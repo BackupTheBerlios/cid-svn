@@ -1,0 +1,120 @@
+# Traduction française de l'application CID.
+# Copyright (C) 2008 Conky Images Display project
+# This file is distributed under the same license as the CID package.
+# Benjamin SANS <sans_ben@yahoo.fr>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.1\n"
+"Report-Msgid-Bugs-To: sans_ben@yahoo.fr\n"
+"POT-Creation-Date: 2008-08-25 21:11+0200\n"
+"PO-Revision-Date: 2008-08-25\n"
+"Last-Translator: Benjamin SANS <sans_ben@yahoo.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: France\n"
+
+#: ../src/cid-utilities.c:64
+msgid "Conky Images Display is a programm written in C.\nIts goal is to display the cover of the song which is currently playing in the player you choose on the desktop like conky does with other informations.\nYou can use it with the following options:\n"
+msgstr "Conky Images Display est un programme écrit en C.\nSon but est d'afficher la pochette de l'album en cours de lecture sur le bureau à la manière de conky.\nVous pouvez le lancer avec les options suivantes :\n"
+
+#: ../src/cid-utilities.c:51
+msgid "log verbosity (debug,info,message,warning,error) default is warning."
+msgstr "niveau de verbosité (debug,info,message,warning,error) warning par defaut."
+
+#: ../src/cid-utilities.c:54
+msgid "load CID with this config file instead of ~/.config/cid.conf."
+msgstr "lance CID avec ce fichier de configuration à la place de ~/.config/cid.conf."
+
+#: ../src/cid-utilities.c:57
+msgid "runs CID in testing mode."
+msgstr "Lance CID avec les options de test."
+
+#: ../src/cid-utilities.c:60
+msgid "print version and quit."
+msgstr "affiche la version et quitte."
+
+#: ../src/cid-main.c:154
+msgid "Your screen does not support alpha channels!\n"
+msgstr "Activation de la transparence impossible !\n"
+
+#: ../src/cid-main.c:158
+msgid "Your screen supports alpha channels!\n"
+msgstr "Transparence activée !\n"
+
+#: ../src/cid-main.c:221
+msgid "ERROR: %s is not recognize as a supported player\n"
+msgstr "ERREUR : %s n'est pas reconnu en tant que lecteur supporté\n"
+
+#:../src/cid-menu-factory.c:31
+msgid "Configure"
+msgstr "Configurer"
+
+#:../src/cid-menu-factory.c:36
+msgid "About"
+msgstr "À propos"
+
+#:../src/cid-menu-factory.c:37
+msgid "Quit"
+msgstr "Quitter"
+
+################
+### cid.conf ###
+################
+#:../data/cid.conf:9
+msgid "CID decoration parameters"
+msgstr "Paramètres de décoration de CID"
+
+#:../data/cid.conf:13 ../data/cid.conf:17 ../data/cid.conf:21 ../data/cid.conf:25
+msgid "in pixels"
+msgstr "en pixels"
+
+#:../data/cid.conf:20
+msgid "Width :"
+msgstr "Largeur :"
+
+#:../data/cid.conf:24
+msgid "Height "
+msgstr "Hauteur :"
+
+#:../data/cid.conf:28
+msgid "Display CID on all Dekstop"
+msgstr "Afficher CID sur tous les bureaux"
+
+#:../data/cid.conf:31
+msgid "Rotation of CID :"
+msgstr "Rotation de CID :"
+
+#:../data/cid.conf:32
+msgid "in degree"
+msgstr "en degrés"
+
+#:../data/cid.conf:35
+msgid "Keep corners during rotate"
+msgstr "Ne pas couper les coins durant la rotation"
+
+#:../data/cid.conf:38
+msgid "Color of the background (r,v,b,a) :"
+msgstr "Couleur de l'arrière plan"
+
+#:../data/cid.conf:44
+msgid "the player you are using"
+msgstr "le lecteur que vous utilisez"
+
+#:../data/cid.conf:47
+msgid "interval between 2 refresh (leave blank if you are using rhythmbox)"
+msgstr "interval entre 2 vérifications (laisser vide pour rhythmbox)"
+
+#:../data/cid.conf:53
+msgid "default image instead of the beautiful CD"
+msgstr "image par défaut à la place du magnifique CD"
+
+#:../data/cid.conf:56
+msgid "hide cid when player isn't running"
+msgstr "cacher CID lorsque le lecteur n'est pas lancé"
+
+#:../data/cid.conf:59
+msgid "Move cid with left clic"
+msgstr "Déplacer cid avec clic gauche"
