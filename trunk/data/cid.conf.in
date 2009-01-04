@@ -48,7 +48,7 @@ FLYING_COLOR=0;0;0;0.7;
 frame_2=
 
 #r[rhythmbox;amarok] Wich player you are using
-PLAYER=rhythmbox
+PLAYER=
 
 #i Interval between 2 refresh (leave blank if you are using rhythmbox)
 INTER=
