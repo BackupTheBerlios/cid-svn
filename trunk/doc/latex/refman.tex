@@ -1,0 +1,69 @@
+\documentclass[a4paper]{book}
+\usepackage{a4wide}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{doxygen}
+\makeindex
+\setcounter{tocdepth}{1}
+\renewcommand{\footrulewidth}{0.4pt}
+\begin{document}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}
+{\Large CID \\[1ex]\large 1.1.1\_\-alpha3 }\\
+\vspace*{1cm}
+{\large Généré par Doxygen 1.5.5}\\
+\vspace*{0.5cm}
+{\small Sat Jan 3 12:09:11 2009}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\chapter{Index des structures de données}
+\input{annotated}
+\chapter{Index des fichiers}
+\input{files}
+\chapter{Documentation des structures de données}
+\input{struct__CidLabelDescription}
+\include{struct__CidMainContainer}
+\include{structdata}
+\include{structFileSettings}
+\chapter{Documentation des fichiers}
+\input{cid-amarok_8c}
+\include{cid-amarok_8h}
+\include{cid-amazon_8c}
+\include{cid-amazon_8h}
+\include{cid-callbacks_8c}
+\include{cid-callbacks_8h}
+\include{cid-conf-panel-factory_8c}
+\include{cid-conf-panel-factory_8h}
+\include{cid-config_8c}
+\include{cid-config_8h}
+\include{cid-dbus_8c}
+\include{cid-dbus_8h}
+\include{cid-main_8c}
+\include{cid-main_8h}
+\include{cid-menu-factory_8c}
+\include{cid-menu-factory_8h}
+\include{cid-messages_8c}
+\include{cid-messages_8h}
+\include{cid-rhythmbox_8c}
+\include{cid-rhythmbox_8h}
+\include{cid-struct_8h}
+\include{cid-utilities_8c}
+\include{cid-utilities_8h}
+\include{cid_8c}
+\include{cid_8h}
+\printindex
+\end{document}

@@ -1,0 +1,510 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-dbus.c</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-dbus.c</h1><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">DBusGConnection *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#cf6fd43bd35fb86e41c280919db53b26">get_session_connection</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">DBusGConnection *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#698e771d9ee79928b65637ef68c6616c">get_system_connection</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">DBusGProxy *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#07a494821139b2f3db60d88b3a5381f5">get_main_proxy</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#6c35ea284d5021681d6042d3a92194f0">register_service_name</a> (const gchar *cServiceName)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#019158a96253e21bc8f797ed7232c2e1">dbus_is_enabled</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">DBusGProxy *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#8b50e30967e56963f7a35ae93e364107">create_new_session_proxy</a> (const char *name, const char *path, const char *interface)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">DBusGProxy *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#c173b624ca07b24abe909dd19d4b740b">create_new_system_proxy</a> (const char *name, const char *path, const char *interface)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#a067a9c5c52e97de30de114afa353f22">dbus_detect_application</a> (const gchar *cName)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#d22399e4bc5784a6ca2679f32707f61a">dbus_get_boolean</a> (DBusGProxy *pDbusProxy, const gchar *cParameter)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">guint&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#a0f6943fc8a248106a3453c6c9e35eb1">dbus_get_uinteger</a> (DBusGProxy *pDbusProxy, const gchar *cParameter)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gchar *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#4bcef2ba58371bec044bbe2c319a9101">dbus_get_string</a> (DBusGProxy *pDbusProxy, const gchar *cParameter)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#9c0feee625a42e23e7882823c9194123">dbus_call</a> (DBusGProxy *pDbusProxy, const gchar *cCommand)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-dbus_8c.html#7226d5c3c5206d7b17f93dc51e2cec10">dbus_call_boolean</a> (DBusGProxy *pDbusProxy, const gchar *cCommand, gboolean bAction)</td></tr>
+
+</table>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="cf6fd43bd35fb86e41c280919db53b26"></a><!-- doxytag: member="cid-dbus.c::get_session_connection" ref="cf6fd43bd35fb86e41c280919db53b26" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DBusGConnection* get_session_connection           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Retourne la connexion 'session' de DBus. <dl class="return" compact><dt><b>Renvoie:</b></dt><dd>la connexion au bus. </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-dbus_8c-source.html#l00073">create_new_session_proxy()</a>, et <a class="el" href="cid-dbus_8c-source.html#l00068">dbus_is_enabled()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="698e771d9ee79928b65637ef68c6616c"></a><!-- doxytag: member="cid-dbus.c::get_system_connection" ref="698e771d9ee79928b65637ef68c6616c" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DBusGConnection* get_system_connection           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-dbus_8c-source.html#l00085">create_new_system_proxy()</a>, et <a class="el" href="cid-dbus_8c-source.html#l00068">dbus_is_enabled()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="07a494821139b2f3db60d88b3a5381f5"></a><!-- doxytag: member="cid-dbus.c::get_main_proxy" ref="07a494821139b2f3db60d88b3a5381f5" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DBusGProxy* get_main_proxy           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-dbus_8c-source.html#l00073">create_new_session_proxy()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-dbus_8c-source.html#l00097">dbus_detect_application()</a>, et <a class="el" href="cid-dbus_8c-source.html#l00055">register_service_name()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6c35ea284d5021681d6042d3a92194f0"></a><!-- doxytag: member="cid-dbus.c::register_service_name" ref="6c35ea284d5021681d6042d3a92194f0" args="(const gchar *cServiceName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void register_service_name           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cServiceName</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Enregistre un nouveau service sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cServiceName</em>&nbsp;</td><td>le nom du service. </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>, et <a class="el" href="cid-dbus_8c-source.html#l00046">get_main_proxy()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="019158a96253e21bc8f797ed7232c2e1"></a><!-- doxytag: member="cid-dbus.c::dbus_is_enabled" ref="019158a96253e21bc8f797ed7232c2e1" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean dbus_is_enabled           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Dis si le bus est disponible. <dl class="return" compact><dt><b>Renvoie:</b></dt><dd>TRUE ssi le bus a pu etre recupere precedemment. </dd></dl>
+
+<p>Références <a class="el" href="cid-dbus_8c-source.html#l00020">get_session_connection()</a>, et <a class="el" href="cid-dbus_8c-source.html#l00033">get_system_connection()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00034">rhythmbox_dbus_connect_to_bus()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8b50e30967e56963f7a35ae93e364107"></a><!-- doxytag: member="cid-dbus.c::create_new_session_proxy" ref="8b50e30967e56963f7a35ae93e364107" args="(const char *name, const char *path, const char *interface)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DBusGProxy* create_new_session_proxy           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>interface</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Cree un nouveau proxy pour la connexion 'session'. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>un nom sur le bus. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>le chemin associe. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>interface</em>&nbsp;</td><td>nom de l'interface associee. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>le proxy nouvellement cree. </dd></dl>
+
+<p>Références <a class="el" href="cid-dbus_8c-source.html#l00020">get_session_connection()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-dbus_8c-source.html#l00046">get_main_proxy()</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00034">rhythmbox_dbus_connect_to_bus()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="c173b624ca07b24abe909dd19d4b740b"></a><!-- doxytag: member="cid-dbus.c::create_new_system_proxy" ref="c173b624ca07b24abe909dd19d4b740b" args="(const char *name, const char *path, const char *interface)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DBusGProxy* create_new_system_proxy           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>interface</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Cree un nouveau proxy pour la connexion 'system'. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>un nom sur le bus. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>le chemin associe. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>interface</em>&nbsp;</td><td>nom de l'interface associee. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>le proxy nouvellement cree. </dd></dl>
+
+<p>Références <a class="el" href="cid-dbus_8c-source.html#l00033">get_system_connection()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a067a9c5c52e97de30de114afa353f22"></a><!-- doxytag: member="cid-dbus.c::dbus_detect_application" ref="a067a9c5c52e97de30de114afa353f22" args="(const gchar *cName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean dbus_detect_application           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cName</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Detecte si une application est couramment lancee. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cName</em>&nbsp;</td><td>nom de l'application. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>TRUE ssi l'application est lancee et possede un service sur le bus. </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, et <a class="el" href="cid-dbus_8c-source.html#l00046">get_main_proxy()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00106">dbus_detect_rhythmbox()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d22399e4bc5784a6ca2679f32707f61a"></a><!-- doxytag: member="cid-dbus.c::dbus_get_boolean" ref="d22399e4bc5784a6ca2679f32707f61a" args="(DBusGProxy *pDbusProxy, const gchar *cParameter)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean dbus_get_boolean           </td>
+          <td>(</td>
+          <td class="paramtype">DBusGProxy *&nbsp;</td>
+          <td class="paramname"> <em>pDbusProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cParameter</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recupere la valeur d'un parametre booleen sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDbusProxy</em>&nbsp;</td><td>associe a la connexion. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cParameter</em>&nbsp;</td><td>nom du parametre. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>la valeur du parametre. </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00115">rhythmbox_getPlaying()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a0f6943fc8a248106a3453c6c9e35eb1"></a><!-- doxytag: member="cid-dbus.c::dbus_get_uinteger" ref="a0f6943fc8a248106a3453c6c9e35eb1" args="(DBusGProxy *pDbusProxy, const gchar *cParameter)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">guint dbus_get_uinteger           </td>
+          <td>(</td>
+          <td class="paramtype">DBusGProxy *&nbsp;</td>
+          <td class="paramname"> <em>pDbusProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cParameter</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recupere la valeur d'un parametre entier non signe sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDbusProxy</em>&nbsp;</td><td>associe a la connexion. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cParameter</em>&nbsp;</td><td>nom du parametre. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>la valeur du parametre. </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4bcef2ba58371bec044bbe2c319a9101"></a><!-- doxytag: member="cid-dbus.c::dbus_get_string" ref="4bcef2ba58371bec044bbe2c319a9101" args="(DBusGProxy *pDbusProxy, const gchar *cParameter)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gchar* dbus_get_string           </td>
+          <td>(</td>
+          <td class="paramtype">DBusGProxy *&nbsp;</td>
+          <td class="paramname"> <em>pDbusProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cParameter</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recupere la valeur d'un parametre 'chaine de caracteres' sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDbusProxy</em>&nbsp;</td><td>associe a la connexion. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cParameter</em>&nbsp;</td><td>nom du parametre. </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>la valeur du parametre. </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00124">rhythmbox_getPlayingUri()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9c0feee625a42e23e7882823c9194123"></a><!-- doxytag: member="cid-dbus.c::dbus_call" ref="9c0feee625a42e23e7882823c9194123" args="(DBusGProxy *pDbusProxy, const gchar *cCommand)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void dbus_call           </td>
+          <td>(</td>
+          <td class="paramtype">DBusGProxy *&nbsp;</td>
+          <td class="paramname"> <em>pDbusProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cCommand</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Appelle une commande sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDbusProxy</em>&nbsp;</td><td>associe a la connexion. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cCommand</em>&nbsp;</td><td>nom de la commande. </td></tr>
+  </table>
+</dl>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00318">_next_rhythmbox()</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00322">_previous_rhythmbox()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7226d5c3c5206d7b17f93dc51e2cec10"></a><!-- doxytag: member="cid-dbus.c::dbus_call_boolean" ref="7226d5c3c5206d7b17f93dc51e2cec10" args="(DBusGProxy *pDbusProxy, const gchar *cCommand, gboolean bAction)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void dbus_call_boolean           </td>
+          <td>(</td>
+          <td class="paramtype">DBusGProxy *&nbsp;</td>
+          <td class="paramname"> <em>pDbusProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cCommand</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gboolean&nbsp;</td>
+          <td class="paramname"> <em>bAction</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Appelle une commande sur le bus. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDbusProxy</em>&nbsp;</td><td>associe a la connexion. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cCommand</em>&nbsp;</td><td>nom de la commande. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bAction</em>&nbsp;</td><td>lorsque le callback a besoin d'un boolean. </td></tr>
+  </table>
+</dl>
+
+<p>Référencé par <a class="el" href="cid-rhythmbox_8c-source.html#l00314">_playPause_rhythmbox()</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

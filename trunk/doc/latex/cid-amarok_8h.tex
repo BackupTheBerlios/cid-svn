@@ -1,0 +1,47 @@
+\section{Référence du fichier cid-amarok.h}
+\label{cid-amarok_8h}\index{cid-amarok.h@{cid-amarok.h}}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+G\_\-BEGIN\_\-DECLS void {\bf cid\_\-connect\_\-to\_\-amarok} (gint iInter)
+\item 
+void {\bf cid\_\-disconnect\_\-from\_\-amarok} ()
+\item 
+void {\bf cid\_\-build\_\-amarok\_\-menu} (GtkWidget $\ast$pMenuItem, GtkWidget $\ast$menu)
+\end{CompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\index{cid-amarok.h@{cid-amarok.h}!cid\_\-connect\_\-to\_\-amarok@{cid\_\-connect\_\-to\_\-amarok}}
+\index{cid\_\-connect\_\-to\_\-amarok@{cid\_\-connect\_\-to\_\-amarok}!cid-amarok.h@{cid-amarok.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}G\_\-BEGIN\_\-DECLS void cid\_\-connect\_\-to\_\-amarok (gint {\em iInter})}\label{cid-amarok_8h_db0fb988775fd9ab349cab7d254ff84c}
+
+
+connexion à amarok \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em iInter}]durée entre 2 interrogations \end{description}
+\end{Desc}
+
+
+Références cid\_\-amarok\_\-pipe(), cid\_\-display\_\-image(), cont, et DEFAULT\_\-IMAGE.
+
+Référencé par cid\_\-run\_\-with\_\-player().\index{cid-amarok.h@{cid-amarok.h}!cid\_\-disconnect\_\-from\_\-amarok@{cid\_\-disconnect\_\-from\_\-amarok}}
+\index{cid\_\-disconnect\_\-from\_\-amarok@{cid\_\-disconnect\_\-from\_\-amarok}!cid-amarok.h@{cid-amarok.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-disconnect\_\-from\_\-amarok ()}\label{cid-amarok_8h_e848f864ad06f0d0260ba26b4a74bb60}
+
+
+deconnexion d'amarok 
+
+Références cont.
+
+Référencé par cid\_\-disconnect\_\-player().\index{cid-amarok.h@{cid-amarok.h}!cid\_\-build\_\-amarok\_\-menu@{cid\_\-build\_\-amarok\_\-menu}}
+\index{cid\_\-build\_\-amarok\_\-menu@{cid\_\-build\_\-amarok\_\-menu}!cid-amarok.h@{cid-amarok.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-build\_\-amarok\_\-menu (GtkWidget $\ast$ {\em pMenuItem}, \/  GtkWidget $\ast$ {\em menu})}\label{cid-amarok_8h_b0c12baf7e61e7e99cca31549b7e1838}
+
+
+Ajoute les options de monitoring de amarok 
+
+Références \_\-, \_\-add\_\-entry\_\-in\_\-menu, \_\-next\_\-amarok(), \_\-playPause\_\-amarok(), et \_\-previous\_\-amarok().
+
+Référencé par cid\_\-build\_\-menu().

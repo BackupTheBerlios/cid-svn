@@ -1,0 +1,145 @@
+\section{Référence du fichier cid-utilities.c}
+\label{cid-utilities_8c}\index{cid-utilities.c@{cid-utilities.c}}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+int {\bf cid\_\-sortie} (int code)
+\item 
+int {\bf cid\_\-player\_\-evaluation} (gchar $\ast$player)
+\item 
+void {\bf cid\_\-disconnect\_\-player} ()
+\item 
+void {\bf cid\_\-free\_\-musicData} (void)
+\item 
+void {\bf cid\_\-read\_\-parameters} (int argc, char $\ast$$\ast$argv)
+\item 
+void {\bf \_\-cid\_\-set\_\-verbosity} (gchar $\ast$cVerbosity)
+\item 
+void {\bf cid\_\-play\_\-sound} (const gchar $\ast$cSoundPath)
+\item 
+void {\bf cid\_\-launch\_\-web\_\-browser} (const gchar $\ast$cURL)
+\item 
+gboolean {\bf cid\_\-launch\_\-command\_\-full} (const gchar $\ast$cCommandFormat, gchar $\ast$cWorkingDirectory,...)
+\end{CompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\index{cid-utilities.c@{cid-utilities.c}!cid\_\-sortie@{cid\_\-sortie}}
+\index{cid\_\-sortie@{cid\_\-sortie}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cid\_\-sortie (int {\em code})}\label{cid-utilities_8c_0b42fafb55fca67d4be22d8095e5d1b4}
+
+
+sort en retournant le code de retour donné en paramètre \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em code}]de retour \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Renvoie:]code de retournant \end{Desc}
+
+
+Références cid, et cid\_\-disconnect\_\-player().
+
+Référencé par \_\-cid\_\-quit(), cid\_\-exit(), et cid\_\-intercept\_\-signal().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-player\_\-evaluation@{cid\_\-player\_\-evaluation}}
+\index{cid\_\-player\_\-evaluation@{cid\_\-player\_\-evaluation}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cid\_\-player\_\-evaluation (gchar $\ast$ {\em player})}\label{cid-utilities_8c_6cad74bc450444838209d719a3a69cb1}
+
+
+évalue le lecteur séléctionné \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em nom}]du lecteur \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Renvoie:]code du lecteur \end{Desc}
+
+
+Références cid, PLAYER\_\-AMAROK\_\-1, et PLAYER\_\-RHYTHMBOX.
+
+Référencé par cid\_\-read\_\-config().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-disconnect\_\-player@{cid\_\-disconnect\_\-player}}
+\index{cid\_\-disconnect\_\-player@{cid\_\-disconnect\_\-player}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-disconnect\_\-player ()}\label{cid-utilities_8c_f341249c88a564232783326fbb667a23}
+
+
+Permet de déconnecter le monitoring du player 
+
+Références cid\_\-disconnect\_\-from\_\-amarok(), et rhythmbox\_\-dbus\_\-disconnect\_\-from\_\-bus().
+
+Référencé par cid\_\-read\_\-config\_\-after\_\-update(), et cid\_\-sortie().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-free\_\-musicData@{cid\_\-free\_\-musicData}}
+\index{cid\_\-free\_\-musicData@{cid\_\-free\_\-musicData}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-free\_\-musicData (void)}\label{cid-utilities_8c_1fb8206b73ce7aa1aba3d8f6bebc8b5b}
+
+
+Nettoyage des données musicales 
+
+Références data::cover\_\-exist, data::iSidCheckCover, musicData, data::opening, data::playing, data::playing\_\-album, data::playing\_\-artist, data::playing\_\-cover, data::playing\_\-duration, data::playing\_\-title, data::playing\_\-track, et data::playing\_\-uri.
+
+Référencé par cid\_\-read\_\-config\_\-after\_\-update().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-read\_\-parameters@{cid\_\-read\_\-parameters}}
+\index{cid\_\-read\_\-parameters@{cid\_\-read\_\-parameters}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-read\_\-parameters (int {\em argc}, \/  char $\ast$$\ast$ {\em argv})}\label{cid-utilities_8c_a4c249f9f77ac45bcbf856a461413965}
+
+
+lit les arguments du programme \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em nombre}]d'arguments \item[{\em tableau}]de chaînes contenant la liste des arguments \end{description}
+\end{Desc}
+
+
+Références \_\-, \_\-cid\_\-set\_\-verbosity(), cid, CID\_\-ERROR\_\-READING\_\-ARGS, CID\_\-EXIT\_\-SUCCESS, DEFAULT\_\-IMAGE, TESTING\_\-COVER, et TESTING\_\-FILE.
+
+Référencé par main().\index{cid-utilities.c@{cid-utilities.c}!\_\-cid\_\-set\_\-verbosity@{\_\-cid\_\-set\_\-verbosity}}
+\index{\_\-cid\_\-set\_\-verbosity@{\_\-cid\_\-set\_\-verbosity}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-set\_\-verbosity (gchar $\ast$ {\em cVerbosity})}\label{cid-utilities_8c_b57ea7ec4a6b249a5d78d624a07b30d7}
+
+
+définit la niveau de verbosité \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em niveau}]de verbosité \end{description}
+\end{Desc}
+
+
+Références cid\_\-log\_\-set\_\-level(), et cid\_\-warning.
+
+Référencé par cid\_\-read\_\-parameters().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-play\_\-sound@{cid\_\-play\_\-sound}}
+\index{cid\_\-play\_\-sound@{cid\_\-play\_\-sound}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-play\_\-sound (const gchar $\ast$ {\em cSoundPath})}\label{cid-utilities_8c_38b7ceae01036942ac314cb69bccaa0d}
+
+
+permet de jouer un son \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em cSoundPath}]chemin vers le son à jouer \end{description}
+\end{Desc}
+
+
+Références cid\_\-debug, cid\_\-launch\_\-command, et cid\_\-warning.
+
+Référencé par \_\-cid\_\-play\_\-a\_\-sound().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-launch\_\-web\_\-browser@{cid\_\-launch\_\-web\_\-browser}}
+\index{cid\_\-launch\_\-web\_\-browser@{cid\_\-launch\_\-web\_\-browser}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-launch\_\-web\_\-browser (const gchar $\ast$ {\em cURL})}\label{cid-utilities_8c_05c186e3f1c09623a2149809a55748ef}
+
+
+permet de jouer un son \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em cURL}]URL du site à afficher \end{description}
+\end{Desc}
+
+
+Références cid\_\-debug, cid\_\-launch\_\-command, et cid\_\-warning.
+
+Référencé par \_\-cid\_\-web\_\-button\_\-clicked().\index{cid-utilities.c@{cid-utilities.c}!cid\_\-launch\_\-command\_\-full@{cid\_\-launch\_\-command\_\-full}}
+\index{cid\_\-launch\_\-command\_\-full@{cid\_\-launch\_\-command\_\-full}!cid-utilities.c@{cid-utilities.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean cid\_\-launch\_\-command\_\-full (const gchar $\ast$ {\em cCommandFormat}, \/  gchar $\ast$ {\em cWorkingDirectory}, \/   {\em ...})}\label{cid-utilities_8c_793b10ad44f8331ad6dc0775e1bfe01c}
+
+
+Permet de lancer une commande \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em cCommandFormat}]La commande à executer \item[{\em cWorkingDirectory}]Le repertoire de travail \item[{\em ...}]\end{description}
+\end{Desc}
+
+
+Références \_\-cid\_\-launch\_\-threaded(), cid\_\-debug, et cid\_\-warning.

@@ -1,0 +1,131 @@
+\section{Référence du fichier cid-amarok.c}
+\label{cid-amarok_8c}\index{cid-amarok.c@{cid-amarok.c}}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+gboolean {\bf get\_\-amarock\_\-musicData} ()
+\item 
+gboolean {\bf cid\_\-amarok\_\-cover} ()
+\item 
+void {\bf cid\_\-amarok\_\-pipe} (gint iInter)
+\item 
+void {\bf cid\_\-disconnect\_\-from\_\-amarok} ()
+\item 
+void {\bf cid\_\-connect\_\-to\_\-amarok} (gint iInter)
+\item 
+void {\bf \_\-playPause\_\-amarok} ()
+\item 
+void {\bf \_\-next\_\-amarok} ()
+\item 
+void {\bf \_\-previous\_\-amarok} ()
+\item 
+void {\bf cid\_\-build\_\-amarok\_\-menu} (GtkWidget $\ast$pMenuItem, GtkWidget $\ast$menu)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+gboolean {\bf cont}
+\item 
+gboolean {\bf run} = FALSE
+\end{CompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\index{cid-amarok.c@{cid-amarok.c}!get\_\-amarock\_\-musicData@{get\_\-amarock\_\-musicData}}
+\index{get\_\-amarock\_\-musicData@{get\_\-amarock\_\-musicData}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean get\_\-amarock\_\-musicData ()}\label{cid-amarok_8c_ccd350392dc5e106f78289692cc8a751}
+
+
+
+
+Références cid\_\-display\_\-image(), cid\_\-info, cid\_\-warning, DEFAULT\_\-IMAGE, musicData, data::opening, data::playing, data::playing\_\-album, data::playing\_\-artist, data::playing\_\-cover, data::playing\_\-title, data::playing\_\-uri, et run.
+
+Référencé par cid\_\-amarok\_\-cover().\index{cid-amarok.c@{cid-amarok.c}!cid\_\-amarok\_\-cover@{cid\_\-amarok\_\-cover}}
+\index{cid\_\-amarok\_\-cover@{cid\_\-amarok\_\-cover}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean cid\_\-amarok\_\-cover ()}\label{cid-amarok_8c_dbbdf804cf1265ece3b1c212dd07e0c1}
+
+
+
+
+Références cid\_\-animation(), cid\_\-debug, cid\_\-display\_\-image(), cont, DEFAULT\_\-IMAGE, get\_\-amarock\_\-musicData(), musicData, data::opening, data::playing, et data::playing\_\-cover.
+
+Référencé par cid\_\-amarok\_\-pipe().\index{cid-amarok.c@{cid-amarok.c}!cid\_\-amarok\_\-pipe@{cid\_\-amarok\_\-pipe}}
+\index{cid\_\-amarok\_\-pipe@{cid\_\-amarok\_\-pipe}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-amarok\_\-pipe (gint {\em iInter})}\label{cid-amarok_8c_254a571fdd39b57762b0cfcb67ad2455}
+
+
+
+
+Références cid\_\-amarok\_\-cover().
+
+Référencé par cid\_\-connect\_\-to\_\-amarok().\index{cid-amarok.c@{cid-amarok.c}!cid\_\-disconnect\_\-from\_\-amarok@{cid\_\-disconnect\_\-from\_\-amarok}}
+\index{cid\_\-disconnect\_\-from\_\-amarok@{cid\_\-disconnect\_\-from\_\-amarok}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-disconnect\_\-from\_\-amarok ()}\label{cid-amarok_8c_e848f864ad06f0d0260ba26b4a74bb60}
+
+
+deconnexion d'amarok 
+
+Références cont.
+
+Référencé par cid\_\-disconnect\_\-player().\index{cid-amarok.c@{cid-amarok.c}!cid\_\-connect\_\-to\_\-amarok@{cid\_\-connect\_\-to\_\-amarok}}
+\index{cid\_\-connect\_\-to\_\-amarok@{cid\_\-connect\_\-to\_\-amarok}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-connect\_\-to\_\-amarok (gint {\em iInter})}\label{cid-amarok_8c_ec1db8f742994eab62d6d815edd96085}
+
+
+connexion à amarok \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em iInter}]durée entre 2 interrogations \end{description}
+\end{Desc}
+
+
+Références cid\_\-amarok\_\-pipe(), cid\_\-display\_\-image(), cont, et DEFAULT\_\-IMAGE.
+
+Référencé par cid\_\-run\_\-with\_\-player().\index{cid-amarok.c@{cid-amarok.c}!\_\-playPause\_\-amarok@{\_\-playPause\_\-amarok}}
+\index{\_\-playPause\_\-amarok@{\_\-playPause\_\-amarok}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-playPause\_\-amarok ()}\label{cid-amarok_8c_4131a554c2a5eb15ee79bdd715adfb6e}
+
+
+
+
+Référencé par cid\_\-build\_\-amarok\_\-menu(), et on\_\-clic().\index{cid-amarok.c@{cid-amarok.c}!\_\-next\_\-amarok@{\_\-next\_\-amarok}}
+\index{\_\-next\_\-amarok@{\_\-next\_\-amarok}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-next\_\-amarok ()}\label{cid-amarok_8c_b1f357503caf1b615a104f2393b9f1bd}
+
+
+
+
+Référencé par cid\_\-build\_\-amarok\_\-menu(), et on\_\-clic().\index{cid-amarok.c@{cid-amarok.c}!\_\-previous\_\-amarok@{\_\-previous\_\-amarok}}
+\index{\_\-previous\_\-amarok@{\_\-previous\_\-amarok}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-previous\_\-amarok ()}\label{cid-amarok_8c_8ebe01c6bd996f5e7192e8f3b81e37a0}
+
+
+
+
+Référencé par cid\_\-build\_\-amarok\_\-menu().\index{cid-amarok.c@{cid-amarok.c}!cid\_\-build\_\-amarok\_\-menu@{cid\_\-build\_\-amarok\_\-menu}}
+\index{cid\_\-build\_\-amarok\_\-menu@{cid\_\-build\_\-amarok\_\-menu}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-build\_\-amarok\_\-menu (GtkWidget $\ast$ {\em pMenuItem}, \/  GtkWidget $\ast$ {\em menu})}\label{cid-amarok_8c_b0c12baf7e61e7e99cca31549b7e1838}
+
+
+Ajoute les options de monitoring de amarok 
+
+Références \_\-, \_\-add\_\-entry\_\-in\_\-menu, \_\-next\_\-amarok(), \_\-playPause\_\-amarok(), et \_\-previous\_\-amarok().
+
+Référencé par cid\_\-build\_\-menu().
+
+\subsection{Documentation des variables}
+\index{cid-amarok.c@{cid-amarok.c}!cont@{cont}}
+\index{cont@{cont}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean {\bf cont}}\label{cid-amarok_8c_87bf97b2459e460bc935239c9a1e9564}
+
+
+
+
+Référencé par cid\_\-amarok\_\-cover(), cid\_\-connect\_\-to\_\-amarok(), et cid\_\-disconnect\_\-from\_\-amarok().\index{cid-amarok.c@{cid-amarok.c}!run@{run}}
+\index{run@{run}!cid-amarok.c@{cid-amarok.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean {\bf run} = FALSE}\label{cid-amarok_8c_1f67efb1989805aac8cf2967e4859a10}
+
+
+
+
+Référencé par get\_\-amarock\_\-musicData().

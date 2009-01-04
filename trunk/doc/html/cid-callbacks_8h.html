@@ -1,0 +1,1048 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-callbacks.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-callbacks.h</h1>
+<p>
+<a href="cid-callbacks_8h-source.html">Aller au code source de ce fichier.</a><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">G_BEGIN_DECLS void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#19dcd60c5610ddf8d3bdf909684b63e1">_cid_quit</a> (GtkWidget *p_widget, gpointer user_data)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#2f3b002310e8848eafaa0a8dac5780e2">cid_interrupt</a> (int signal)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#f16db2042bef8aabd2829a3a4a578588">on_clic</a> (GtkWidget *p_widget, GdkEventButton *pButton)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#ac1bcf14dbd3d02106324f4a52ccfabb">_cid_about</a> (GtkMenuItem *pMenuItem, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#4ab4ce092509cc57211911adfffda518">_cid_add_about_page</a> (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#65612132c74c4760abf7cb3efb8c3257">_cid_conf_panel</a> (GtkMenuItem *pItemMenu, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#7877896d9d497a250e5487108cfd49b1">_cid_user_action_on_config</a> (GtkDialog *pDialog, gint action, gpointer *user_data)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#49ab1092bf6ff94110560d2093600038">_check_cover_is_present</a> (gpointer <a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#9c97c019b1920dff0ace8edf341a8b86">_cid_set_color</a> (GtkColorButton *pColorButton, GSList *pWidgetList)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#bfef31f6772998853bcfe1d16f749904">_cid_get_current_color</a> (GtkColorButton *pColorButton, GSList *pWidgetList)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#f55b6dee32d16fb18234d7c8e9e4abaf">_cid_find_iter_from_name</a> (GtkListStore *pModele, gchar *cName, GtkTreeIter *iter)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#89642a4e897ff6224ebf066faab17a8b">_cid_test_one_name</a> (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#8941cb85508e9f7d8d7d4f17c992d63d">_cid_go_up</a> (GtkButton *button, GtkTreeView *pTreeView)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#272209cf2b7a8f179f1026ff4b2efa46">_cid_go_down</a> (GtkButton *button, GtkTreeView *pTreeView)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#caa73ff6628d40864efe848ef3af8f09">_cid_add</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#ac4e64f6761618148e18da77b62f1977">_cid_remove</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#2a05e3dbf48472adf05905c9c9c7c115">_cid_pick_a_file</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#b1d0292171c97d4c87760dfaf8da2930">_cid_play_a_sound</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#1035e80c38a4692ff583b0a54b69282a">_cid_set_font</a> (GtkFontButton *widget, GtkEntry *pEntry)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#c2af9e7dba87955f3ee5b98ac2064580">_cid_key_grab_clicked</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gpointer&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#06c7f37ec989f3bfef3e65668dc107ae">_cid_launch_threaded</a> (gchar *cCommand)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#0bebd1142587d7b886f698a1c402bfea">_cid_select_one_item_in_combo</a> (GtkComboBox *widget, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#a7ac9e6bcdc6221ab7460e93befefefb">_cid_configure_renderer</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#49ba76d841d14854ab4c0cdbc63915fc">_cid_configure</a> (GtkButton *button, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#845e62ffc9590b903d0ef123b9efb3cf">_cid_select_one_item_in_tree</a> (GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path, gboolean path_currently_selected, gpointer *<a class="el" href="structdata.html">data</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#0e6228a52370cee5be4a8cb1ca200d5c">_cid_get_active_elements</a> (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, GSList **pStringList)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-callbacks_8h.html#765fa530d36dc45654542f4d256df599">cid_free_generated_widget_list</a> (GSList *pWidgetList)</td></tr>
+
+</table>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="19dcd60c5610ddf8d3bdf909684b63e1"></a><!-- doxytag: member="cid-callbacks.h::_cid_quit" ref="19dcd60c5610ddf8d3bdf909684b63e1" args="(GtkWidget *p_widget, gpointer user_data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">G_BEGIN_DECLS void _cid_quit           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>p_widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction exécutée à l'arret du programme <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p_widget</em>&nbsp;</td><td>non utilisé </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>non utilisé </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00076">CID_EXIT_SUCCESS</a>, <a class="el" href="cid-config_8c-source.html#l00215">cid_save_data()</a>, <a class="el" href="cid-utilities_8c-source.html#l00016">cid_sortie()</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00079">rhythmbox_dbus_disconnect_from_bus()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-menu-factory_8c-source.html#l00013">cid_build_menu()</a>, <a class="el" href="cid-main_8c-source.html#l00168">cid_create_main_window()</a>, et <a class="el" href="cid-callbacks_8c-source.html#l00013">cid_interrupt()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2f3b002310e8848eafaa0a8dac5780e2"></a><!-- doxytag: member="cid-callbacks.h::cid_interrupt" ref="2f3b002310e8848eafaa0a8dac5780e2" args="(int signal)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_interrupt           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>signal</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction exécutée en cas d'interruption du programme <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>signal</em>&nbsp;</td><td>signal à l'origine de l'interruption </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00017">_cid_quit()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-main_8c-source.html#l00641">cid_display_init()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f16db2042bef8aabd2829a3a4a578588"></a><!-- doxytag: member="cid-callbacks.h::on_clic" ref="f16db2042bef8aabd2829a3a4a578588" args="(GtkWidget *p_widget, GdkEventButton *pButton)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void on_clic           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>p_widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GdkEventButton *&nbsp;</td>
+          <td class="paramname"> <em>pButton</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction executée lors d'un clic de souris <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p_widget</em>&nbsp;</td><td>objet cliqué </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>pButton</em>&nbsp;</td><td>evènement </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-amarok_8c-source.html#l00149">_next_amarok()</a>, <a class="el" href="cid-rhythmbox_8c-source.html#l00318">_next_rhythmbox()</a>, <a class="el" href="cid-amarok_8c-source.html#l00145">_playPause_amarok()</a>, <a class="el" href="cid-rhythmbox_8c-source.html#l00314">_playPause_rhythmbox()</a>, <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-menu-factory_8c-source.html#l00013">cid_build_menu()</a>, <a class="el" href="cid-messages_8h-source.html#l00062">cid_info</a>, <a class="el" href="cid-struct_8h-source.html#l00059">PLAYER_AMAROK_1</a>, et <a class="el" href="cid-struct_8h-source.html#l00060">PLAYER_RHYTHMBOX</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-main_8c-source.html#l00168">cid_create_main_window()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ac1bcf14dbd3d02106324f4a52ccfabb"></a><!-- doxytag: member="cid-callbacks.h::_cid_about" ref="ac1bcf14dbd3d02106324f4a52ccfabb" args="(GtkMenuItem *pMenuItem, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_about           </td>
+          <td>(</td>
+          <td class="paramtype">GtkMenuItem *&nbsp;</td>
+          <td class="paramname"> <em>pMenuItem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction executée pour générer la page "À propos" <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pMenuItem</em>&nbsp;</td><td>element déclencheur </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="structdata.html">data</a></em>&nbsp;</td><td>non utilisé </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00129">_cid_add_about_page()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00075">_cid_web_button_clicked()</a>, et <a class="el" href="cid_8h-source.html#l00040">cid</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-menu-factory_8c-source.html#l00013">cid_build_menu()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4ab4ce092509cc57211911adfffda518"></a><!-- doxytag: member="cid-callbacks.h::_cid_add_about_page" ref="4ab4ce092509cc57211911adfffda518" args="(GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_add_about_page           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>pNoteBook</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cPageLabel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cAboutText</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Ajouter une page à la page "À propos" <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pNoteBook</em>&nbsp;</td><td>sous-page </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cPageLabel</em>&nbsp;</td><td>label </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cAboutText</em>&nbsp;</td><td>contenu </td></tr>
+  </table>
+</dl>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00079">_cid_about()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="65612132c74c4760abf7cb3efb8c3257"></a><!-- doxytag: member="cid-callbacks.h::_cid_conf_panel" ref="65612132c74c4760abf7cb3efb8c3257" args="(GtkMenuItem *pItemMenu, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_conf_panel           </td>
+          <td>(</td>
+          <td class="paramtype">GtkMenuItem *&nbsp;</td>
+          <td class="paramname"> <em>pItemMenu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction executée pour générer l'interface de configuration <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pItemMenu</em>&nbsp;</td><td>element déclencheur </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="structdata.html">data</a></em>&nbsp;</td><td>non utilisé </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-conf-panel-factory_8c-source.html#l00033">cid_edit_conf_file_with_panel()</a>, <a class="el" href="cid-config_8c-source.html#l00097">cid_read_config_after_update()</a>, et <a class="el" href="cid-config_8c-source.html#l00215">cid_save_data()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-menu-factory_8c-source.html#l00013">cid_build_menu()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7877896d9d497a250e5487108cfd49b1"></a><!-- doxytag: member="cid-callbacks.h::_cid_user_action_on_config" ref="7877896d9d497a250e5487108cfd49b1" args="(GtkDialog *pDialog, gint action, gpointer *user_data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_user_action_on_config           </td>
+          <td>(</td>
+          <td class="paramtype">GtkDialog *&nbsp;</td>
+          <td class="paramname"> <em>pDialog</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gint&nbsp;</td>
+          <td class="paramname"> <em>action</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction executée par le panneau de configuration <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pDialog</em>&nbsp;</td><td>element déclencheur </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>action</em>&nbsp;</td><td>action sur la configuration </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>données modifiées </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8c-source.html#l00025">cid_config_panel_destroyed()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00713">cid_free_generated_widget_list()</a>, <a class="el" href="cid-config_8c-source.html#l00288">cid_update_keyfile_from_widget_list()</a>, <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>, et <a class="el" href="cid-config_8c-source.html#l00261">cid_write_keys_to_file()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00037">cid_edit_conf_file_core()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="49ab1092bf6ff94110560d2093600038"></a><!-- doxytag: member="cid-callbacks.h::_check_cover_is_present" ref="49ab1092bf6ff94110560d2093600038" args="(gpointer data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean _check_cover_is_present           </td>
+          <td>(</td>
+          <td class="paramtype">gpointer&nbsp;</td>
+          <td class="paramname"> <em>data</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Vérifie si l'image à afficher existe <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pointeur</em>&nbsp;</td><td>de données (non utilisé) </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>VRAI ou FAUX </dd></dl>
+
+<p>Références <a class="el" href="cid-main_8c-source.html#l00019">cid_display_image()</a>, <a class="el" href="cid-struct_8h-source.html#l00039">data::cover_exist</a>, <a class="el" href="cid-struct_8h-source.html#l00037">data::iSidCheckCover</a>, <a class="el" href="cid-struct_8h.html#5524932604a0680d7ad54d851104e740">musicData</a>, et <a class="el" href="cid-struct_8h-source.html#l00033">data::playing_cover</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-main_8c-source.html#l00019">cid_display_image()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9c97c019b1920dff0ace8edf341a8b86"></a><!-- doxytag: member="cid-callbacks.h::_cid_set_color" ref="9c97c019b1920dff0ace8edf341a8b86" args="(GtkColorButton *pColorButton, GSList *pWidgetList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_set_color           </td>
+          <td>(</td>
+          <td class="paramtype">GtkColorButton *&nbsp;</td>
+          <td class="paramname"> <em>pColorButton</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GSList *&nbsp;</td>
+          <td class="paramname"> <em>pWidgetList</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="bfef31f6772998853bcfe1d16f749904"></a><!-- doxytag: member="cid-callbacks.h::_cid_get_current_color" ref="bfef31f6772998853bcfe1d16f749904" args="(GtkColorButton *pColorButton, GSList *pWidgetList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_get_current_color           </td>
+          <td>(</td>
+          <td class="paramtype">GtkColorButton *&nbsp;</td>
+          <td class="paramname"> <em>pColorButton</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GSList *&nbsp;</td>
+          <td class="paramname"> <em>pWidgetList</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f55b6dee32d16fb18234d7c8e9e4abaf"></a><!-- doxytag: member="cid-callbacks.h::_cid_find_iter_from_name" ref="f55b6dee32d16fb18234d7c8e9e4abaf" args="(GtkListStore *pModele, gchar *cName, GtkTreeIter *iter)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean _cid_find_iter_from_name           </td>
+          <td>(</td>
+          <td class="paramtype">GtkListStore *&nbsp;</td>
+          <td class="paramname"> <em>pModele</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeIter *&nbsp;</td>
+          <td class="paramname"> <em>iter</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00295">_cid_test_one_name()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="89642a4e897ff6224ebf066faab17a8b"></a><!-- doxytag: member="cid-callbacks.h::_cid_test_one_name" ref="89642a4e897ff6224ebf066faab17a8b" args="(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean _cid_test_one_name           </td>
+          <td>(</td>
+          <td class="paramtype">GtkTreeModel *&nbsp;</td>
+          <td class="paramname"> <em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreePath *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeIter *&nbsp;</td>
+          <td class="paramname"> <em>iter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8h-source.html#l00019">CID_MODEL_NAME</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00286">_cid_find_iter_from_name()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8941cb85508e9f7d8d7d4f17c992d63d"></a><!-- doxytag: member="cid-callbacks.h::_cid_go_up" ref="8941cb85508e9f7d8d7d4f17c992d63d" args="(GtkButton *button, GtkTreeView *pTreeView)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_go_up           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeView *&nbsp;</td>
+          <td class="paramname"> <em>pTreeView</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00309">_cid_increase_order()</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00023">CID_MODEL_ORDER</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="272209cf2b7a8f179f1026ff4b2efa46"></a><!-- doxytag: member="cid-callbacks.h::_cid_go_down" ref="272209cf2b7a8f179f1026ff4b2efa46" args="(GtkButton *button, GtkTreeView *pTreeView)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_go_down           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeView *&nbsp;</td>
+          <td class="paramname"> <em>pTreeView</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00340">_cid_decrease_order()</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00023">CID_MODEL_ORDER</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="caa73ff6628d40864efe848ef3af8f09"></a><!-- doxytag: member="cid-callbacks.h::_cid_add" ref="caa73ff6628d40864efe848ef3af8f09" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_add           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8h-source.html#l00022">CID_MODEL_ACTIVE</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00019">CID_MODEL_NAME</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00023">CID_MODEL_ORDER</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ac4e64f6761618148e18da77b62f1977"></a><!-- doxytag: member="cid-callbacks.h::_cid_remove" ref="ac4e64f6761618148e18da77b62f1977" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_remove           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00392">_cid_decrease_order_if_greater()</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00019">CID_MODEL_NAME</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00023">CID_MODEL_ORDER</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2a05e3dbf48472adf05905c9c9c7c115"></a><!-- doxytag: member="cid-callbacks.h::_cid_pick_a_file" ref="2a05e3dbf48472adf05905c9c9c7c115" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_pick_a_file           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00428">_cid_show_image_preview()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b1d0292171c97d4c87760dfaf8da2930"></a><!-- doxytag: member="cid-callbacks.h::_cid_play_a_sound" ref="b1d0292171c97d4c87760dfaf8da2930" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_play_a_sound           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-utilities_8c-source.html#l00207">cid_play_sound()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1035e80c38a4692ff583b0a54b69282a"></a><!-- doxytag: member="cid-callbacks.h::_cid_set_font" ref="1035e80c38a4692ff583b0a54b69282a" args="(GtkFontButton *widget, GtkEntry *pEntry)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_set_font           </td>
+          <td>(</td>
+          <td class="paramtype">GtkFontButton *&nbsp;</td>
+          <td class="paramname"> <em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkEntry *&nbsp;</td>
+          <td class="paramname"> <em>pEntry</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00056">cid_message</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="c2af9e7dba87955f3ee5b98ac2064580"></a><!-- doxytag: member="cid-callbacks.h::_cid_key_grab_clicked" ref="c2af9e7dba87955f3ee5b98ac2064580" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_key_grab_clicked           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00490">_cid_key_grab_cb()</a>, et <a class="el" href="cid-messages_8h-source.html#l00056">cid_message</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="06c7f37ec989f3bfef3e65668dc107ae"></a><!-- doxytag: member="cid-callbacks.h::_cid_launch_threaded" ref="06c7f37ec989f3bfef3e65668dc107ae" args="(gchar *cCommand)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gpointer _cid_launch_threaded           </td>
+          <td>(</td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cCommand</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-utilities_8c-source.html#l00258">cid_launch_command_full()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0bebd1142587d7b886f698a1c402bfea"></a><!-- doxytag: member="cid-callbacks.h::_cid_select_one_item_in_combo" ref="0bebd1142587d7b886f698a1c402bfea" args="(GtkComboBox *widget, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_select_one_item_in_combo           </td>
+          <td>(</td>
+          <td class="paramtype">GtkComboBox *&nbsp;</td>
+          <td class="paramname"> <em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00539">_cid_selection_changed()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a7ac9e6bcdc6221ab7460e93befefefb"></a><!-- doxytag: member="cid-callbacks.h::_cid_configure_renderer" ref="a7ac9e6bcdc6221ab7460e93befefefb" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_configure_renderer           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="49ba76d841d14854ab4c0cdbc63915fc"></a><!-- doxytag: member="cid-callbacks.h::_cid_configure" ref="49ba76d841d14854ab4c0cdbc63915fc" args="(GtkButton *button, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_configure           </td>
+          <td>(</td>
+          <td class="paramtype">GtkButton *&nbsp;</td>
+          <td class="paramname"> <em>button</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8h-source.html#l00020">CID_MODEL_RESULT</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="845e62ffc9590b903d0ef123b9efb3cf"></a><!-- doxytag: member="cid-callbacks.h::_cid_select_one_item_in_tree" ref="845e62ffc9590b903d0ef123b9efb3cf" args="(GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path, gboolean path_currently_selected, gpointer *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean _cid_select_one_item_in_tree           </td>
+          <td>(</td>
+          <td class="paramtype">GtkTreeSelection *&nbsp;</td>
+          <td class="paramname"> <em>selection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeModel *&nbsp;</td>
+          <td class="paramname"> <em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreePath *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gboolean&nbsp;</td>
+          <td class="paramname"> <em>path_currently_selected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00539">_cid_selection_changed()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0e6228a52370cee5be4a8cb1ca200d5c"></a><!-- doxytag: member="cid-callbacks.h::_cid_get_active_elements" ref="0e6228a52370cee5be4a8cb1ca200d5c" args="(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, GSList **pStringList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean _cid_get_active_elements           </td>
+          <td>(</td>
+          <td class="paramtype">GtkTreeModel *&nbsp;</td>
+          <td class="paramname"> <em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreePath *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkTreeIter *&nbsp;</td>
+          <td class="paramname"> <em>iter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GSList **&nbsp;</td>
+          <td class="paramname"> <em>pStringList</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8h-source.html#l00022">CID_MODEL_ACTIVE</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00019">CID_MODEL_NAME</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00292">_cid_get_each_widget_value()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="765fa530d36dc45654542f4d256df599"></a><!-- doxytag: member="cid-callbacks.h::cid_free_generated_widget_list" ref="765fa530d36dc45654542f4d256df599" args="(GSList *pWidgetList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_free_generated_widget_list           </td>
+          <td>(</td>
+          <td class="paramtype">GSList *&nbsp;</td>
+          <td class="paramname"> <em>pWidgetList</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00705">_cid_free_widget_list()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00168">_cid_user_action_on_config()</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

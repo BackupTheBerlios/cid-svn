@@ -1,0 +1,1062 @@
+\begin{theindex}
+
+  \item {\_\-}
+    \subitem {cid.h}, 82
+  \item {\_\-CidLabelDescription}, 5
+    \subitem {bVerticalPattern}, 6
+    \subitem {cFont}, 5
+    \subitem {fBackgroundColor}, 6
+    \subitem {fColorStart}, 5
+    \subitem {fColorStop}, 6
+    \subitem {iSize}, 5
+    \subitem {iStyle}, 5
+    \subitem {iWeight}, 5
+  \item {\_\-CidMainContainer}, 7
+    \subitem {bAllDesktop}, 8
+    \subitem {bAnimation}, 8
+    \subitem {bCurrentlyPlaying}, 8
+    \subitem {bDownload}, 8
+    \subitem {bHide}, 8
+    \subitem {bKeepCorners}, 8
+    \subitem {bLockPosition}, 8
+    \subitem {bMonitorPlayer}, 8
+    \subitem {bRunAnimation}, 8
+    \subitem {bRunning}, 8
+    \subitem {bTesting}, 8
+    \subitem {cidHint}, 8
+    \subitem {cImageSize}, 8
+    \subitem {cSurface}, 8
+    \subitem {cWindow}, 8
+    \subitem {dAlpha}, 8
+    \subitem {dAngle}, 8
+    \subitem {dBlue}, 8
+    \subitem {dColor}, 8
+    \subitem {dFlyingColor}, 8
+    \subitem {dGreen}, 8
+    \subitem {dRed}, 8
+    \subitem {dRotate}, 8
+    \subitem {gColorSize}, 8
+    \subitem {gFlyingColorSize}, 8
+    \subitem {iCurrentlyDrawing}, 8
+    \subitem {iHeight}, 8
+    \subitem {iInter}, 8
+    \subitem {iPlayer}, 8
+    \subitem {iPosX}, 8
+    \subitem {iPosY}, 8
+    \subitem {iWidth}, 8
+    \subitem {pConfFile}, 8
+    \subitem {pContext}, 8
+    \subitem {pDefaultImage}, 8
+    \subitem {pPixmap}, 8
+    \subitem {pPlayer}, 8
+    \subitem {pVerbosity}, 8
+  \item {\_\-CidModelColumns}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {\_\-INSIDE\_\-CID\_\-MESSAGES\_\-C\_\-}
+    \subitem {cid-messages.c}, 60
+  \item {\_\-add\_\-entry\_\-in\_\-menu}
+    \subitem {cid-menu-factory.h}, 58
+  \item {\_\-allocate\_\-new\_\-buffer}
+    \subitem {cid-conf-panel-factory.c}, 32
+  \item {\_\-allocate\_\-new\_\-model}
+    \subitem {cid-conf-panel-factory.c}, 32
+  \item {\_\-check\_\-cover\_\-is\_\-present}
+    \subitem {cid-callbacks.c}, 22
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-about}
+    \subitem {cid-callbacks.c}, 22
+    \subitem {cid-callbacks.h}, 28
+  \item {\_\-cid\_\-add}
+    \subitem {cid-callbacks.c}, 24
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-add\_\-about\_\-page}
+    \subitem {cid-callbacks.c}, 22
+    \subitem {cid-callbacks.h}, 28
+  \item {\_\-cid\_\-conf\_\-panel}
+    \subitem {cid-callbacks.c}, 23
+    \subitem {cid-callbacks.h}, 28
+  \item {\_\-cid\_\-configure}
+    \subitem {cid-callbacks.c}, 26
+    \subitem {cid-callbacks.h}, 31
+  \item {\_\-cid\_\-configure\_\-renderer}
+    \subitem {cid-callbacks.c}, 26
+    \subitem {cid-callbacks.h}, 31
+  \item {\_\-cid\_\-decrease\_\-order}
+    \subitem {cid-callbacks.c}, 24
+  \item {\_\-cid\_\-decrease\_\-order\_\-if\_\-greater}
+    \subitem {cid-callbacks.c}, 24
+  \item {\_\-cid\_\-find\_\-iter\_\-from\_\-name}
+    \subitem {cid-callbacks.c}, 23
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-free\_\-widget\_\-list}
+    \subitem {cid-callbacks.c}, 26
+  \item {\_\-cid\_\-get\_\-active\_\-elements}
+    \subitem {cid-callbacks.c}, 26
+    \subitem {cid-callbacks.h}, 31
+  \item {\_\-cid\_\-get\_\-current\_\-color}
+    \subitem {cid-callbacks.c}, 23
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-get\_\-each\_\-widget\_\-value}
+    \subitem {cid-config.c}, 38
+    \subitem {cid-config.h}, 40
+  \item {\_\-cid\_\-go\_\-down}
+    \subitem {cid-callbacks.c}, 24
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-go\_\-up}
+    \subitem {cid-callbacks.c}, 24
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-increase\_\-order}
+    \subitem {cid-callbacks.c}, 24
+  \item {\_\-cid\_\-key\_\-grab\_\-cb}
+    \subitem {cid-callbacks.c}, 25
+  \item {\_\-cid\_\-key\_\-grab\_\-clicked}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-launch\_\-threaded}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-log\_\-level\_\-to\_\-string}
+    \subitem {cid-messages.c}, 60
+  \item {\_\-cid\_\-pick\_\-a\_\-file}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-play\_\-a\_\-sound}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-quit}
+    \subitem {cid-callbacks.c}, 21
+    \subitem {cid-callbacks.h}, 27
+  \item {\_\-cid\_\-remove}
+    \subitem {cid-callbacks.c}, 24
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree}
+    \subitem {cid-callbacks.c}, 26
+    \subitem {cid-callbacks.h}, 31
+  \item {\_\-cid\_\-selection\_\-changed}
+    \subitem {cid-callbacks.c}, 25
+  \item {\_\-cid\_\-set\_\-color}
+    \subitem {cid-callbacks.c}, 23
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-set\_\-font}
+    \subitem {cid-callbacks.c}, 25
+    \subitem {cid-callbacks.h}, 30
+  \item {\_\-cid\_\-set\_\-verbosity}
+    \subitem {cid-utilities.c}, 76
+    \subitem {cid-utilities.h}, 79
+  \item {\_\-cid\_\-show\_\-image\_\-preview}
+    \subitem {cid-callbacks.c}, 25
+  \item {\_\-cid\_\-test\_\-one\_\-name}
+    \subitem {cid-callbacks.c}, 24
+    \subitem {cid-callbacks.h}, 29
+  \item {\_\-cid\_\-user\_\-action\_\-on\_\-config}
+    \subitem {cid-callbacks.c}, 23
+    \subitem {cid-callbacks.h}, 28
+  \item {\_\-cid\_\-web\_\-button\_\-clicked}
+    \subitem {cid-callbacks.c}, 22
+  \item {\_\-next\_\-amarok}
+    \subitem {cid-amarok.c}, 16
+  \item {\_\-next\_\-rhythmbox}
+    \subitem {cid-rhythmbox.c}, 67
+  \item {\_\-playPause\_\-amarok}
+    \subitem {cid-amarok.c}, 16
+  \item {\_\-playPause\_\-rhythmbox}
+    \subitem {cid-rhythmbox.c}, 67
+  \item {\_\-previous\_\-amarok}
+    \subitem {cid-amarok.c}, 16
+  \item {\_\-previous\_\-rhythmbox}
+    \subitem {cid-rhythmbox.c}, 67
+
+  \indexspace
+
+  \item {allDesktop}
+    \subitem {FileSettings}, 12
+  \item {AMAZON\_\-API\_\-URL\_\-1}
+    \subitem {cid-amazon.h}, 20
+  \item {AMAZON\_\-API\_\-URL\_\-2}
+    \subitem {cid-amazon.h}, 20
+  \item {animation}
+    \subitem {FileSettings}, 12
+  \item {AnimationType}
+    \subitem {cid-struct.h}, 73
+
+  \indexspace
+
+  \item {bAllDesktop}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bAnimation}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bCurrentlyPlaying}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bDownload}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bHide}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bKeepCorners}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bLockPosition}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bMonitorPlayer}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bRunAnimation}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bRunning}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bTesting}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {bVerticalPattern}
+    \subitem {\_\-CidLabelDescription}, 6
+
+  \indexspace
+
+  \item {cFont}
+    \subitem {\_\-CidLabelDescription}, 5
+  \item {cid}
+    \subitem {cid.h}, 83
+  \item {cid-amarok.c}, 15
+    \subitem {\_\-next\_\-amarok}, 16
+    \subitem {\_\-playPause\_\-amarok}, 16
+    \subitem {\_\-previous\_\-amarok}, 16
+    \subitem {cid\_\-amarok\_\-cover}, 15
+    \subitem {cid\_\-amarok\_\-pipe}, 15
+    \subitem {cid\_\-build\_\-amarok\_\-menu}, 16
+    \subitem {cid\_\-connect\_\-to\_\-amarok}, 16
+    \subitem {cid\_\-disconnect\_\-from\_\-amarok}, 16
+    \subitem {cont}, 16
+    \subitem {get\_\-amarock\_\-musicData}, 15
+    \subitem {run}, 16
+  \item {cid-amarok.h}, 18
+    \subitem {cid\_\-build\_\-amarok\_\-menu}, 18
+    \subitem {cid\_\-connect\_\-to\_\-amarok}, 18
+    \subitem {cid\_\-disconnect\_\-from\_\-amarok}, 18
+  \item {cid-amazon.c}, 19
+  \item {cid-amazon.h}, 20
+    \subitem {AMAZON\_\-API\_\-URL\_\-1}, 20
+    \subitem {AMAZON\_\-API\_\-URL\_\-2}, 20
+    \subitem {DEFAULT\_\-XML\_\-LOCATION}, 20
+    \subitem {downloadCover}, 20
+    \subitem {imageSize}, 20
+    \subitem {LICENCE\_\-KEY}, 20
+  \item {cid-callbacks.c}, 21
+    \subitem {\_\-check\_\-cover\_\-is\_\-present}, 22
+    \subitem {\_\-cid\_\-about}, 22
+    \subitem {\_\-cid\_\-add}, 24
+    \subitem {\_\-cid\_\-add\_\-about\_\-page}, 22
+    \subitem {\_\-cid\_\-conf\_\-panel}, 23
+    \subitem {\_\-cid\_\-configure}, 26
+    \subitem {\_\-cid\_\-configure\_\-renderer}, 26
+    \subitem {\_\-cid\_\-decrease\_\-order}, 24
+    \subitem {\_\-cid\_\-decrease\_\-order\_\-if\_\-greater}, 24
+    \subitem {\_\-cid\_\-find\_\-iter\_\-from\_\-name}, 23
+    \subitem {\_\-cid\_\-free\_\-widget\_\-list}, 26
+    \subitem {\_\-cid\_\-get\_\-active\_\-elements}, 26
+    \subitem {\_\-cid\_\-get\_\-current\_\-color}, 23
+    \subitem {\_\-cid\_\-go\_\-down}, 24
+    \subitem {\_\-cid\_\-go\_\-up}, 24
+    \subitem {\_\-cid\_\-increase\_\-order}, 24
+    \subitem {\_\-cid\_\-key\_\-grab\_\-cb}, 25
+    \subitem {\_\-cid\_\-key\_\-grab\_\-clicked}, 25
+    \subitem {\_\-cid\_\-launch\_\-threaded}, 25
+    \subitem {\_\-cid\_\-pick\_\-a\_\-file}, 25
+    \subitem {\_\-cid\_\-play\_\-a\_\-sound}, 25
+    \subitem {\_\-cid\_\-quit}, 21
+    \subitem {\_\-cid\_\-remove}, 24
+    \subitem {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo}, 25
+    \subitem {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree}, 26
+    \subitem {\_\-cid\_\-selection\_\-changed}, 25
+    \subitem {\_\-cid\_\-set\_\-color}, 23
+    \subitem {\_\-cid\_\-set\_\-font}, 25
+    \subitem {\_\-cid\_\-show\_\-image\_\-preview}, 25
+    \subitem {\_\-cid\_\-test\_\-one\_\-name}, 24
+    \subitem {\_\-cid\_\-user\_\-action\_\-on\_\-config}, 23
+    \subitem {\_\-cid\_\-web\_\-button\_\-clicked}, 22
+    \subitem {cid\_\-free\_\-generated\_\-widget\_\-list}, 26
+    \subitem {cid\_\-interrupt}, 21
+    \subitem {on\_\-clic}, 22
+  \item {cid-callbacks.h}, 27
+    \subitem {\_\-check\_\-cover\_\-is\_\-present}, 29
+    \subitem {\_\-cid\_\-about}, 28
+    \subitem {\_\-cid\_\-add}, 30
+    \subitem {\_\-cid\_\-add\_\-about\_\-page}, 28
+    \subitem {\_\-cid\_\-conf\_\-panel}, 28
+    \subitem {\_\-cid\_\-configure}, 31
+    \subitem {\_\-cid\_\-configure\_\-renderer}, 31
+    \subitem {\_\-cid\_\-find\_\-iter\_\-from\_\-name}, 29
+    \subitem {\_\-cid\_\-get\_\-active\_\-elements}, 31
+    \subitem {\_\-cid\_\-get\_\-current\_\-color}, 29
+    \subitem {\_\-cid\_\-go\_\-down}, 30
+    \subitem {\_\-cid\_\-go\_\-up}, 29
+    \subitem {\_\-cid\_\-key\_\-grab\_\-clicked}, 30
+    \subitem {\_\-cid\_\-launch\_\-threaded}, 30
+    \subitem {\_\-cid\_\-pick\_\-a\_\-file}, 30
+    \subitem {\_\-cid\_\-play\_\-a\_\-sound}, 30
+    \subitem {\_\-cid\_\-quit}, 27
+    \subitem {\_\-cid\_\-remove}, 30
+    \subitem {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo}, 30
+    \subitem {\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree}, 31
+    \subitem {\_\-cid\_\-set\_\-color}, 29
+    \subitem {\_\-cid\_\-set\_\-font}, 30
+    \subitem {\_\-cid\_\-test\_\-one\_\-name}, 29
+    \subitem {\_\-cid\_\-user\_\-action\_\-on\_\-config}, 28
+    \subitem {cid\_\-free\_\-generated\_\-widget\_\-list}, 31
+    \subitem {cid\_\-interrupt}, 27
+    \subitem {on\_\-clic}, 28
+  \item {cid-conf-panel-factory.c}, 32
+    \subitem {\_\-allocate\_\-new\_\-buffer}, 32
+    \subitem {\_\-allocate\_\-new\_\-model}, 32
+    \subitem {cid\_\-config\_\-panel\_\-created}, 33
+    \subitem {cid\_\-config\_\-panel\_\-destroyed}, 32
+    \subitem {cid\_\-edit\_\-conf\_\-file\_\-core}, 33
+    \subitem {cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel}, 32
+    \subitem {cid\_\-generate\_\-ihm\_\-from\_\-keyfile}, 33
+  \item {cid-conf-panel-factory.h}, 34
+    \subitem {\_\-CidModelColumns}, 34
+    \subitem {cid\_\-config\_\-panel\_\-destroyed}, 34
+    \subitem {cid\_\-edit\_\-conf\_\-file\_\-core}, 35
+    \subitem {cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel}, 34
+    \subitem {cid\_\-generate\_\-ihm\_\-from\_\-keyfile}, 35
+    \subitem {CID\_\-MODEL\_\-ACTIVE}, 34
+    \subitem {CID\_\-MODEL\_\-DESCRIPTION\_\-FILE}, 34
+    \subitem {CID\_\-MODEL\_\-ICON}, 34
+    \subitem {CID\_\-MODEL\_\-IMAGE}, 34
+    \subitem {CID\_\-MODEL\_\-NAME}, 34
+    \subitem {CID\_\-MODEL\_\-NB\_\-COLUMNS}, 34
+    \subitem {CID\_\-MODEL\_\-ORDER}, 34
+    \subitem {CID\_\-MODEL\_\-RESULT}, 34
+  \item {cid-config.c}, 36
+    \subitem {\_\-cid\_\-get\_\-each\_\-widget\_\-value}, 38
+    \subitem {cid\_\-check\_\-conf\_\-file\_\-version}, 36
+    \subitem {cid\_\-check\_\-file}, 36
+    \subitem {cid\_\-free\_\-conf}, 37
+    \subitem {cid\_\-get\_\-data}, 37
+    \subitem {cid\_\-merge\_\-config}, 36
+    \subitem {cid\_\-read\_\-config}, 37
+    \subitem {cid\_\-read\_\-config\_\-after\_\-update}, 36
+    \subitem {cid\_\-read\_\-key\_\-file}, 37
+    \subitem {cid\_\-save\_\-data}, 37
+    \subitem {cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list}, 38
+    \subitem {cid\_\-write\_\-keys\_\-to\_\-file}, 37
+    \subitem {conf}, 38
+  \item {cid-config.h}, 39
+    \subitem {\_\-cid\_\-get\_\-each\_\-widget\_\-value}, 40
+    \subitem {cid\_\-check\_\-conf\_\-file\_\-version}, 40
+    \subitem {cid\_\-check\_\-file}, 39
+    \subitem {cid\_\-free\_\-conf}, 41
+    \subitem {cid\_\-merge\_\-config}, 39
+    \subitem {cid\_\-read\_\-config}, 39
+    \subitem {cid\_\-read\_\-config\_\-after\_\-update}, 40
+    \subitem {cid\_\-read\_\-key\_\-file}, 41
+    \subitem {cid\_\-save\_\-data}, 40
+    \subitem {cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list}, 40
+    \subitem {cid\_\-write\_\-keys\_\-to\_\-file}, 40
+    \subitem {OLD\_\-CONFIG\_\-FILE}, 39
+  \item {cid-dbus.c}, 42
+    \subitem {create\_\-new\_\-session\_\-proxy}, 43
+    \subitem {create\_\-new\_\-system\_\-proxy}, 43
+    \subitem {dbus\_\-call}, 44
+    \subitem {dbus\_\-call\_\-boolean}, 44
+    \subitem {dbus\_\-detect\_\-application}, 43
+    \subitem {dbus\_\-get\_\-boolean}, 43
+    \subitem {dbus\_\-get\_\-string}, 44
+    \subitem {dbus\_\-get\_\-uinteger}, 44
+    \subitem {dbus\_\-is\_\-enabled}, 42
+    \subitem {get\_\-main\_\-proxy}, 42
+    \subitem {get\_\-session\_\-connection}, 42
+    \subitem {get\_\-system\_\-connection}, 42
+    \subitem {register\_\-service\_\-name}, 42
+  \item {cid-dbus.h}, 46
+    \subitem {create\_\-new\_\-dbus\_\-proxy}, 46
+    \subitem {create\_\-new\_\-session\_\-proxy}, 47
+    \subitem {create\_\-new\_\-system\_\-proxy}, 47
+    \subitem {dbus\_\-call}, 48
+    \subitem {dbus\_\-call\_\-boolean}, 48
+    \subitem {dbus\_\-detect\_\-application}, 47
+    \subitem {dbus\_\-get\_\-boolean}, 47
+    \subitem {dbus\_\-get\_\-string}, 48
+    \subitem {dbus\_\-get\_\-uinteger}, 48
+    \subitem {dbus\_\-is\_\-enabled}, 46
+    \subitem {get\_\-dbus\_\-connection}, 46
+    \subitem {get\_\-session\_\-connection}, 46
+    \subitem {register\_\-service\_\-name}, 46
+  \item {cid-main.c}, 50
+    \subitem {cid\_\-animation}, 52
+    \subitem {cid\_\-create\_\-main\_\-window}, 51
+    \subitem {cid\_\-create\_\-surface\_\-from\_\-text\_\-full}, 53
+    \subitem {cid\_\-display\_\-image}, 50
+    \subitem {cid\_\-display\_\-init}, 53
+    \subitem {cid\_\-draw\_\-frame}, 53
+    \subitem {cid\_\-draw\_\-window}, 52
+    \subitem {cid\_\-focus}, 52
+    \subitem {cid\_\-focus\_\-in}, 51
+    \subitem {cid\_\-focus\_\-out}, 51
+    \subitem {cid\_\-get\_\-image}, 50
+    \subitem {cid\_\-get\_\-image\_\-from\_\-pixbuf}, 51
+    \subitem {cid\_\-get\_\-image\_\-widget}, 51
+    \subitem {cid\_\-get\_\-pixbuf}, 50
+    \subitem {cid\_\-rotate\_\-on\_\-changing\_\-song}, 52
+    \subitem {cid\_\-run\_\-with\_\-player}, 53
+    \subitem {cid\_\-set\_\-colormap}, 51
+    \subitem {cid\_\-set\_\-render}, 52
+    \subitem {cid\_\-threaded\_\-animation}, 52
+    \subitem {g\_\-bRoundedBottomCorner}, 53
+    \subitem {supports\_\-alpha}, 53
+  \item {cid-main.h}, 54
+    \subitem {cid\_\-animation}, 56
+    \subitem {cid\_\-create\_\-main\_\-window}, 54
+    \subitem {cid\_\-display\_\-image}, 54
+    \subitem {cid\_\-display\_\-init}, 54
+    \subitem {cid\_\-draw\_\-window}, 55
+    \subitem {cid\_\-focus}, 55
+    \subitem {cid\_\-get\_\-image}, 55
+    \subitem {cid\_\-get\_\-image\_\-from\_\-pixbuf}, 55
+    \subitem {cid\_\-get\_\-image\_\-widget}, 54
+    \subitem {cid\_\-get\_\-pixbuf}, 54
+    \subitem {cid\_\-rotate\_\-on\_\-changing\_\-song}, 56
+    \subitem {cid\_\-set\_\-colormap}, 55
+    \subitem {cid\_\-threaded\_\-animation}, 56
+  \item {cid-menu-factory.c}, 57
+    \subitem {cid\_\-build\_\-menu}, 57
+  \item {cid-menu-factory.h}, 58
+    \subitem {\_\-add\_\-entry\_\-in\_\-menu}, 58
+    \subitem {CID\_\-ADD\_\-IN\_\-MENU\_\-WITH\_\-STOCK\_\-AND\_\-DATA}, 
+		58
+    \subitem {cid\_\-build\_\-menu}, 58
+  \item {cid-messages.c}, 60
+    \subitem {\_\-INSIDE\_\-CID\_\-MESSAGES\_\-C\_\-}, 60
+    \subitem {\_\-cid\_\-log\_\-level\_\-to\_\-string}, 60
+    \subitem {cid\_\-exit}, 61
+    \subitem {cid\_\-log\_\-init}, 60
+    \subitem {cid\_\-log\_\-location}, 60
+    \subitem {cid\_\-log\_\-set\_\-level}, 60
+    \subitem {s\_\-iLogColor}, 61
+  \item {cid-messages.h}, 62
+    \subitem {cid\_\-debug}, 62
+    \subitem {cid\_\-error}, 62
+    \subitem {cid\_\-exit}, 63
+    \subitem {cid\_\-info}, 63
+    \subitem {cid\_\-log\_\-init}, 63
+    \subitem {cid\_\-log\_\-location}, 63
+    \subitem {cid\_\-log\_\-set\_\-level}, 63
+    \subitem {cid\_\-message}, 62
+    \subitem {cid\_\-warning}, 62
+    \subitem {gLogLevel}, 64
+  \item {cid-rhythmbox.c}, 65
+    \subitem {\_\-next\_\-rhythmbox}, 67
+    \subitem {\_\-playPause\_\-rhythmbox}, 67
+    \subitem {\_\-previous\_\-rhythmbox}, 67
+    \subitem {cid\_\-build\_\-rhythmbox\_\-menu}, 67
+    \subitem {cid\_\-rhythmbox\_\-cover}, 65
+    \subitem {dbus\_\-detect\_\-rhythmbox}, 65
+    \subitem {getSongInfos}, 66
+    \subitem {onChangeSong}, 66
+    \subitem {onChangeState}, 66
+    \subitem {onCovertArtChanged}, 67
+    \subitem {onElapsedChanged}, 67
+    \subitem {rhythmbox\_\-dbus\_\-connect\_\-to\_\-bus}, 65
+    \subitem {rhythmbox\_\-dbus\_\-disconnect\_\-from\_\-bus}, 65
+    \subitem {rhythmbox\_\-getPlaying}, 66
+    \subitem {rhythmbox\_\-getPlayingUri}, 66
+  \item {cid-rhythmbox.h}, 69
+    \subitem {cid\_\-build\_\-rhythmbox\_\-menu}, 71
+    \subitem {cid\_\-rhythmbox\_\-cover}, 69
+    \subitem {dbus\_\-detect\_\-rhythmbox}, 69
+    \subitem {getSongInfos}, 70
+    \subitem {onChangeSong}, 70
+    \subitem {onChangeState}, 70
+    \subitem {onCovertArtChanged}, 71
+    \subitem {onElapsedChanged}, 71
+    \subitem {rhythmbox\_\-dbus\_\-connect\_\-to\_\-bus}, 69
+    \subitem {rhythmbox\_\-dbus\_\-disconnect\_\-from\_\-bus}, 69
+    \subitem {rhythmbox\_\-getPlaying}, 70
+    \subitem {rhythmbox\_\-getPlayingUri}, 70
+  \item {cid-struct.h}, 72
+    \subitem {AnimationType}, 73
+    \subitem {CID\_\-ERROR\_\-READING\_\-ARGS}, 73
+    \subitem {CID\_\-ERROR\_\-READING\_\-FILE}, 73
+    \subitem {CID\_\-EXIT\_\-ERROR}, 73
+    \subitem {CID\_\-EXIT\_\-SUCCESS}, 73
+    \subitem {CID\_\-FOCUS\_\-IN}, 73
+    \subitem {CID\_\-FOCUS\_\-OUT}, 73
+    \subitem {CID\_\-GTK\_\-ERROR}, 73
+    \subitem {CID\_\-PLAYER\_\-ERROR}, 73
+    \subitem {CID\_\-ROTATE}, 73
+    \subitem {CidLabelDescription}, 73
+    \subitem {CidMainContainer}, 73
+    \subitem {CidReadConfigFunc}, 73
+    \subitem {codesRetours}, 73
+    \subitem {ImageSizes}, 73
+    \subitem {LARGE\_\-IMAGE}, 73
+    \subitem {MEDIUM\_\-IMAGE}, 73
+    \subitem {musicData}, 74
+    \subitem {PLAYER\_\-AMAROK\_\-1}, 73
+    \subitem {PLAYER\_\-RHYTHMBOX}, 73
+    \subitem {PlayerIndice}, 73
+    \subitem {rhythmboxData}, 72
+  \item {cid-utilities.c}, 75
+    \subitem {\_\-cid\_\-set\_\-verbosity}, 76
+    \subitem {cid\_\-disconnect\_\-player}, 75
+    \subitem {cid\_\-free\_\-musicData}, 75
+    \subitem {cid\_\-launch\_\-command\_\-full}, 76
+    \subitem {cid\_\-launch\_\-web\_\-browser}, 76
+    \subitem {cid\_\-play\_\-sound}, 76
+    \subitem {cid\_\-player\_\-evaluation}, 75
+    \subitem {cid\_\-read\_\-parameters}, 76
+    \subitem {cid\_\-sortie}, 75
+  \item {cid-utilities.h}, 78
+    \subitem {\_\-cid\_\-set\_\-verbosity}, 79
+    \subitem {cid\_\-disconnect\_\-player}, 80
+    \subitem {cid\_\-free\_\-musicData}, 80
+    \subitem {cid\_\-launch\_\-command}, 78
+    \subitem {cid\_\-launch\_\-command\_\-full}, 78
+    \subitem {cid\_\-launch\_\-web\_\-browser}, 80
+    \subitem {cid\_\-play\_\-sound}, 79
+    \subitem {cid\_\-player\_\-evaluation}, 79
+    \subitem {cid\_\-read\_\-parameters}, 79
+    \subitem {cid\_\-sortie}, 78
+    \subitem {TESTING\_\-COVER}, 78
+    \subitem {TESTING\_\-FILE}, 78
+  \item {cid.c}, 81
+    \subitem {cid\_\-init}, 81
+    \subitem {cid\_\-intercept\_\-signal}, 81
+    \subitem {cid\_\-set\_\-signal\_\-interception}, 81
+    \subitem {main}, 81
+  \item {cid.h}, 82
+    \subitem {\_\-}, 82
+    \subitem {cid}, 83
+    \subitem {cid\_\-intercept\_\-signal}, 82
+    \subitem {cid\_\-set\_\-signal\_\-interception}, 82
+    \subitem {DEFAULT\_\-IMAGE}, 82
+  \item {CID\_\-ADD\_\-IN\_\-MENU\_\-WITH\_\-STOCK\_\-AND\_\-DATA}
+    \subitem {cid-menu-factory.h}, 58
+  \item {cid\_\-amarok\_\-cover}
+    \subitem {cid-amarok.c}, 15
+  \item {cid\_\-amarok\_\-pipe}
+    \subitem {cid-amarok.c}, 15
+  \item {cid\_\-animation}
+    \subitem {cid-main.c}, 52
+    \subitem {cid-main.h}, 56
+  \item {cid\_\-build\_\-amarok\_\-menu}
+    \subitem {cid-amarok.c}, 16
+    \subitem {cid-amarok.h}, 18
+  \item {cid\_\-build\_\-menu}
+    \subitem {cid-menu-factory.c}, 57
+    \subitem {cid-menu-factory.h}, 58
+  \item {cid\_\-build\_\-rhythmbox\_\-menu}
+    \subitem {cid-rhythmbox.c}, 67
+    \subitem {cid-rhythmbox.h}, 71
+  \item {cid\_\-check\_\-conf\_\-file\_\-version}
+    \subitem {cid-config.c}, 36
+    \subitem {cid-config.h}, 40
+  \item {cid\_\-check\_\-file}
+    \subitem {cid-config.c}, 36
+    \subitem {cid-config.h}, 39
+  \item {cid\_\-config\_\-panel\_\-created}
+    \subitem {cid-conf-panel-factory.c}, 33
+  \item {cid\_\-config\_\-panel\_\-destroyed}
+    \subitem {cid-conf-panel-factory.c}, 32
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {cid\_\-connect\_\-to\_\-amarok}
+    \subitem {cid-amarok.c}, 16
+    \subitem {cid-amarok.h}, 18
+  \item {cid\_\-create\_\-main\_\-window}
+    \subitem {cid-main.c}, 51
+    \subitem {cid-main.h}, 54
+  \item {cid\_\-create\_\-surface\_\-from\_\-text\_\-full}
+    \subitem {cid-main.c}, 53
+  \item {cid\_\-debug}
+    \subitem {cid-messages.h}, 62
+  \item {cid\_\-disconnect\_\-from\_\-amarok}
+    \subitem {cid-amarok.c}, 16
+    \subitem {cid-amarok.h}, 18
+  \item {cid\_\-disconnect\_\-player}
+    \subitem {cid-utilities.c}, 75
+    \subitem {cid-utilities.h}, 80
+  \item {cid\_\-display\_\-image}
+    \subitem {cid-main.c}, 50
+    \subitem {cid-main.h}, 54
+  \item {cid\_\-display\_\-init}
+    \subitem {cid-main.c}, 53
+    \subitem {cid-main.h}, 54
+  \item {cid\_\-draw\_\-frame}
+    \subitem {cid-main.c}, 53
+  \item {cid\_\-draw\_\-window}
+    \subitem {cid-main.c}, 52
+    \subitem {cid-main.h}, 55
+  \item {cid\_\-edit\_\-conf\_\-file\_\-core}
+    \subitem {cid-conf-panel-factory.c}, 33
+    \subitem {cid-conf-panel-factory.h}, 35
+  \item {cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel}
+    \subitem {cid-conf-panel-factory.c}, 32
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {cid\_\-error}
+    \subitem {cid-messages.h}, 62
+  \item {CID\_\-ERROR\_\-READING\_\-ARGS}
+    \subitem {cid-struct.h}, 73
+  \item {CID\_\-ERROR\_\-READING\_\-FILE}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-exit}
+    \subitem {cid-messages.c}, 61
+    \subitem {cid-messages.h}, 63
+  \item {CID\_\-EXIT\_\-ERROR}
+    \subitem {cid-struct.h}, 73
+  \item {CID\_\-EXIT\_\-SUCCESS}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-focus}
+    \subitem {cid-main.c}, 52
+    \subitem {cid-main.h}, 55
+  \item {CID\_\-FOCUS\_\-IN}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-focus\_\-in}
+    \subitem {cid-main.c}, 51
+  \item {CID\_\-FOCUS\_\-OUT}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-focus\_\-out}
+    \subitem {cid-main.c}, 51
+  \item {cid\_\-free\_\-conf}
+    \subitem {cid-config.c}, 37
+    \subitem {cid-config.h}, 41
+  \item {cid\_\-free\_\-generated\_\-widget\_\-list}
+    \subitem {cid-callbacks.c}, 26
+    \subitem {cid-callbacks.h}, 31
+  \item {cid\_\-free\_\-musicData}
+    \subitem {cid-utilities.c}, 75
+    \subitem {cid-utilities.h}, 80
+  \item {cid\_\-generate\_\-ihm\_\-from\_\-keyfile}
+    \subitem {cid-conf-panel-factory.c}, 33
+    \subitem {cid-conf-panel-factory.h}, 35
+  \item {cid\_\-get\_\-data}
+    \subitem {cid-config.c}, 37
+  \item {cid\_\-get\_\-image}
+    \subitem {cid-main.c}, 50
+    \subitem {cid-main.h}, 55
+  \item {cid\_\-get\_\-image\_\-from\_\-pixbuf}
+    \subitem {cid-main.c}, 51
+    \subitem {cid-main.h}, 55
+  \item {cid\_\-get\_\-image\_\-widget}
+    \subitem {cid-main.c}, 51
+    \subitem {cid-main.h}, 54
+  \item {cid\_\-get\_\-pixbuf}
+    \subitem {cid-main.c}, 50
+    \subitem {cid-main.h}, 54
+  \item {CID\_\-GTK\_\-ERROR}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-info}
+    \subitem {cid-messages.h}, 63
+  \item {cid\_\-init}
+    \subitem {cid.c}, 81
+  \item {cid\_\-intercept\_\-signal}
+    \subitem {cid.c}, 81
+    \subitem {cid.h}, 82
+  \item {cid\_\-interrupt}
+    \subitem {cid-callbacks.c}, 21
+    \subitem {cid-callbacks.h}, 27
+  \item {cid\_\-launch\_\-command}
+    \subitem {cid-utilities.h}, 78
+  \item {cid\_\-launch\_\-command\_\-full}
+    \subitem {cid-utilities.c}, 76
+    \subitem {cid-utilities.h}, 78
+  \item {cid\_\-launch\_\-web\_\-browser}
+    \subitem {cid-utilities.c}, 76
+    \subitem {cid-utilities.h}, 80
+  \item {cid\_\-log\_\-init}
+    \subitem {cid-messages.c}, 60
+    \subitem {cid-messages.h}, 63
+  \item {cid\_\-log\_\-location}
+    \subitem {cid-messages.c}, 60
+    \subitem {cid-messages.h}, 63
+  \item {cid\_\-log\_\-set\_\-level}
+    \subitem {cid-messages.c}, 60
+    \subitem {cid-messages.h}, 63
+  \item {cid\_\-merge\_\-config}
+    \subitem {cid-config.c}, 36
+    \subitem {cid-config.h}, 39
+  \item {cid\_\-message}
+    \subitem {cid-messages.h}, 62
+  \item {CID\_\-MODEL\_\-ACTIVE}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-DESCRIPTION\_\-FILE}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-ICON}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-IMAGE}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-NAME}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-NB\_\-COLUMNS}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-ORDER}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {CID\_\-MODEL\_\-RESULT}
+    \subitem {cid-conf-panel-factory.h}, 34
+  \item {cid\_\-play\_\-sound}
+    \subitem {cid-utilities.c}, 76
+    \subitem {cid-utilities.h}, 79
+  \item {CID\_\-PLAYER\_\-ERROR}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-player\_\-evaluation}
+    \subitem {cid-utilities.c}, 75
+    \subitem {cid-utilities.h}, 79
+  \item {cid\_\-read\_\-config}
+    \subitem {cid-config.c}, 37
+    \subitem {cid-config.h}, 39
+  \item {cid\_\-read\_\-config\_\-after\_\-update}
+    \subitem {cid-config.c}, 36
+    \subitem {cid-config.h}, 40
+  \item {cid\_\-read\_\-key\_\-file}
+    \subitem {cid-config.c}, 37
+    \subitem {cid-config.h}, 41
+  \item {cid\_\-read\_\-parameters}
+    \subitem {cid-utilities.c}, 76
+    \subitem {cid-utilities.h}, 79
+  \item {cid\_\-rhythmbox\_\-cover}
+    \subitem {cid-rhythmbox.c}, 65
+    \subitem {cid-rhythmbox.h}, 69
+  \item {CID\_\-ROTATE}
+    \subitem {cid-struct.h}, 73
+  \item {cid\_\-rotate\_\-on\_\-changing\_\-song}
+    \subitem {cid-main.c}, 52
+    \subitem {cid-main.h}, 56
+  \item {cid\_\-run\_\-with\_\-player}
+    \subitem {cid-main.c}, 53
+  \item {cid\_\-save\_\-data}
+    \subitem {cid-config.c}, 37
+    \subitem {cid-config.h}, 40
+  \item {cid\_\-set\_\-colormap}
+    \subitem {cid-main.c}, 51
+    \subitem {cid-main.h}, 55
+  \item {cid\_\-set\_\-render}
+    \subitem {cid-main.c}, 52
+  \item {cid\_\-set\_\-signal\_\-interception}
+    \subitem {cid.c}, 81
+    \subitem {cid.h}, 82
+  \item {cid\_\-sortie}
+    \subitem {cid-utilities.c}, 75
+    \subitem {cid-utilities.h}, 78
+  \item {cid\_\-threaded\_\-animation}
+    \subitem {cid-main.c}, 52
+    \subitem {cid-main.h}, 56
+  \item {cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list}
+    \subitem {cid-config.c}, 38
+    \subitem {cid-config.h}, 40
+  \item {cid\_\-warning}
+    \subitem {cid-messages.h}, 62
+  \item {cid\_\-write\_\-keys\_\-to\_\-file}
+    \subitem {cid-config.c}, 37
+    \subitem {cid-config.h}, 40
+  \item {cidHint}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {CidLabelDescription}
+    \subitem {cid-struct.h}, 73
+  \item {CidMainContainer}
+    \subitem {cid-struct.h}, 73
+  \item {CidReadConfigFunc}
+    \subitem {cid-struct.h}, 73
+  \item {cImageSize}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {codesRetours}
+    \subitem {cid-struct.h}, 73
+  \item {conf}
+    \subitem {cid-config.c}, 38
+  \item {cont}
+    \subitem {cid-amarok.c}, 16
+  \item {corners}
+    \subitem {FileSettings}, 12
+  \item {couleur}
+    \subitem {FileSettings}, 13
+  \item {couleurSurvol}
+    \subitem {FileSettings}, 13
+  \item {cover\_\-exist}
+    \subitem {data}, 11
+  \item {create\_\-new\_\-dbus\_\-proxy}
+    \subitem {cid-dbus.h}, 46
+  \item {create\_\-new\_\-session\_\-proxy}
+    \subitem {cid-dbus.c}, 43
+    \subitem {cid-dbus.h}, 47
+  \item {create\_\-new\_\-system\_\-proxy}
+    \subitem {cid-dbus.c}, 43
+    \subitem {cid-dbus.h}, 47
+  \item {cSurface}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {cWindow}
+    \subitem {\_\-CidMainContainer}, 8
+
+  \indexspace
+
+  \item {dAlpha}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {dAngle}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {data}, 10
+    \subitem {cover\_\-exist}, 11
+    \subitem {iSidCheckCover}, 10
+    \subitem {opening}, 11
+    \subitem {playing}, 11
+    \subitem {playing\_\-album}, 10
+    \subitem {playing\_\-artist}, 10
+    \subitem {playing\_\-cover}, 10
+    \subitem {playing\_\-duration}, 10
+    \subitem {playing\_\-title}, 10
+    \subitem {playing\_\-track}, 10
+    \subitem {playing\_\-uri}, 10
+  \item {dBlue}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {dbus\_\-call}
+    \subitem {cid-dbus.c}, 44
+    \subitem {cid-dbus.h}, 48
+  \item {dbus\_\-call\_\-boolean}
+    \subitem {cid-dbus.c}, 44
+    \subitem {cid-dbus.h}, 48
+  \item {dbus\_\-detect\_\-application}
+    \subitem {cid-dbus.c}, 43
+    \subitem {cid-dbus.h}, 47
+  \item {dbus\_\-detect\_\-rhythmbox}
+    \subitem {cid-rhythmbox.c}, 65
+    \subitem {cid-rhythmbox.h}, 69
+  \item {dbus\_\-get\_\-boolean}
+    \subitem {cid-dbus.c}, 43
+    \subitem {cid-dbus.h}, 47
+  \item {dbus\_\-get\_\-string}
+    \subitem {cid-dbus.c}, 44
+    \subitem {cid-dbus.h}, 48
+  \item {dbus\_\-get\_\-uinteger}
+    \subitem {cid-dbus.c}, 44
+    \subitem {cid-dbus.h}, 48
+  \item {dbus\_\-is\_\-enabled}
+    \subitem {cid-dbus.c}, 42
+    \subitem {cid-dbus.h}, 46
+  \item {dColor}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {DEFAULT\_\-IMAGE}
+    \subitem {cid.h}, 82
+  \item {DEFAULT\_\-XML\_\-LOCATION}
+    \subitem {cid-amazon.h}, 20
+  \item {dFlyingColor}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {dGreen}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {downloadCover}
+    \subitem {cid-amazon.h}, 20
+  \item {dRed}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {dRotate}
+    \subitem {\_\-CidMainContainer}, 8
+
+  \indexspace
+
+  \item {fBackgroundColor}
+    \subitem {\_\-CidLabelDescription}, 6
+  \item {fColorStart}
+    \subitem {\_\-CidLabelDescription}, 5
+  \item {fColorStop}
+    \subitem {\_\-CidLabelDescription}, 6
+  \item {FileSettings}, 12
+    \subitem {allDesktop}, 12
+    \subitem {animation}, 12
+    \subitem {corners}, 12
+    \subitem {couleur}, 13
+    \subitem {couleurSurvol}, 13
+    \subitem {hide}, 12
+    \subitem {image}, 12
+    \subitem {inter}, 13
+    \subitem {lock}, 12
+    \subitem {monitoring}, 12
+    \subitem {player\_\-name}, 13
+    \subitem {pos\_\-x}, 13
+    \subitem {pos\_\-y}, 13
+    \subitem {rotation}, 13
+    \subitem {size\_\-x}, 13
+    \subitem {size\_\-y}, 13
+
+  \indexspace
+
+  \item {g\_\-bRoundedBottomCorner}
+    \subitem {cid-main.c}, 53
+  \item {gColorSize}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {get\_\-amarock\_\-musicData}
+    \subitem {cid-amarok.c}, 15
+  \item {get\_\-dbus\_\-connection}
+    \subitem {cid-dbus.h}, 46
+  \item {get\_\-main\_\-proxy}
+    \subitem {cid-dbus.c}, 42
+  \item {get\_\-session\_\-connection}
+    \subitem {cid-dbus.c}, 42
+    \subitem {cid-dbus.h}, 46
+  \item {get\_\-system\_\-connection}
+    \subitem {cid-dbus.c}, 42
+  \item {getSongInfos}
+    \subitem {cid-rhythmbox.c}, 66
+    \subitem {cid-rhythmbox.h}, 70
+  \item {gFlyingColorSize}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {gLogLevel}
+    \subitem {cid-messages.h}, 64
+
+  \indexspace
+
+  \item {hide}
+    \subitem {FileSettings}, 12
+
+  \indexspace
+
+  \item {iCurrentlyDrawing}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {iHeight}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {iInter}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {image}
+    \subitem {FileSettings}, 12
+  \item {imageSize}
+    \subitem {cid-amazon.h}, 20
+  \item {ImageSizes}
+    \subitem {cid-struct.h}, 73
+  \item {inter}
+    \subitem {FileSettings}, 13
+  \item {iPlayer}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {iPosX}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {iPosY}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {iSidCheckCover}
+    \subitem {data}, 10
+  \item {iSize}
+    \subitem {\_\-CidLabelDescription}, 5
+  \item {iStyle}
+    \subitem {\_\-CidLabelDescription}, 5
+  \item {iWeight}
+    \subitem {\_\-CidLabelDescription}, 5
+  \item {iWidth}
+    \subitem {\_\-CidMainContainer}, 8
+
+  \indexspace
+
+  \item {LARGE\_\-IMAGE}
+    \subitem {cid-struct.h}, 73
+  \item {LICENCE\_\-KEY}
+    \subitem {cid-amazon.h}, 20
+  \item {lock}
+    \subitem {FileSettings}, 12
+
+  \indexspace
+
+  \item {main}
+    \subitem {cid.c}, 81
+  \item {MEDIUM\_\-IMAGE}
+    \subitem {cid-struct.h}, 73
+  \item {monitoring}
+    \subitem {FileSettings}, 12
+  \item {musicData}
+    \subitem {cid-struct.h}, 74
+
+  \indexspace
+
+  \item {OLD\_\-CONFIG\_\-FILE}
+    \subitem {cid-config.h}, 39
+  \item {on\_\-clic}
+    \subitem {cid-callbacks.c}, 22
+    \subitem {cid-callbacks.h}, 28
+  \item {onChangeSong}
+    \subitem {cid-rhythmbox.c}, 66
+    \subitem {cid-rhythmbox.h}, 70
+  \item {onChangeState}
+    \subitem {cid-rhythmbox.c}, 66
+    \subitem {cid-rhythmbox.h}, 70
+  \item {onCovertArtChanged}
+    \subitem {cid-rhythmbox.c}, 67
+    \subitem {cid-rhythmbox.h}, 71
+  \item {onElapsedChanged}
+    \subitem {cid-rhythmbox.c}, 67
+    \subitem {cid-rhythmbox.h}, 71
+  \item {opening}
+    \subitem {data}, 11
+
+  \indexspace
+
+  \item {pConfFile}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {pContext}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {pDefaultImage}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {PLAYER\_\-AMAROK\_\-1}
+    \subitem {cid-struct.h}, 73
+  \item {player\_\-name}
+    \subitem {FileSettings}, 13
+  \item {PLAYER\_\-RHYTHMBOX}
+    \subitem {cid-struct.h}, 73
+  \item {PlayerIndice}
+    \subitem {cid-struct.h}, 73
+  \item {playing}
+    \subitem {data}, 11
+  \item {playing\_\-album}
+    \subitem {data}, 10
+  \item {playing\_\-artist}
+    \subitem {data}, 10
+  \item {playing\_\-cover}
+    \subitem {data}, 10
+  \item {playing\_\-duration}
+    \subitem {data}, 10
+  \item {playing\_\-title}
+    \subitem {data}, 10
+  \item {playing\_\-track}
+    \subitem {data}, 10
+  \item {playing\_\-uri}
+    \subitem {data}, 10
+  \item {pos\_\-x}
+    \subitem {FileSettings}, 13
+  \item {pos\_\-y}
+    \subitem {FileSettings}, 13
+  \item {pPixmap}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {pPlayer}
+    \subitem {\_\-CidMainContainer}, 8
+  \item {pVerbosity}
+    \subitem {\_\-CidMainContainer}, 8
+
+  \indexspace
+
+  \item {register\_\-service\_\-name}
+    \subitem {cid-dbus.c}, 42
+    \subitem {cid-dbus.h}, 46
+  \item {rhythmbox\_\-dbus\_\-connect\_\-to\_\-bus}
+    \subitem {cid-rhythmbox.c}, 65
+    \subitem {cid-rhythmbox.h}, 69
+  \item {rhythmbox\_\-dbus\_\-disconnect\_\-from\_\-bus}
+    \subitem {cid-rhythmbox.c}, 65
+    \subitem {cid-rhythmbox.h}, 69
+  \item {rhythmbox\_\-getPlaying}
+    \subitem {cid-rhythmbox.c}, 66
+    \subitem {cid-rhythmbox.h}, 70
+  \item {rhythmbox\_\-getPlayingUri}
+    \subitem {cid-rhythmbox.c}, 66
+    \subitem {cid-rhythmbox.h}, 70
+  \item {rhythmboxData}
+    \subitem {cid-struct.h}, 72
+  \item {rotation}
+    \subitem {FileSettings}, 13
+  \item {run}
+    \subitem {cid-amarok.c}, 16
+
+  \indexspace
+
+  \item {s\_\-iLogColor}
+    \subitem {cid-messages.c}, 61
+  \item {size\_\-x}
+    \subitem {FileSettings}, 13
+  \item {size\_\-y}
+    \subitem {FileSettings}, 13
+  \item {supports\_\-alpha}
+    \subitem {cid-main.c}, 53
+
+  \indexspace
+
+  \item {TESTING\_\-COVER}
+    \subitem {cid-utilities.h}, 78
+  \item {TESTING\_\-FILE}
+    \subitem {cid-utilities.h}, 78
+
+\end{theindex}

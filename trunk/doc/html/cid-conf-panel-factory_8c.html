@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-conf-panel-factory.c</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-conf-panel-factory.c</h1><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Macros</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#7dc49b9acb0496fc8400df4d7d718cc1">_allocate_new_buffer</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#251042fa0ef460fb6bdf82b6597dd4bb">_allocate_new_model</a>&nbsp;&nbsp;&nbsp;modele = gtk_list_store_new (CID_MODEL_NB_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);</td></tr>
+
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#dea878f4c7dd9508f463739dc306f3a1">cid_config_panel_destroyed</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#527e5da831d6d9f18f2739316bfda493">cid_edit_conf_file_with_panel</a> (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, <a class="el" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a> pConfigFunc, gchar *cGettextDomain)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#d634715d7795c19e064e4c29dd9b3632">cid_edit_conf_file_core</a> (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, <a class="el" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a> pConfigFunc, gchar *cGettextDomain)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#0759c763f045e06e269a53cb1853a6f3">cid_config_panel_created</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GtkWidget *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-conf-panel-factory_8c.html#328a8204fa685a6187fc6a6422d1261b">cid_generate_ihm_from_keyfile</a> (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindow *pParentWindow, GSList **pWidgetList, gboolean bApplyButtonPresent, gchar iIdentifier, gchar *cPresentedGroup, gchar *cGettextDomain, GPtrArray *pDataGarbage)</td></tr>
+
+</table>
+<hr><h2>Documentation des macros</h2>
+<a class="anchor" name="7dc49b9acb0496fc8400df4d7d718cc1"></a><!-- doxytag: member="cid-conf-panel-factory.c::_allocate_new_buffer" ref="7dc49b9acb0496fc8400df4d7d718cc1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _allocate_new_buffer          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+<b>Valeur :</b><div class="fragment"><pre class="fragment"><a class="code" href="structdata.html">data</a> = g_new (gpointer, 3); \
+        g_ptr_array_add (pDataGarbage, <a class="code" href="structdata.html">data</a>);
+</pre></div>
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="251042fa0ef460fb6bdf82b6597dd4bb"></a><!-- doxytag: member="cid-conf-panel-factory.c::_allocate_new_model" ref="251042fa0ef460fb6bdf82b6597dd4bb" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _allocate_new_model&nbsp;&nbsp;&nbsp;modele = gtk_list_store_new (CID_MODEL_NB_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="dea878f4c7dd9508f463739dc306f3a1"></a><!-- doxytag: member="cid-conf-panel-factory.c::cid_config_panel_destroyed" ref="dea878f4c7dd9508f463739dc306f3a1" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_config_panel_destroyed           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00168">_cid_user_action_on_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="527e5da831d6d9f18f2739316bfda493"></a><!-- doxytag: member="cid-conf-panel-factory.c::cid_edit_conf_file_with_panel" ref="527e5da831d6d9f18f2739316bfda493" args="(GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean cid_edit_conf_file_with_panel           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWindow *&nbsp;</td>
+          <td class="paramname"> <em>pWindow</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cConfFilePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cTitle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>iWindowWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>iWindowHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar&nbsp;</td>
+          <td class="paramname"> <em>iIdentifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cPresentedGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a>&nbsp;</td>
+          <td class="paramname"> <em>pConfigFunc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cGettextDomain</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-conf-panel-factory_8c-source.html#l00037">cid_edit_conf_file_core()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00162">_cid_conf_panel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d634715d7795c19e064e4c29dd9b3632"></a><!-- doxytag: member="cid-conf-panel-factory.c::cid_edit_conf_file_core" ref="d634715d7795c19e064e4c29dd9b3632" args="(GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean cid_edit_conf_file_core           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWindow *&nbsp;</td>
+          <td class="paramname"> <em>pWindow</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cConfFilePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cTitle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>iWindowWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>iWindowHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar&nbsp;</td>
+          <td class="paramname"> <em>iIdentifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cPresentedGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a>&nbsp;</td>
+          <td class="paramname"> <em>pConfigFunc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cGettextDomain</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00168">_cid_user_action_on_config()</a>, <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>, <a class="el" href="cid-messages_8h-source.html#l00056">cid_message</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00033">cid_edit_conf_file_with_panel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0759c763f045e06e269a53cb1853a6f3"></a><!-- doxytag: member="cid-conf-panel-factory.c::cid_config_panel_created" ref="0759c763f045e06e269a53cb1853a6f3" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_config_panel_created           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00085">cid_generate_ihm_from_keyfile()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="328a8204fa685a6187fc6a6422d1261b"></a><!-- doxytag: member="cid-conf-panel-factory.c::cid_generate_ihm_from_keyfile" ref="328a8204fa685a6187fc6a6422d1261b" args="(GKeyFile *pKeyFile, const gchar *cTitle, GtkWindow *pParentWindow, GSList **pWidgetList, gboolean bApplyButtonPresent, gchar iIdentifier, gchar *cPresentedGroup, gchar *cGettextDomain, GPtrArray *pDataGarbage)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GtkWidget* cid_generate_ihm_from_keyfile           </td>
+          <td>(</td>
+          <td class="paramtype">GKeyFile *&nbsp;</td>
+          <td class="paramname"> <em>pKeyFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cTitle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GtkWindow *&nbsp;</td>
+          <td class="paramname"> <em>pParentWindow</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GSList **&nbsp;</td>
+          <td class="paramname"> <em>pWidgetList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gboolean&nbsp;</td>
+          <td class="paramname"> <em>bApplyButtonPresent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar&nbsp;</td>
+          <td class="paramname"> <em>iIdentifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cPresentedGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cGettextDomain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GPtrArray *&nbsp;</td>
+          <td class="paramname"> <em>pDataGarbage</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00038">_</a>, <a class="el" href="cid-conf-panel-factory_8c-source.html#l00013">_allocate_new_buffer</a>, <a class="el" href="cid-conf-panel-factory_8c-source.html#l00017">_allocate_new_model</a>, <a class="el" href="cid-callbacks_8c-source.html#l00372">_cid_add()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00663">_cid_configure()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00656">_cid_configure_renderer()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00286">_cid_find_iter_from_name()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00254">_cid_get_current_color()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00352">_cid_go_down()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00321">_cid_go_up()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00521">_cid_key_grab_clicked()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00444">_cid_pick_a_file()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00477">_cid_play_a_sound()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00404">_cid_remove()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00646">_cid_select_one_item_in_combo()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00680">_cid_select_one_item_in_tree()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00221">_cid_set_color()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00483">_cid_set_font()</a>, <a class="el" href="cid-conf-panel-factory_8c-source.html#l00080">cid_config_panel_created()</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00022">CID_MODEL_ACTIVE</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00021">CID_MODEL_DESCRIPTION_FILE</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00025">CID_MODEL_ICON</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00024">CID_MODEL_IMAGE</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00019">CID_MODEL_NAME</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00023">CID_MODEL_ORDER</a>, <a class="el" href="cid-conf-panel-factory_8h-source.html#l00020">CID_MODEL_RESULT</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-conf-panel-factory_8c-source.html#l00037">cid_edit_conf_file_core()</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID:  Fichier source de cid-struct.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+<h1>cid-struct.h</h1><a href="cid-struct_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">   *</span>
+<a name="l00003"></a>00003 <span class="comment">   *                    cid-struct.h</span>
+<a name="l00004"></a>00004 <span class="comment">   *                       -------</span>
+<a name="l00005"></a>00005 <span class="comment">   *                 Conky Images Display</span>
+<a name="l00006"></a>00006 <span class="comment">   *              06/10/2008 - SANS Benjamin</span>
+<a name="l00007"></a>00007 <span class="comment">   *             ----------------------------</span>
+<a name="l00008"></a>00008 <span class="comment">   *</span>
+<a name="l00009"></a>00009 <span class="comment">   *</span>
+<a name="l00010"></a>00010 <span class="comment">*/</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#ifndef __CID_STRUCT__</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span><span class="preprocessor">#define  __CID_STRUCT__</span>
+<a name="l00013"></a>00013 <span class="preprocessor"></span>
+<a name="l00014"></a>00014 G_BEGIN_DECLS
+<a name="l00015"></a>00015 
+<a name="l00016"></a><a class="code" href="cid-struct_8h.html#4e1f96a6293d819d2bd5ba782babd62b">00016</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__CidMainContainer.html">_CidMainContainer</a> <a class="code" href="cid-struct_8h.html#4e1f96a6293d819d2bd5ba782babd62b">CidMainContainer</a>;
+<a name="l00017"></a>00017 
+<a name="l00018"></a><a class="code" href="cid-struct_8h.html#d4e3211c4113b55777b415e1bc109ce9">00018</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__CidLabelDescription.html">_CidLabelDescription</a> <a class="code" href="struct__CidLabelDescription.html">CidLabelDescription</a>;
+<a name="l00019"></a>00019 
+<a name="l00020"></a><a class="code" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">00020</a> <span class="keyword">typedef</span> void (* <a class="code" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a>) (gchar *cConfFile, gpointer <a class="code" href="structdata.html">data</a>);
+<a name="l00021"></a>00021 
+<a name="l00022"></a><a class="code" href="cid-struct_8h.html#37fcdf3eced785bdd4418fbbf9d616a7">00022</a> <span class="preprocessor">#define rhythmboxData musicData</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span>
+<a name="l00028"></a><a class="code" href="structdata.html">00028</a> <span class="keyword">struct </span><a class="code" href="structdata.html">data</a> {
+<a name="l00029"></a><a class="code" href="structdata.html#488eb7ba0c08a38407c0e89110eea793">00029</a>         gchar *<a class="code" href="structdata.html#488eb7ba0c08a38407c0e89110eea793">playing_uri</a>;
+<a name="l00030"></a><a class="code" href="structdata.html#3943a57791ed0358ba06f5a122a0bf02">00030</a>         gchar *<a class="code" href="structdata.html#3943a57791ed0358ba06f5a122a0bf02">playing_artist</a>;
+<a name="l00031"></a><a class="code" href="structdata.html#6e4bc7f51a2d088999b6d43c0e768959">00031</a>         gchar *<a class="code" href="structdata.html#6e4bc7f51a2d088999b6d43c0e768959">playing_album</a>;
+<a name="l00032"></a><a class="code" href="structdata.html#44a7d44e6cae021c6a65a4f1a1cc7b66">00032</a>         gchar *<a class="code" href="structdata.html#44a7d44e6cae021c6a65a4f1a1cc7b66">playing_title</a>;
+<a name="l00033"></a><a class="code" href="structdata.html#84654f47f1d1155a1bb1b2a075052812">00033</a>         gchar *<a class="code" href="structdata.html#84654f47f1d1155a1bb1b2a075052812">playing_cover</a>;
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="structdata.html#ab1853f4c3a9b3fb2dcda59ada1fcb6e">00035</a>         guint <a class="code" href="structdata.html#ab1853f4c3a9b3fb2dcda59ada1fcb6e">playing_track</a>;
+<a name="l00036"></a><a class="code" href="structdata.html#bd4213f17a129a8cfa81aae4b499b82e">00036</a>         guint <a class="code" href="structdata.html#bd4213f17a129a8cfa81aae4b499b82e">playing_duration</a>;
+<a name="l00037"></a><a class="code" href="structdata.html#bc7d89eeb185b84f9c5da26d13a0342a">00037</a>         guint <a class="code" href="structdata.html#bc7d89eeb185b84f9c5da26d13a0342a">iSidCheckCover</a>;
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="structdata.html#c5eb3006a687d3bc6ff93c237c97f81f">00039</a>         gboolean <a class="code" href="structdata.html#c5eb3006a687d3bc6ff93c237c97f81f">cover_exist</a>;
+<a name="l00040"></a><a class="code" href="structdata.html#1d129eddc7a533f259e504f944e0ce78">00040</a>         gboolean <a class="code" href="structdata.html#1d129eddc7a533f259e504f944e0ce78">playing</a>;
+<a name="l00041"></a><a class="code" href="structdata.html#4f0d5ec86c215b53f903924b86b430c8">00041</a>         gboolean <a class="code" href="structdata.html#4f0d5ec86c215b53f903924b86b430c8">opening</a>;
+<a name="l00042"></a>00042 } <a class="code" href="cid-struct_8h.html#5524932604a0680d7ad54d851104e740">musicData</a>;
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="comment">/*</span>
+<a name="l00045"></a>00045 <span class="comment">typedef enum {</span>
+<a name="l00046"></a>00046 <span class="comment">        CID_DEBUG_MODE=1,</span>
+<a name="l00047"></a>00047 <span class="comment">        CID_HELP_MENU,</span>
+<a name="l00048"></a>00048 <span class="comment">        CID_TESTING_MODE,</span>
+<a name="l00049"></a>00049 <span class="comment">        CID_CHANGE_CONFIG_FILE,</span>
+<a name="l00050"></a>00050 <span class="comment">        CID_GIVE_VERSION,</span>
+<a name="l00051"></a>00051 <span class="comment">        CID_SET_VERBOSITY</span>
+<a name="l00052"></a>00052 <span class="comment">} cidParamList;</span>
+<a name="l00053"></a>00053 <span class="comment">*/</span>
+<a name="l00054"></a>00054 
+<a name="l00058"></a><a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f8521519">00058</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00059"></a><a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f852151900206b1de4ff180e7f5e81740d7c719f">00059</a>         <a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f852151900206b1de4ff180e7f5e81740d7c719f">PLAYER_AMAROK_1</a>=1,
+<a name="l00060"></a><a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f852151936df3ed23dd7334a34225578e91b5f3a">00060</a>         <a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f852151936df3ed23dd7334a34225578e91b5f3a">PLAYER_RHYTHMBOX</a>
+<a name="l00061"></a>00061 } <a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f8521519">PlayerIndice</a>;
+<a name="l00062"></a>00062 
+<a name="l00066"></a><a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a95">00066</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00067"></a><a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a95070b7e728d26c50a48a094123cad5843">00067</a>         <a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a95070b7e728d26c50a48a094123cad5843">CID_ROTATE</a>=1,
+<a name="l00068"></a><a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a955fbd2f7a60182ab790af0257460ae8e1">00068</a>         <a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a955fbd2f7a60182ab790af0257460ae8e1">CID_FOCUS_IN</a>,
+<a name="l00069"></a><a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a952c28e15ed6f100f598924abe8f769406">00069</a>         <a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a952c28e15ed6f100f598924abe8f769406">CID_FOCUS_OUT</a>
+<a name="l00070"></a>00070 } <a class="code" href="cid-struct_8h.html#ffb455e5ea72d01e065758c70f810a95">AnimationType</a>;
+<a name="l00071"></a>00071 
+<a name="l00075"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed">00075</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00076"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed52284cbe791947d230c943ce54e266c2">00076</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed52284cbe791947d230c943ce54e266c2">CID_EXIT_SUCCESS</a>=EXIT_SUCCESS,
+<a name="l00077"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1eda1feebe68445640fe4b0c480fb74ef1a">00077</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1eda1feebe68445640fe4b0c480fb74ef1a">CID_ERROR_READING_FILE</a>,
+<a name="l00078"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edffb703169ed8ebf8002face8decc1545">00078</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edffb703169ed8ebf8002face8decc1545">CID_ERROR_READING_ARGS</a>,
+<a name="l00079"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed23d4dd30f76d715b8a9c6786cd5b918a">00079</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed23d4dd30f76d715b8a9c6786cd5b918a">CID_GTK_ERROR</a>,
+<a name="l00080"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edd610ca62da45787fc651e00284c04292">00080</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edd610ca62da45787fc651e00284c04292">CID_PLAYER_ERROR</a>,
+<a name="l00081"></a><a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edf2250285fae10c0eab0a5106b09067bc">00081</a>         <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1edf2250285fae10c0eab0a5106b09067bc">CID_EXIT_ERROR</a>
+<a name="l00082"></a>00082 } <a class="code" href="cid-struct_8h.html#6e63d540b7b6a5dd2d81810dbdada1ed">codesRetours</a>;
+<a name="l00083"></a>00083 
+<a name="l00087"></a><a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f">00087</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00088"></a><a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f514582d7fc683d265577b669ba240de2">00088</a>         <a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f514582d7fc683d265577b669ba240de2">MEDIUM_IMAGE</a>,
+<a name="l00089"></a><a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f1d6059852bd6961e00626a3953389f28">00089</a>         <a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f1d6059852bd6961e00626a3953389f28">LARGE_IMAGE</a>
+<a name="l00090"></a>00090 } <a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f">ImageSizes</a>;
+<a name="l00091"></a>00091 
+<a name="l00095"></a><a class="code" href="structFileSettings.html">00095</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00096"></a><a class="code" href="structFileSettings.html#3e530abcccadb2395ab5fa69d69edbb4">00096</a>         gboolean hide;
+<a name="l00097"></a><a class="code" href="structFileSettings.html#27ba0cea6edf9640a6df5f8d1872a50f">00097</a>         gboolean corners;
+<a name="l00098"></a><a class="code" href="structFileSettings.html#9d7f134d4a044bf0a04dc71dcdba1b2b">00098</a>         gboolean lock;
+<a name="l00099"></a><a class="code" href="structFileSettings.html#c491af22434501ce551ed555461234bd">00099</a>         gboolean allDesktop;
+<a name="l00100"></a><a class="code" href="structFileSettings.html#93b84a3fd4328af082cccc9dae8f5108">00100</a>         gboolean animation;
+<a name="l00101"></a><a class="code" href="structFileSettings.html#c44773d9bd5be96ea5614700edaa5752">00101</a>         gboolean monitoring;
+<a name="l00102"></a><a class="code" href="structFileSettings.html#d2dd90f54a732a1531402fdacb86b534">00102</a>         gchar *image;
+<a name="l00103"></a><a class="code" href="structFileSettings.html#2616c2436392ef65989274d503df76cb">00103</a>         gchar *player_name;
+<a name="l00104"></a><a class="code" href="structFileSettings.html#c177e13dddf6d87642c1114312fca2b7">00104</a>         gdouble *couleur;
+<a name="l00105"></a><a class="code" href="structFileSettings.html#4ffda8a92ec073597840869261935af2">00105</a>         gdouble *couleurSurvol;
+<a name="l00106"></a><a class="code" href="structFileSettings.html#92b5a19fccbf09414524b8c1e8ab3891">00106</a>         gdouble rotation;
+<a name="l00107"></a><a class="code" href="structFileSettings.html#bfe45b093d6f5d2a1a45e3b24fc041e9">00107</a>         gint pos_x;
+<a name="l00108"></a><a class="code" href="structFileSettings.html#6a8de0b85c62b28768ebe98b0bd355c5">00108</a>         gint pos_y;
+<a name="l00109"></a><a class="code" href="structFileSettings.html#0d1d5334e8f967042717fbe34e8fc0e1">00109</a>         gint size_x;
+<a name="l00110"></a><a class="code" href="structFileSettings.html#9797f5a56d65410eff310710a56b1915">00110</a>         gint size_y;
+<a name="l00111"></a><a class="code" href="structFileSettings.html#293f8f5e23f29078373db327a6936ee1">00111</a>         gint inter;
+<a name="l00112"></a>00112 } <a class="code" href="structFileSettings.html">FileSettings</a>;
+<a name="l00113"></a>00113 
+<a name="l00117"></a><a class="code" href="struct__CidMainContainer.html">00117</a> <span class="keyword">struct </span><a class="code" href="struct__CidMainContainer.html">_CidMainContainer</a> {
+<a name="l00118"></a>00118         <span class="comment">// fenêtre principale</span>
+<a name="l00119"></a><a class="code" href="struct__CidMainContainer.html#7b8b23945b2dd37b7d9183f983a162bb">00119</a>         GtkWidget *<a class="code" href="struct__CidMainContainer.html#7b8b23945b2dd37b7d9183f983a162bb">cWindow</a>;
+<a name="l00120"></a>00120         
+<a name="l00121"></a>00121         <span class="comment">// buffer de l'image à dessiner</span>
+<a name="l00122"></a><a class="code" href="struct__CidMainContainer.html#74e5a84c9a85dba2c49cd138d5aba10d">00122</a>         GdkPixmap *<a class="code" href="struct__CidMainContainer.html#74e5a84c9a85dba2c49cd138d5aba10d">pPixmap</a>;
+<a name="l00123"></a>00123         
+<a name="l00124"></a>00124         <span class="comment">// pochette</span>
+<a name="l00125"></a><a class="code" href="struct__CidMainContainer.html#136507962185b80a266bb2861a6785a6">00125</a>         cairo_surface_t *<a class="code" href="struct__CidMainContainer.html#136507962185b80a266bb2861a6785a6">cSurface</a>;
+<a name="l00126"></a>00126         
+<a name="l00127"></a>00127         <span class="comment">// cairo context</span>
+<a name="l00128"></a><a class="code" href="struct__CidMainContainer.html#19eda9e7d250fe7a0e38e4f3909e0a6e">00128</a>         cairo_t *<a class="code" href="struct__CidMainContainer.html#19eda9e7d250fe7a0e38e4f3909e0a6e">pContext</a>;
+<a name="l00129"></a>00129         
+<a name="l00130"></a>00130         <span class="comment">// largeur de cid</span>
+<a name="l00131"></a><a class="code" href="struct__CidMainContainer.html#0f7480583de1ef91c4b8659096f00b34">00131</a>         gint <a class="code" href="struct__CidMainContainer.html#0f7480583de1ef91c4b8659096f00b34">iWidth</a>;
+<a name="l00132"></a>00132         <span class="comment">// hauteur de cid</span>
+<a name="l00133"></a><a class="code" href="struct__CidMainContainer.html#ed208854a3a25dc49c12110f8cf04bf9">00133</a>         gint <a class="code" href="struct__CidMainContainer.html#ed208854a3a25dc49c12110f8cf04bf9">iHeight</a>;
+<a name="l00134"></a>00134         <span class="comment">// position en x</span>
+<a name="l00135"></a><a class="code" href="struct__CidMainContainer.html#32864ff21732c40509680d0f2ce59d72">00135</a>         gint <a class="code" href="struct__CidMainContainer.html#32864ff21732c40509680d0f2ce59d72">iPosX</a>;
+<a name="l00136"></a>00136         <span class="comment">// position en y</span>
+<a name="l00137"></a><a class="code" href="struct__CidMainContainer.html#9b32a0602a2791bfee77cdc98ae249de">00137</a>         gint <a class="code" href="struct__CidMainContainer.html#9b32a0602a2791bfee77cdc98ae249de">iPosY</a>;
+<a name="l00138"></a>00138         <span class="comment">// interval par défaut</span>
+<a name="l00139"></a><a class="code" href="struct__CidMainContainer.html#31dd04551a7602e52420b954c3c96ab0">00139</a>         gint <a class="code" href="struct__CidMainContainer.html#31dd04551a7602e52420b954c3c96ab0">iInter</a>;
+<a name="l00140"></a>00140         <span class="comment">// currently drawing</span>
+<a name="l00141"></a><a class="code" href="struct__CidMainContainer.html#7c67030acc4926a886c38378edf5f609">00141</a>         gint <a class="code" href="struct__CidMainContainer.html#7c67030acc4926a886c38378edf5f609">iCurrentlyDrawing</a>;
+<a name="l00142"></a>00142         
+<a name="l00143"></a>00143         <span class="comment">// numéro du player</span>
+<a name="l00144"></a><a class="code" href="struct__CidMainContainer.html#4861dabd217521b2e501b8c6dd824f09">00144</a>         <a class="code" href="cid-struct_8h.html#9db5e05a8412752d629c1588f8521519">PlayerIndice</a> <a class="code" href="struct__CidMainContainer.html#4861dabd217521b2e501b8c6dd824f09">iPlayer</a>;
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146         <span class="comment">// type de fenêtre</span>
+<a name="l00147"></a><a class="code" href="struct__CidMainContainer.html#c93929650a726c0a15e84d921d78308f">00147</a>         GdkWindowTypeHint <a class="code" href="struct__CidMainContainer.html#c93929650a726c0a15e84d921d78308f">cidHint</a>;
+<a name="l00148"></a>00148         
+<a name="l00149"></a>00149         <span class="comment">// couleur de la fenêtre</span>
+<a name="l00150"></a><a class="code" href="struct__CidMainContainer.html#d33f9b285d5b7617ab4b9d40f06766c4">00150</a>         gdouble *<a class="code" href="struct__CidMainContainer.html#d33f9b285d5b7617ab4b9d40f06766c4">dColor</a>;
+<a name="l00151"></a>00151         <span class="comment">// couleur au survol</span>
+<a name="l00152"></a><a class="code" href="struct__CidMainContainer.html#e20ade53945c4a85e28a6f8d91da47d3">00152</a>         gdouble *<a class="code" href="struct__CidMainContainer.html#e20ade53945c4a85e28a6f8d91da47d3">dFlyingColor</a>;
+<a name="l00153"></a>00153         <span class="comment">// angle de cid</span>
+<a name="l00154"></a><a class="code" href="struct__CidMainContainer.html#f42c092d250eb2dab79f7413c52cc812">00154</a>         gdouble <a class="code" href="struct__CidMainContainer.html#f42c092d250eb2dab79f7413c52cc812">dRotate</a>;
+<a name="l00155"></a>00155         <span class="comment">// opacité de la fenêtre</span>
+<a name="l00156"></a><a class="code" href="struct__CidMainContainer.html#5160b7466396ebcfcd60d5b9fb1cd28b">00156</a>         gdouble <a class="code" href="struct__CidMainContainer.html#5160b7466396ebcfcd60d5b9fb1cd28b">dAlpha</a>;
+<a name="l00157"></a>00157         <span class="comment">// rouge</span>
+<a name="l00158"></a><a class="code" href="struct__CidMainContainer.html#822f412943cf1dad39b292b25e959274">00158</a>         gdouble <a class="code" href="struct__CidMainContainer.html#822f412943cf1dad39b292b25e959274">dRed</a>;
+<a name="l00159"></a>00159         <span class="comment">// vert</span>
+<a name="l00160"></a><a class="code" href="struct__CidMainContainer.html#becca769d71f7b6dac715fca33354f14">00160</a>         gdouble <a class="code" href="struct__CidMainContainer.html#becca769d71f7b6dac715fca33354f14">dGreen</a>;
+<a name="l00161"></a>00161         <span class="comment">// bleu</span>
+<a name="l00162"></a><a class="code" href="struct__CidMainContainer.html#dbd7d586d79277d51ff8882422dda705">00162</a>         gdouble <a class="code" href="struct__CidMainContainer.html#dbd7d586d79277d51ff8882422dda705">dBlue</a>;
+<a name="l00163"></a>00163         <span class="comment">// current animation angle</span>
+<a name="l00164"></a><a class="code" href="struct__CidMainContainer.html#2c94c6078f514c209f7a6308a943ec4a">00164</a>         gdouble <a class="code" href="struct__CidMainContainer.html#2c94c6078f514c209f7a6308a943ec4a">dAngle</a>;
+<a name="l00165"></a>00165         
+<a name="l00166"></a>00166         <span class="comment">// image par défaut</span>
+<a name="l00167"></a><a class="code" href="struct__CidMainContainer.html#09ddf28c270b31e243cb1fcecabb58db">00167</a>         gchar *<a class="code" href="struct__CidMainContainer.html#09ddf28c270b31e243cb1fcecabb58db">pDefaultImage</a>;
+<a name="l00168"></a>00168         <span class="comment">// fichier de conf</span>
+<a name="l00169"></a><a class="code" href="struct__CidMainContainer.html#cfcf7704032fcb3974a2d46387094f13">00169</a>         gchar *<a class="code" href="struct__CidMainContainer.html#cfcf7704032fcb3974a2d46387094f13">pConfFile</a>;
+<a name="l00170"></a>00170         <span class="comment">// lecteur à monitorer</span>
+<a name="l00171"></a><a class="code" href="struct__CidMainContainer.html#c94c47c5675bc6dc98c0380a67c5bc61">00171</a>         gchar *<a class="code" href="struct__CidMainContainer.html#c94c47c5675bc6dc98c0380a67c5bc61">pPlayer</a>;
+<a name="l00172"></a>00172         <span class="comment">// verbosité du programme</span>
+<a name="l00173"></a><a class="code" href="struct__CidMainContainer.html#82b11c033f1db2118d5b002c68c30e17">00173</a>         gchar *<a class="code" href="struct__CidMainContainer.html#82b11c033f1db2118d5b002c68c30e17">pVerbosity</a>;
+<a name="l00174"></a>00174         
+<a name="l00175"></a>00175         <span class="comment">// caché ?</span>
+<a name="l00176"></a><a class="code" href="struct__CidMainContainer.html#c62422a6c087345709ead96eba9dc6a5">00176</a>         gboolean <a class="code" href="struct__CidMainContainer.html#c62422a6c087345709ead96eba9dc6a5">bHide</a>;
+<a name="l00177"></a>00177         <span class="comment">// ne pas couper les angles ?</span>
+<a name="l00178"></a><a class="code" href="struct__CidMainContainer.html#ea1d18467e787f9afe70bfd14569808b">00178</a>         gboolean <a class="code" href="struct__CidMainContainer.html#ea1d18467e787f9afe70bfd14569808b">bKeepCorners</a>;
+<a name="l00179"></a>00179         <span class="comment">// en mode testing ?</span>
+<a name="l00180"></a><a class="code" href="struct__CidMainContainer.html#0f45e7fc4094ea8ba745dc4238a1756d">00180</a>         gboolean <a class="code" href="struct__CidMainContainer.html#0f45e7fc4094ea8ba745dc4238a1756d">bTesting</a>;
+<a name="l00181"></a>00181         <span class="comment">// déplacer en cliquant ?</span>
+<a name="l00182"></a><a class="code" href="struct__CidMainContainer.html#7d2ddddba1e774e3853b24407505ec3b">00182</a>         gboolean <a class="code" href="struct__CidMainContainer.html#7d2ddddba1e774e3853b24407505ec3b">bLockPosition</a>;
+<a name="l00183"></a>00183         <span class="comment">// afficher sur tous les bureaux ?</span>
+<a name="l00184"></a><a class="code" href="struct__CidMainContainer.html#d98cf92870cbea63ae11f10c2aa96a39">00184</a>         gboolean <a class="code" href="struct__CidMainContainer.html#d98cf92870cbea63ae11f10c2aa96a39">bAllDesktop</a>;
+<a name="l00185"></a>00185         <span class="comment">// télécharger les pochettes manquantes ?</span>
+<a name="l00186"></a><a class="code" href="struct__CidMainContainer.html#f6c122d68fc7634b69bc318326fe76f1">00186</a>         gboolean <a class="code" href="struct__CidMainContainer.html#f6c122d68fc7634b69bc318326fe76f1">bDownload</a>;
+<a name="l00187"></a>00187         <span class="comment">// CID lancé ?</span>
+<a name="l00188"></a><a class="code" href="struct__CidMainContainer.html#6e9da01ab915e1a94e3b83ba3e0c1bac">00188</a>         gboolean <a class="code" href="struct__CidMainContainer.html#6e9da01ab915e1a94e3b83ba3e0c1bac">bRunning</a>;
+<a name="l00189"></a>00189         <span class="comment">// animation en cour ?</span>
+<a name="l00190"></a><a class="code" href="struct__CidMainContainer.html#f9d225a5e69cfd7ce39ec0dcbd7dfa50">00190</a>         gboolean <a class="code" href="struct__CidMainContainer.html#f9d225a5e69cfd7ce39ec0dcbd7dfa50">bAnimation</a>;
+<a name="l00191"></a>00191         <span class="comment">// on autorise l'animation ?</span>
+<a name="l00192"></a><a class="code" href="struct__CidMainContainer.html#ccab18d1939272c7d3e3c03e177ecf43">00192</a>         gboolean <a class="code" href="struct__CidMainContainer.html#ccab18d1939272c7d3e3c03e177ecf43">bRunAnimation</a>;
+<a name="l00193"></a>00193         <span class="comment">// on autorise le monitoring du player ?</span>
+<a name="l00194"></a><a class="code" href="struct__CidMainContainer.html#6388b10a0bb77f8eaf7488ebcf383c52">00194</a>         gboolean <a class="code" href="struct__CidMainContainer.html#6388b10a0bb77f8eaf7488ebcf383c52">bMonitorPlayer</a>;
+<a name="l00195"></a>00195         <span class="comment">// lecteur en lecture ?</span>
+<a name="l00196"></a><a class="code" href="struct__CidMainContainer.html#39d453ff22e23a0922a81e21e11d87ff">00196</a>         gboolean <a class="code" href="struct__CidMainContainer.html#39d453ff22e23a0922a81e21e11d87ff">bCurrentlyPlaying</a>;
+<a name="l00197"></a>00197         
+<a name="l00198"></a>00198         <span class="comment">// taille de la couleur</span>
+<a name="l00199"></a><a class="code" href="struct__CidMainContainer.html#56a114646065f5a58f5e3aebe2d44a49">00199</a>         gsize <a class="code" href="struct__CidMainContainer.html#56a114646065f5a58f5e3aebe2d44a49">gColorSize</a>;
+<a name="l00200"></a>00200         <span class="comment">// taille de la couleur de survol</span>
+<a name="l00201"></a><a class="code" href="struct__CidMainContainer.html#b70c21d4252b5e98dcf3573d704dcba0">00201</a>         gsize <a class="code" href="struct__CidMainContainer.html#b70c21d4252b5e98dcf3573d704dcba0">gFlyingColorSize</a>;
+<a name="l00202"></a>00202         
+<a name="l00203"></a>00203         <span class="comment">// taille des covers à télécharger</span>
+<a name="l00204"></a><a class="code" href="struct__CidMainContainer.html#78792ea798e6e8d473539caf15ec47af">00204</a>         <a class="code" href="cid-struct_8h.html#abe9b2938e57ce207b429148c6b8a76f">ImageSizes</a> <a class="code" href="struct__CidMainContainer.html#78792ea798e6e8d473539caf15ec47af">cImageSize</a>;
+<a name="l00205"></a>00205 };
+<a name="l00206"></a>00206 
+<a name="l00207"></a><a class="code" href="struct__CidLabelDescription.html">00207</a> <span class="keyword">struct </span><a class="code" href="struct__CidLabelDescription.html">_CidLabelDescription</a> {
+<a name="l00208"></a>00208         <span class="comment">// Taille de la police (et hauteur du texte en pixels).</span>
+<a name="l00209"></a><a class="code" href="struct__CidLabelDescription.html#21d11c44f0f35f1012bc32ea19e120c2">00209</a>         gint <a class="code" href="struct__CidLabelDescription.html#21d11c44f0f35f1012bc32ea19e120c2">iSize</a>;
+<a name="l00210"></a>00210         <span class="comment">// Police de caracteres.</span>
+<a name="l00211"></a><a class="code" href="struct__CidLabelDescription.html#294c624e7901723afdb119b4ce25204c">00211</a>         gchar *<a class="code" href="struct__CidLabelDescription.html#294c624e7901723afdb119b4ce25204c">cFont</a>;
+<a name="l00212"></a>00212         <span class="comment">// Epaisseur des traits.</span>
+<a name="l00213"></a><a class="code" href="struct__CidLabelDescription.html#7722b0b28aa9d9dde9de570e8e70c446">00213</a>         PangoWeight <a class="code" href="struct__CidLabelDescription.html#7722b0b28aa9d9dde9de570e8e70c446">iWeight</a>;
+<a name="l00214"></a>00214         <span class="comment">// Style du trace (italique ou droit).</span>
+<a name="l00215"></a><a class="code" href="struct__CidLabelDescription.html#3fa284e935d2153fe8ec7c29ea234297">00215</a>         PangoStyle <a class="code" href="struct__CidLabelDescription.html#3fa284e935d2153fe8ec7c29ea234297">iStyle</a>;
+<a name="l00216"></a>00216         <span class="comment">// Couleur de debut du dégradé.</span>
+<a name="l00217"></a><a class="code" href="struct__CidLabelDescription.html#ec6a47b311fec6c4b4c393c46582e0ff">00217</a>         gdouble <a class="code" href="struct__CidLabelDescription.html#ec6a47b311fec6c4b4c393c46582e0ff">fColorStart</a>[3];
+<a name="l00218"></a>00218         <span class="comment">// Couleur de fin du dégradé.</span>
+<a name="l00219"></a><a class="code" href="struct__CidLabelDescription.html#c9db63b14397a1b80b566421dff60869">00219</a>         gdouble <a class="code" href="struct__CidLabelDescription.html#c9db63b14397a1b80b566421dff60869">fColorStop</a>[3];
+<a name="l00220"></a>00220         <span class="comment">// TRUE ssi le dégradé est du haut vers le bas.</span>
+<a name="l00221"></a><a class="code" href="struct__CidLabelDescription.html#4dd4a8cf5a49bb45476fd887ad22162a">00221</a>         gboolean <a class="code" href="struct__CidLabelDescription.html#4dd4a8cf5a49bb45476fd887ad22162a">bVerticalPattern</a>;
+<a name="l00222"></a>00222         <span class="comment">// Couleur du fond.</span>
+<a name="l00223"></a><a class="code" href="struct__CidLabelDescription.html#d4f15e4ba98dc54aa5f1ab739645148b">00223</a>         gdouble <a class="code" href="struct__CidLabelDescription.html#d4f15e4ba98dc54aa5f1ab739645148b">fBackgroundColor</a>[4];
+<a name="l00224"></a>00224 };
+<a name="l00225"></a>00225 
+<a name="l00226"></a>00226 G_END_DECLS
+<a name="l00227"></a>00227 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

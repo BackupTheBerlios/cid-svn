@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-utilities.c</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-utilities.c</h1><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#0b42fafb55fca67d4be22d8095e5d1b4">cid_sortie</a> (int code)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#6cad74bc450444838209d719a3a69cb1">cid_player_evaluation</a> (gchar *player)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#f341249c88a564232783326fbb667a23">cid_disconnect_player</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#1fb8206b73ce7aa1aba3d8f6bebc8b5b">cid_free_musicData</a> (void)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#a4c249f9f77ac45bcbf856a461413965">cid_read_parameters</a> (int argc, char **argv)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#b57ea7ec4a6b249a5d78d624a07b30d7">_cid_set_verbosity</a> (gchar *cVerbosity)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#38b7ceae01036942ac314cb69bccaa0d">cid_play_sound</a> (const gchar *cSoundPath)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#05c186e3f1c09623a2149809a55748ef">cid_launch_web_browser</a> (const gchar *cURL)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">gboolean&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-utilities_8c.html#793b10ad44f8331ad6dc0775e1bfe01c">cid_launch_command_full</a> (const gchar *cCommandFormat, gchar *cWorkingDirectory,...)</td></tr>
+
+</table>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="0b42fafb55fca67d4be22d8095e5d1b4"></a><!-- doxytag: member="cid-utilities.c::cid_sortie" ref="0b42fafb55fca67d4be22d8095e5d1b4" args="(int code)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cid_sortie           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>code</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+sort en retournant le code de retour donné en paramètre <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>code</em>&nbsp;</td><td>de retour </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>code de retournant </dd></dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, et <a class="el" href="cid-utilities_8c-source.html#l00032">cid_disconnect_player()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00017">_cid_quit()</a>, <a class="el" href="cid-messages_8c-source.html#l00089">cid_exit()</a>, et <a class="el" href="cid_8c-source.html#l00084">cid_intercept_signal()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6cad74bc450444838209d719a3a69cb1"></a><!-- doxytag: member="cid-utilities.c::cid_player_evaluation" ref="6cad74bc450444838209d719a3a69cb1" args="(gchar *player)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cid_player_evaluation           </td>
+          <td>(</td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>player</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+évalue le lecteur séléctionné <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>nom</em>&nbsp;</td><td>du lecteur </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>code du lecteur </dd></dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-struct_8h-source.html#l00059">PLAYER_AMAROK_1</a>, et <a class="el" href="cid-struct_8h-source.html#l00060">PLAYER_RHYTHMBOX</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f341249c88a564232783326fbb667a23"></a><!-- doxytag: member="cid-utilities.c::cid_disconnect_player" ref="f341249c88a564232783326fbb667a23" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_disconnect_player           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Permet de déconnecter le monitoring du player 
+<p>Références <a class="el" href="cid-amarok_8c-source.html#l00135">cid_disconnect_from_amarok()</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00079">rhythmbox_dbus_disconnect_from_bus()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00097">cid_read_config_after_update()</a>, et <a class="el" href="cid-utilities_8c-source.html#l00016">cid_sortie()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1fb8206b73ce7aa1aba3d8f6bebc8b5b"></a><!-- doxytag: member="cid-utilities.c::cid_free_musicData" ref="1fb8206b73ce7aa1aba3d8f6bebc8b5b" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_free_musicData           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Nettoyage des données musicales 
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00039">data::cover_exist</a>, <a class="el" href="cid-struct_8h-source.html#l00037">data::iSidCheckCover</a>, <a class="el" href="cid-struct_8h.html#5524932604a0680d7ad54d851104e740">musicData</a>, <a class="el" href="cid-struct_8h-source.html#l00041">data::opening</a>, <a class="el" href="cid-struct_8h-source.html#l00040">data::playing</a>, <a class="el" href="cid-struct_8h-source.html#l00031">data::playing_album</a>, <a class="el" href="cid-struct_8h-source.html#l00030">data::playing_artist</a>, <a class="el" href="cid-struct_8h-source.html#l00033">data::playing_cover</a>, <a class="el" href="cid-struct_8h-source.html#l00036">data::playing_duration</a>, <a class="el" href="cid-struct_8h-source.html#l00032">data::playing_title</a>, <a class="el" href="cid-struct_8h-source.html#l00035">data::playing_track</a>, et <a class="el" href="cid-struct_8h-source.html#l00029">data::playing_uri</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00097">cid_read_config_after_update()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a4c249f9f77ac45bcbf856a461413965"></a><!-- doxytag: member="cid-utilities.c::cid_read_parameters" ref="a4c249f9f77ac45bcbf856a461413965" args="(int argc, char **argv)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_read_parameters           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&nbsp;</td>
+          <td class="paramname"> <em>argv</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+lit les arguments du programme <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>nombre</em>&nbsp;</td><td>d'arguments </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>tableau</em>&nbsp;</td><td>de chaînes contenant la liste des arguments </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00038">_</a>, <a class="el" href="cid-utilities_8c-source.html#l00187">_cid_set_verbosity()</a>, <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-struct_8h-source.html#l00078">CID_ERROR_READING_ARGS</a>, <a class="el" href="cid-struct_8h-source.html#l00076">CID_EXIT_SUCCESS</a>, <a class="el" href="cid_8h-source.html#l00043">DEFAULT_IMAGE</a>, <a class="el" href="cid-utilities_8h-source.html#l00015">TESTING_COVER</a>, et <a class="el" href="cid-utilities_8h-source.html#l00016">TESTING_FILE</a>.</p>
+
+<p>Référencé par <a class="el" href="cid_8c-source.html#l00101">main()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b57ea7ec4a6b249a5d78d624a07b30d7"></a><!-- doxytag: member="cid-utilities.c::_cid_set_verbosity" ref="b57ea7ec4a6b249a5d78d624a07b30d7" args="(gchar *cVerbosity)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_set_verbosity           </td>
+          <td>(</td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cVerbosity</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+définit la niveau de verbosité <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>niveau</em>&nbsp;</td><td>de verbosité </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8c-source.html#l00084">cid_log_set_level()</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-utilities_8c-source.html#l00084">cid_read_parameters()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="38b7ceae01036942ac314cb69bccaa0d"></a><!-- doxytag: member="cid-utilities.c::cid_play_sound" ref="38b7ceae01036942ac314cb69bccaa0d" args="(const gchar *cSoundPath)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_play_sound           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cSoundPath</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+permet de jouer un son <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cSoundPath</em>&nbsp;</td><td>chemin vers le son à jouer </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, <a class="el" href="cid-utilities_8h-source.html#l00018">cid_launch_command</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00477">_cid_play_a_sound()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="05c186e3f1c09623a2149809a55748ef"></a><!-- doxytag: member="cid-utilities.c::cid_launch_web_browser" ref="05c186e3f1c09623a2149809a55748ef" args="(const gchar *cURL)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_launch_web_browser           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cURL</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+permet de jouer un son <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cURL</em>&nbsp;</td><td>URL du site à afficher </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, <a class="el" href="cid-utilities_8h-source.html#l00018">cid_launch_command</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00075">_cid_web_button_clicked()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="793b10ad44f8331ad6dc0775e1bfe01c"></a><!-- doxytag: member="cid-utilities.c::cid_launch_command_full" ref="793b10ad44f8331ad6dc0775e1bfe01c" args="(const gchar *cCommandFormat, gchar *cWorkingDirectory,...)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gboolean cid_launch_command_full           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cCommandFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gchar *&nbsp;</td>
+          <td class="paramname"> <em>cWorkingDirectory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>...</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Permet de lancer une commande <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cCommandFormat</em>&nbsp;</td><td>La commande à executer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cWorkingDirectory</em>&nbsp;</td><td>Le repertoire de travail </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>...</em>&nbsp;</td><td></td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00533">_cid_launch_threaded()</a>, <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

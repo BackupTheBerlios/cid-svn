@@ -1,0 +1,166 @@
+\section{Référence du fichier cid-config.h}
+\label{cid-config_8h}\index{cid-config.h@{cid-config.h}}
+\subsection*{Macros}
+\begin{CompactItemize}
+\item 
+\#define {\bf OLD\_\-CONFIG\_\-FILE}~\char`\"{}.cidrc\char`\"{}
+\end{CompactItemize}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+int {\bf cid\_\-read\_\-config} (const char $\ast$f)
+\item 
+void {\bf cid\_\-check\_\-file} (const char $\ast$f)
+\item 
+void {\bf cid\_\-merge\_\-config} ({\bf FileSettings} $\ast${\bf conf})
+\item 
+void {\bf cid\_\-save\_\-data} ()
+\item 
+void {\bf cid\_\-write\_\-keys\_\-to\_\-file} (GKeyFile $\ast$pKeyFile, const gchar $\ast$cConfFilePath)
+\item 
+void {\bf cid\_\-check\_\-conf\_\-file\_\-version} (const gchar $\ast$f)
+\item 
+void {\bf cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list} (GKeyFile $\ast$pKeyFile, GSList $\ast$pWidgetList)
+\item 
+void {\bf \_\-cid\_\-get\_\-each\_\-widget\_\-value} (gpointer $\ast${\bf data}, GKeyFile $\ast$pKeyFile)
+\item 
+void {\bf cid\_\-read\_\-config\_\-after\_\-update} (const char $\ast$f, gpointer $\ast$pData)
+\item 
+void {\bf cid\_\-free\_\-conf} ({\bf FileSettings} $\ast${\bf conf})
+\item 
+int {\bf cid\_\-read\_\-key\_\-file} (const gchar $\ast$f)
+\end{CompactItemize}
+
+
+\subsection{Documentation des macros}
+\index{cid-config.h@{cid-config.h}!OLD\_\-CONFIG\_\-FILE@{OLD\_\-CONFIG\_\-FILE}}
+\index{OLD\_\-CONFIG\_\-FILE@{OLD\_\-CONFIG\_\-FILE}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define OLD\_\-CONFIG\_\-FILE~\char`\"{}.cidrc\char`\"{}}\label{cid-config_8h_711d201b78f9dcd358d588745928e157}
+
+
+
+
+Référencé par cid\_\-check\_\-file().
+
+\subsection{Documentation des fonctions}
+\index{cid-config.h@{cid-config.h}!cid\_\-read\_\-config@{cid\_\-read\_\-config}}
+\index{cid\_\-read\_\-config@{cid\_\-read\_\-config}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cid\_\-read\_\-config (const char $\ast$ {\em f})}\label{cid-config_8h_76b2b01d2c1cba520d9183fe1ab756bf}
+
+
+Fonction qui charge la configuration . \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em f}]fichier de configuration à lire. \end{description}
+\end{Desc}
+
+
+Références cid, cid\_\-check\_\-conf\_\-file\_\-version(), cid\_\-check\_\-file(), cid\_\-free\_\-conf(), cid\_\-info, cid\_\-merge\_\-config(), cid\_\-player\_\-evaluation(), et cid\_\-read\_\-key\_\-file().
+
+Référencé par cid\_\-read\_\-config\_\-after\_\-update(), et main().\index{cid-config.h@{cid-config.h}!cid\_\-check\_\-file@{cid\_\-check\_\-file}}
+\index{cid\_\-check\_\-file@{cid\_\-check\_\-file}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-check\_\-file (const char $\ast$ {\em f})}\label{cid-config_8h_b0fd59c2d29f359e01d9119a71ccc985}
+
+
+vérifie que le fichier de configuration existe. \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em f}]fichier de configuration à lire. \end{description}
+\end{Desc}
+\index{cid-config.h@{cid-config.h}!cid\_\-merge\_\-config@{cid\_\-merge\_\-config}}
+\index{cid\_\-merge\_\-config@{cid\_\-merge\_\-config}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-merge\_\-config ({\bf FileSettings} $\ast$ {\em conf})}\label{cid-config_8h_4f844443b05d6ce433181abd4cc27b22}
+
+
+fusionne les configurations entre les paramètres par défaut et le fichier de configurations. \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em conf}]le contenu du fichier de configurations. \end{description}
+\end{Desc}
+
+
+Références FileSettings::allDesktop, FileSettings::animation, cid, FileSettings::corners, FileSettings::couleur, FileSettings::couleurSurvol, DEFAULT\_\-IMAGE, FileSettings::hide, FileSettings::image, FileSettings::inter, FileSettings::lock, FileSettings::monitoring, FileSettings::player\_\-name, FileSettings::pos\_\-x, FileSettings::pos\_\-y, FileSettings::rotation, FileSettings::size\_\-x, et FileSettings::size\_\-y.
+
+Référencé par cid\_\-check\_\-conf\_\-file\_\-version(), et cid\_\-read\_\-config().\index{cid-config.h@{cid-config.h}!cid\_\-save\_\-data@{cid\_\-save\_\-data}}
+\index{cid\_\-save\_\-data@{cid\_\-save\_\-data}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-save\_\-data ()}\label{cid-config_8h_a924ec2e21de1e288a0fb06a7ec71e90}
+
+
+sauvegarde les données de cid 
+
+Références cid, cid\_\-get\_\-data(), cid\_\-write\_\-keys\_\-to\_\-file(), et TESTING\_\-COVER.
+
+Référencé par \_\-cid\_\-conf\_\-panel(), \_\-cid\_\-quit(), et cid\_\-check\_\-conf\_\-file\_\-version().\index{cid-config.h@{cid-config.h}!cid\_\-write\_\-keys\_\-to\_\-file@{cid\_\-write\_\-keys\_\-to\_\-file}}
+\index{cid\_\-write\_\-keys\_\-to\_\-file@{cid\_\-write\_\-keys\_\-to\_\-file}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-write\_\-keys\_\-to\_\-file (GKeyFile $\ast$ {\em pKeyFile}, \/  const gchar $\ast$ {\em cConfFilePath})}\label{cid-config_8h_bde2f6a9c4d72b55999544d4d823d75a}
+
+
+sauvegarde les clés dans le fichier de configurations. \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pKeyFile}]pointeur de KeyFile. \item[{\em cConfFilePath}]chemin du fichier à sauvegarder. \end{description}
+\end{Desc}
+
+
+Références cid\_\-debug, et cid\_\-warning.
+
+Référencé par \_\-cid\_\-user\_\-action\_\-on\_\-config(), et cid\_\-save\_\-data().\index{cid-config.h@{cid-config.h}!cid\_\-check\_\-conf\_\-file\_\-version@{cid\_\-check\_\-conf\_\-file\_\-version}}
+\index{cid\_\-check\_\-conf\_\-file\_\-version@{cid\_\-check\_\-conf\_\-file\_\-version}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-check\_\-conf\_\-file\_\-version (const gchar $\ast$ {\em f})}\label{cid-config_8h_8649145737989647a1fb2ebc8e8e9f74}
+
+
+vérifie la version du fichier de configuration. \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em f}]path du fichier à vérifier. \end{description}
+\end{Desc}
+
+
+Références cid, cid\_\-exit(), cid\_\-info, cid\_\-merge\_\-config(), cid\_\-read\_\-key\_\-file(), et cid\_\-save\_\-data().
+
+Référencé par cid\_\-read\_\-config().\index{cid-config.h@{cid-config.h}!cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list@{cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list}}
+\index{cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list@{cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list (GKeyFile $\ast$ {\em pKeyFile}, \/  GSList $\ast$ {\em pWidgetList})}\label{cid-config_8h_b0b7d2c2182a54ad3ae6fd16f7b3978a}
+
+
+
+
+Références \_\-cid\_\-get\_\-each\_\-widget\_\-value().
+
+Référencé par \_\-cid\_\-user\_\-action\_\-on\_\-config().\index{cid-config.h@{cid-config.h}!\_\-cid\_\-get\_\-each\_\-widget\_\-value@{\_\-cid\_\-get\_\-each\_\-widget\_\-value}}
+\index{\_\-cid\_\-get\_\-each\_\-widget\_\-value@{\_\-cid\_\-get\_\-each\_\-widget\_\-value}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-get\_\-each\_\-widget\_\-value (gpointer $\ast$ {\em data}, \/  GKeyFile $\ast$ {\em pKeyFile})}\label{cid-config_8h_ab4246cffd42c2d1e7548e1f52d69082}
+
+
+
+
+Références \_\-cid\_\-get\_\-active\_\-elements(), et CID\_\-MODEL\_\-RESULT.
+
+Référencé par cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list().\index{cid-config.h@{cid-config.h}!cid\_\-read\_\-config\_\-after\_\-update@{cid\_\-read\_\-config\_\-after\_\-update}}
+\index{cid\_\-read\_\-config\_\-after\_\-update@{cid\_\-read\_\-config\_\-after\_\-update}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-read\_\-config\_\-after\_\-update (const char $\ast$ {\em f}, \/  gpointer $\ast$ {\em pData})}\label{cid-config_8h_f1fe3c86fa896a97e605559ae2b88b41}
+
+
+
+
+Références cid, cid\_\-disconnect\_\-player(), cid\_\-free\_\-musicData(), cid\_\-read\_\-config(), et cid\_\-run\_\-with\_\-player().
+
+Référencé par \_\-cid\_\-conf\_\-panel().\index{cid-config.h@{cid-config.h}!cid\_\-free\_\-conf@{cid\_\-free\_\-conf}}
+\index{cid\_\-free\_\-conf@{cid\_\-free\_\-conf}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-free\_\-conf ({\bf FileSettings} $\ast$ {\em conf})}\label{cid-config_8h_2b89918241ccf974ebbc275fcbf938af}
+
+
+
+
+Références FileSettings::image, et FileSettings::player\_\-name.
+
+Référencé par cid\_\-read\_\-config().\index{cid-config.h@{cid-config.h}!cid\_\-read\_\-key\_\-file@{cid\_\-read\_\-key\_\-file}}
+\index{cid\_\-read\_\-key\_\-file@{cid\_\-read\_\-key\_\-file}!cid-config.h@{cid-config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cid\_\-read\_\-key\_\-file (const gchar $\ast$ {\em f})}\label{cid-config_8h_0b6505cb73b9e5edfd90d08682687f7a}
+
+
+
+
+Références FileSettings::allDesktop, FileSettings::animation, cid, FileSettings::corners, FileSettings::couleur, FileSettings::couleurSurvol, FileSettings::hide, FileSettings::image, FileSettings::inter, FileSettings::lock, FileSettings::monitoring, FileSettings::player\_\-name, FileSettings::pos\_\-x, FileSettings::pos\_\-y, FileSettings::rotation, FileSettings::size\_\-x, et FileSettings::size\_\-y.
+
+Référencé par cid\_\-check\_\-conf\_\-file\_\-version(), et cid\_\-read\_\-config().

@@ -1,0 +1,424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-config.c</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-config.c</h1><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#f3e51a66443cd9c14a7f8c1e116a99c8">cid_check_file</a> (const gchar *f)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#8649145737989647a1fb2ebc8e8e9f74">cid_check_conf_file_version</a> (const gchar *f)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#4f844443b05d6ce433181abd4cc27b22">cid_merge_config</a> (<a class="el" href="structFileSettings.html">FileSettings</a> *<a class="el" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#f1fe3c86fa896a97e605559ae2b88b41">cid_read_config_after_update</a> (const char *f, gpointer *pData)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#0b6505cb73b9e5edfd90d08682687f7a">cid_read_key_file</a> (const gchar *f)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#76b2b01d2c1cba520d9183fe1ab756bf">cid_read_config</a> (const char *f)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#2b89918241ccf974ebbc275fcbf938af">cid_free_conf</a> (<a class="el" href="structFileSettings.html">FileSettings</a> *<a class="el" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#a237fd95c44a9108b1bc85e22af12d94">cid_get_data</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#a924ec2e21de1e288a0fb06a7ec71e90">cid_save_data</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#bde2f6a9c4d72b55999544d4d823d75a">cid_write_keys_to_file</a> (GKeyFile *pKeyFile, const gchar *cConfFilePath)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#b0b7d2c2182a54ad3ae6fd16f7b3978a">cid_update_keyfile_from_widget_list</a> (GKeyFile *pKeyFile, GSList *pWidgetList)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#ab4246cffd42c2d1e7548e1f52d69082">_cid_get_each_widget_value</a> (gpointer *<a class="el" href="structdata.html">data</a>, GKeyFile *pKeyFile)</td></tr>
+
+<tr><td colspan="2"><br><h2>Variables</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="structFileSettings.html">FileSettings</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a></td></tr>
+
+</table>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="f3e51a66443cd9c14a7f8c1e116a99c8"></a><!-- doxytag: member="cid-config.c::cid_check_file" ref="f3e51a66443cd9c14a7f8c1e116a99c8" args="(const gchar *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_check_file           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>f</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-messages_8h-source.html#l00062">cid_info</a>, et <a class="el" href="cid-config_8h-source.html#l00017">OLD_CONFIG_FILE</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8649145737989647a1fb2ebc8e8e9f74"></a><!-- doxytag: member="cid-config.c::cid_check_conf_file_version" ref="8649145737989647a1fb2ebc8e8e9f74" args="(const gchar *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_check_conf_file_version           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>f</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+vérifie la version du fichier de configuration. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>f</em>&nbsp;</td><td>path du fichier à vérifier. </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-messages_8c-source.html#l00089">cid_exit()</a>, <a class="el" href="cid-messages_8h-source.html#l00062">cid_info</a>, <a class="el" href="cid-config_8c-source.html#l00070">cid_merge_config()</a>, <a class="el" href="cid-config_8c-source.html#l00117">cid_read_key_file()</a>, et <a class="el" href="cid-config_8c-source.html#l00215">cid_save_data()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4f844443b05d6ce433181abd4cc27b22"></a><!-- doxytag: member="cid-config.c::cid_merge_config" ref="4f844443b05d6ce433181abd4cc27b22" args="(FileSettings *conf)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_merge_config           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFileSettings.html">FileSettings</a> *&nbsp;</td>
+          <td class="paramname"> <em>conf</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fusionne les configurations entre les paramètres par défaut et le fichier de configurations. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>conf</em>&nbsp;</td><td>le contenu du fichier de configurations. </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00099">FileSettings::allDesktop</a>, <a class="el" href="cid-struct_8h-source.html#l00100">FileSettings::animation</a>, <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-struct_8h-source.html#l00097">FileSettings::corners</a>, <a class="el" href="cid-struct_8h-source.html#l00104">FileSettings::couleur</a>, <a class="el" href="cid-struct_8h-source.html#l00105">FileSettings::couleurSurvol</a>, <a class="el" href="cid_8h-source.html#l00043">DEFAULT_IMAGE</a>, <a class="el" href="cid-struct_8h-source.html#l00096">FileSettings::hide</a>, <a class="el" href="cid-struct_8h-source.html#l00102">FileSettings::image</a>, <a class="el" href="cid-struct_8h-source.html#l00111">FileSettings::inter</a>, <a class="el" href="cid-struct_8h-source.html#l00098">FileSettings::lock</a>, <a class="el" href="cid-struct_8h-source.html#l00101">FileSettings::monitoring</a>, <a class="el" href="cid-struct_8h-source.html#l00103">FileSettings::player_name</a>, <a class="el" href="cid-struct_8h-source.html#l00107">FileSettings::pos_x</a>, <a class="el" href="cid-struct_8h-source.html#l00108">FileSettings::pos_y</a>, <a class="el" href="cid-struct_8h-source.html#l00106">FileSettings::rotation</a>, <a class="el" href="cid-struct_8h-source.html#l00109">FileSettings::size_x</a>, et <a class="el" href="cid-struct_8h-source.html#l00110">FileSettings::size_y</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00038">cid_check_conf_file_version()</a>, et <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f1fe3c86fa896a97e605559ae2b88b41"></a><!-- doxytag: member="cid-config.c::cid_read_config_after_update" ref="f1fe3c86fa896a97e605559ae2b88b41" args="(const char *f, gpointer *pData)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_read_config_after_update           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>pData</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-utilities_8c-source.html#l00032">cid_disconnect_player()</a>, <a class="el" href="cid-utilities_8c-source.html#l00045">cid_free_musicData()</a>, <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>, et <a class="el" href="cid-main_8c-source.html#l00618">cid_run_with_player()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00162">_cid_conf_panel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0b6505cb73b9e5edfd90d08682687f7a"></a><!-- doxytag: member="cid-config.c::cid_read_key_file" ref="0b6505cb73b9e5edfd90d08682687f7a" args="(const gchar *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cid_read_key_file           </td>
+          <td>(</td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>f</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00099">FileSettings::allDesktop</a>, <a class="el" href="cid-struct_8h-source.html#l00100">FileSettings::animation</a>, <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-struct_8h-source.html#l00097">FileSettings::corners</a>, <a class="el" href="cid-struct_8h-source.html#l00104">FileSettings::couleur</a>, <a class="el" href="cid-struct_8h-source.html#l00105">FileSettings::couleurSurvol</a>, <a class="el" href="cid-struct_8h-source.html#l00096">FileSettings::hide</a>, <a class="el" href="cid-struct_8h-source.html#l00102">FileSettings::image</a>, <a class="el" href="cid-struct_8h-source.html#l00111">FileSettings::inter</a>, <a class="el" href="cid-struct_8h-source.html#l00098">FileSettings::lock</a>, <a class="el" href="cid-struct_8h-source.html#l00101">FileSettings::monitoring</a>, <a class="el" href="cid-struct_8h-source.html#l00103">FileSettings::player_name</a>, <a class="el" href="cid-struct_8h-source.html#l00107">FileSettings::pos_x</a>, <a class="el" href="cid-struct_8h-source.html#l00108">FileSettings::pos_y</a>, <a class="el" href="cid-struct_8h-source.html#l00106">FileSettings::rotation</a>, <a class="el" href="cid-struct_8h-source.html#l00109">FileSettings::size_x</a>, et <a class="el" href="cid-struct_8h-source.html#l00110">FileSettings::size_y</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00038">cid_check_conf_file_version()</a>, et <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="76b2b01d2c1cba520d9183fe1ab756bf"></a><!-- doxytag: member="cid-config.c::cid_read_config" ref="76b2b01d2c1cba520d9183fe1ab756bf" args="(const char *f)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cid_read_config           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>f</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction qui charge la configuration . <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>f</em>&nbsp;</td><td>fichier de configuration à lire. </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-config_8c-source.html#l00038">cid_check_conf_file_version()</a>, <a class="el" href="cid-config_8c-source.html#l00019">cid_check_file()</a>, <a class="el" href="cid-config_8c-source.html#l00202">cid_free_conf()</a>, <a class="el" href="cid-messages_8h-source.html#l00062">cid_info</a>, <a class="el" href="cid-config_8c-source.html#l00070">cid_merge_config()</a>, <a class="el" href="cid-utilities_8c-source.html#l00024">cid_player_evaluation()</a>, et <a class="el" href="cid-config_8c-source.html#l00117">cid_read_key_file()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00097">cid_read_config_after_update()</a>, et <a class="el" href="cid_8c-source.html#l00101">main()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2b89918241ccf974ebbc275fcbf938af"></a><!-- doxytag: member="cid-config.c::cid_free_conf" ref="2b89918241ccf974ebbc275fcbf938af" args="(FileSettings *conf)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_free_conf           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFileSettings.html">FileSettings</a> *&nbsp;</td>
+          <td class="paramname"> <em>conf</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00102">FileSettings::image</a>, et <a class="el" href="cid-struct_8h-source.html#l00103">FileSettings::player_name</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00177">cid_read_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a237fd95c44a9108b1bc85e22af12d94"></a><!-- doxytag: member="cid-config.c::cid_get_data" ref="a237fd95c44a9108b1bc85e22af12d94" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_get_data           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00215">cid_save_data()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a924ec2e21de1e288a0fb06a7ec71e90"></a><!-- doxytag: member="cid-config.c::cid_save_data" ref="a924ec2e21de1e288a0fb06a7ec71e90" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_save_data           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+sauvegarde les données de cid 
+<p>Références <a class="el" href="cid_8h-source.html#l00040">cid</a>, <a class="el" href="cid-config_8c-source.html#l00207">cid_get_data()</a>, <a class="el" href="cid-config_8c-source.html#l00261">cid_write_keys_to_file()</a>, et <a class="el" href="cid-utilities_8h-source.html#l00015">TESTING_COVER</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00162">_cid_conf_panel()</a>, <a class="el" href="cid-callbacks_8c-source.html#l00017">_cid_quit()</a>, et <a class="el" href="cid-config_8c-source.html#l00038">cid_check_conf_file_version()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="bde2f6a9c4d72b55999544d4d823d75a"></a><!-- doxytag: member="cid-config.c::cid_write_keys_to_file" ref="bde2f6a9c4d72b55999544d4d823d75a" args="(GKeyFile *pKeyFile, const gchar *cConfFilePath)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_write_keys_to_file           </td>
+          <td>(</td>
+          <td class="paramtype">GKeyFile *&nbsp;</td>
+          <td class="paramname"> <em>pKeyFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>cConfFilePath</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+sauvegarde les clés dans le fichier de configurations. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pKeyFile</em>&nbsp;</td><td>pointeur de KeyFile. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cConfFilePath</em>&nbsp;</td><td>chemin du fichier à sauvegarder. </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, et <a class="el" href="cid-messages_8h-source.html#l00053">cid_warning</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00168">_cid_user_action_on_config()</a>, et <a class="el" href="cid-config_8c-source.html#l00215">cid_save_data()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b0b7d2c2182a54ad3ae6fd16f7b3978a"></a><!-- doxytag: member="cid-config.c::cid_update_keyfile_from_widget_list" ref="b0b7d2c2182a54ad3ae6fd16f7b3978a" args="(GKeyFile *pKeyFile, GSList *pWidgetList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_update_keyfile_from_widget_list           </td>
+          <td>(</td>
+          <td class="paramtype">GKeyFile *&nbsp;</td>
+          <td class="paramname"> <em>pKeyFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GSList *&nbsp;</td>
+          <td class="paramname"> <em>pWidgetList</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-config_8c-source.html#l00292">_cid_get_each_widget_value()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-callbacks_8c-source.html#l00168">_cid_user_action_on_config()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ab4246cffd42c2d1e7548e1f52d69082"></a><!-- doxytag: member="cid-config.c::_cid_get_each_widget_value" ref="ab4246cffd42c2d1e7548e1f52d69082" args="(gpointer *data, GKeyFile *pKeyFile)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void _cid_get_each_widget_value           </td>
+          <td>(</td>
+          <td class="paramtype">gpointer *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GKeyFile *&nbsp;</td>
+          <td class="paramname"> <em>pKeyFile</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Références <a class="el" href="cid-callbacks_8c-source.html#l00688">_cid_get_active_elements()</a>, et <a class="el" href="cid-conf-panel-factory_8h-source.html#l00020">CID_MODEL_RESULT</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00288">cid_update_keyfile_from_widget_list()</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Documentation des variables</h2>
+<a class="anchor" name="15199c9647fdc5129281614002d6af25"></a><!-- doxytag: member="cid-config.c::conf" ref="15199c9647fdc5129281614002d6af25" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structFileSettings.html">FileSettings</a>* <a class="el" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

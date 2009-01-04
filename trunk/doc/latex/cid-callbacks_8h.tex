@@ -1,0 +1,338 @@
+\section{Référence du fichier cid-callbacks.h}
+\label{cid-callbacks_8h}\index{cid-callbacks.h@{cid-callbacks.h}}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+G\_\-BEGIN\_\-DECLS void {\bf \_\-cid\_\-quit} (GtkWidget $\ast$p\_\-widget, gpointer user\_\-data)
+\item 
+void {\bf cid\_\-interrupt} (int signal)
+\item 
+void {\bf on\_\-clic} (GtkWidget $\ast$p\_\-widget, GdkEventButton $\ast$pButton)
+\item 
+void {\bf \_\-cid\_\-about} (GtkMenuItem $\ast$pMenuItem, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-add\_\-about\_\-page} (GtkWidget $\ast$pNoteBook, const gchar $\ast$cPageLabel, const gchar $\ast$cAboutText)
+\item 
+void {\bf \_\-cid\_\-conf\_\-panel} (GtkMenuItem $\ast$pItemMenu, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-user\_\-action\_\-on\_\-config} (GtkDialog $\ast$pDialog, gint action, gpointer $\ast$user\_\-data)
+\item 
+gboolean {\bf \_\-check\_\-cover\_\-is\_\-present} (gpointer {\bf data})
+\item 
+void {\bf \_\-cid\_\-set\_\-color} (GtkColorButton $\ast$pColorButton, GSList $\ast$pWidgetList)
+\item 
+void {\bf \_\-cid\_\-get\_\-current\_\-color} (GtkColorButton $\ast$pColorButton, GSList $\ast$pWidgetList)
+\item 
+gboolean {\bf \_\-cid\_\-find\_\-iter\_\-from\_\-name} (GtkListStore $\ast$pModele, gchar $\ast$cName, GtkTreeIter $\ast$iter)
+\item 
+gboolean {\bf \_\-cid\_\-test\_\-one\_\-name} (GtkTreeModel $\ast$model, GtkTreePath $\ast$path, GtkTreeIter $\ast$iter, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-go\_\-up} (GtkButton $\ast$button, GtkTreeView $\ast$pTreeView)
+\item 
+void {\bf \_\-cid\_\-go\_\-down} (GtkButton $\ast$button, GtkTreeView $\ast$pTreeView)
+\item 
+void {\bf \_\-cid\_\-add} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-remove} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-pick\_\-a\_\-file} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-play\_\-a\_\-sound} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-set\_\-font} (GtkFontButton $\ast$widget, GtkEntry $\ast$pEntry)
+\item 
+void {\bf \_\-cid\_\-key\_\-grab\_\-clicked} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+gpointer {\bf \_\-cid\_\-launch\_\-threaded} (gchar $\ast$cCommand)
+\item 
+void {\bf \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo} (GtkComboBox $\ast$widget, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-configure\_\-renderer} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+void {\bf \_\-cid\_\-configure} (GtkButton $\ast$button, gpointer $\ast${\bf data})
+\item 
+gboolean {\bf \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree} (GtkTreeSelection $\ast$selection, GtkTreeModel $\ast$model, GtkTreePath $\ast$path, gboolean path\_\-currently\_\-selected, gpointer $\ast${\bf data})
+\item 
+gboolean {\bf \_\-cid\_\-get\_\-active\_\-elements} (GtkTreeModel $\ast$model, GtkTreePath $\ast$path, GtkTreeIter $\ast$iter, GSList $\ast$$\ast$pStringList)
+\item 
+void {\bf cid\_\-free\_\-generated\_\-widget\_\-list} (GSList $\ast$pWidgetList)
+\end{CompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-quit@{\_\-cid\_\-quit}}
+\index{\_\-cid\_\-quit@{\_\-cid\_\-quit}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}G\_\-BEGIN\_\-DECLS void \_\-cid\_\-quit (GtkWidget $\ast$ {\em p\_\-widget}, \/  gpointer {\em user\_\-data})}\label{cid-callbacks_8h_19dcd60c5610ddf8d3bdf909684b63e1}
+
+
+Fonction exécutée à l'arret du programme \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em p\_\-widget}]non utilisé \item[{\em user\_\-data}]non utilisé \end{description}
+\end{Desc}
+
+
+Références CID\_\-EXIT\_\-SUCCESS, cid\_\-save\_\-data(), cid\_\-sortie(), et rhythmbox\_\-dbus\_\-disconnect\_\-from\_\-bus().
+
+Référencé par cid\_\-build\_\-menu(), cid\_\-create\_\-main\_\-window(), et cid\_\-interrupt().\index{cid-callbacks.h@{cid-callbacks.h}!cid\_\-interrupt@{cid\_\-interrupt}}
+\index{cid\_\-interrupt@{cid\_\-interrupt}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-interrupt (int {\em signal})}\label{cid-callbacks_8h_2f3b002310e8848eafaa0a8dac5780e2}
+
+
+Fonction exécutée en cas d'interruption du programme \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em signal}]signal à l'origine de l'interruption \end{description}
+\end{Desc}
+
+
+Références \_\-cid\_\-quit().
+
+Référencé par cid\_\-display\_\-init().\index{cid-callbacks.h@{cid-callbacks.h}!on\_\-clic@{on\_\-clic}}
+\index{on\_\-clic@{on\_\-clic}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void on\_\-clic (GtkWidget $\ast$ {\em p\_\-widget}, \/  GdkEventButton $\ast$ {\em pButton})}\label{cid-callbacks_8h_f16db2042bef8aabd2829a3a4a578588}
+
+
+Fonction executée lors d'un clic de souris \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em p\_\-widget}]objet cliqué \item[{\em pButton}]evènement \end{description}
+\end{Desc}
+
+
+Références \_\-next\_\-amarok(), \_\-next\_\-rhythmbox(), \_\-playPause\_\-amarok(), \_\-playPause\_\-rhythmbox(), cid, cid\_\-build\_\-menu(), cid\_\-info, PLAYER\_\-AMAROK\_\-1, et PLAYER\_\-RHYTHMBOX.
+
+Référencé par cid\_\-create\_\-main\_\-window().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-about@{\_\-cid\_\-about}}
+\index{\_\-cid\_\-about@{\_\-cid\_\-about}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-about (GtkMenuItem $\ast$ {\em pMenuItem}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_ac1bcf14dbd3d02106324f4a52ccfabb}
+
+
+Fonction executée pour générer la page \char`\"{}À propos\char`\"{} \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pMenuItem}]element déclencheur \item[{\em \doxyref{data}{p.}{structdata}}]non utilisé \end{description}
+\end{Desc}
+
+
+Références \_\-cid\_\-add\_\-about\_\-page(), \_\-cid\_\-web\_\-button\_\-clicked(), et cid.
+
+Référencé par cid\_\-build\_\-menu().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-add\_\-about\_\-page@{\_\-cid\_\-add\_\-about\_\-page}}
+\index{\_\-cid\_\-add\_\-about\_\-page@{\_\-cid\_\-add\_\-about\_\-page}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-add\_\-about\_\-page (GtkWidget $\ast$ {\em pNoteBook}, \/  const gchar $\ast$ {\em cPageLabel}, \/  const gchar $\ast$ {\em cAboutText})}\label{cid-callbacks_8h_4ab4ce092509cc57211911adfffda518}
+
+
+Ajouter une page à la page \char`\"{}À propos\char`\"{} \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pNoteBook}]sous-page \item[{\em cPageLabel}]label \item[{\em cAboutText}]contenu \end{description}
+\end{Desc}
+
+
+Référencé par \_\-cid\_\-about().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-conf\_\-panel@{\_\-cid\_\-conf\_\-panel}}
+\index{\_\-cid\_\-conf\_\-panel@{\_\-cid\_\-conf\_\-panel}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-conf\_\-panel (GtkMenuItem $\ast$ {\em pItemMenu}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_65612132c74c4760abf7cb3efb8c3257}
+
+
+Fonction executée pour générer l'interface de configuration \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pItemMenu}]element déclencheur \item[{\em \doxyref{data}{p.}{structdata}}]non utilisé \end{description}
+\end{Desc}
+
+
+Références cid, cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel(), cid\_\-read\_\-config\_\-after\_\-update(), et cid\_\-save\_\-data().
+
+Référencé par cid\_\-build\_\-menu().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-user\_\-action\_\-on\_\-config@{\_\-cid\_\-user\_\-action\_\-on\_\-config}}
+\index{\_\-cid\_\-user\_\-action\_\-on\_\-config@{\_\-cid\_\-user\_\-action\_\-on\_\-config}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-user\_\-action\_\-on\_\-config (GtkDialog $\ast$ {\em pDialog}, \/  gint {\em action}, \/  gpointer $\ast$ {\em user\_\-data})}\label{cid-callbacks_8h_7877896d9d497a250e5487108cfd49b1}
+
+
+Fonction executée par le panneau de configuration \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pDialog}]element déclencheur \item[{\em action}]action sur la configuration \item[{\em user\_\-data}]données modifiées \end{description}
+\end{Desc}
+
+
+Références cid\_\-config\_\-panel\_\-destroyed(), cid\_\-free\_\-generated\_\-widget\_\-list(), cid\_\-update\_\-keyfile\_\-from\_\-widget\_\-list(), cid\_\-warning, et cid\_\-write\_\-keys\_\-to\_\-file().
+
+Référencé par cid\_\-edit\_\-conf\_\-file\_\-core().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-check\_\-cover\_\-is\_\-present@{\_\-check\_\-cover\_\-is\_\-present}}
+\index{\_\-check\_\-cover\_\-is\_\-present@{\_\-check\_\-cover\_\-is\_\-present}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean \_\-check\_\-cover\_\-is\_\-present (gpointer {\em data})}\label{cid-callbacks_8h_49ab1092bf6ff94110560d2093600038}
+
+
+Vérifie si l'image à afficher existe \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em pointeur}]de données (non utilisé) \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Renvoie:]VRAI ou FAUX \end{Desc}
+
+
+Références cid\_\-display\_\-image(), data::cover\_\-exist, data::iSidCheckCover, musicData, et data::playing\_\-cover.
+
+Référencé par cid\_\-display\_\-image().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-set\_\-color@{\_\-cid\_\-set\_\-color}}
+\index{\_\-cid\_\-set\_\-color@{\_\-cid\_\-set\_\-color}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-set\_\-color (GtkColorButton $\ast$ {\em pColorButton}, \/  GSList $\ast$ {\em pWidgetList})}\label{cid-callbacks_8h_9c97c019b1920dff0ace8edf341a8b86}
+
+
+
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-get\_\-current\_\-color@{\_\-cid\_\-get\_\-current\_\-color}}
+\index{\_\-cid\_\-get\_\-current\_\-color@{\_\-cid\_\-get\_\-current\_\-color}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-get\_\-current\_\-color (GtkColorButton $\ast$ {\em pColorButton}, \/  GSList $\ast$ {\em pWidgetList})}\label{cid-callbacks_8h_bfef31f6772998853bcfe1d16f749904}
+
+
+
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-find\_\-iter\_\-from\_\-name@{\_\-cid\_\-find\_\-iter\_\-from\_\-name}}
+\index{\_\-cid\_\-find\_\-iter\_\-from\_\-name@{\_\-cid\_\-find\_\-iter\_\-from\_\-name}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean \_\-cid\_\-find\_\-iter\_\-from\_\-name (GtkListStore $\ast$ {\em pModele}, \/  gchar $\ast$ {\em cName}, \/  GtkTreeIter $\ast$ {\em iter})}\label{cid-callbacks_8h_f55b6dee32d16fb18234d7c8e9e4abaf}
+
+
+
+
+Références \_\-cid\_\-test\_\-one\_\-name().
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-test\_\-one\_\-name@{\_\-cid\_\-test\_\-one\_\-name}}
+\index{\_\-cid\_\-test\_\-one\_\-name@{\_\-cid\_\-test\_\-one\_\-name}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean \_\-cid\_\-test\_\-one\_\-name (GtkTreeModel $\ast$ {\em model}, \/  GtkTreePath $\ast$ {\em path}, \/  GtkTreeIter $\ast$ {\em iter}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_89642a4e897ff6224ebf066faab17a8b}
+
+
+
+
+Références CID\_\-MODEL\_\-NAME.
+
+Référencé par \_\-cid\_\-find\_\-iter\_\-from\_\-name().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-go\_\-up@{\_\-cid\_\-go\_\-up}}
+\index{\_\-cid\_\-go\_\-up@{\_\-cid\_\-go\_\-up}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-go\_\-up (GtkButton $\ast$ {\em button}, \/  GtkTreeView $\ast$ {\em pTreeView})}\label{cid-callbacks_8h_8941cb85508e9f7d8d7d4f17c992d63d}
+
+
+
+
+Références \_\-cid\_\-increase\_\-order(), et CID\_\-MODEL\_\-ORDER.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-go\_\-down@{\_\-cid\_\-go\_\-down}}
+\index{\_\-cid\_\-go\_\-down@{\_\-cid\_\-go\_\-down}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-go\_\-down (GtkButton $\ast$ {\em button}, \/  GtkTreeView $\ast$ {\em pTreeView})}\label{cid-callbacks_8h_272209cf2b7a8f179f1026ff4b2efa46}
+
+
+
+
+Références \_\-cid\_\-decrease\_\-order(), et CID\_\-MODEL\_\-ORDER.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-add@{\_\-cid\_\-add}}
+\index{\_\-cid\_\-add@{\_\-cid\_\-add}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-add (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_caa73ff6628d40864efe848ef3af8f09}
+
+
+
+
+Références CID\_\-MODEL\_\-ACTIVE, CID\_\-MODEL\_\-NAME, et CID\_\-MODEL\_\-ORDER.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-remove@{\_\-cid\_\-remove}}
+\index{\_\-cid\_\-remove@{\_\-cid\_\-remove}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-remove (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_ac4e64f6761618148e18da77b62f1977}
+
+
+
+
+Références \_\-cid\_\-decrease\_\-order\_\-if\_\-greater(), CID\_\-MODEL\_\-NAME, et CID\_\-MODEL\_\-ORDER.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-pick\_\-a\_\-file@{\_\-cid\_\-pick\_\-a\_\-file}}
+\index{\_\-cid\_\-pick\_\-a\_\-file@{\_\-cid\_\-pick\_\-a\_\-file}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-pick\_\-a\_\-file (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_2a05e3dbf48472adf05905c9c9c7c115}
+
+
+
+
+Références \_\-cid\_\-show\_\-image\_\-preview().
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-play\_\-a\_\-sound@{\_\-cid\_\-play\_\-a\_\-sound}}
+\index{\_\-cid\_\-play\_\-a\_\-sound@{\_\-cid\_\-play\_\-a\_\-sound}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-play\_\-a\_\-sound (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_b1d0292171c97d4c87760dfaf8da2930}
+
+
+
+
+Références cid\_\-play\_\-sound().
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-set\_\-font@{\_\-cid\_\-set\_\-font}}
+\index{\_\-cid\_\-set\_\-font@{\_\-cid\_\-set\_\-font}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-set\_\-font (GtkFontButton $\ast$ {\em widget}, \/  GtkEntry $\ast$ {\em pEntry})}\label{cid-callbacks_8h_1035e80c38a4692ff583b0a54b69282a}
+
+
+
+
+Références cid\_\-message.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-key\_\-grab\_\-clicked@{\_\-cid\_\-key\_\-grab\_\-clicked}}
+\index{\_\-cid\_\-key\_\-grab\_\-clicked@{\_\-cid\_\-key\_\-grab\_\-clicked}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-key\_\-grab\_\-clicked (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_c2af9e7dba87955f3ee5b98ac2064580}
+
+
+
+
+Références \_\-cid\_\-key\_\-grab\_\-cb(), et cid\_\-message.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-launch\_\-threaded@{\_\-cid\_\-launch\_\-threaded}}
+\index{\_\-cid\_\-launch\_\-threaded@{\_\-cid\_\-launch\_\-threaded}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gpointer \_\-cid\_\-launch\_\-threaded (gchar $\ast$ {\em cCommand})}\label{cid-callbacks_8h_06c7f37ec989f3bfef3e65668dc107ae}
+
+
+
+
+Référencé par cid\_\-launch\_\-command\_\-full().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo@{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo}}
+\index{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo@{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo (GtkComboBox $\ast$ {\em widget}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_0bebd1142587d7b886f698a1c402bfea}
+
+
+
+
+Références \_\-cid\_\-selection\_\-changed().
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-configure\_\-renderer@{\_\-cid\_\-configure\_\-renderer}}
+\index{\_\-cid\_\-configure\_\-renderer@{\_\-cid\_\-configure\_\-renderer}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-configure\_\-renderer (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_a7ac9e6bcdc6221ab7460e93befefefb}
+
+
+
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-configure@{\_\-cid\_\-configure}}
+\index{\_\-cid\_\-configure@{\_\-cid\_\-configure}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void \_\-cid\_\-configure (GtkButton $\ast$ {\em button}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_49ba76d841d14854ab4c0cdbc63915fc}
+
+
+
+
+Références CID\_\-MODEL\_\-RESULT.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree@{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree}}
+\index{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree@{\_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree (GtkTreeSelection $\ast$ {\em selection}, \/  GtkTreeModel $\ast$ {\em model}, \/  GtkTreePath $\ast$ {\em path}, \/  gboolean {\em path\_\-currently\_\-selected}, \/  gpointer $\ast$ {\em data})}\label{cid-callbacks_8h_845e62ffc9590b903d0ef123b9efb3cf}
+
+
+
+
+Références \_\-cid\_\-selection\_\-changed().
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-callbacks.h@{cid-callbacks.h}!\_\-cid\_\-get\_\-active\_\-elements@{\_\-cid\_\-get\_\-active\_\-elements}}
+\index{\_\-cid\_\-get\_\-active\_\-elements@{\_\-cid\_\-get\_\-active\_\-elements}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean \_\-cid\_\-get\_\-active\_\-elements (GtkTreeModel $\ast$ {\em model}, \/  GtkTreePath $\ast$ {\em path}, \/  GtkTreeIter $\ast$ {\em iter}, \/  GSList $\ast$$\ast$ {\em pStringList})}\label{cid-callbacks_8h_0e6228a52370cee5be4a8cb1ca200d5c}
+
+
+
+
+Références CID\_\-MODEL\_\-ACTIVE, et CID\_\-MODEL\_\-NAME.
+
+Référencé par \_\-cid\_\-get\_\-each\_\-widget\_\-value().\index{cid-callbacks.h@{cid-callbacks.h}!cid\_\-free\_\-generated\_\-widget\_\-list@{cid\_\-free\_\-generated\_\-widget\_\-list}}
+\index{cid\_\-free\_\-generated\_\-widget\_\-list@{cid\_\-free\_\-generated\_\-widget\_\-list}!cid-callbacks.h@{cid-callbacks.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-free\_\-generated\_\-widget\_\-list (GSList $\ast$ {\em pWidgetList})}\label{cid-callbacks_8h_765fa530d36dc45654542f4d256df599}
+
+
+
+
+Références \_\-cid\_\-free\_\-widget\_\-list().
+
+Référencé par \_\-cid\_\-user\_\-action\_\-on\_\-config().

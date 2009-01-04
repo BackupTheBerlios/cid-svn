@@ -1,0 +1,176 @@
+\section{Référence du fichier cid-main.h}
+\label{cid-main_8h}\index{cid-main.h@{cid-main.h}}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+G\_\-BEGIN\_\-DECLS void {\bf cid\_\-display\_\-image} (gchar $\ast$image)
+\item 
+void {\bf cid\_\-display\_\-init} (int argc, char $\ast$$\ast$argv)
+\item 
+void {\bf cid\_\-create\_\-main\_\-window} ()
+\item 
+GdkPixbuf $\ast$ {\bf cid\_\-get\_\-pixbuf} (GtkWidget $\ast$imageWidget)
+\item 
+GtkWidget $\ast$ {\bf cid\_\-get\_\-image\_\-widget} (gchar $\ast$imageURI)
+\item 
+void {\bf cid\_\-set\_\-colormap} (GtkWidget $\ast$widget, GdkScreen $\ast$old\_\-screen, gpointer userdata)
+\item 
+cairo\_\-surface\_\-t $\ast$ {\bf cid\_\-get\_\-image\_\-from\_\-pixbuf} (GdkPixbuf $\ast$pixbuf)
+\item 
+cairo\_\-surface\_\-t $\ast$ {\bf cid\_\-get\_\-image} (gchar $\ast$cImagePath, gdouble iWidth, gdouble iHeight)
+\item 
+void {\bf cid\_\-draw\_\-window} (GtkWidget $\ast$widget, GdkEventExpose $\ast$event, gpointer $\ast$userdata)
+\item 
+void {\bf cid\_\-focus} (GtkWidget $\ast$pWidget, GdkEventExpose $\ast$event, gpointer $\ast$userdata)
+\item 
+void $\ast$ {\bf cid\_\-rotate\_\-on\_\-changing\_\-song} (void $\ast$ptr)
+\item 
+void {\bf cid\_\-animation} (void)
+\item 
+gboolean {\bf cid\_\-threaded\_\-animation} (gpointer $\ast${\bf data})
+\end{CompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\index{cid-main.h@{cid-main.h}!cid\_\-display\_\-image@{cid\_\-display\_\-image}}
+\index{cid\_\-display\_\-image@{cid\_\-display\_\-image}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}G\_\-BEGIN\_\-DECLS void cid\_\-display\_\-image (gchar $\ast$ {\em image})}\label{cid-main_8h_abcf6e9905ea41c95586e9e6be2e84a1}
+
+
+affiche l'image dont le chemin est passé en argument. \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em URI}]de l'image à afficher \end{description}
+\end{Desc}
+
+
+Références \_\-check\_\-cover\_\-is\_\-present(), cid, cid\_\-debug, cid\_\-get\_\-image(), data::cover\_\-exist, DEFAULT\_\-IMAGE, data::iSidCheckCover, musicData, et rhythmboxData.
+
+Référencé par \_\-check\_\-cover\_\-is\_\-present(), cid\_\-amarok\_\-cover(), cid\_\-connect\_\-to\_\-amarok(), cid\_\-run\_\-with\_\-player(), get\_\-amarock\_\-musicData(), onChangeSong(), et onCovertArtChanged().\index{cid-main.h@{cid-main.h}!cid\_\-display\_\-init@{cid\_\-display\_\-init}}
+\index{cid\_\-display\_\-init@{cid\_\-display\_\-init}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-display\_\-init (int {\em argc}, \/  char $\ast$$\ast$ {\em argv})}\label{cid-main_8h_6d1ca9236cd558391793807b8e817130}
+
+
+boucle cid/gtk \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em nombre}]d'argument de CID \item[{\em liste}]des arguments de CID \end{description}
+\end{Desc}
+
+
+Références cid, cid\_\-create\_\-main\_\-window(), cid\_\-interrupt(), et cid\_\-run\_\-with\_\-player().
+
+Référencé par main().\index{cid-main.h@{cid-main.h}!cid\_\-create\_\-main\_\-window@{cid\_\-create\_\-main\_\-window}}
+\index{cid\_\-create\_\-main\_\-window@{cid\_\-create\_\-main\_\-window}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-create\_\-main\_\-window ()}\label{cid-main_8h_2640d4b07379342354919e9a4ca1dae4}
+
+
+crée une fenêtre, la déplace à la position voulue, et la dimensionne 
+
+Références \_\-cid\_\-quit(), cid, cid\_\-draw\_\-window(), cid\_\-focus(), cid\_\-set\_\-colormap(), et on\_\-clic().
+
+Référencé par cid\_\-display\_\-init().\index{cid-main.h@{cid-main.h}!cid\_\-get\_\-pixbuf@{cid\_\-get\_\-pixbuf}}
+\index{cid\_\-get\_\-pixbuf@{cid\_\-get\_\-pixbuf}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}GdkPixbuf$\ast$ cid\_\-get\_\-pixbuf (GtkWidget $\ast$ {\em imageWidget})}\label{cid-main_8h_bc0aec7dc3c1566c92317817962763c7}
+
+
+Crée un buffer de pixels à partir d'un GtkWidget image 
+
+Référencé par cid\_\-get\_\-image().\index{cid-main.h@{cid-main.h}!cid\_\-get\_\-image\_\-widget@{cid\_\-get\_\-image\_\-widget}}
+\index{cid\_\-get\_\-image\_\-widget@{cid\_\-get\_\-image\_\-widget}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}GtkWidget$\ast$ cid\_\-get\_\-image\_\-widget (gchar $\ast$ {\em imageURI})}\label{cid-main_8h_a80c8d1a838f92796cbc0706de88a394}
+
+
+Crée un GtkWidget image à partir de l'URI de l'image \index{cid-main.h@{cid-main.h}!cid\_\-set\_\-colormap@{cid\_\-set\_\-colormap}}
+\index{cid\_\-set\_\-colormap@{cid\_\-set\_\-colormap}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-set\_\-colormap (GtkWidget $\ast$ {\em widget}, \/  GdkScreen $\ast$ {\em old\_\-screen}, \/  gpointer {\em userdata})}\label{cid-main_8h_2839de6472a3afc45911b4856e156443}
+
+
+determine si un gestionnaire de composite est présent \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em fenêtre}]à évaluer \item[{\em non}]utilisé \item[{\em pointeur}]de données (non utilisé) \end{description}
+\end{Desc}
+
+
+Références cid\_\-message, et supports\_\-alpha.
+
+Référencé par cid\_\-create\_\-main\_\-window().\index{cid-main.h@{cid-main.h}!cid\_\-get\_\-image\_\-from\_\-pixbuf@{cid\_\-get\_\-image\_\-from\_\-pixbuf}}
+\index{cid\_\-get\_\-image\_\-from\_\-pixbuf@{cid\_\-get\_\-image\_\-from\_\-pixbuf}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cairo\_\-surface\_\-t$\ast$ cid\_\-get\_\-image\_\-from\_\-pixbuf (GdkPixbuf $\ast$ {\em pixbuf})}\label{cid-main_8h_8f4f280d9555d90279fb07216621a565}
+
+
+renvoie une image à partir d'un buffer de pixels \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em buffer}]de pixels \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Renvoie:]image à partir du buffer \end{Desc}
+
+
+Références cid\_\-debug.
+
+Référencé par cid\_\-get\_\-image().\index{cid-main.h@{cid-main.h}!cid\_\-get\_\-image@{cid\_\-get\_\-image}}
+\index{cid\_\-get\_\-image@{cid\_\-get\_\-image}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cairo\_\-surface\_\-t$\ast$ cid\_\-get\_\-image (gchar $\ast$ {\em cImagePath}, \/  gdouble {\em iWidth}, \/  gdouble {\em iHeight})}\label{cid-main_8h_6dc56a26a96403d692ae71b7149041d6}
+
+
+dessine l'image à partir de son URI \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em URI}]de l'image à dessiner \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Renvoie:]image \end{Desc}
+\index{cid-main.h@{cid-main.h}!cid\_\-draw\_\-window@{cid\_\-draw\_\-window}}
+\index{cid\_\-draw\_\-window@{cid\_\-draw\_\-window}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-draw\_\-window (GtkWidget $\ast$ {\em widget}, \/  GdkEventExpose $\ast$ {\em event}, \/  gpointer $\ast$ {\em userdata})}\label{cid-main_8h_feafbc365c714b4d2154591f3b9423d5}
+
+
+Fonction appelée pour dessiner la fenêtre \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em La}]fenêtre à dessiner \item[{\em ?}]\item[{\em non}]utilisé \end{description}
+\end{Desc}
+
+
+Références cid, et cid\_\-set\_\-render().
+
+Référencé par cid\_\-create\_\-main\_\-window().\index{cid-main.h@{cid-main.h}!cid\_\-focus@{cid\_\-focus}}
+\index{cid\_\-focus@{cid\_\-focus}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-focus (GtkWidget $\ast$ {\em pWidget}, \/  GdkEventExpose $\ast$ {\em event}, \/  gpointer $\ast$ {\em userdata})}\label{cid-main_8h_53b806a2d95d2c3f4a4e998b2ab0f4f2}
+
+
+Fonction appelee au focus 
+
+Références cid, CID\_\-FOCUS\_\-IN, CID\_\-FOCUS\_\-OUT, cid\_\-info, et cid\_\-threaded\_\-animation().
+
+Référencé par cid\_\-create\_\-main\_\-window().\index{cid-main.h@{cid-main.h}!cid\_\-rotate\_\-on\_\-changing\_\-song@{cid\_\-rotate\_\-on\_\-changing\_\-song}}
+\index{cid\_\-rotate\_\-on\_\-changing\_\-song@{cid\_\-rotate\_\-on\_\-changing\_\-song}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ cid\_\-rotate\_\-on\_\-changing\_\-song (void $\ast$ {\em ptr})}\label{cid-main_8h_f16aea4bb7c83bdd621e61e2b2d73845}
+
+
+Fonction appelée par cid\_\-threaded\_\-animation 
+
+Références cid.
+
+Référencé par cid\_\-threaded\_\-animation().\index{cid-main.h@{cid-main.h}!cid\_\-animation@{cid\_\-animation}}
+\index{cid\_\-animation@{cid\_\-animation}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-animation (void)}\label{cid-main_8h_91ad784513daa5eaf6e6216cc4da9f5e}
+
+
+Fonction appelée pour animer CID 
+
+Références cid, CID\_\-ROTATE, et cid\_\-threaded\_\-animation().
+
+Référencé par cid\_\-amarok\_\-cover(), et onChangeSong().\index{cid-main.h@{cid-main.h}!cid\_\-threaded\_\-animation@{cid\_\-threaded\_\-animation}}
+\index{cid\_\-threaded\_\-animation@{cid\_\-threaded\_\-animation}!cid-main.h@{cid-main.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean cid\_\-threaded\_\-animation (gpointer $\ast$ {\em data})}\label{cid-main_8h_388cbc7682b3b0da4860795ccdb70111}
+
+
+Fonction permettant de lancer une animation threadée 
+
+Références cid, cid\_\-focus\_\-in(), CID\_\-FOCUS\_\-IN, cid\_\-focus\_\-out(), CID\_\-FOCUS\_\-OUT, CID\_\-ROTATE, et cid\_\-rotate\_\-on\_\-changing\_\-song().
+
+Référencé par cid\_\-animation(), et cid\_\-focus().

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID:  Fichier source de cid-menu-factory.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+<h1>cid-menu-factory.h</h1><a href="cid-menu-factory_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">   *</span>
+<a name="l00003"></a>00003 <span class="comment">   *                           cid-menu-factory.h</span>
+<a name="l00004"></a>00004 <span class="comment">   *                                -------</span>
+<a name="l00005"></a>00005 <span class="comment">   *                          Conky Images Display</span>
+<a name="l00006"></a>00006 <span class="comment">   *                              Benjamin SANS</span>
+<a name="l00007"></a>00007 <span class="comment">   *                    --------------------------------</span>
+<a name="l00008"></a>00008 <span class="comment">   *</span>
+<a name="l00009"></a>00009 <span class="comment">*/</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#ifndef __CID_MENU_FACTORY__</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#define __CID_MENU_FACTORY__</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;gtk/gtk.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;gdk/gdkscreen.h&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 G_BEGIN_DECLS
+<a name="l00017"></a>00017 
+<a name="l00022"></a>00022 GtkWidget *<a class="code" href="cid-menu-factory_8c.html#cab76f9da7f63cdda8f0a32002099be5">cid_build_menu</a> (<a class="code" href="cid-struct_8h.html#4e1f96a6293d819d2bd5ba782babd62b">CidMainContainer</a> *pCid);
+<a name="l00023"></a>00023 
+<a name="l00024"></a><a class="code" href="cid-menu-factory_8h.html#1afa152e07595006ac48a3da7a0ecf58">00024</a> <span class="preprocessor">#define _add_entry_in_menu(cLabel, gtkStock, pSubMenu, pCallBack) CID_ADD_IN_MENU_WITH_STOCK_AND_DATA(cLabel, gtkStock, pSubMenu, pCallBack, data)</span>
+<a name="l00025"></a>00025 <span class="preprocessor"></span>
+<a name="l00034"></a><a class="code" href="cid-menu-factory_8h.html#77a4a64752c510532d67272ffcb62961">00034</a> <span class="preprocessor">#define CID_ADD_IN_MENU_WITH_STOCK_AND_DATA(cLabel, gtkStock, pFunction, pMenu, pData) \</span>
+<a name="l00035"></a>00035 <span class="preprocessor">        do { \</span>
+<a name="l00036"></a>00036 <span class="preprocessor">                pMenuItem = gtk_image_menu_item_new_with_label (cLabel); \</span>
+<a name="l00037"></a>00037 <span class="preprocessor">                image = gtk_image_new_from_stock (gtkStock, GTK_ICON_SIZE_MENU); \</span>
+<a name="l00038"></a>00038 <span class="preprocessor">                gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (pMenuItem), image); \</span>
+<a name="l00039"></a>00039 <span class="preprocessor">                gtk_menu_shell_append  (GTK_MENU_SHELL (pMenu), pMenuItem); \</span>
+<a name="l00040"></a>00040 <span class="preprocessor">                g_signal_connect (G_OBJECT (pMenuItem), "activate", G_CALLBACK(pFunction), pData); \</span>
+<a name="l00041"></a>00041 <span class="preprocessor">        } while (0);</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>
+<a name="l00043"></a>00043 G_END_DECLS
+<a name="l00044"></a>00044 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID:  Fichier source de cid-config.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+<h1>cid-config.h</h1><a href="cid-config_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">   *</span>
+<a name="l00003"></a>00003 <span class="comment">   *                             cid-config.h</span>
+<a name="l00004"></a>00004 <span class="comment">   *                               -------</span>
+<a name="l00005"></a>00005 <span class="comment">   *                         Conky Images Display</span>
+<a name="l00006"></a>00006 <span class="comment">   *             16/10/2008 - Charlie MERLAND / Benjamin SANS</span>
+<a name="l00007"></a>00007 <span class="comment">   *             --------------------------------------------</span>
+<a name="l00008"></a>00008 <span class="comment">   *</span>
+<a name="l00009"></a>00009 <span class="comment">*/</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#ifndef __CID_CONFIG__</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#define __CID_CONFIG__</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include "<a class="code" href="cid-struct_8h.html">cid-struct.h</a>"</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 G_BEGIN_DECLS
+<a name="l00016"></a>00016 
+<a name="l00017"></a><a class="code" href="cid-config_8h.html#711d201b78f9dcd358d588745928e157">00017</a> <span class="preprocessor">#define OLD_CONFIG_FILE ".cidrc"</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span>
+<a name="l00023"></a>00023 <span class="keywordtype">int</span> <a class="code" href="cid-config_8c.html#76b2b01d2c1cba520d9183fe1ab756bf">cid_read_config</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> *f);
+<a name="l00024"></a>00024 
+<a name="l00029"></a>00029 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#f3e51a66443cd9c14a7f8c1e116a99c8">cid_check_file</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> *f);
+<a name="l00030"></a>00030 
+<a name="l00036"></a>00036 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#4f844443b05d6ce433181abd4cc27b22">cid_merge_config</a> (<a class="code" href="structFileSettings.html">FileSettings</a> *<a class="code" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a>);
+<a name="l00037"></a>00037 
+<a name="l00041"></a>00041 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#a924ec2e21de1e288a0fb06a7ec71e90">cid_save_data</a> ();
+<a name="l00042"></a>00042 
+<a name="l00048"></a>00048 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#bde2f6a9c4d72b55999544d4d823d75a">cid_write_keys_to_file</a> (GKeyFile *pKeyFile, <span class="keyword">const</span> gchar *cConfFilePath);
+<a name="l00049"></a>00049 
+<a name="l00054"></a>00054 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#8649145737989647a1fb2ebc8e8e9f74">cid_check_conf_file_version</a> (<span class="keyword">const</span> gchar *f);
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#b0b7d2c2182a54ad3ae6fd16f7b3978a">cid_update_keyfile_from_widget_list</a> (GKeyFile *pKeyFile, GSList *pWidgetList);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#ab4246cffd42c2d1e7548e1f52d69082">_cid_get_each_widget_value</a> (gpointer *<a class="code" href="structdata.html">data</a>, GKeyFile *pKeyFile);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#f1fe3c86fa896a97e605559ae2b88b41">cid_read_config_after_update</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> *f, gpointer *pData);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062 <span class="keywordtype">void</span> <a class="code" href="cid-config_8c.html#2b89918241ccf974ebbc275fcbf938af">cid_free_conf</a> (<a class="code" href="structFileSettings.html">FileSettings</a> *<a class="code" href="cid-config_8c.html#15199c9647fdc5129281614002d6af25">conf</a>);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 <span class="keywordtype">int</span> <a class="code" href="cid-config_8c.html#0b6505cb73b9e5edfd90d08682687f7a">cid_read_key_file</a> (<span class="keyword">const</span> gchar *f);
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 G_END_DECLS
+<a name="l00067"></a>00067 <span class="preprocessor">#endif</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

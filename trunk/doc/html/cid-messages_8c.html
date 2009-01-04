@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier cid-messages.c</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier cid-messages.c</h1><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Macros</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#7e31b219b6b8abedd57ef63975e18c2c">_INSIDE_CID_MESSAGES_C_</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#432b36349bd27c11dbf8c5c704e3692b">_cid_log_level_to_string</a> (const GLogLevelFlags loglevel)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#bd4aa69876ed51a037deb593eb7219cb">cid_log_location</a> (const GLogLevelFlags loglevel, const char *file, const char *func, const int line, const char *format,...)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#6aed9a1a5cbf05c3cb5ff4a34e3e3c14">cid_log_init</a> (gboolean bBlackTerminal)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#9f6543baa01f0cd02d43abcafbc667d4">cid_log_set_level</a> (GLogLevelFlags loglevel)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#a884a28c1f60af6eed13da9bb191dd25">cid_exit</a> (int code, const gchar *mess,...)</td></tr>
+
+<tr><td colspan="2"><br><h2>Variables</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-messages_8c.html#860436ba179bdc7bc86455fc8d306759">s_iLogColor</a> = '0'</td></tr>
+
+</table>
+<hr><h2>Documentation des macros</h2>
+<a class="anchor" name="7e31b219b6b8abedd57ef63975e18c2c"></a><!-- doxytag: member="cid-messages.c::_INSIDE_CID_MESSAGES_C_" ref="7e31b219b6b8abedd57ef63975e18c2c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _INSIDE_CID_MESSAGES_C_          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+</div>
+</div><p>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="432b36349bd27c11dbf8c5c704e3692b"></a><!-- doxytag: member="cid-messages.c::_cid_log_level_to_string" ref="432b36349bd27c11dbf8c5c704e3692b" args="(const GLogLevelFlags loglevel)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* _cid_log_level_to_string           </td>
+          <td>(</td>
+          <td class="paramtype">const GLogLevelFlags&nbsp;</td>
+          <td class="paramname"> <em>loglevel</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-messages_8c-source.html#l00050">cid_log_location()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="bd4aa69876ed51a037deb593eb7219cb"></a><!-- doxytag: member="cid-messages.c::cid_log_location" ref="bd4aa69876ed51a037deb593eb7219cb" args="(const GLogLevelFlags loglevel, const char *file, const char *func, const int line, const char *format,...)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_log_location           </td>
+          <td>(</td>
+          <td class="paramtype">const GLogLevelFlags&nbsp;</td>
+          <td class="paramname"> <em>loglevel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&nbsp;</td>
+          <td class="paramname"> <em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>...</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+internal function <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>log</em>&nbsp;</td><td>level </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>where the messge comes from </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>function</em>&nbsp;</td><td>where the message comes from </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>line</em>&nbsp;</td><td>where the message comes from </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>message</em>&nbsp;</td><td>to display (viariable nomber of paramters) </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8c-source.html#l00032">_cid_log_level_to_string()</a>, et <a class="el" href="cid-messages_8c-source.html#l00017">s_iLogColor</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6aed9a1a5cbf05c3cb5ff4a34e3e3c14"></a><!-- doxytag: member="cid-messages.c::cid_log_init" ref="6aed9a1a5cbf05c3cb5ff4a34e3e3c14" args="(gboolean bBlackTerminal)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_log_init           </td>
+          <td>(</td>
+          <td class="paramtype">gboolean&nbsp;</td>
+          <td class="paramname"> <em>bBlackTerminal</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+initialise the log system <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>do</em>&nbsp;</td><td>we use the log system </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8c-source.html#l00017">s_iLogColor</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9f6543baa01f0cd02d43abcafbc667d4"></a><!-- doxytag: member="cid-messages.c::cid_log_set_level" ref="9f6543baa01f0cd02d43abcafbc667d4" args="(GLogLevelFlags loglevel)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_log_set_level           </td>
+          <td>(</td>
+          <td class="paramtype">GLogLevelFlags&nbsp;</td>
+          <td class="paramname"> <em>loglevel</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+set the verbosity level <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>verbosity</em>&nbsp;</td><td>level </td></tr>
+  </table>
+</dl>
+
+<p>Référencé par <a class="el" href="cid-utilities_8c-source.html#l00187">_cid_set_verbosity()</a>, et <a class="el" href="cid_8c-source.html#l00101">main()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a884a28c1f60af6eed13da9bb191dd25"></a><!-- doxytag: member="cid-messages.c::cid_exit" ref="a884a28c1f60af6eed13da9bb191dd25" args="(int code, const gchar *mess,...)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_exit           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const gchar *&nbsp;</td>
+          <td class="paramname"> <em>mess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>...</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+sort du programme avec le code de retour donné en affichant le message d'erreur passé en paramètre <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>code</em>&nbsp;</td><td>de retour </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>message</em>&nbsp;</td><td>d'erreur à nombre variable de paramètres </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00050">cid_error</a>, et <a class="el" href="cid-utilities_8c-source.html#l00016">cid_sortie()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-config_8c-source.html#l00038">cid_check_conf_file_version()</a>, <a class="el" href="cid-main_8c-source.html#l00045">cid_get_image()</a>, et <a class="el" href="cid-main_8c-source.html#l00618">cid_run_with_player()</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Documentation des variables</h2>
+<a class="anchor" name="860436ba179bdc7bc86455fc8d306759"></a><!-- doxytag: member="cid-messages.c::s_iLogColor" ref="860436ba179bdc7bc86455fc8d306759" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char <a class="el" href="cid-messages_8c.html#860436ba179bdc7bc86455fc8d306759">s_iLogColor</a> = '0'          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Référencé par <a class="el" href="cid-messages_8c-source.html#l00078">cid_log_init()</a>, et <a class="el" href="cid-messages_8c-source.html#l00050">cid_log_location()</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

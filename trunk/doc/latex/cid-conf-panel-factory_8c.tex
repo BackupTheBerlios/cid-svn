@@ -1,0 +1,94 @@
+\section{Référence du fichier cid-conf-panel-factory.c}
+\label{cid-conf-panel-factory_8c}\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsection*{Macros}
+\begin{CompactItemize}
+\item 
+\#define {\bf \_\-allocate\_\-new\_\-buffer}
+\item 
+\#define {\bf \_\-allocate\_\-new\_\-model}~modele = gtk\_\-list\_\-store\_\-new (CID\_\-MODEL\_\-NB\_\-COLUMNS, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-BOOLEAN, G\_\-TYPE\_\-INT, G\_\-TYPE\_\-STRING, GDK\_\-TYPE\_\-PIXBUF);
+\end{CompactItemize}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+void {\bf cid\_\-config\_\-panel\_\-destroyed} (void)
+\item 
+gboolean {\bf cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel} (GtkWindow $\ast$pWindow, gchar $\ast$cConfFilePath, const gchar $\ast$cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar $\ast$cPresentedGroup, {\bf CidReadConfigFunc} pConfigFunc, gchar $\ast$cGettextDomain)
+\item 
+gboolean {\bf cid\_\-edit\_\-conf\_\-file\_\-core} (GtkWindow $\ast$pWindow, gchar $\ast$cConfFilePath, const gchar $\ast$cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar $\ast$cPresentedGroup, {\bf CidReadConfigFunc} pConfigFunc, gchar $\ast$cGettextDomain)
+\item 
+void {\bf cid\_\-config\_\-panel\_\-created} (void)
+\item 
+GtkWidget $\ast$ {\bf cid\_\-generate\_\-ihm\_\-from\_\-keyfile} (GKeyFile $\ast$pKeyFile, const gchar $\ast$cTitle, GtkWindow $\ast$pParentWindow, GSList $\ast$$\ast$pWidgetList, gboolean bApplyButtonPresent, gchar iIdentifier, gchar $\ast$cPresentedGroup, gchar $\ast$cGettextDomain, GPtrArray $\ast$pDataGarbage)
+\end{CompactItemize}
+
+
+\subsection{Documentation des macros}
+\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!\_\-allocate\_\-new\_\-buffer@{\_\-allocate\_\-new\_\-buffer}}
+\index{\_\-allocate\_\-new\_\-buffer@{\_\-allocate\_\-new\_\-buffer}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define \_\-allocate\_\-new\_\-buffer}\label{cid-conf-panel-factory_8c_7dc49b9acb0496fc8400df4d7d718cc1}
+
+
+\textbf{Valeur :}
+
+\begin{Code}\begin{verbatim}data = g_new (gpointer, 3); \
+        g_ptr_array_add (pDataGarbage, data);
+\end{verbatim}
+\end{Code}
+
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!\_\-allocate\_\-new\_\-model@{\_\-allocate\_\-new\_\-model}}
+\index{\_\-allocate\_\-new\_\-model@{\_\-allocate\_\-new\_\-model}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define \_\-allocate\_\-new\_\-model~modele = gtk\_\-list\_\-store\_\-new (CID\_\-MODEL\_\-NB\_\-COLUMNS, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-STRING, G\_\-TYPE\_\-BOOLEAN, G\_\-TYPE\_\-INT, G\_\-TYPE\_\-STRING, GDK\_\-TYPE\_\-PIXBUF);}\label{cid-conf-panel-factory_8c_251042fa0ef460fb6bdf82b6597dd4bb}
+
+
+
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().
+
+\subsection{Documentation des fonctions}
+\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!cid\_\-config\_\-panel\_\-destroyed@{cid\_\-config\_\-panel\_\-destroyed}}
+\index{cid\_\-config\_\-panel\_\-destroyed@{cid\_\-config\_\-panel\_\-destroyed}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-config\_\-panel\_\-destroyed (void)}\label{cid-conf-panel-factory_8c_dea878f4c7dd9508f463739dc306f3a1}
+
+
+
+
+Références cid\_\-debug.
+
+Référencé par \_\-cid\_\-user\_\-action\_\-on\_\-config().\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel@{cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel}}
+\index{cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel@{cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel (GtkWindow $\ast$ {\em pWindow}, \/  gchar $\ast$ {\em cConfFilePath}, \/  const gchar $\ast$ {\em cTitle}, \/  int {\em iWindowWidth}, \/  int {\em iWindowHeight}, \/  gchar {\em iIdentifier}, \/  gchar $\ast$ {\em cPresentedGroup}, \/  {\bf CidReadConfigFunc} {\em pConfigFunc}, \/  gchar $\ast$ {\em cGettextDomain})}\label{cid-conf-panel-factory_8c_527e5da831d6d9f18f2739316bfda493}
+
+
+
+
+Références cid\_\-edit\_\-conf\_\-file\_\-core().
+
+Référencé par \_\-cid\_\-conf\_\-panel().\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!cid\_\-edit\_\-conf\_\-file\_\-core@{cid\_\-edit\_\-conf\_\-file\_\-core}}
+\index{cid\_\-edit\_\-conf\_\-file\_\-core@{cid\_\-edit\_\-conf\_\-file\_\-core}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}gboolean cid\_\-edit\_\-conf\_\-file\_\-core (GtkWindow $\ast$ {\em pWindow}, \/  gchar $\ast$ {\em cConfFilePath}, \/  const gchar $\ast$ {\em cTitle}, \/  int {\em iWindowWidth}, \/  int {\em iWindowHeight}, \/  gchar {\em iIdentifier}, \/  gchar $\ast$ {\em cPresentedGroup}, \/  {\bf CidReadConfigFunc} {\em pConfigFunc}, \/  gchar $\ast$ {\em cGettextDomain})}\label{cid-conf-panel-factory_8c_d634715d7795c19e064e4c29dd9b3632}
+
+
+
+
+Références \_\-cid\_\-user\_\-action\_\-on\_\-config(), cid\_\-generate\_\-ihm\_\-from\_\-keyfile(), cid\_\-message, et cid\_\-warning.
+
+Référencé par cid\_\-edit\_\-conf\_\-file\_\-with\_\-panel().\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!cid\_\-config\_\-panel\_\-created@{cid\_\-config\_\-panel\_\-created}}
+\index{cid\_\-config\_\-panel\_\-created@{cid\_\-config\_\-panel\_\-created}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-config\_\-panel\_\-created (void)}\label{cid-conf-panel-factory_8c_0759c763f045e06e269a53cb1853a6f3}
+
+
+
+
+Références cid\_\-debug.
+
+Référencé par cid\_\-generate\_\-ihm\_\-from\_\-keyfile().\index{cid-conf-panel-factory.c@{cid-conf-panel-factory.c}!cid\_\-generate\_\-ihm\_\-from\_\-keyfile@{cid\_\-generate\_\-ihm\_\-from\_\-keyfile}}
+\index{cid\_\-generate\_\-ihm\_\-from\_\-keyfile@{cid\_\-generate\_\-ihm\_\-from\_\-keyfile}!cid-conf-panel-factory.c@{cid-conf-panel-factory.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}GtkWidget$\ast$ cid\_\-generate\_\-ihm\_\-from\_\-keyfile (GKeyFile $\ast$ {\em pKeyFile}, \/  const gchar $\ast$ {\em cTitle}, \/  GtkWindow $\ast$ {\em pParentWindow}, \/  GSList $\ast$$\ast$ {\em pWidgetList}, \/  gboolean {\em bApplyButtonPresent}, \/  gchar {\em iIdentifier}, \/  gchar $\ast$ {\em cPresentedGroup}, \/  gchar $\ast$ {\em cGettextDomain}, \/  GPtrArray $\ast$ {\em pDataGarbage})}\label{cid-conf-panel-factory_8c_328a8204fa685a6187fc6a6422d1261b}
+
+
+
+
+Références \_\-, \_\-allocate\_\-new\_\-buffer, \_\-allocate\_\-new\_\-model, \_\-cid\_\-add(), \_\-cid\_\-configure(), \_\-cid\_\-configure\_\-renderer(), \_\-cid\_\-find\_\-iter\_\-from\_\-name(), \_\-cid\_\-get\_\-current\_\-color(), \_\-cid\_\-go\_\-down(), \_\-cid\_\-go\_\-up(), \_\-cid\_\-key\_\-grab\_\-clicked(), \_\-cid\_\-pick\_\-a\_\-file(), \_\-cid\_\-play\_\-a\_\-sound(), \_\-cid\_\-remove(), \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-combo(), \_\-cid\_\-select\_\-one\_\-item\_\-in\_\-tree(), \_\-cid\_\-set\_\-color(), \_\-cid\_\-set\_\-font(), cid\_\-config\_\-panel\_\-created(), CID\_\-MODEL\_\-ACTIVE, CID\_\-MODEL\_\-DESCRIPTION\_\-FILE, CID\_\-MODEL\_\-ICON, CID\_\-MODEL\_\-IMAGE, CID\_\-MODEL\_\-NAME, CID\_\-MODEL\_\-ORDER, CID\_\-MODEL\_\-RESULT, et cid\_\-warning.
+
+Référencé par cid\_\-edit\_\-conf\_\-file\_\-core().

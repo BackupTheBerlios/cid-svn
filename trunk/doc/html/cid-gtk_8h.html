@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID: Référence du fichier /home/benjamin/Documents/dev/cid1.1/src/cid-gtk.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence du fichier /home/benjamin/Documents/dev/cid1.1/src/cid-gtk.h</h1>
+<p>
+<a href="cid-gtk_8h-source.html">Aller au code source de ce fichier.</a><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#9c5f429709e642f6d10349260ca659f4">imageDisplay</a> (char *image)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#6d1ca9236cd558391793807b8e817130">cid_display_init</a> (int argc, char **argv)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#9b1cec11c1e104c0c8a1c96af4970c3c">windowCreate</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#2839de6472a3afc45911b4856e156443">cid_set_colormap</a> (GtkWidget *widget, GdkScreen *old_screen, gpointer userdata)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#819e1dd504e64514b481c238930a5152">cid_color</a> (GtkWidget *widget, GdkEventExpose *event, gpointer userdata)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">cairo_surface_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#25f30bf6387751fc1e2bc76d052998da">cid_get_image</a> (GdkPixbuf *pixbuf)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#e0482c3e4b140b468fe3e45acec0c99a">cid_draw_image</a> (char *image)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="cid-gtk_8h.html#b30f4a7e4964994d4755efee3a97dad6">cid_quit</a> (GtkWidget *p_widget, gpointer user_data)</td></tr>
+
+</table>
+<hr><h2>Documentation des fonctions</h2>
+<a class="anchor" name="9c5f429709e642f6d10349260ca659f4"></a><!-- doxytag: member="cid-gtk.h::imageDisplay" ref="9c5f429709e642f6d10349260ca659f4" args="(char *image)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void imageDisplay           </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>image</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+affiche l'image dont le chemin est passé en argument. <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>URI</em>&nbsp;</td><td>de l'image à afficher </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, <a class="el" href="cid-gtk_8c-source.html#l00051">cid_draw_image()</a>, <a class="el" href="cid-struct_8h-source.html#l00029">data::cover_exist</a>, <a class="el" href="cid_8h-source.html#l00030">DEFAULT_IMAGE</a>, <a class="el" href="cid-struct_8h-source.html#l00027">data::iSidCheckCover</a>, <a class="el" href="cid-rhythmbox_8c-source.html#l00340">rhythmbox_check_cover_is_present()</a>, et <a class="el" href="cid-struct_8h.html#f51a074d31987c443c5535fb8a279202">rhythmboxData</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-amarok_8c-source.html#l00020">amarokCover()</a>, <a class="el" href="cid-gtk_8c-source.html#l00238">cid_check_player()</a>, <a class="el" href="cid-rhythmbox_8c-source.html#l00249">onChangeSong()</a>, <a class="el" href="cid-rhythmbox_8c-source.html#l00333">onCovertArtChanged()</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00340">rhythmbox_check_cover_is_present()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6d1ca9236cd558391793807b8e817130"></a><!-- doxytag: member="cid-gtk.h::cid_display_init" ref="6d1ca9236cd558391793807b8e817130" args="(int argc, char **argv)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_display_init           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&nbsp;</td>
+          <td class="paramname"> <em>argv</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+boucle cid/gtk <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>nombre</em>&nbsp;</td><td>d'argument de CID </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>liste</em>&nbsp;</td><td>des arguments de CID </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-gtk_8c-source.html#l00238">cid_check_player()</a>, <a class="el" href="cid-gtk_8c-source.html#l00174">cid_draw_window()</a>, <a class="el" href="cid-gtk_8c-source.html#l00219">cid_quit()</a>, <a class="el" href="cid-gtk_8c-source.html#l00153">cid_set_colormap()</a>, <a class="el" href="cid-gtk_8c-source.html#l00014">cWindow</a>, et <a class="el" href="cid-gtk_8c-source.html#l00119">windowCreate()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid_8c-source.html#l00081">main()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9b1cec11c1e104c0c8a1c96af4970c3c"></a><!-- doxytag: member="cid-gtk.h::windowCreate" ref="9b1cec11c1e104c0c8a1c96af4970c3c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void windowCreate           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+créée une fenêtre, la déplace à la position voulue, et la dimensionne 
+<p>Références <a class="el" href="cid-struct_8h.html#2714e0854cee3cf2c8868df965604b1b">CID_PARAMETERS</a>, <a class="el" href="cid-gtk_8c-source.html#l00014">cWindow</a>, <a class="el" href="cid-struct_8h-source.html#l00046">options::pos_x</a>, <a class="el" href="cid-struct_8h-source.html#l00047">options::pos_y</a>, <a class="el" href="cid-struct_8h-source.html#l00048">options::size_x</a>, et <a class="el" href="cid-struct_8h-source.html#l00049">options::size_y</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-gtk_8c-source.html#l00267">cid_display_init()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2839de6472a3afc45911b4856e156443"></a><!-- doxytag: member="cid-gtk.h::cid_set_colormap" ref="2839de6472a3afc45911b4856e156443" args="(GtkWidget *widget, GdkScreen *old_screen, gpointer userdata)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_set_colormap           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GdkScreen *&nbsp;</td>
+          <td class="paramname"> <em>old_screen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer&nbsp;</td>
+          <td class="paramname"> <em>userdata</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+determine si un gestionnaire de composite est présent <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fenêtre</em>&nbsp;</td><td>à évaluer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>non</em>&nbsp;</td><td>utilisé </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>pointeur</em>&nbsp;</td><td>de données (non utilisé) </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00056">cid_message</a>, et <a class="el" href="cid-gtk_8c-source.html#l00017">supports_alpha</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-gtk_8c-source.html#l00267">cid_display_init()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="819e1dd504e64514b481c238930a5152"></a><!-- doxytag: member="cid-gtk.h::cid_color" ref="819e1dd504e64514b481c238930a5152" args="(GtkWidget *widget, GdkEventExpose *event, gpointer userdata)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_color           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GdkEventExpose *&nbsp;</td>
+          <td class="paramname"> <em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer&nbsp;</td>
+          <td class="paramname"> <em>userdata</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+dessine le fond de la fenêtre <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fenêtre</em>&nbsp;</td><td>à recolorer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>non</em>&nbsp;</td><td>utilisé </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>pointeur</em>&nbsp;</td><td>de données (non utilisé) </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="25f30bf6387751fc1e2bc76d052998da"></a><!-- doxytag: member="cid-gtk.h::cid_get_image" ref="25f30bf6387751fc1e2bc76d052998da" args="(GdkPixbuf *pixbuf)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cairo_surface_t* cid_get_image           </td>
+          <td>(</td>
+          <td class="paramtype">GdkPixbuf *&nbsp;</td>
+          <td class="paramname"> <em>pixbuf</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+renvoie une image à partir d'un buffer de pixels <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>buffer</em>&nbsp;</td><td>de pixels </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Renvoie:</b></dt><dd>image à partir du buffer </dd></dl>
+
+<p>Références <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-gtk_8c-source.html#l00174">cid_draw_window()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e0482c3e4b140b468fe3e45acec0c99a"></a><!-- doxytag: member="cid-gtk.h::cid_draw_image" ref="e0482c3e4b140b468fe3e45acec0c99a" args="(char *image)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_draw_image           </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>image</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+dessine l'image à partir de son URI <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>URI</em>&nbsp;</td><td>de l'image à dessiner </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-gtk_8c-source.html#l00014">cCover</a>, <a class="el" href="cid-messages_8h-source.html#l00059">cid_debug</a>, <a class="el" href="cid-messages_8c-source.html#l00089">cid_exit()</a>, <a class="el" href="cid-struct_8h-source.html#l00080">CID_GTK_ERROR</a>, <a class="el" href="cid-struct_8h.html#2714e0854cee3cf2c8868df965604b1b">CID_PARAMETERS</a>, <a class="el" href="cid-gtk_8c-source.html#l00014">cWindow</a>, <a class="el" href="cid-gtk_8c-source.html#l00015">nCover</a>, <a class="el" href="cid-gtk_8c-source.html#l00015">sCover</a>, <a class="el" href="cid-struct_8h-source.html#l00048">options::size_x</a>, et <a class="el" href="cid-struct_8h-source.html#l00049">options::size_y</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-gtk_8c-source.html#l00022">imageDisplay()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b30f4a7e4964994d4755efee3a97dad6"></a><!-- doxytag: member="cid-gtk.h::cid_quit" ref="b30f4a7e4964994d4755efee3a97dad6" args="(GtkWidget *p_widget, gpointer user_data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cid_quit           </td>
+          <td>(</td>
+          <td class="paramtype">GtkWidget *&nbsp;</td>
+          <td class="paramname"> <em>p_widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gpointer&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fonction exécutée à l'arret du programme <dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>non</em>&nbsp;</td><td>utilisé </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>non</em>&nbsp;</td><td>utilisé </td></tr>
+  </table>
+</dl>
+
+<p>Références <a class="el" href="cid-struct_8h-source.html#l00077">CID_EXIT_SUCCESS</a>, <a class="el" href="cid-messages_8h-source.html#l00062">cid_info</a>, <a class="el" href="cid-config_8c-source.html#l00091">cid_save_position()</a>, <a class="el" href="cid-utilities_8c-source.html#l00016">cid_sortie()</a>, <a class="el" href="cid-gtk_8c-source.html#l00014">cWindow</a>, et <a class="el" href="cid-rhythmbox_8c-source.html#l00082">rhythmbox_dbus_disconnect_from_bus()</a>.</p>
+
+<p>Référencé par <a class="el" href="cid-gtk_8c-source.html#l00267">cid_display_init()</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Thu Oct 16 01:58:02 2008 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

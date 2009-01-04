@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CID:  Fichier source de cid-conf-panel-factory.h</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.5.5 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    <li>
+      <form action="search.php" method="get">
+        <table cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><label>&nbsp;Rechercher&nbsp;</label></td>
+            <td><input type="text" name="query" value="" size="20" accesskey="s"/></td>
+          </tr>
+        </table>
+      </form>
+    </li>
+    </ul>
+  </div>
+<h1>cid-conf-panel-factory.h</h1><a href="cid-conf-panel-factory_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">   *</span>
+<a name="l00003"></a>00003 <span class="comment">   *                         cid-conf-panel-factory.h</span>
+<a name="l00004"></a>00004 <span class="comment">   *                                -------</span>
+<a name="l00005"></a>00005 <span class="comment">   *                          Conky Images Display</span>
+<a name="l00006"></a>00006 <span class="comment">   *                              Benjamin SANS</span>
+<a name="l00007"></a>00007 <span class="comment">   *                    --------------------------------</span>
+<a name="l00008"></a>00008 <span class="comment">   *</span>
+<a name="l00009"></a>00009 <span class="comment">*/</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#ifndef __CID_CONF_PANEL_FACTORY__</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#define __CID_CONF_PANEL_FACTORY__</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;gtk/gtk.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;gdk/gdkscreen.h&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 G_BEGIN_DECLS
+<a name="l00017"></a>00017 
+<a name="l00018"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b">00018</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00019"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4ba822f40feca0051a2cf49bb8fbd14fd4">00019</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4ba822f40feca0051a2cf49bb8fbd14fd4">CID_MODEL_NAME</a> = 0,
+<a name="l00020"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4ba29b80e8ecf770afcacdcb5762b71f09">00020</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4ba29b80e8ecf770afcacdcb5762b71f09">CID_MODEL_RESULT</a>,
+<a name="l00021"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b947f23271e83e12b2c513c33ea33f582">00021</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b947f23271e83e12b2c513c33ea33f582">CID_MODEL_DESCRIPTION_FILE</a>,
+<a name="l00022"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b8964d6d033f8224e0889c402e18323e5">00022</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b8964d6d033f8224e0889c402e18323e5">CID_MODEL_ACTIVE</a>,
+<a name="l00023"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b663598f5474cbb4f22fc175e9e291ca4">00023</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b663598f5474cbb4f22fc175e9e291ca4">CID_MODEL_ORDER</a>,
+<a name="l00024"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b08071a4cc1e47748d969c5cbd3d45dc3">00024</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b08071a4cc1e47748d969c5cbd3d45dc3">CID_MODEL_IMAGE</a>,
+<a name="l00025"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b555b0df6efff5aa81e16539cff668f84">00025</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b555b0df6efff5aa81e16539cff668f84">CID_MODEL_ICON</a>,
+<a name="l00026"></a><a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4bd71bdd32bc6d4223a16580041dede2ac">00026</a>         <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4bd71bdd32bc6d4223a16580041dede2ac">CID_MODEL_NB_COLUMNS</a>
+<a name="l00027"></a>00027 } <a class="code" href="cid-conf-panel-factory_8h.html#fe1377534bbddb2652fff16a64b28f4b">_CidModelColumns</a>;
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keywordtype">void</span> <a class="code" href="cid-conf-panel-factory_8c.html#dea878f4c7dd9508f463739dc306f3a1">cid_config_panel_destroyed</a> (<span class="keywordtype">void</span>);
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 gboolean <a class="code" href="cid-conf-panel-factory_8c.html#527e5da831d6d9f18f2739316bfda493">cid_edit_conf_file_with_panel</a> (GtkWindow *pWindow, gchar *cConfFilePath, <span class="keyword">const</span> gchar *cTitle, <span class="keywordtype">int</span> iWindowWidth, <span class="keywordtype">int</span> iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, <a class="code" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a> pConfigFunc, gchar *cGettextDomain);
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 gboolean <a class="code" href="cid-conf-panel-factory_8c.html#d634715d7795c19e064e4c29dd9b3632">cid_edit_conf_file_core</a> (GtkWindow *pWindow, gchar *cConfFilePath, <span class="keyword">const</span> gchar *cTitle, <span class="keywordtype">int</span> iWindowWidth, <span class="keywordtype">int</span> iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, <a class="code" href="cid-struct_8h.html#e2c5969c575e4e50176fc785fb5a40af">CidReadConfigFunc</a> pConfigFunc, gchar *cGettextDomain);
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 GtkWidget *<a class="code" href="cid-conf-panel-factory_8c.html#328a8204fa685a6187fc6a6422d1261b">cid_generate_ihm_from_keyfile</a> (GKeyFile *pKeyFile, <span class="keyword">const</span> gchar *cTitle, GtkWindow *pParentWindow, GSList **pWidgetList, gboolean bApplyButtonPresent, gchar iIdentifier, gchar *cPresentedGroup, gchar *cGettextDomain, GPtrArray *pDataGarbage);
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 G_END_DECLS
+<a name="l00038"></a>00038 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Généré le Sat Jan 3 12:09:11 2009 pour CID par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
+</body>
+</html>

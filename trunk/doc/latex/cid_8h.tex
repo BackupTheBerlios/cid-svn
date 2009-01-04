@@ -1,0 +1,75 @@
+\section{Référence du fichier cid.h}
+\label{cid_8h}\index{cid.h@{cid.h}}
+\subsection*{Macros}
+\begin{CompactItemize}
+\item 
+\#define {\bf \_\-}(string)~gettext (string)
+\item 
+\#define {\bf DEFAULT\_\-IMAGE}~{\bf cid} $\rightarrow$ pDefaultImage
+\end{CompactItemize}
+\subsection*{Fonctions}
+\begin{CompactItemize}
+\item 
+void {\bf cid\_\-intercept\_\-signal} (int signal)
+\item 
+void {\bf cid\_\-set\_\-signal\_\-interception} (void)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+{\bf CidMainContainer} $\ast$ {\bf cid}
+\end{CompactItemize}
+
+
+\subsection{Documentation des macros}
+\index{cid.h@{cid.h}!\_\-@{\_\-}}
+\index{\_\-@{\_\-}!cid.h@{cid.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define \_\-(string)~gettext (string)}\label{cid_8h_a9bd4034a10d8f6a33b6c8e6416eac00}
+
+
+
+
+Référencé par cid\_\-build\_\-amarok\_\-menu(), cid\_\-build\_\-menu(), cid\_\-build\_\-rhythmbox\_\-menu(), cid\_\-generate\_\-ihm\_\-from\_\-keyfile(), et cid\_\-read\_\-parameters().\index{cid.h@{cid.h}!DEFAULT\_\-IMAGE@{DEFAULT\_\-IMAGE}}
+\index{DEFAULT\_\-IMAGE@{DEFAULT\_\-IMAGE}!cid.h@{cid.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DEFAULT\_\-IMAGE~{\bf cid} $\rightarrow$ pDefaultImage}\label{cid_8h_dd950b3d867b63874e6dd1f186326c2f}
+
+
+
+
+Référencé par cid\_\-amarok\_\-cover(), cid\_\-connect\_\-to\_\-amarok(), cid\_\-display\_\-image(), cid\_\-merge\_\-config(), cid\_\-read\_\-parameters(), cid\_\-rhythmbox\_\-cover(), et get\_\-amarock\_\-musicData().
+
+\subsection{Documentation des fonctions}
+\index{cid.h@{cid.h}!cid\_\-intercept\_\-signal@{cid\_\-intercept\_\-signal}}
+\index{cid\_\-intercept\_\-signal@{cid\_\-intercept\_\-signal}!cid.h@{cid.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-intercept\_\-signal (int {\em signal})}\label{cid_8h_21501416eb017004a4340f74799fcefa}
+
+
+Intercpte un signal afin de le traiter \begin{Desc}
+\item[Paramètres:]
+\begin{description}
+\item[{\em signal}]signal intercepté \end{description}
+\end{Desc}
+
+
+Références cid\_\-error, CID\_\-EXIT\_\-ERROR, cid\_\-sortie(), et cid\_\-warning.
+
+Référencé par cid\_\-set\_\-signal\_\-interception().\index{cid.h@{cid.h}!cid\_\-set\_\-signal\_\-interception@{cid\_\-set\_\-signal\_\-interception}}
+\index{cid\_\-set\_\-signal\_\-interception@{cid\_\-set\_\-signal\_\-interception}!cid.h@{cid.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cid\_\-set\_\-signal\_\-interception (void)}\label{cid_8h_0efde490c4fbc1830577e136134601c9}
+
+
+Sert à définir les signaux à intercepter 
+
+Références cid\_\-intercept\_\-signal().
+
+Référencé par main().
+
+\subsection{Documentation des variables}
+\index{cid.h@{cid.h}!cid@{cid}}
+\index{cid@{cid}!cid.h@{cid.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CidMainContainer}$\ast$ {\bf cid}}\label{cid_8h_840f0e53011817c3b2f82f5c39cc9379}
+
+
+
+
+Référencé par \_\-cid\_\-about(), \_\-cid\_\-conf\_\-panel(), cid\_\-animation(), cid\_\-build\_\-menu(), cid\_\-check\_\-conf\_\-file\_\-version(), cid\_\-check\_\-file(), cid\_\-create\_\-main\_\-window(), cid\_\-display\_\-image(), cid\_\-display\_\-init(), cid\_\-draw\_\-window(), cid\_\-focus(), cid\_\-focus\_\-in(), cid\_\-focus\_\-out(), cid\_\-get\_\-data(), cid\_\-merge\_\-config(), cid\_\-player\_\-evaluation(), cid\_\-read\_\-config(), cid\_\-read\_\-config\_\-after\_\-update(), cid\_\-read\_\-key\_\-file(), cid\_\-read\_\-parameters(), cid\_\-rotate\_\-on\_\-changing\_\-song(), cid\_\-run\_\-with\_\-player(), cid\_\-save\_\-data(), cid\_\-set\_\-render(), cid\_\-sortie(), cid\_\-threaded\_\-animation(), main(), on\_\-clic(), et onChangeState().
