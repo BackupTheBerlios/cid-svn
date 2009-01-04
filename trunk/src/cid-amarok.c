@@ -18,7 +18,7 @@ gboolean get_amarock_musicData () {
 	gchar gStatus[128];
 	musicData.opening = TRUE;
 	if (!status) {
-		cid_warning ("Couldn't get status");
+		cid_warning ("Couldn't reach amarok");
 		return FALSE;
 	}
 	if (!fgets (gStatus,128,status)) {
@@ -129,7 +129,7 @@ gboolean cid_amarok_cover() {
 }
 
 void cid_amarok_pipe (gint iInter) {
-	g_timeout_add (iInter,(gpointer) cid_amarok_cover, NULL);
+	g_timeout_add_full (G_PRIORITY_HIGH, iInter,(gpointer) cid_amarok_cover, NULL, NULL);
 }
 
 void cid_disconnect_from_amarok () {
