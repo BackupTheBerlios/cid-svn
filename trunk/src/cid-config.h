@@ -20,9 +20,13 @@ gboolean cid_get_boolean_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, 
 
 gchar *cid_get_string_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gchar *cDefault);
 
+gint cid_get_int_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gint iDefault);
+
 #define CID_CONFIG_GET_BOOLEAN(cGroup,cKey,bDefault) cid_get_boolean_value (cid->pKeyFile,cGroup,cKey,bDefault)
 
 #define CID_CONFIG_GET_STRING(cGroup,cKey,cDefault) cid_get_string_value (cid->pKeyFile,cGroup,cKey,cDefault)
+
+#define CID_CONFIG_GET_INTEGER(cGroup,cKey,iDefault) cid_get_int_value (cid->pKeyFile,cGroup,cKey,iDefault)
 
 /**
  * Fonction qui charge la configuration .

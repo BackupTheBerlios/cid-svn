@@ -16,13 +16,14 @@ int ret;
 int flag, found;
 
 gchar *URL;
+gchar *TAB_IMAGE_SIZES[] = {"MediumImage","LargeImage"};
 
 /**
  * Lit les noeuds du fichier en cours de parsage
  * @param reader le noeud courrant
  * @param imageSize Noeud que l'on cherche
  */
-static void processNode (xmlTextReaderPtr reader, const char *imageSize) {
+static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
 	const xmlChar *name, *value;
 
 	name = xmlTextReaderConstName(reader);
@@ -30,14 +31,14 @@ static void processNode (xmlTextReaderPtr reader, const char *imageSize) {
 		name = BAD_CAST "--";
 
 		value = xmlTextReaderConstValue(reader);
-		if ((strcmp(name,imageSize[cid->cImageSize])==0 || flag) && !founded) {
+		if ((strcmp(name,TAB_IMAGE_SIZES[cid->iImageSize])==0 || flag) && !found) {
 			//printf("node: %s ", name);
 		if (value == NULL)
 			cid_message ("");
 		else {
 			cid_message ("%s\n", value);
 			found=TRUE;
-			URL=g_strdup(value);
+			*cValue=g_strdup(value);
 		}
 		if (strcmp(name,"#text")!=0) {
 			flag=TRUE;
@@ -53,7 +54,7 @@ static void processNode (xmlTextReaderPtr reader, const char *imageSize) {
  * @param filename URI du fichier à lire
  * @param imageSize Taille de l'image que l'on souhaite
  */
-static void streamFile(const char *filename, const char *imageSize) {
+void cid_stream_file(const char *filename, gchar **cValue) {
 	xmlTextReaderPtr reader;
 	flag = FALSE;
 	found=FALSE;
@@ -62,7 +63,7 @@ static void streamFile(const char *filename, const char *imageSize) {
 	if (reader != NULL) {
 		ret = xmlTextReaderRead(reader);
 		while (ret == 1) {
-			processNode(reader,imageSize);
+			cid_process_node (reader,cValue);
 			ret = xmlTextReaderRead(reader);
 		}
 		xmlFreeTextReader(reader);
@@ -74,21 +75,30 @@ static void streamFile(const char *filename, const char *imageSize) {
 	}
 }
 
-static boolean getXMLFile (const gchar *artist, const gchar *album) {
+gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
+	if (g_strcasecmp("Unknown",artist)==0 || g_strcasecmp("Unknown",album)==0)
+		return FALSE;
+		
 	gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);
 	gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
-	int fds = mkstemp (cTmpFilePath);
-	if (fds == -1)
-	{
-		g_free (cTmpFilePath);
-		return FALSE;
-	}
 	
 	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2", cFileToDownload, cTmpFilePath);
+	cid_debug ("%s\n",cCommand);
 	system (cCommand);
 	g_free (cCommand);
-	close(fds);
-	g_free(cTmpFilePath);
+	g_free (cTmpFilePath);
+	g_free (cFileToDownload);
+	return TRUE;
+}
+
+gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) {
+	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2", cURL, cDestPath);
+	cid_debug ("%s\n",cCommand);
+	system (cCommand);
+	g_free (cCommand);
+	cCommand = g_strdup_printf ("rm %s", DEFAULT_XML_LOCATION);
+	system (cCommand);
+	g_free (cCommand);
 	return TRUE;
 }
 

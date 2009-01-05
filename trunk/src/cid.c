@@ -55,6 +55,8 @@ void cid_init (CidMainContainer *pCid) {
 	
 	pCid->bTesting=FALSE;
 	
+	pCid->iCheckIter=0;
+	
 	pCid->iInter=5 * 1000;
 	
 	pCid->iPosX=0;

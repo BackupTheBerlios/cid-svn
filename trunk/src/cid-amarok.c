@@ -19,6 +19,7 @@ gboolean get_amarock_musicData () {
 	musicData.opening = TRUE;
 	if (!status) {
 		cid_warning ("Couldn't reach amarok");
+		pclose (status);
 		return FALSE;
 	}
 	if (!fgets (gStatus,128,status)) {
@@ -38,32 +39,25 @@ gboolean get_amarock_musicData () {
 	 	 *uri = popen ("dcop amarok player encodedURL","r"),
 	 	 *coverURI = popen ("dcop amarok player coverImage","r");
 	gchar gArtist[128], gAlbum[128], gTitle[128], gPlayingURI[256], gCoverURI[256];
-	if (!artist) {
-		cid_warning ("Couldn't get artist name");
-		return FALSE;
-	}
-	if (!album) {
-		cid_warning ("Couldn't get album name");
-		return FALSE;
-	}
-	if (!title) {
-		cid_warning ("Couldn't get title");
-		return FALSE;
-	}
-	if (!uri) {
-		cid_warning ("Couldn't get song URI");
-		return FALSE;
-	}
-	if (!coverURI) {
-		cid_warning ("Couldn't get cover URI");
+	if (!artist || !album || !title || !uri || !coverURI) {
+		pclose (artist);
+		pclose (album);
+		pclose (title);
+		pclose (uri);
+		pclose (coverURI);
+		cid_warning ("Couldn't get data");
 		return FALSE;
 	}
 	
 	
-	if (!fgets (gArtist,128,artist)) return FALSE;
-	if (!fgets (gAlbum,128,album)) return FALSE;
-	if (!fgets (gTitle,128,title)) return FALSE;
-	if (!fgets (gPlayingURI,256,uri)) return FALSE;
+	if (!fgets (gArtist,128,artist) || !fgets (gAlbum,128,album) || !fgets (gTitle,128,title) || !fgets (gPlayingURI,256,uri)) {
+		pclose (artist);
+		pclose (album);
+		pclose (title);
+		pclose (uri);
+		pclose (coverURI);
+		return FALSE;
+	}
 	
 	g_free (musicData.playing_cover);
 	if (!fgets (gCoverURI,256,coverURI))
@@ -72,18 +66,18 @@ gboolean get_amarock_musicData () {
 		strtok (gCoverURI,"\n");
 		musicData.playing_cover = g_strdup (gCoverURI);
 	}
-
-	strtok (gArtist,"\n");
-	strtok (gAlbum,"\n");
-	strtok (gTitle,"\n");
-	strtok (gPlayingURI,"\n");
-	strtok (gStatus,"\n");
 	
 	pclose (artist);
 	pclose (album);
 	pclose (title);
 	pclose (uri);
 	pclose (coverURI);
+
+	strtok (gArtist,"\n");
+	strtok (gAlbum,"\n");
+	strtok (gTitle,"\n");
+	strtok (gPlayingURI,"\n");
+	strtok (gStatus,"\n");
 	
 	if (musicData.playing_uri != NULL && strcmp (musicData.playing_uri,gPlayingURI)==0)
 		return FALSE;

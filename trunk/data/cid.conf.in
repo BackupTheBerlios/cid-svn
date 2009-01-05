@@ -47,8 +47,8 @@ FLYING_COLOR=0;0;0;0.7;
 #F+[Monitoring player options]
 frame_2=
 
-#r[rhythmbox;amarok] Wich player you are using
-PLAYER=
+#r[Rhythmbox;Amarok] Wich player you are using
+PLAYER=rhythmbox
 
 #i Interval between 2 refresh (leave blank if you are using rhythmbox)
 INTER=
@@ -82,3 +82,12 @@ ANIMATION_TYPE=0
 #b Use threaded animations
 #{This cannot work depending your processor}
 THREAD=
+
+#b Allow CID to download missing covers :
+DOWNLOAD=
+
+#i[0;15] Delay before checking for missing covers :
+DELAY=
+
+#r[Medium;Large] Size of the downloaded covers :
+D_SIZE=

@@ -8,28 +8,27 @@
    *
    *
 */
-#ifndef __CID_STRUCT__
-#define  __CID_STRUCT__
+#ifndef __CID_AMAZON__
+#define  __CID_AMAZON__
 
 #include <stdio.h>
 #include <libxml/xmlreader.h>
 
 G_BEGIN_DECLS
 
-#define LICENCE_KEY 0C3430YZ2MVJKQ4JEKG2
+#define LICENCE_KEY "0C3430YZ2MVJKQ4JEKG2"
 #define AMAZON_API_URL_1 "http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId="
 #define AMAZON_API_URL_2 "&AssociateTag=webservices-20&ResponseGroup=Images,ItemAttributes&Operation=ItemSearch&ItemSearch.Shared.SearchIndex=Music"
 #define DEFAULT_XML_LOCATION "/tmp/cid_amazon.xml"
+#define DEFAULT_DOWNLOADED_IMAGE_LOCATION "/tmp/default.jpg"
 
-char **imageSize = ["MediumImage","LargeImage"];
+static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue);
 
-static void processNode (xmlTextReaderPtr reader, const char *imageSize);
+void cid_stream_file(const char *filename, gchar **cValue);
 
-static void streamFile(const char *filename, const char *imageSize);
+gboolean cid_get_xml_file (const gchar *artist, const gchar *album);
 
-static boolean getXMLFile (const gchar *artist, const gchar *album);
-
-void downloadCover (void);
+gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath);
 
 G_END_DECLS
 #endif

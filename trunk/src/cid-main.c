@@ -32,6 +32,7 @@ void cid_display_image(gchar *image) {
 	} else {
 		cid->cSurface = cid_get_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
 		musicData.cover_exist = FALSE;
+		cid->iCheckIter = 0;
 		if (image != NULL && musicData.iSidCheckCover == 0) {
 			cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
 			musicData.iSidCheckCover = g_timeout_add_seconds (1, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);

@@ -162,6 +162,17 @@ gchar *cid_get_string_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gch
 	return cGet;
 }
 
+gint cid_get_int_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gint iDefault) {
+	GError *error = NULL;
+	gint iGet = g_key_file_get_integer (pKeyFile, cGroup, cKey, &error);
+	if (error != NULL) {
+		g_error_free(error);
+		error = NULL;
+		iGet = iDefault;
+	}
+	return iGet;
+}
+
 int cid_read_key_file (const gchar *f) {
 	GError *monitor = NULL, *image = NULL, *animation = NULL, *allDesktop = NULL, *move = NULL;
 	
@@ -180,6 +191,9 @@ int cid_read_key_file (const gchar *f) {
 	conf->animation      = CID_CONFIG_GET_BOOLEAN ("options", "ANIMATION", TRUE);
 	conf->iAnimationType = g_key_file_get_integer (cid->pKeyFile, "options", "ANIMATION_TYPE", NULL);
 	conf->threaded       = CID_CONFIG_GET_BOOLEAN ("options", "THREAD", FALSE);
+	cid->bDownload       = CID_CONFIG_GET_BOOLEAN ("options", "DOWNLOAD", FALSE);
+	cid->iImageSize      = CID_CONFIG_GET_INTEGER ("options", "D_SIZE", 0);
+	cid->iTimeToWait     = CID_CONFIG_GET_INTEGER ("options", "DELAY", 5);
 	
 	// [position] configuration
 	conf->pos_x    = g_key_file_get_integer (cid->pKeyFile, "position", "GAP_X", NULL);
@@ -262,7 +276,10 @@ void cid_save_data () {
 	else
 		g_key_file_set_string  (keyfile, "options", "IMAGE", "");
 	g_key_file_set_boolean (keyfile, "options", "THREAD", cid->bThreaded);
+	g_key_file_set_boolean (keyfile, "options", "DOWNLOAD", cid->bDownload);
 	g_key_file_set_integer (keyfile, "options", "ANIMATION_TYPE", cid->iAnimationType);
+	g_key_file_set_integer (keyfile, "options", "DELAY", cid->iTimeToWait);
+	g_key_file_set_integer (keyfile, "options", "D_SIZE", cid->iImageSize);
 		
 	// [position] configuration
 	g_key_file_set_integer (keyfile, "position", "SIZE_X",cid->iWidth<=175 ? cid->iWidth : 175);

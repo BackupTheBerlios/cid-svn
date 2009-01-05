@@ -142,6 +142,10 @@ struct _CidMainContainer {
 	gint iInter;
 	// currently drawing
 	gint iCurrentlyDrawing;
+	// temps avant de telecharger les pochettes manquantes
+	gint iTimeToWait;
+	
+	gint iCheckIter;
 	
 	// numéro du player
 	PlayerIndice iPlayer;
@@ -212,7 +216,7 @@ struct _CidMainContainer {
 	GKeyFile *pKeyFile;
 	
 	// taille des covers à télécharger
-	ImageSizes cImageSize;
+	ImageSizes iImageSize;
 };
 
 struct _CidLabelDescription {

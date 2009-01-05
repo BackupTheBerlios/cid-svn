@@ -20,6 +20,10 @@ void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
 
 	cid_save_data ();
 
+	gchar *cCommand = g_strdup_printf ("rm %s", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+	system (cCommand);
+	g_free (cCommand);
+
 	g_print ("Bye !\n");
 
 	cid_sortie (CID_EXIT_SUCCESS);
@@ -149,10 +153,24 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
 
 gboolean _check_cover_is_present (gpointer data) {
 	//cid_debug ("On cherche....\n");
+	//gint iCpt;
+	cid->iCheckIter++;
 	if (g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS)) {
 		cid_display_image(musicData.playing_cover);
 		musicData.cover_exist = TRUE;
 		musicData.iSidCheckCover = 0;
+		return FALSE;
+	} else if (cid->iCheckIter > cid->iTimeToWait) {
+		//iCpt = 0;
+		if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
+			gchar *cImageURL = NULL;
+			cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
+			if (cImageURL)
+				if (cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION))
+					cid_display_image(DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+			cid_debug ("URL : %s",cImageURL);
+		} else
+			cid_debug ("Téléchargement impossible\n");
 		return FALSE;
 	} else {
 		return TRUE;
