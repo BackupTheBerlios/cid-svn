@@ -314,15 +314,28 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 				} else
 					pEventBox = NULL;
 
-				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X' || (iElementType != 't' && !cid->bTesting)) {
-					pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
-					GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
-					gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
-					gtk_box_pack_start ((bIsAligned ? GTK_BOX (pHBox) : (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox))),
-						pAlign,
-						FALSE,
-						FALSE,
-						0);
+				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X') {
+					if (iElementType == 't') {
+						if (cid->bTesting) {
+							pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
+							GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
+							gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
+							gtk_box_pack_start ((bIsAligned ? GTK_BOX (pHBox) : (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox))),
+								pAlign,
+								FALSE,
+								FALSE,
+								0);
+						}
+					} else {
+						pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
+						GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
+						gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
+						gtk_box_pack_start ((bIsAligned ? GTK_BOX (pHBox) : (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox))),
+							pAlign,
+							FALSE,
+							FALSE,
+							0);
+					}
 				}
 
 				gtk_box_pack_start (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox),
