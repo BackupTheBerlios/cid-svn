@@ -198,7 +198,7 @@ void cid_create_main_window() {
 	/* On intercepte et traite les évènements */
 	g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
 	g_signal_connect (G_OBJECT(cid->cWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
-	if (cid->bTesting) {
+	if (cid->bTesting && cid->bUnstable) {
 		g_signal_connect (G_OBJECT(cid->cWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
 		g_signal_connect (G_OBJECT(cid->cWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
 	}
@@ -288,7 +288,7 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		
 		//g_print ("theta : %f, alpha : %f, opp : %f\n",theta,alpha,opp);
 	
-		gdouble hyp = cid->bTesting ? sqrt (pow(scaledWidth,2)+pow(scaledHeight,2)) : sqrt (pow(cid->iWidth,2)+pow(cid->iHeight,2));		
+		gdouble hyp = cid->bTesting && cid->bUnstable ? sqrt (pow(scaledWidth,2)+pow(scaledHeight,2)) : sqrt (pow(cid->iWidth,2)+pow(cid->iHeight,2));		
 		
 		cairo_translate (cr, cid->iWidth/2, cid->iHeight/2);
 		

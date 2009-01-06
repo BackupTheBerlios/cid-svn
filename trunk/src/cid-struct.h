@@ -130,6 +130,8 @@ struct _CidMainContainer {
 	// cairo context
 	cairo_t *pContext;
 	
+	gboolean bChangedTestingConf;
+	
 	// largeur de cid
 	gint iWidth;
 	// hauteur de cid
@@ -206,6 +208,8 @@ struct _CidMainContainer {
 	gboolean bThreaded;
 	// mode developpeur ?
 	gboolean bDevMode;
+	// options instables ?
+	gboolean bUnstable;
 	
 	// taille de la couleur
 	gsize gColorSize;

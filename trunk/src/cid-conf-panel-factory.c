@@ -314,7 +314,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 				} else
 					pEventBox = NULL;
 
-				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X') {
+				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X' || (iElementType != 't' && !cid->bTesting)) {
 					pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
 					GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
 					gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
@@ -1055,6 +1055,28 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 								0);
 						}
 					break ;
+					case 't' :  // boolean
+						//g_print ("  + boolean\n");
+						if (cid->bTesting) {
+							length = 0;
+							bValueList = g_key_file_get_boolean_list (pKeyFile, cGroupName, cKeyName, &length, NULL);
+
+							for (k = 0; k < iNbElements; k ++) {
+								bValue =  (k < (int)length ? bValueList[k] : FALSE);
+								pOneWidget = gtk_check_button_new ();
+								gtk_toggle_button_set_active  (GTK_TOGGLE_BUTTON (pOneWidget), bValue);
+
+								pSubWidgetList = g_slist_append (pSubWidgetList, pOneWidget);
+								gtk_box_pack_start (GTK_BOX (pHBox),
+									pOneWidget,
+									FALSE,
+									FALSE,
+									0);
+							}
+							g_free (bValueList);
+						}
+					break;
+					
 
 					default :
 						cid_warning ("this conf file seems to be incorrect !");

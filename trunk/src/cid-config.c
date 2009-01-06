@@ -104,6 +104,13 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
 	g_slice_free (FileSettings,conf);
 	cid_read_config (f);
 	
+	if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) {
+		cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
+		g_print ("On change la conf\n");
+		gtk_widget_destroy(cid->cWindow);
+		cid_create_main_window();
+	}
+	
 	cid_disconnect_player ();
 	
 	cid_free_musicData();
@@ -194,6 +201,7 @@ int cid_read_key_file (const gchar *f) {
 	cid->bDownload       = CID_CONFIG_GET_BOOLEAN ("options", "DOWNLOAD", FALSE);
 	cid->iImageSize      = CID_CONFIG_GET_INTEGER ("options", "D_SIZE", 0);
 	cid->iTimeToWait     = CID_CONFIG_GET_INTEGER ("options", "DELAY", 5);
+	cid->bUnstable       = CID_CONFIG_GET_BOOLEAN ("options", "B_UNSTABLE", TRUE);
 	
 	// [position] configuration
 	conf->pos_x    = g_key_file_get_integer (cid->pKeyFile, "position", "GAP_X", NULL);
@@ -280,6 +288,7 @@ void cid_save_data () {
 	g_key_file_set_integer (keyfile, "options", "ANIMATION_TYPE", cid->iAnimationType);
 	g_key_file_set_integer (keyfile, "options", "DELAY", cid->iTimeToWait);
 	g_key_file_set_integer (keyfile, "options", "D_SIZE", cid->iImageSize);
+	g_key_file_set_boolean (keyfile, "options", "B_UNSTABLE", cid->bUnstable);
 		
 	// [position] configuration
 	g_key_file_set_integer (keyfile, "position", "SIZE_X",cid->iWidth<=175 ? cid->iWidth : 175);
