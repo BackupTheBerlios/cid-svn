@@ -103,6 +103,20 @@ gboolean get_amarock_musicData () {
 	return TRUE;
 }
 
+gchar *cid_check_cover_exists (gchar *cURI) {
+	gchar **cCleanURI = g_strsplit (cURI,"@",0);
+	gchar **cSplitedURI = g_strsplit (cCleanURI[1],".",0);
+	if (g_strcasecmp(cSplitedURI[0],"nocover")==0) {
+		g_free (cCleanURI);
+		g_free (cSplitedURI);
+		
+		return g_strdup(DEFAULT_IMAGE);
+	}
+	g_free (cCleanURI);
+	g_free (cSplitedURI);
+	return cURI;
+}
+
 gboolean cid_amarok_cover() {
 	/* On vérifie l'état d'Amarok */
 	if (get_amarock_musicData()) {
@@ -112,7 +126,7 @@ gboolean cid_amarok_cover() {
 			cid_display_image (DEFAULT_IMAGE);
 		} else {
 			if (musicData.playing && musicData.playing_cover != NULL)
-				cid_display_image (musicData.playing_cover);
+				cid_display_image (cid_check_cover_exists(musicData.playing_cover));
 			else
 				cid_display_image (DEFAULT_IMAGE);
 			cid_animation(cid->iAnimationType);

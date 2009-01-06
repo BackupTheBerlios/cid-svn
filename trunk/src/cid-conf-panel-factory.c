@@ -106,6 +106,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	GtkWidget *pDescriptionLabel;
 	GtkWidget *pPreviewImage;
 	GtkWidget *pButtonConfigRenderer;
+	GtkWidget *pBackButton;
 	GtkCellRenderer *rend;
 	GtkTreeIter iter;
 	gchar *cGroupName, *cGroupComment , *cKeyName, *cKeyComment, *cUsefulComment, *cAuthorizedValuesChain, *pTipString, **pAuthorizedValuesList, *cSmallGroupIcon;
@@ -115,11 +116,14 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	char iElementType;
 	gboolean bIsAligned;
 	gboolean bValue, *bValueList;
+	gboolean bAddBackButton;
 	int iValue, iMinValue, iMaxValue, *iValueList;
 	double fValue, fMinValue, fMaxValue, *fValueList;
 	gchar *cValue, **cValueList, *cSmallIcon=NULL;
 	GdkColor gdkColor;
 	GtkListStore *modele;
+	
+	gchar *cOriginalConfFilePath = g_strdup_printf ("%s/%s", CID_DATA_DIR, CID_CONFIG_FILE);
 	
 	GtkWidget *pDialog;
 	if (bApplyButtonPresent) {
@@ -314,19 +318,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 				} else
 					pEventBox = NULL;
 
-				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X') {
-					if (iElementType == 't') {
-						if (cid->bTesting) {
-							pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
-							GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
-							gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
-							gtk_box_pack_start ((bIsAligned ? GTK_BOX (pHBox) : (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox))),
-								pAlign,
-								FALSE,
-								FALSE,
-								0);
-						}
-					} else {
+				if (*cUsefulComment != '\0' && strcmp (cUsefulComment, "...") != 0 && iElementType != 'F' && iElementType != 'X' && (iElementType != 't' || (iElementType == 't' && cid->bTesting))) {
 						pLabel = gtk_label_new (dgettext (cGettextDomain, cUsefulComment));
 						GtkWidget *pAlign = gtk_alignment_new (0., 0.5, 0., 0.);
 						gtk_container_add (GTK_CONTAINER (pAlign), pLabel);
@@ -335,7 +327,6 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 							FALSE,
 							FALSE,
 							0);
-					}
 				}
 
 				gtk_box_pack_start (pFrameVBox == NULL ? GTK_BOX (pVBox) : GTK_BOX (pFrameVBox),
@@ -356,6 +347,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 				}
 
 				pSubWidgetList = NULL;
+				bAddBackButton = FALSE;
 
 				switch (iElementType) {
 					case 'b' :  // boolean
@@ -406,6 +398,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 								gtk_scale_set_digits (GTK_SCALE (pOneWidget), 0);
 								gtk_widget_set (pOneWidget, "width-request", 150, NULL);
 							} else {
+								bAddBackButton = TRUE;
 								pOneWidget = gtk_spin_button_new (GTK_ADJUSTMENT (pAdjustment),
 									1.,
 									0);
@@ -1097,11 +1090,23 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 				}
 
 				if (pSubWidgetList != NULL) {
-					pGroupKeyWidget = g_new (gpointer, 3);
+					pGroupKeyWidget = g_new (gpointer, 4);
 					pGroupKeyWidget[0] = g_strdup (cGroupName);  // car on ne pourra pas le liberer s'il est partage entre plusieurs 'data'.
 					pGroupKeyWidget[1] = cKeyName;
 					pGroupKeyWidget[2] = pSubWidgetList;
+					pGroupKeyWidget[3] = (gchar *)cOriginalConfFilePath;
 					*pWidgetList = g_slist_prepend (*pWidgetList, pGroupKeyWidget);
+					if (bAddBackButton && cOriginalConfFilePath != NULL) {
+						pBackButton = gtk_button_new ();
+						GtkWidget *pImage = gtk_image_new_from_stock (GTK_STOCK_UNDO, GTK_ICON_SIZE_BUTTON);  // GTK_STOCK_GO_BACK
+						gtk_button_set_image (GTK_BUTTON (pBackButton), pImage);
+						g_signal_connect (G_OBJECT (pBackButton), "clicked", G_CALLBACK(_cid_set_original_value), pGroupKeyWidget);
+						gtk_box_pack_start(GTK_BOX (pHBox),
+							pBackButton,
+							FALSE,
+							FALSE,
+							0);
+					}
 				}
 
 				g_strfreev (pAuthorizedValuesList);
@@ -1124,4 +1129,47 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	
 	cid_config_panel_created ();
 	return pDialog;
+}
+
+void _cid_set_original_value (GtkButton *button, gpointer *data)
+{
+	cid_debug ("%s (%s, %s, %s)\n", __func__, data[0], data[1], data[3]);
+	gchar *cGroupName = data[0];
+	gchar *cKeyName = data[1];
+	GSList *pSubWidgetList = data[2];
+	gchar *cOriginalConfFilePath = data[3];
+	
+	GSList *pList;
+	gsize i = 0;
+	GtkWidget *pOneWidget = pSubWidgetList->data;
+	GError *erreur = NULL;
+	gsize length = 0;
+	
+	GKeyFile *pKeyFile = g_key_file_new ();
+	g_key_file_load_from_file (pKeyFile, cOriginalConfFilePath, G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &erreur);
+	if (erreur != NULL)
+	{
+		cid_warning (erreur->message);
+		g_error_free (erreur);
+		erreur = NULL;
+		return ;
+	}
+	
+	if (GTK_IS_SPIN_BUTTON (pOneWidget) || GTK_IS_HSCALE (pOneWidget))
+	{
+		gboolean bIsSpin = GTK_IS_SPIN_BUTTON (pOneWidget);
+		double *fValuesList = g_key_file_get_double_list (pKeyFile, cGroupName, cKeyName, &length, &erreur);
+		
+		for (pList = pSubWidgetList; pList != NULL && i < length; pList = pList->next, i++)
+		{
+			pOneWidget = pList->data;
+			if (bIsSpin)
+				gtk_spin_button_set_value (GTK_SPIN_BUTTON (pOneWidget), fValuesList[i]);
+			else
+				gtk_range_set_value (GTK_RANGE (pOneWidget), fValuesList[i]);
+		}
+		
+		g_free (fValuesList);
+	}
+	g_key_file_free (pKeyFile);
 }

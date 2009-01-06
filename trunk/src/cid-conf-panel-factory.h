@@ -26,6 +26,8 @@ typedef enum {
 	CID_MODEL_NB_COLUMNS
 } _CidModelColumns;
 
+void _cid_set_original_value (GtkButton *button, gpointer *data);
+
 void cid_config_panel_destroyed (void);
 
 gboolean cid_edit_conf_file_with_panel (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain);

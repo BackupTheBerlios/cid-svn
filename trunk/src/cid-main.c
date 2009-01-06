@@ -25,7 +25,7 @@ void cid_display_image(gchar *image) {
 	if (g_file_test (image, G_FILE_TEST_EXISTS)) {
 		cid->cSurface = cid_get_image (image, cid->iWidth, cid->iHeight);
 		musicData.cover_exist = TRUE;
-		if (rhythmboxData.iSidCheckCover != 0) {
+		if (musicData.iSidCheckCover != 0) {
 			g_source_remove (musicData.iSidCheckCover);
 			musicData.iSidCheckCover = 0;
 		}
@@ -33,7 +33,7 @@ void cid_display_image(gchar *image) {
 		cid->cSurface = cid_get_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
 		musicData.cover_exist = FALSE;
 		cid->iCheckIter = 0;
-		if (image != NULL && musicData.iSidCheckCover == 0) {
+		if (/*image != NULL && */musicData.iSidCheckCover == 0) {
 			cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
 			musicData.iSidCheckCover = g_timeout_add_seconds (1, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
 		}

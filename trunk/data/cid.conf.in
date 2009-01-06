@@ -11,19 +11,19 @@ frame_1=
 
 #i Position X :
 #{in pixels}
-GAP_X=
+GAP_X=0
 
 #i Position Y :
 #{in pixels}
-GAP_Y=
+GAP_Y=0
 
 #i[50;175] Width :
 #{in pixels}
-SIZE_X=
+SIZE_X=150
 
 #i[50;175] Height :
 #{in pixels}
-SIZE_Y=
+SIZE_Y=150
 
 #b Display CID on all Dekstop
 ALL_DESKTOP=
@@ -51,7 +51,7 @@ frame_2=
 PLAYER=rhythmbox
 
 #i Interval between 2 refresh (leave blank if you are using rhythmbox)
-INTER=
+INTER=5
 
 #b Allow CID to monitor your player
 #{Contextual menu in right clic. Play/Pause by left clicking. Next by middle clicking}
@@ -87,7 +87,7 @@ THREAD=
 DOWNLOAD=
 
 #i[0;15] Delay before checking for missing covers :
-DELAY=
+DELAY=3
 
 #r[Medium;Large] Size of the downloaded covers :
 D_SIZE=
