@@ -91,3 +91,7 @@ DELAY=
 
 #r[Medium;Large] Size of the downloaded covers :
 D_SIZE=
+
+#t Active unstable functions :
+#{Please restart CID right after you validated}
+B_UNSTABLE=
