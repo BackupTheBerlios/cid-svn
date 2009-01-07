@@ -38,7 +38,7 @@ KEEP_CORNERS=
 #c+4[0;1] Color of the background (r,v,b,a) :
 COLOR=1;1;1;0.2;
 
-#c+4[0;1] Idem when the mouse is over :
+#tc+4[0;1] Idem when the mouse is over :
 FLYING_COLOR=0;0;0;0.7;
 
 #[gtk-preferences]
@@ -92,6 +92,6 @@ DELAY=3
 #r[Medium;Large] Size of the downloaded covers :
 D_SIZE=
 
-#t Active unstable functions :
+#tb Active unstable functions :
 #{Please restart CID right after you validated}
 B_UNSTABLE=

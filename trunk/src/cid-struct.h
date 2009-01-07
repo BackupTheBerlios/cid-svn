@@ -210,6 +210,9 @@ struct _CidMainContainer {
 	gboolean bDevMode;
 	// options instables ?
 	gboolean bUnstable;
+	//
+	gboolean bSafeMode;
+	gboolean bBlockedWidowActive;
 	
 	// taille de la couleur
 	gsize gColorSize;

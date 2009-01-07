@@ -18,20 +18,32 @@ FileSettings *conf;
 
 void cid_check_file (const gchar *f) {
 	gchar *cCommand=NULL;
-	gchar *cCommand2;
 	if (!g_file_test (f, G_FILE_TEST_EXISTS)) {
-		if (g_file_test (g_strdup_printf("%s/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS)) {
-			cCommand = g_strdup_printf("rm %s/%s",g_getenv("HOME"),OLD_CONFIG_FILE);
-		} else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS)) {
-			cCommand = g_strdup_printf("rm %s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE);
-		} 
-		cCommand2 = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
-		cid_info ("Commande: %s\n", cCommand);
-		cid_info ("Commande: %s\n", cCommand2);
+		cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
 		system (cCommand);
-		system (cCommand2);
 		g_free (cCommand);
-		g_free (cCommand2);
+		cCommand = NULL;
+		if (g_file_test (g_strdup_printf("%s/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
+			cCommand = g_strdup_printf("mv %s/%s %s/.config/cid/%s",
+										g_getenv("HOME"),
+										OLD_CONFIG_FILE,
+										g_getenv("HOME"),
+										CID_CONFIG_FILE);
+		else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
+			cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
+										g_getenv("HOME"),
+										OLD_CONFIG_FILE,
+										g_getenv("HOME"),
+										CID_CONFIG_FILE);
+		else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),CID_CONFIG_FILE), G_FILE_TEST_EXISTS))
+			cCommand = g_strdup_printf("mv %s/.config/cid/%s",
+										g_getenv("HOME"),
+										OLD_CONFIG_FILE);
+		else 
+			cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
+		cid_info ("Commande: %s\n", cCommand);
+		system (cCommand);
+		g_free (cCommand);
 	}
 }
 
@@ -54,7 +66,7 @@ gboolean cid_check_conf_file_version (const gchar *f) {
 		
 	if (strcmp(line_f1,line_f2)!=0) {
 		cid_info ("bad file version, building a new one\n");
-		cCommand = g_strdup_printf("rm %s",f);
+		cCommand = g_strdup_printf("rm -rf %s > /dev/null",f);
 		system (cCommand);
 		g_free (cCommand);
 		cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
@@ -102,7 +114,7 @@ void cid_merge_config (FileSettings *conf) {
 
 void cid_read_config_after_update (const char *f, gpointer *pData) {
 	g_slice_free (FileSettings,conf);
-	cid_read_config (f);
+	cid_read_config (f, NULL);
 	
 	if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) {
 		cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
@@ -216,7 +228,7 @@ int cid_read_key_file (const gchar *f) {
 	cid_key_file_free();
 }
 
-int cid_read_config (const char *f) {
+int cid_read_config (const char *f, gpointer *pData) {
 	cid_info ("Reading file : %s\n",f);
 	
 	/* Create a new Settings object. If you are using GTK+ 2.8 or below, you should

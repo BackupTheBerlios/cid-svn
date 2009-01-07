@@ -75,7 +75,7 @@ void cid_init (CidMainContainer *pCid) {
 	
 	pCid->bAnimation=FALSE;
 	
-	pCid->pConfFile = g_strdup_printf("%s/.config/%s",g_getenv("HOME"),g_strdup(CID_CONFIG_FILE));
+	pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 	
 	pCid->pDefaultImage = g_strdup(CID_DEFAULT_IMAGE);
 	
@@ -111,7 +111,7 @@ int main ( int argc, char **argv ) {
 	{
 		g_string_append_printf (sCommandString, " %s", argv[i]);
 	}
-	//g_string_append_printf (sCommandString, " -d");
+	g_string_append_printf (sCommandString, " -s");
 	cLaunchCommand = sCommandString->str;
 	g_string_free (sCommandString, FALSE);
 	
@@ -128,7 +128,7 @@ int main ( int argc, char **argv ) {
 	bind_textdomain_codeset (CID_GETTEXT_PACKAGE, "UTF-8");
 	textdomain (CID_GETTEXT_PACKAGE);
 	
-	cid_read_config (cid->pConfFile);
+	cid_read_config (cid->pConfFile, NULL);
 	cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
 	
 	if (!g_thread_supported ()){ g_thread_init(NULL); }

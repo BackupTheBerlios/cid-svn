@@ -82,7 +82,7 @@ cairo_surface_t *cid_get_image (char *cImagePath, gdouble iWidth, gdouble iHeigh
 		if(!cCover)
 			cid_exit(CID_GTK_ERROR,"%s() : error loading image",__func__);
 	
-		nCover = gdk_pixbuf_scale_simple(cid_get_pixbuf(cCover), iWidth, iHeight, GDK_INTERP_HYPER);
+		nCover = gdk_pixbuf_scale_simple(cid_get_pixbuf(cCover), iWidth, iHeight, GDK_INTERP_BILINEAR);
 		
 		if (!bIsSVG)	
 			gtk_widget_destroy(cCover);
@@ -521,18 +521,22 @@ void cid_run_with_player (void) {
 
 void cid_display_init(int argc, char **argv) {
 	/* Initialisation de Gtk */
-	cid->bRunning = gtk_init_check(&argc, &argv);
+	if (!cid->bRunning)
+		cid->bRunning = gtk_init_check(&argc, &argv);
 	if (!cid->bRunning)
 		cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
 
+	/* On intercepte les signaux */
+	signal (SIGINT, cid_interrupt); // ctrl+c
+
+	if (cid->bSafeMode) {
+		_cid_conf_panel(NULL,NULL);
+	}
 	/* On créé la fenêtre */
 	cid_create_main_window();
 	
 	/* On lance le monitoring du player */
 	cid_run_with_player();	
-
-	/* On intercepte les signaux */
-	signal (SIGINT, cid_interrupt); // ctrl+c
         
 	/* Enfin on lance la boucle infinie Gtk */
 	gtk_main();

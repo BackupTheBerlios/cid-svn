@@ -21,17 +21,32 @@ static int iNbConfigDialogs = 0;
 static GtkListStore *s_pRendererListStore = NULL;
 static GtkListStore *s_pDecorationsListStore = NULL;
 static GtkListStore *s_pDecorationsListStore2 = NULL;
+static GtkWidget *s_pDialog = NULL;
 
 void cid_config_panel_destroyed (void) {
 	iNbConfigDialogs --;
 	if (iNbConfigDialogs <= 0) {
 		cid_debug ("plus de panneaux de config\n");
 		iNbConfigDialogs = 0;
+		if (s_pDialog)
+			gtk_widget_destroy(s_pDialog);
 	}
 }
 
 gboolean cid_edit_conf_file_with_panel (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain) {
 	return cid_edit_conf_file_core (pWindow, g_strdup (cConfFilePath), g_strdup (cTitle), iWindowWidth, iWindowHeight, iIdentifier, cPresentedGroup, pConfigFunc, cGettextDomain);
+}
+
+gboolean on_delete_main_gui (GtkWidget *pWidget, GdkEvent *event, GMainLoop *pBlockingLoop)
+{
+	g_print ("%s (%x)\n", __func__, pBlockingLoop);
+	if (pBlockingLoop != NULL)
+	{
+		g_print ("dialogue detruit, on sort de la boucle");
+		if (g_main_loop_is_running (pBlockingLoop))
+			g_main_loop_quit (pBlockingLoop);
+	}
+	return FALSE;
 }
 
 gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain) {
@@ -50,14 +65,14 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
 	g_key_file_remove_key (pKeyFile, "Desktop Entry", "X-Ubuntu-Gettext-Domain", NULL);  // salete de traducteur automatique.
 	
 	GPtrArray *pDataGarbage = g_ptr_array_new ();
-	GtkWidget *pDialog = cid_generate_ihm_from_keyfile (pKeyFile, cTitle, pWindow, &pWidgetList, (pConfigFunc != NULL), iIdentifier, cPresentedGroup, cGettextDomain, pDataGarbage);
+	s_pDialog = cid_generate_ihm_from_keyfile (pKeyFile, cTitle, pWindow, &pWidgetList, (pConfigFunc != NULL)&&!cid->bSafeMode, iIdentifier, cPresentedGroup, cGettextDomain, pDataGarbage);
 
-	g_return_val_if_fail (pDialog != NULL, FALSE);
+	g_return_val_if_fail (s_pDialog != NULL, FALSE);
 	
 	if (iWindowWidth != 0 && iWindowHeight != 0)
-		gtk_window_resize (GTK_WINDOW (pDialog), iWindowWidth, iWindowHeight);
-	
-	gtk_window_present (GTK_WINDOW (pDialog));
+		gtk_window_resize (GTK_WINDOW (s_pDialog), iWindowWidth, iWindowHeight);
+		
+	gtk_window_present (GTK_WINDOW (s_pDialog));
 	
 	gpointer *user_data = g_new (gpointer, 11);
 	user_data[0] = pKeyFile;
@@ -72,8 +87,29 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
 	user_data[9] = GINT_TO_POINTER ((int) iIdentifier);
 	user_data[10] = pDataGarbage;
 		
-	g_signal_connect (pDialog, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
+	g_signal_connect (s_pDialog, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
 	
+		
+	if (cid->bSafeMode)
+	{
+		cid->bBlockedWidowActive = TRUE;
+		gtk_window_set_title (GTK_WINDOW (s_pDialog), _("< Maintenance mode >"));
+		GMainLoop *pBlockingLoop = g_main_loop_new (NULL, FALSE);
+		g_object_set_data (G_OBJECT (s_pDialog), "loop", pBlockingLoop);
+		g_signal_connect (s_pDialog,
+			"delete-event",
+			G_CALLBACK (on_delete_main_gui),
+			pBlockingLoop);
+		
+		g_print ("debut de boucle bloquante ...\n");
+		GDK_THREADS_LEAVE ();
+		g_main_loop_run (pBlockingLoop);
+		GDK_THREADS_ENTER ();
+		g_print ("fin de boucle bloquante\n");
+		
+		g_main_loop_unref (pBlockingLoop);
+	}	
+		
 	return FALSE;
 }
 
@@ -113,7 +149,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	gpointer *pGroupKeyWidget;
 	int i, j, k, iNbElements;
 	int iNumPage=0, iPresentedNumPage=0;
-	char iElementType;
+	char iElementType, iHiddenType;
 	gboolean bIsAligned;
 	gboolean bValue, *bValueList;
 	gboolean bAddBackButton;
@@ -125,7 +161,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	
 	gchar *cOriginalConfFilePath = g_strdup_printf ("%s/%s", CID_DATA_DIR, CID_CONFIG_FILE);
 	
-	GtkWidget *pDialog;
+	GtkWidget *pDialog;	
 	if (bApplyButtonPresent) {
 		pParentWindow = NULL;  // evite de la rendre modale, et ainsi la fait apparaitre dans la barre des taches.
 		pDialog = gtk_dialog_new_with_buttons ((cTitle != NULL ? cTitle : ""),
@@ -137,15 +173,13 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 			GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_QUIT,
 			GTK_RESPONSE_REJECT,
-			NULL);
+			NULL);		
 	} else {
 		pDialog = gtk_dialog_new_with_buttons ((cTitle != NULL ? cTitle : ""),
-			(pParentWindow != NULL ? GTK_WINDOW (pParentWindow) : NULL),
-			GTK_DIALOG_DESTROY_WITH_PARENT,  // GTK_DIALOG_MODAL | 
+			NULL,
+			GTK_DIALOG_MODAL, 
 			GTK_STOCK_OK,
 			GTK_RESPONSE_ACCEPT,
-			GTK_STOCK_QUIT,
-			GTK_RESPONSE_REJECT,
 			NULL);
 	}
 	
@@ -198,6 +232,10 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 					cUsefulComment ++;
 
 				iElementType = *cUsefulComment;
+				if (iElementType == 't') {
+					cUsefulComment ++;
+					iHiddenType = *cUsefulComment;
+				}
 				cUsefulComment ++;
 
 				if (! g_ascii_isdigit (*cUsefulComment) && *cUsefulComment != '[') {
@@ -348,6 +386,9 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 
 				pSubWidgetList = NULL;
 				bAddBackButton = FALSE;
+
+				if (iElementType=='t' && cid->bTesting)
+					iElementType = iHiddenType;
 
 				switch (iElementType) {
 					case 'b' :  // boolean
@@ -1063,7 +1104,10 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 					break ;
 					case 't' :  // boolean
 						//g_print ("  + boolean\n");
+						/*
 						if (cid->bTesting) {
+							
+							
 							length = 0;
 							bValueList = g_key_file_get_boolean_list (pKeyFile, cGroupName, cKeyName, &length, NULL);
 
@@ -1081,6 +1125,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 							}
 							g_free (bValueList);
 						}
+						*/
 					break;
 					
 

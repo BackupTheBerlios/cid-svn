@@ -84,7 +84,7 @@ int cid_read_string(char* chaine) {
 void cid_read_parameters (int argc, char **argv) {
 	
 	GError *erreur=NULL;
-	gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE;
+	gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE, bSafeMode = FALSE;
 	
 	GOptionEntry TableDesOptions[] =
 	{
@@ -100,6 +100,9 @@ void cid_read_parameters (int argc, char **argv) {
 		{"debug", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bDebugMode,
 			_("runs CID in debug mode. (equivalent to '-l debug')"), NULL},
+		{"safe", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
+			&bSafeMode,
+			_("runs CID in safe mode."), NULL},
 		{"version", 'v', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bPrintVersion,
 			_("print version and quit."), NULL}
@@ -165,6 +168,11 @@ Hum... I'd say it's a kinda Penguin ! \n\
 	{
 		g_print ("ERROR : %s\n", erreur->message);
 		exit (CID_ERROR_READING_ARGS);
+	}
+	
+	if (bSafeMode) {
+		cid->bSafeMode = TRUE;
+		g_print ("Safe Mode\n");
 	}
 	
 	if (bDebugMode) {

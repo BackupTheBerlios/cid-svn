@@ -32,7 +32,7 @@ gint cid_get_int_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gint iDe
  * Fonction qui charge la configuration .
  * @param f fichier de configuration à lire.
  */
-int cid_read_config (const char *f);
+int cid_read_config (const char *f, gpointer *pData);
 
 /**
  * vérifie que le fichier de configuration existe.

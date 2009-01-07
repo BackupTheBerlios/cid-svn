@@ -180,10 +180,11 @@ gboolean _check_cover_is_present (gpointer data) {
 void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
 	cid_save_data();
 	
-	cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, "CID Configuration Panel", 690, 480, '\0', NULL, (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+	cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 690, 480, '\0', NULL, (CidReadConfigFunc) cid->bSafeMode ? cid_read_config : cid_read_config_after_update, CID_GETTEXT_PACKAGE);
 }
 
 void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data) {
+	
 	GKeyFile *pKeyFile = user_data[0];
 	GSList *pWidgetList = user_data[1];
 	gchar *cConfFilePath = user_data[2];
@@ -222,9 +223,12 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
 	}
 
 	if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_REJECT || action == GTK_RESPONSE_NONE) {
-		//cairo_dock_mark_prefered_conf_file (cConfFilePath);
+		if (cid->bSafeMode && cid->bBlockedWidowActive) {
+			cid->bBlockedWidowActive = FALSE;
+			g_signal_emit_by_name(GTK_OBJECT(pDialog),"delete-event");
+		}
 
-		gtk_widget_destroy (GTK_WIDGET (pDialog));
+		if (pDialog) gtk_widget_destroy (GTK_WIDGET (pDialog));
 		cid_config_panel_destroyed ();
 		g_key_file_free (pKeyFile);
 		cid_free_generated_widget_list (pWidgetList);
