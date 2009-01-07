@@ -14,6 +14,7 @@ G_BEGIN_DECLS
 
 #define TESTING_COVER "../data/default.svg"
 #define TESTING_FILE "../data/cid.conf"
+#define SVN_CONF_FILE "cid-svn.conf"
 
 #define cid_launch_command(cCommand,...) cid_launch_command_full(cCommand, NULL, ##__VA_ARGS__)
 

@@ -189,6 +189,7 @@ Hum... I'd say it's a kinda Penguin ! \n\
 
 	if (bTestingMode) {
 		cid->bTesting = TRUE;
+		cid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),SVN_CONF_FILE);
 	}
 }
 	

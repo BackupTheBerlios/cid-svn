@@ -18,6 +18,7 @@ FileSettings *conf;
 
 void cid_check_file (const gchar *f) {
 	gchar *cCommand=NULL;
+	gchar *cFileName = cid->bTesting ? g_strdup(SVN_CONF_FILE) : g_strdup(CID_CONFIG_FILE);
 	if (!g_file_test (f, G_FILE_TEST_EXISTS)) {
 		cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
 		system (cCommand);
@@ -28,22 +29,25 @@ void cid_check_file (const gchar *f) {
 										g_getenv("HOME"),
 										OLD_CONFIG_FILE,
 										g_getenv("HOME"),
-										CID_CONFIG_FILE);
+										cFileName);
 		else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
 			cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
 										g_getenv("HOME"),
 										OLD_CONFIG_FILE,
 										g_getenv("HOME"),
-										CID_CONFIG_FILE);
-		else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),CID_CONFIG_FILE), G_FILE_TEST_EXISTS))
-			cCommand = g_strdup_printf("mv %s/.config/cid/%s",
+										cFileName);
+		else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),cFileName), G_FILE_TEST_EXISTS))
+			cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
 										g_getenv("HOME"),
-										OLD_CONFIG_FILE);
+										cFileName,
+										g_getenv("HOME"),
+										cFileName);
 		else 
 			cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
 		cid_info ("Commande: %s\n", cCommand);
 		system (cCommand);
 		g_free (cCommand);
+		g_free (cFileName);
 	}
 }
 
