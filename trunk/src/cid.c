@@ -51,21 +51,21 @@ void cid_init (CidMainContainer *pCid) {
 	
 	pCid->pVerbosity=NULL;
 	
-	pCid->bHide=FALSE;
+	//pCid->bHide=FALSE;
 	
 	pCid->bTesting=FALSE;
 	
 	pCid->iCheckIter=0;
 	
-	pCid->iInter=5 * 1000;
+	//pCid->iInter=5 * 1000;
 	
-	pCid->iPosX=0;
+	//pCid->iPosX=0;
 	
-	pCid->iPosY=0;
+	//pCid->iPosY=0;
 	
-	pCid->iWidth=150;
+	//pCid->iWidth=150;
 	
-	pCid->iHeight=150;
+	//pCid->iHeight=150;
 	
 	pCid->gColorSize=0;
 	
@@ -73,11 +73,11 @@ void cid_init (CidMainContainer *pCid) {
 	
 	pCid->iCurrentlyDrawing=0;
 	
-	pCid->bAnimation=FALSE;
+	//pCid->bAnimation=FALSE;
 	
 	pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 	
-	pCid->pDefaultImage = g_strdup(CID_DEFAULT_IMAGE);
+	//pCid->pDefaultImage = g_strdup(CID_DEFAULT_IMAGE);
 	
 	pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
 	

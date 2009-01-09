@@ -16,37 +16,41 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: France\n"
 
-#: ../src/cid-utilities.c:64
+#######################
+### cid-utilities.c ###
+#######################
+
+#: ../src/cid-utilities.c:112
 msgid "Conky Images Display is a programm written in C.\nIts goal is to display the cover of the song which is currently playing in the player you choose on the desktop like conky does with other informations.\nYou can use it with the following options:\n"
 msgstr "Conky Images Display est un programme écrit en C.\nSon but est d'afficher la pochette de l'album en cours de lecture sur le bureau à la manière de conky.\nVous pouvez le lancer avec les options suivantes :\n"
 
-#: ../src/cid-utilities.c:51
-msgid "log verbosity (debug,info,message,warning,error) default is warning."
-msgstr "niveau de verbosité (debug,info,message,warning,error) warning par defaut."
+#: ../src/cid-utilities.c:93
+msgid "log verbosity (debug,info,message,warning,error) default is 'warning'."
+msgstr "niveau de verbosité (debug,info,message,warning,error) par defaut 'warning'."
 
-#: ../src/cid-utilities.c:54
-msgid "load CID with this config file instead of ~/.config/cid.conf."
-msgstr "lance CID avec ce fichier de configuration à la place de ~/.config/cid.conf."
+#: ../src/cid-utilities.c:96
+msgid "load CID with this config file instead of ~/.config/cid/cid.conf."
+msgstr "lance CID avec ce fichier de configuration à la place de ~/.config/cid/cid.conf."
 
-#: ../src/cid-utilities.c:57
-msgid "runs CID in testing mode."
-msgstr "Lance CID avec les options de test."
+#: ../src/cid-utilities.c:99
+msgid "runs CID in testing mode. (some unstable options might be running)"
+msgstr "Lance CID en mode testing (certaines options instables peuvent être activées)."
 
-#: ../src/cid-utilities.c:60
+#: ../src/cid-utilities.c:102
+msgid "runs CID in debug mode. (equivalent to '-l debug')"
+msgstr "Lance CID en mode debug (équivalent à '-l debug')."
+
+#: ../src/cid-utilities.c:105
+msgid "runs CID in safe mode."
+msgstr "Lance CID en mode restauration."
+
+#: ../src/cid-utilities.c:108
 msgid "print version and quit."
 msgstr "affiche la version et quitte."
 
-#: ../src/cid-main.c:154
-msgid "Your screen does not support alpha channels!\n"
-msgstr "Activation de la transparence impossible !\n"
-
-#: ../src/cid-main.c:158
-msgid "Your screen supports alpha channels!\n"
-msgstr "Transparence activée !\n"
-
-#: ../src/cid-main.c:221
-msgid "ERROR: %s is not recognize as a supported player\n"
-msgstr "ERREUR : %s n'est pas reconnu en tant que lecteur supporté\n"
+##########################
+### cid-menu-factory.c ###
+##########################
 
 #:../src/cid-menu-factory.c:31
 msgid "Configure"
@@ -60,61 +64,180 @@ msgstr "À propos"
 msgid "Quit"
 msgstr "Quitter"
 
+#:../src/cid-menu-factory.c:43
+msgid "Play/Pause"
+msgstr "Jouer/Pause"
+
+#:../src/cid-menu-factory.c:44
+msgid "Next"
+msgstr "Suivant"
+
+#:../src/cid-menu-factory.c:45
+msgid "Previous"
+msgstr "Précédent"
+
 ################
 ### cid.conf ###
 ################
-#:../data/cid.conf:9
-msgid "CID decoration parameters"
-msgstr "Paramètres de décoration de CID"
 
-#:../data/cid.conf:13 ../data/cid.conf:17 ../data/cid.conf:21 ../data/cid.conf:25
+############# BEHAVIOUR OPTIONS #############
+
+#:../data/cid.conf:11
+msgid "Behaviour"
+msgstr "Disposition"
+
+#:../data/cid.conf:13
+msgid "Position on the screen"
+msgstr "Position à l'écran"
+
+#:../data/cid.conf:17 ../data/cid.conf:21 ../data/cid.conf:25 ../data/cid.conf:29
 msgid "in pixels"
 msgstr "en pixels"
 
-#:../data/cid.conf:20
+#:../data/cid.conf:24
 msgid "Width :"
 msgstr "Largeur :"
 
-#:../data/cid.conf:24
-msgid "Height "
+#:../data/cid.conf:28
+msgid "Height :"
 msgstr "Hauteur :"
 
-#:../data/cid.conf:28
-msgid "Display CID on all Dekstop"
-msgstr "Afficher CID sur tous les bureaux"
+#:../data/cid.conf:32
+msgid "Display CID on all Dekstop :"
+msgstr "Afficher CID sur tous les bureaux :"
 
-#:../data/cid.conf:31
+#:../data/cid.conf:35
+msgid "Lock CID position :"
+msgstr "Vérouiller la position de CID :"
+
+#:../data/cid.conf:36
+msgid "You can still move it with ALT + left_clic. This will disable the play/pause command."
+msgstr "Vous pouvez toujours le déplacer avec ALT + clic_gauche. Cela désactive la commande jouer/pause."
+
+#:../data/cid.conf:39
 msgid "Rotation of CID :"
 msgstr "Rotation de CID :"
 
-#:../data/cid.conf:32
+#:../data/cid.conf:50
 msgid "in degree"
 msgstr "en degrés"
 
-#:../data/cid.conf:35
-msgid "Keep corners during rotate"
-msgstr "Ne pas couper les coins durant la rotation"
-
-#:../data/cid.conf:38
-msgid "Color of the background (r,v,b,a) :"
-msgstr "Couleur de l'arrière plan"
-
-#:../data/cid.conf:44
-msgid "the player you are using"
-msgstr "le lecteur que vous utilisez"
-
-#:../data/cid.conf:47
-msgid "interval between 2 refresh (leave blank if you are using rhythmbox)"
-msgstr "interval entre 2 vérifications (laisser vide pour rhythmbox)"
-
 #:../data/cid.conf:53
-msgid "default image instead of the beautiful CD"
-msgstr "image par défaut à la place du magnifique CD"
+msgid "Keep corners during rotate :"
+msgstr "Ne pas couper les coins durant la rotation :"
 
 #:../data/cid.conf:56
-msgid "hide cid when player isn't running"
-msgstr "cacher CID lorsque le lecteur n'est pas lancé"
+msgid "Color of the background (r,g,b,a) :"
+msgstr "Couleur de l'arrière plan (r,v,b,a) :"
 
 #:../data/cid.conf:59
-msgid "Move cid with left clic"
-msgstr "Déplacer cid avec clic gauche"
+msgid "Idem when the mouse is over :"
+msgstr "Même chose au survol de la souris :"
+
+############# SYSTEM OPTIONS #############
+
+#:../data/cid.conf:67
+msgid "System"
+msgstr "Système"
+
+#:../data/cid.conf:69
+msgid "Monitoring player options"
+msgstr "Options de contrôle du lecteur"
+
+#:../data/cid.conf:72
+msgid "Wich player you want to monitor :"
+msgstr "Quel lecteur surveiller :"
+
+#:../data/cid.conf:75
+msgid "Interval between two refresh :"
+msgstr "Interval entre deux vérifications  :"
+
+#:../data/cid.conf:76
+msgid "in seconds. Doesn't matter for rhythmbox support."
+msgstr "en secondes. Sans importance pour rhythmbox."
+
+#:../data/cid.conf:79
+msgid "Allow CID to monitor your player :"
+msgstr "Autoriser CID à contrôler le lecteur :"
+
+#:../data/cid.conf:80
+msgid "Contextual menu in right clic. Play/Pause by left clicking. Next by middle clicking."
+msgstr "Menu contextuel au clic. Jouer/pause par clic gauche. Suivant par clic milieu."
+
+############## CID OPTIONS ###############
+
+#:../data/cid.conf:90
+msgid "Customisation options"
+msgstr "Customisation"
+
+#:../data/cid.conf:93
+msgid "Default image :"
+msgstr "Image par défaut :"
+
+#:../data/cid.conf:94
+msgid "Instead of the beautiful CD."
+msgstr "À la place du magnifique CD."
+
+#:../data/cid.conf:97
+msgid "Hide CID when the player isn't running :"
+msgstr "Cacher CID lorsque le lecteur n'est pas lancé :"
+
+#:../data/cid.conf:109
+msgid "Run an animation when the music change :"
+msgstr "Lancer une animation au changement de musique :"
+
+#:../data/cid.conf:112
+msgid "Animation to use :"
+msgstr "Animation à utiliser :"
+
+#:../data/cid.conf:112
+msgid "Rotate"
+msgstr "Rotation"
+
+#:../data/cid.conf:115
+msgid "Use threaded animations :"
+msgstr "Utiliser des animations threadées :"
+
+#:../data/cid.conf:116
+msgid "This can not work properly depending your processor."
+msgstr "Peut ne pas être efficace en fonction de votre processeur."
+
+#:../data/cid.conf:126
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#:../data/cid.conf:129
+msgid "Allow CID to download missing covers :"
+msgstr "Autoriser CID à télécharger les pochettes manquantes :"
+
+#:../data/cid.conf:130
+msgid "You need to be connected to the Internet."
+msgstr "Vous devez être connecté à Internet."
+
+#:../data/cid.conf:133
+msgid "Delay before checking for missing covers :"
+msgstr "Délai avant de télécharger les pochettes manquantes :"
+
+#:../data/cid.conf:134
+msgid "in seconds"
+msgstr "en secondes"
+
+#:../data/cid.conf:137
+msgid "Medium"
+msgstr "Moyenne"
+
+#:../data/cid.conf:137
+msgid "Large"
+msgstr "Grande"
+
+#:../data/cid.conf:137
+msgid "Size of the downloaded covers :"
+msgstr "Taille des images téléchargées :"
+
+#:../data/cid.conf:138
+msgid "The smaller image will be downloaded faster than a big one."
+msgstr "Les petites images sont téléchargées plus vite que les grandes."
+
+#:../data/cid.conf:153
+msgid "Active unstable functions :"
+msgstr "Activer les fonctions instables :"

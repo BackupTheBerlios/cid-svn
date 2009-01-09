@@ -46,17 +46,11 @@ void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
 	} else if (pButton->button == 1 && pButton->type == GDK_BUTTON_RELEASE) {
 		cid_info("Clic court");
 		if (cid->bMonitorPlayer)
-			if (cid->iPlayer == PLAYER_RHYTHMBOX)
-				_playPause_rhythmbox();
-			else if (cid->iPlayer == PLAYER_AMAROK_1)
-				_playPause_amarok ();
+			cid->pMonitorList->p_fPlayPause();
 	} else if (pButton->button == 2 && pButton->type == GDK_BUTTON_RELEASE) { // clic milieu
 		cid_info ("Clic milieu\n");
 		if (cid->bMonitorPlayer)
-			if (cid->iPlayer == PLAYER_RHYTHMBOX)
-				_next_rhythmbox ();
-			else if (cid->iPlayer == PLAYER_AMAROK_1)
-				_next_amarok ();
+			cid->pMonitorList->p_fNext();
 	} else if (pButton->button == 3 && pButton->type == GDK_BUTTON_RELEASE){ //clic droit
 		cid_info ("clic droit\n");
 		
@@ -153,7 +147,6 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
 
 gboolean _check_cover_is_present (gpointer data) {
 	//cid_debug ("On cherche....\n");
-	//gint iCpt;
 	cid->iCheckIter++;
 	if (g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS)) {
 		cid_display_image(musicData.playing_cover);
@@ -161,7 +154,6 @@ gboolean _check_cover_is_present (gpointer data) {
 		musicData.iSidCheckCover = 0;
 		return FALSE;
 	} else if (cid->iCheckIter > cid->iTimeToWait) {
-		//iCpt = 0;
 		if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
 			gchar *cImageURL = NULL;
 			cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
@@ -178,9 +170,11 @@ gboolean _check_cover_is_present (gpointer data) {
 }
 
 void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
-	cid_save_data();
+	if (!cid->bConfFilePanel) {
+		cid_save_data();
 	
-	cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 690, 480, '\0', NULL, (CidReadConfigFunc) cid->bSafeMode ? cid_read_config : cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+		cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 690, 480, '\0', NULL, (CidReadConfigFunc) cid->bSafeMode ? cid_read_config : cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+	}
 }
 
 void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data) {
@@ -227,7 +221,7 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
 			cid->bBlockedWidowActive = FALSE;
 			g_signal_emit_by_name(GTK_OBJECT(pDialog),"delete-event");
 		}
-
+		cid->bConfFilePanel = FALSE;
 		if (pDialog) gtk_widget_destroy (GTK_WIDGET (pDialog));
 		cid_config_panel_destroyed ();
 		g_key_file_free (pKeyFile);

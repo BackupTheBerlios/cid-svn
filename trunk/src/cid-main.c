@@ -498,14 +498,17 @@ cairo_surface_t *cid_create_surface_from_text_full (gchar *cText, cairo_t* pSour
 
 void cid_run_with_player (void) {
 	/* On lance telle ou telle fonction selon le lecteur selectionne */
+	cid->pMonitorList = g_slice_new (CidControlFunctionsList);
 	switch (cid->iPlayer) {
 		/* Amarok 1.4 */
 		case PLAYER_AMAROK_1:
+			cid_build_amarok_menu ();
 			cid_connect_to_amarok(cid->iInter);
 			break;
 		/* Rhythmbox */
 		case PLAYER_RHYTHMBOX:
 			/* Initialisation de DBus */
+			cid_build_rhythmbox_menu ();
 			if (rhythmbox_dbus_connect_to_bus()) {
 				cid_debug ("\ndbus connected\n");
 				cid_display_image(cid_rhythmbox_cover());

@@ -12,13 +12,10 @@
 #include <math.h>
 
 static gint iNbRead=0;
-FileSettings *conf;
-
-//gsize colorSize2 = 4* sizeof (double);
 
 void cid_check_file (const gchar *f) {
 	gchar *cCommand=NULL;
-	gchar *cFileName = cid->bTesting ? g_strdup(SVN_CONF_FILE) : g_strdup(CID_CONFIG_FILE);
+	gchar *cFileName = cid->bTesting && !cid->bDevMode ? g_strdup(SVN_CONF_FILE) : g_strdup(CID_CONFIG_FILE);
 	if (!g_file_test (f, G_FILE_TEST_EXISTS)) {
 		cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
 		system (cCommand);
@@ -79,50 +76,16 @@ gboolean cid_check_conf_file_version (const gchar *f) {
 		
 		cid_save_data ();
 		cid_read_key_file (cid->pConfFile);
-		cid_merge_config (conf);
 		return FALSE;
 	}
 	return TRUE;
 }
 
-void cid_merge_config (FileSettings *conf) {
-	if (iNbRead>0) {
-		//g_free (cid->pPlayer);
-		g_free (cid->dColor);
-		g_free (cid->dFlyingColor);
-	}
-	//cid->pPlayer        = (strcmp(conf->player_name,"")!=0) ? g_strdup(conf->player_name) : NULL;
-	cid->bHide          = (conf->hide);
-	cid->bKeepCorners   = (conf->corners);
-	cid->bLockPosition  = (conf->lock);
-	cid->bAllDesktop    = (conf->allDesktop);
-	cid->bRunAnimation  = (conf->animation);
-	cid->bMonitorPlayer = (conf->monitoring);
-	cid->bThreaded      = (conf->threaded);
-	cid->iPlayer        = (conf->iPlayer);
-	cid->iAnimationType = (conf->iAnimationType);
-	cid->iInter         = (conf->inter!=0) ? (conf->inter * 1000) : (5 * 1000);
-	cid->iPosX          = (conf->pos_x!=0) ? (conf->pos_x) : 0;
-	cid->iPosY          = (conf->pos_y!=0) ? (conf->pos_y) : 0;
-	cid->iWidth         = (conf->size_x!=0) ? (conf->size_x) : 150;
-	cid->iHeight        = (conf->size_y!=0) ? (conf->size_y) : 150;
-	cid->dColor         = conf->couleur;
-	cid->dFlyingColor   = conf->couleurSurvol;
-	cid->dRed           = cid->dColor[0];
-	cid->dGreen         = cid->dColor[1];
-	cid->dBlue          = cid->dColor[2];
-	cid->dAlpha         = cid->dColor[3];
-	cid->dRotate        = (conf->rotation);
-	DEFAULT_IMAGE       = (g_file_test (conf->image, G_FILE_TEST_EXISTS)) ? g_strdup(conf->image) : g_strdup(CID_DEFAULT_IMAGE);
-}
-
 void cid_read_config_after_update (const char *f, gpointer *pData) {
-	g_slice_free (FileSettings,conf);
 	cid_read_config (f, NULL);
 	
 	if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) {
 		cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
-		g_print ("On change la conf\n");
 		gtk_widget_destroy(cid->cWindow);
 		cid_create_main_window();
 	}
@@ -130,6 +93,10 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
 	cid_disconnect_player ();
 	
 	cid_free_musicData();
+	
+	if (cid->pMonitorList) 
+		g_slice_free (CidControlFunctionsList,cid->pMonitorList);
+	
 	
 	cid_run_with_player();
 	gtk_window_move (GTK_WINDOW(cid->cWindow), cid->iPosX, cid->iPosY);
@@ -143,7 +110,7 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
 	(void) pData;
 }
 
-gboolean cid_load_key_file(void) {
+gboolean cid_load_key_file(const gchar *cFile) {
 	GKeyFileFlags flags;
 	GError *error = NULL;
 
@@ -152,7 +119,7 @@ gboolean cid_load_key_file(void) {
 	flags = G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS;
 
 	/* Load the GKeyFile from keyfile.conf or return. */
-	if (!g_key_file_load_from_file (cid->pKeyFile, cid->pConfFile, flags, &error)) {
+	if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) {
 		g_error (error->message);
 		return FALSE;
 	}
@@ -163,7 +130,7 @@ void cid_key_file_free(void) {
 	g_key_file_free (cid->pKeyFile);
 }
 
-gboolean cid_get_boolean_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault) {
+gboolean cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault) {
 	GError *error = NULL;
 	gboolean bGet = g_key_file_get_boolean (pKeyFile, cGroup, cKey, &error);
 	if (error != NULL) {
@@ -174,90 +141,91 @@ gboolean cid_get_boolean_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, 
 	return bGet;
 }
 
-gchar *cid_get_string_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gchar *cDefault) {
+gchar *cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gchar *cDefault, gboolean bFile, gboolean bDir) {
 	GError *error = NULL;
 	gchar *cGet = g_key_file_get_string (pKeyFile, cGroup, cKey, &error);
-	if (error != NULL) {
+	if (error != NULL && bDefault) {
 		g_error_free(error);
 		error = NULL;
 		cGet = cDefault;
 	}
+	if ((bFile || bDir) && cDefault != NULL && !g_file_test (cGet, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS)) {
+		g_free (cGet);
+		if (g_file_test (cDefault, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS))
+			return cDefault;
+		else 
+			return NULL;
+	}		
 	return cGet;
 }
 
-gint cid_get_int_value (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gint iDefault) {
+gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gint iDefault, gboolean bMax, gint iMax) {
 	GError *error = NULL;
 	gint iGet = g_key_file_get_integer (pKeyFile, cGroup, cKey, &error);
-	if (error != NULL) {
+	if (error != NULL && bDefault) {
 		g_error_free(error);
 		error = NULL;
 		iGet = iDefault;
 	}
+	if (bMax && iGet > iMax)
+		return iMax;
 	return iGet;
 }
 
-int cid_read_key_file (const gchar *f) {
-	GError *monitor = NULL, *image = NULL, *animation = NULL, *allDesktop = NULL, *move = NULL;
-	
-	if (!cid_load_key_file())
+void cid_read_key_file (const gchar *f) {	
+	if (!cid_load_key_file(f))
 		cid_exit(CID_ERROR_READING_FILE,"Key File error");
 	
-	// [player] configuration
-	conf->iPlayer    = g_key_file_get_integer  (cid->pKeyFile, "player", "PLAYER", NULL);
-	conf->inter      = g_key_file_get_integer (cid->pKeyFile, "player", "INTER", NULL);
-	conf->monitoring = CID_CONFIG_GET_BOOLEAN ("player", "MONITOR", TRUE);
+	// [System] configuration
+	cid->iPlayer        = CID_CONFIG_GET_INTEGER ("System", "PLAYER");
+	cid->iInter         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("System", "INTER", 5) * 1000;
+	cid->bMonitorPlayer = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "MONITOR", TRUE);
 
-	// [options] configuration
-	conf->lock           = CID_CONFIG_GET_BOOLEAN ("options", "LOCK", TRUE);
-	conf->hide           = CID_CONFIG_GET_BOOLEAN ("options", "HIDE", FALSE);
-	conf->image          = CID_CONFIG_GET_STRING  ("options", "IMAGE", CID_DEFAULT_IMAGE);
-	conf->animation      = CID_CONFIG_GET_BOOLEAN ("options", "ANIMATION", TRUE);
-	conf->iAnimationType = g_key_file_get_integer (cid->pKeyFile, "options", "ANIMATION_TYPE", NULL);
-	conf->threaded       = CID_CONFIG_GET_BOOLEAN ("options", "THREAD", FALSE);
-	cid->bDownload       = CID_CONFIG_GET_BOOLEAN ("options", "DOWNLOAD", FALSE);
-	cid->iImageSize      = CID_CONFIG_GET_INTEGER ("options", "D_SIZE", 0);
-	cid->iTimeToWait     = CID_CONFIG_GET_INTEGER ("options", "DELAY", 5);
-	cid->bUnstable       = CID_CONFIG_GET_BOOLEAN ("options", "B_UNSTABLE", TRUE);
+	// [Options] configuration
+	cid->bHide           = CID_CONFIG_GET_BOOLEAN ("Options", "HIDE");
+	cid->pDefaultImage   = CID_CONFIG_GET_FILE_PATH  ("Options", "IMAGE", CID_DEFAULT_IMAGE);
+	cid->bRunAnimation   = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "ANIMATION", TRUE);
+	cid->iAnimationType  = CID_CONFIG_GET_INTEGER ("Options", "ANIMATION_TYPE");
+	cid->bThreaded       = CID_CONFIG_GET_BOOLEAN ("Options", "THREAD");
+	cid->bDownload       = CID_CONFIG_GET_BOOLEAN ("Options", "DOWNLOAD");
+	cid->iImageSize      = CID_CONFIG_GET_INTEGER ("Options", "D_SIZE");
+	cid->iTimeToWait     = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("Options", "DELAY", 5);
+	cid->bUnstable       = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "B_UNSTABLE", TRUE);
 	
-	// [position] configuration
-	conf->pos_x    = g_key_file_get_integer (cid->pKeyFile, "position", "GAP_X", NULL);
-	conf->pos_y    = g_key_file_get_integer (cid->pKeyFile, "position", "GAP_Y", NULL);	
-	conf->size_x   = g_key_file_get_integer (cid->pKeyFile, "position", "SIZE_X", NULL);
-	conf->size_y   = g_key_file_get_integer (cid->pKeyFile, "position", "SIZE_Y", NULL);
-	conf->rotation = g_key_file_get_double  (cid->pKeyFile, "position", "ROTATION", NULL);
-	conf->couleur  = g_key_file_get_double_list (cid->pKeyFile, "position", "COLOR", &cid->gColorSize, NULL);
-	conf->couleurSurvol  = g_key_file_get_double_list (cid->pKeyFile, "position", "FLYING_COLOR", &cid->gFlyingColorSize, NULL);
-	conf->corners  = CID_CONFIG_GET_BOOLEAN ("position", "KEEP_CORNERS", FALSE);
-	conf->allDesktop = CID_CONFIG_GET_BOOLEAN ("position", "ALL_DESKTOP", TRUE);
+	// [Behaviour] configuration
+	cid->iPosX          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_X");
+	cid->iPosY          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_Y");	
+	cid->iWidth         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_X", 150, 175);
+	cid->iHeight        = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_Y", 150, 175);
+	cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", NULL);
+	cid->dColor         = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "COLOR", &cid->gColorSize, NULL);
+	cid->dFlyingColor   = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "FLYING_COLOR", &cid->gFlyingColorSize, NULL);
+	cid->bKeepCorners   = CID_CONFIG_GET_BOOLEAN ("Behaviour", "KEEP_CORNERS");
+	cid->bAllDesktop    = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "ALL_DESKTOP", TRUE);
+	cid->bLockPosition  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "LOCK", TRUE);
+	
+	cid->dRed   = cid->dColor[0];
+	cid->dGreen = cid->dColor[1];
+	cid->dBlue  = cid->dColor[2];
+	cid->dAlpha = cid->dColor[3];
+	
 	cid_key_file_free();
 }
 
 int cid_read_config (const char *f, gpointer *pData) {
 	cid_info ("Reading file : %s\n",f);
 	
-	/* Create a new Settings object. If you are using GTK+ 2.8 or below, you should
-	* use g_new() or g_malloc() instead! */
-	conf = g_slice_new (FileSettings);
-	
-	cid_check_file (f);	
+	if (!cid->bDevMode) 
+		cid_check_file (f);
 			
 	cid_read_key_file (f);
-	cid_merge_config (conf);
 	
 	if (!cid->bDevMode) 
 		cid_check_conf_file_version (f);
-	//cid_player_evaluation (cid->pPlayer);
-	
-	cid_free_conf (conf);
 	
 	iNbRead++;
 
 	return 0;
-}
-
-void cid_free_conf (FileSettings *conf) {
-	//g_free(conf->player_name);
-	g_free(conf->image);
 }
 
 void cid_get_data () {
@@ -269,55 +237,44 @@ void cid_get_data () {
 }
 
 void cid_save_data () {
-	GKeyFile *keyfile;
-	GKeyFileFlags flags;
-	GError *error = NULL;
-
-	/* Create a new GKeyFile object and a bitwise list of flags. */
-	keyfile = g_key_file_new ();
-	flags = G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS;
-
-	/* Load the GKeyFile from keyfile.conf or return. */
-	if (!g_key_file_load_from_file (keyfile, cid->pConfFile, flags, &error)) {
-		g_error (error->message);
-		return;
-	}
+	if (!cid_load_key_file(cid->pConfFile))
+		cid_exit(CID_ERROR_READING_FILE,"Key File error");
 	
 	if (cid->cWindow!=NULL)
 		cid_get_data();
 	
-	// [player] configuration
-	g_key_file_set_integer (keyfile, "player", "PLAYER", cid->iPlayer);
-	g_key_file_set_integer (keyfile, "player", "INTER", cid->iInter/1000);
-	g_key_file_set_boolean (keyfile, "player", "MONITOR", cid->bMonitorPlayer);
+	// [System] configuration
+	g_key_file_set_integer (cid->pKeyFile, "System", "PLAYER", cid->iPlayer);
+	g_key_file_set_integer (cid->pKeyFile, "System", "INTER", cid->iInter/1000);
+	g_key_file_set_boolean (cid->pKeyFile, "System", "MONITOR", cid->bMonitorPlayer);
 
-	// [options] configuration
-	g_key_file_set_boolean (keyfile, "options", "LOCK", cid->bLockPosition);
-	g_key_file_set_boolean (keyfile, "options", "ANIMATION", cid->bRunAnimation);
-	g_key_file_set_boolean (keyfile, "options", "HIDE", cid->bHide);
+	// [Options] configuration
+	g_key_file_set_boolean (cid->pKeyFile, "Options", "ANIMATION", cid->bRunAnimation);
+	g_key_file_set_boolean (cid->pKeyFile, "Options", "HIDE", cid->bHide);
 	if (strcmp(cid->pDefaultImage,TESTING_COVER)!=0 && strcmp(cid->pDefaultImage,CID_DEFAULT_IMAGE)!=0)
-		g_key_file_set_string  (keyfile, "options", "IMAGE", (g_file_test (cid->pDefaultImage, G_FILE_TEST_EXISTS) ? cid->pDefaultImage : /*CID_DEFAULT_IMAGE*/""));
+		g_key_file_set_string  (cid->pKeyFile, "Options", "IMAGE", cid->pDefaultImage);
 	else
-		g_key_file_set_string  (keyfile, "options", "IMAGE", "");
-	g_key_file_set_boolean (keyfile, "options", "THREAD", cid->bThreaded);
-	g_key_file_set_boolean (keyfile, "options", "DOWNLOAD", cid->bDownload);
-	g_key_file_set_integer (keyfile, "options", "ANIMATION_TYPE", cid->iAnimationType);
-	g_key_file_set_integer (keyfile, "options", "DELAY", cid->iTimeToWait);
-	g_key_file_set_integer (keyfile, "options", "D_SIZE", cid->iImageSize);
-	g_key_file_set_boolean (keyfile, "options", "B_UNSTABLE", cid->bUnstable);
+		g_key_file_set_string  (cid->pKeyFile, "Options", "IMAGE", "");
+	g_key_file_set_boolean (cid->pKeyFile, "Options", "THREAD", cid->bThreaded);
+	g_key_file_set_boolean (cid->pKeyFile, "Options", "DOWNLOAD", cid->bDownload);
+	g_key_file_set_integer (cid->pKeyFile, "Options", "ANIMATION_TYPE", cid->iAnimationType);
+	g_key_file_set_integer (cid->pKeyFile, "Options", "DELAY", cid->iTimeToWait);
+	g_key_file_set_integer (cid->pKeyFile, "Options", "D_SIZE", cid->iImageSize);
+	g_key_file_set_boolean (cid->pKeyFile, "Options", "B_UNSTABLE", cid->bUnstable);
 		
-	// [position] configuration
-	g_key_file_set_integer (keyfile, "position", "SIZE_X",cid->iWidth<=175 ? cid->iWidth : 175);
-	g_key_file_set_integer (keyfile, "position", "SIZE_Y",cid->iHeight<=175 ? cid->iHeight : 175);
-	g_key_file_set_integer (keyfile, "position", "GAP_X",cid->iPosX);
-	g_key_file_set_integer (keyfile, "position", "GAP_Y",cid->iPosY);
-	g_key_file_set_double (keyfile, "position", "ROTATION",(cid->dRotate));
-	g_key_file_set_double_list (keyfile, "position", "COLOR", (cid->dColor), cid->gColorSize);
-	g_key_file_set_double_list (keyfile, "position", "FLYING_COLOR", (cid->dFlyingColor), cid->gFlyingColorSize);
-	g_key_file_set_boolean (keyfile, "position", "KEEP_CORNERS", cid->bKeepCorners);
-	g_key_file_set_boolean (keyfile, "position", "ALL_DESKTOP", cid->bAllDesktop);
+	// [Behaviour] configuration
+	g_key_file_set_integer (cid->pKeyFile, "Behaviour", "SIZE_X",cid->iWidth);
+	g_key_file_set_integer (cid->pKeyFile, "Behaviour", "SIZE_Y",cid->iHeight);
+	g_key_file_set_integer (cid->pKeyFile, "Behaviour", "GAP_X",cid->iPosX);
+	g_key_file_set_integer (cid->pKeyFile, "Behaviour", "GAP_Y",cid->iPosY);
+	g_key_file_set_double (cid->pKeyFile, "Behaviour", "ROTATION",(cid->dRotate));
+	g_key_file_set_double_list (cid->pKeyFile, "Behaviour", "COLOR", (cid->dColor), cid->gColorSize);
+	g_key_file_set_double_list (cid->pKeyFile, "Behaviour", "FLYING_COLOR", (cid->dFlyingColor), cid->gFlyingColorSize);
+	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "KEEP_CORNERS", cid->bKeepCorners);
+	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "ALL_DESKTOP", cid->bAllDesktop);
+	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "LOCK", cid->bLockPosition);
 
-	cid_write_keys_to_file (keyfile, cid->pConfFile);
+	cid_write_keys_to_file (cid->pKeyFile, cid->pConfFile);
 }
 
 void cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath) {

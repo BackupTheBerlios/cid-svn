@@ -28,7 +28,7 @@ void cid_disconnect_from_amarok ();
 /**
  * Ajoute les options de monitoring de amarok
  */
-void cid_build_amarok_menu (GtkWidget *pMenuItem, GtkWidget *menu);
+void cid_build_amarok_menu (void);
 
 G_END_DECLS
 #endif

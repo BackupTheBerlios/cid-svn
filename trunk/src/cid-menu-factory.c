@@ -36,11 +36,13 @@ GtkWidget *cid_build_menu (CidMainContainer *pCid) {
 	_add_entry_in_menu (_("About"), GTK_STOCK_ABOUT, _cid_about, pSubMenu);
 	_add_entry_in_menu (_("Quit"), GTK_STOCK_QUIT, _cid_quit, pSubMenu);
 	
-	if (cid->bMonitorPlayer)
-		if (cid->iPlayer == PLAYER_RHYTHMBOX)
-			cid_build_rhythmbox_menu (pMenuItem, menu);
-		else if (cid->iPlayer == PLAYER_AMAROK_1)
-			cid_build_amarok_menu (pMenuItem, menu);
+	if (cid->bMonitorPlayer) {
+		pMenuItem = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), pMenuItem);
 	
+		_add_entry_in_menu (_("Play/Pause"), NULL, cid->pMonitorList->p_fPlayPause, menu);
+		_add_entry_in_menu (_("Next"), NULL, cid->pMonitorList->p_fNext, menu);
+		_add_entry_in_menu (_("Previous"), NULL, cid->pMonitorList->p_fPrevious, menu);
+	}
 	return menu;
 }

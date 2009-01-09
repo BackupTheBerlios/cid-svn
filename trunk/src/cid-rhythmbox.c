@@ -310,25 +310,20 @@ void onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointe
 	cid_display_image(rhythmboxData.playing_cover);
 }
 
-void _playPause_rhythmbox () {
+void _playPause_rhythmbox (void) {
 	dbus_call_boolean (dbus_proxy_player,"playPause", !rhythmboxData.playing);
 }
 
-void _next_rhythmbox () {
+void _next_rhythmbox (void) {
 	dbus_call (dbus_proxy_player,"next");
 }
 
-void _previous_rhythmbox () {
+void _previous_rhythmbox (void) {
 	dbus_call (dbus_proxy_player,"previous");
 }
 
-void cid_build_rhythmbox_menu (GtkWidget *pMenuItem, GtkWidget *menu) {
-	static gpointer *data = NULL;
-	GtkWidget *image;
-	pMenuItem = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), pMenuItem);
-	
-	_add_entry_in_menu (_("Play/Pause"), NULL, _playPause_rhythmbox, menu);
-	_add_entry_in_menu (_("Next"), NULL, _next_rhythmbox, menu);
-	_add_entry_in_menu (_("Previous"), NULL, _previous_rhythmbox, menu);
+void cid_build_rhythmbox_menu (void) {
+	cid->pMonitorList->p_fPlayPause = (CidControlFunction) _playPause_rhythmbox;
+	cid->pMonitorList->p_fNext = (CidControlFunction) _next_rhythmbox;
+	cid->pMonitorList->p_fPrevious = (CidControlFunction) _previous_rhythmbox;
 }

@@ -28,8 +28,7 @@ void cid_config_panel_destroyed (void) {
 	if (iNbConfigDialogs <= 0) {
 		cid_debug ("plus de panneaux de config\n");
 		iNbConfigDialogs = 0;
-		if (s_pDialog)
-			gtk_widget_destroy(s_pDialog);
+		cid->bConfFilePanel = FALSE;
 	}
 }
 
@@ -37,11 +36,9 @@ gboolean cid_edit_conf_file_with_panel (GtkWindow *pWindow, gchar *cConfFilePath
 	return cid_edit_conf_file_core (pWindow, g_strdup (cConfFilePath), g_strdup (cTitle), iWindowWidth, iWindowHeight, iIdentifier, cPresentedGroup, pConfigFunc, cGettextDomain);
 }
 
-gboolean on_delete_main_gui (GtkWidget *pWidget, GdkEvent *event, GMainLoop *pBlockingLoop)
-{
+gboolean on_delete_main_gui (GtkWidget *pWidget, GdkEvent *event, GMainLoop *pBlockingLoop) {
 	g_print ("%s (%x)\n", __func__, pBlockingLoop);
-	if (pBlockingLoop != NULL)
-	{
+	if (pBlockingLoop != NULL) {
 		g_print ("dialogue detruit, on sort de la boucle");
 		if (g_main_loop_is_running (pBlockingLoop))
 			g_main_loop_quit (pBlockingLoop);
@@ -50,6 +47,9 @@ gboolean on_delete_main_gui (GtkWidget *pWidget, GdkEvent *event, GMainLoop *pBl
 }
 
 gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain) {
+	if (s_pDialog != NULL && cid->bConfFilePanel) {
+		return FALSE;
+	}
 	cid_message ("%s (%s)", __func__, cConfFilePath);
 	GSList *pWidgetList = NULL;
 	GtkTextBuffer *pTextBuffer = NULL;  // le buffer est lie au widget, donc au pDialog.
@@ -68,6 +68,7 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
 	s_pDialog = cid_generate_ihm_from_keyfile (pKeyFile, cTitle, pWindow, &pWidgetList, (pConfigFunc != NULL)&&!cid->bSafeMode, iIdentifier, cPresentedGroup, cGettextDomain, pDataGarbage);
 
 	g_return_val_if_fail (s_pDialog != NULL, FALSE);
+	cid->bConfFilePanel = TRUE;
 	
 	if (iWindowWidth != 0 && iWindowHeight != 0)
 		gtk_window_resize (GTK_WINDOW (s_pDialog), iWindowWidth, iWindowHeight);
@@ -88,7 +89,7 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
 	user_data[10] = pDataGarbage;
 		
 	g_signal_connect (s_pDialog, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
-	
+	g_signal_connect (s_pDialog, "delete-event", G_CALLBACK (_cid_user_action_on_config), user_data);
 		
 	if (cid->bSafeMode)
 	{
@@ -391,6 +392,8 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 					iElementType = iHiddenType;
 
 				switch (iElementType) {
+					case 't' :  // option cachee 
+					break;
 					case 'b' :  // boolean
 						//g_print ("  + boolean\n");
 						length = 0;
@@ -482,6 +485,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 								0);
 
 							if (iElementType == 'e') {
+								bAddBackButton = TRUE;
 								pOneWidget = gtk_hscale_new (GTK_ADJUSTMENT (pAdjustment));
 								gtk_scale_set_digits (GTK_SCALE (pOneWidget), 3);
 								gtk_widget_set (pOneWidget, "width-request", 150, NULL);
@@ -1102,32 +1106,6 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 								0);
 						}
 					break ;
-					case 't' :  // boolean
-						//g_print ("  + boolean\n");
-						/*
-						if (cid->bTesting) {
-							
-							
-							length = 0;
-							bValueList = g_key_file_get_boolean_list (pKeyFile, cGroupName, cKeyName, &length, NULL);
-
-							for (k = 0; k < iNbElements; k ++) {
-								bValue =  (k < (int)length ? bValueList[k] : FALSE);
-								pOneWidget = gtk_check_button_new ();
-								gtk_toggle_button_set_active  (GTK_TOGGLE_BUTTON (pOneWidget), bValue);
-
-								pSubWidgetList = g_slist_append (pSubWidgetList, pOneWidget);
-								gtk_box_pack_start (GTK_BOX (pHBox),
-									pOneWidget,
-									FALSE,
-									FALSE,
-									0);
-							}
-							g_free (bValueList);
-						}
-						*/
-					break;
-					
 
 					default :
 						cid_warning ("this conf file seems to be incorrect !");
@@ -1176,8 +1154,7 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 	return pDialog;
 }
 
-void _cid_set_original_value (GtkButton *button, gpointer *data)
-{
+void _cid_set_original_value (GtkButton *button, gpointer *data) {
 	cid_debug ("%s (%s, %s, %s)\n", __func__, data[0], data[1], data[3]);
 	gchar *cGroupName = data[0];
 	gchar *cKeyName = data[1];
@@ -1192,21 +1169,18 @@ void _cid_set_original_value (GtkButton *button, gpointer *data)
 	
 	GKeyFile *pKeyFile = g_key_file_new ();
 	g_key_file_load_from_file (pKeyFile, cOriginalConfFilePath, G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &erreur);
-	if (erreur != NULL)
-	{
+	if (erreur != NULL) {
 		cid_warning (erreur->message);
 		g_error_free (erreur);
 		erreur = NULL;
 		return ;
 	}
 	
-	if (GTK_IS_SPIN_BUTTON (pOneWidget) || GTK_IS_HSCALE (pOneWidget))
-	{
+	if (GTK_IS_SPIN_BUTTON (pOneWidget) || GTK_IS_HSCALE (pOneWidget)) {
 		gboolean bIsSpin = GTK_IS_SPIN_BUTTON (pOneWidget);
 		double *fValuesList = g_key_file_get_double_list (pKeyFile, cGroupName, cKeyName, &length, &erreur);
 		
-		for (pList = pSubWidgetList; pList != NULL && i < length; pList = pList->next, i++)
-		{
+		for (pList = pSubWidgetList; pList != NULL && i < length; pList = pList->next, i++) {
 			pOneWidget = pList->data;
 			if (bIsSpin)
 				gtk_spin_button_set_value (GTK_SPIN_BUTTON (pOneWidget), fValuesList[i]);

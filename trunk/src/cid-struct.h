@@ -12,12 +12,17 @@
 #define  __CID_STRUCT__
 
 G_BEGIN_DECLS
-
+///\______ Structures de donnees
 typedef struct _CidMainContainer CidMainContainer;
 
 typedef struct _CidLabelDescription CidLabelDescription;
 
-typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer data);
+typedef struct _CidControlFunctionsList CidControlFunctionsList;
+
+///\______ Encapsulations
+typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
+
+typedef void (* CidControlFunction) (void);
 
 #define rhythmboxData musicData
 
@@ -57,7 +62,7 @@ typedef enum {
  */
 typedef enum {
 	PLAYER_RHYTHMBOX,
-	PLAYER_AMAROK_1
+	PLAYER_AMAROK_1 
 } PlayerIndice;
 
 /**
@@ -90,29 +95,16 @@ typedef enum {
 } ImageSizes;
 
 /**
- * Options à récupérer dans cid.conf
+ * Fonctions de controle des lecteurs
  */
-typedef struct {
-	gboolean hide;
-	gboolean corners;
-	gboolean lock;
-	gboolean allDesktop;
-	gboolean animation;
-	gboolean monitoring;
-	gboolean threaded;
-	gchar *image;
-	//gchar *player_name;
-	PlayerIndice iPlayer;
-	AnimationType iAnimationType;
-	gdouble *couleur;
-	gdouble *couleurSurvol;
-	gdouble rotation;
-	gint pos_x;
-	gint pos_y;
-	gint size_x;
-	gint size_y;
-	gint inter;
-} FileSettings;
+struct _CidControlFunctionsList {
+	// fonction 'play/pause'
+	CidControlFunction (*p_fPlayPause)();
+	// fonction 'next'
+	CidControlFunction (*p_fNext)();
+	// fonction 'previous'
+	CidControlFunction (*p_fPrevious)();
+};
 
 /**
  * Cid main container
@@ -130,8 +122,6 @@ struct _CidMainContainer {
 	// cairo context
 	cairo_t *pContext;
 	
-	gboolean bChangedTestingConf;
-	
 	// largeur de cid
 	gint iWidth;
 	// hauteur de cid
@@ -146,13 +136,18 @@ struct _CidMainContainer {
 	gint iCurrentlyDrawing;
 	// temps avant de telecharger les pochettes manquantes
 	gint iTimeToWait;
-	
+	// temps ecoule avant le telechargement
 	gint iCheckIter;
 	
-	// numéro du player
+	// lecteur a monitorer
 	PlayerIndice iPlayer;
+	// type d'animation
 	AnimationType iAnimationType;
-
+	// taille des covers à télécharger
+	ImageSizes iImageSize;
+	// fonctions de monitoring
+	CidControlFunctionsList *pMonitorList;
+	
 	// type de fenêtre
 	GdkWindowTypeHint cidHint;
 	
@@ -177,8 +172,6 @@ struct _CidMainContainer {
 	gchar *pDefaultImage;
 	// fichier de conf
 	gchar *pConfFile;
-	// lecteur à monitorer
-	//gchar *pPlayer;
 	// verbosité du programme
 	gchar *pVerbosity;
 	
@@ -213,6 +206,8 @@ struct _CidMainContainer {
 	//
 	gboolean bSafeMode;
 	gboolean bBlockedWidowActive;
+	gboolean bChangedTestingConf;
+	gboolean bConfFilePanel;
 	
 	// taille de la couleur
 	gsize gColorSize;
@@ -221,9 +216,6 @@ struct _CidMainContainer {
 	
 	// keyFile
 	GKeyFile *pKeyFile;
-	
-	// taille des covers à télécharger
-	ImageSizes iImageSize;
 };
 
 struct _CidLabelDescription {

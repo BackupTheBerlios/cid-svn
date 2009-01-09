@@ -150,25 +150,20 @@ void cid_connect_to_amarok(gint iInter) {
 	cid_amarok_pipe (iInter);	
 }
 
-void _playPause_amarok () {
+void _playPause_amarok (void) {
 	if (!system ("dcop amarok player playPause")) return;
 }
 
-void _next_amarok () {
+void _next_amarok (void) {
 	if (!system ("dcop amarok player next")) return;
 }
 
-void _previous_amarok () {
+void _previous_amarok (void) {
 	if (!system ("dcop amarok player prev")) return;
 }
 
-void cid_build_amarok_menu (GtkWidget *pMenuItem, GtkWidget *menu) {
-	static gpointer *data = NULL;
-	GtkWidget *image;
-	pMenuItem = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), pMenuItem);
-	
-	_add_entry_in_menu (_("Play/Pause"), NULL, _playPause_amarok, menu);
-	_add_entry_in_menu (_("Next"), NULL, _next_amarok, menu);
-	_add_entry_in_menu (_("Previous"), NULL, _previous_amarok, menu);
+void cid_build_amarok_menu (void) {
+	cid->pMonitorList->p_fPlayPause = (CidControlFunction) _playPause_amarok;
+	cid->pMonitorList->p_fNext = (CidControlFunction) _next_amarok;
+	cid->pMonitorList->p_fPrevious = (CidControlFunction) _previous_amarok;
 }

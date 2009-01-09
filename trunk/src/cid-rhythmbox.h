@@ -102,7 +102,7 @@ void onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointe
  * Permet d'ajouter des options de monitoring pour rhythmbox
  * @param menu
  */
-void cid_build_rhythmbox_menu (GtkWidget *pMenuItem, GtkWidget *menu);
+void cid_build_rhythmbox_menu (void);
 
 G_END_DECLS
 #endif

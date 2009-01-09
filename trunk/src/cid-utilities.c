@@ -93,7 +93,7 @@ void cid_read_parameters (int argc, char **argv) {
 			_("log verbosity (debug,info,message,warning,error) default is warning."), NULL},
 		{"config", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME,
 			&cid->pConfFile,
-			_("load CID with this config file instead of ~/.config/cid.conf."), NULL},
+			_("load CID with this config file instead of ~/.config/cid/cid.conf."), NULL},
 		{"testing", 'T', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bTestingMode,
 			_("runs CID in testing mode. (some unstable options might be running)"), NULL},
@@ -113,7 +113,35 @@ void cid_read_parameters (int argc, char **argv) {
 	g_option_context_add_main_entries (context, TableDesOptions, NULL);
 	g_option_context_parse (context, &argc, &argv, &erreur);
 	
-	int i=0;
+	if (erreur != NULL)
+	{
+		g_print ("ERROR : %s\n", erreur->message);
+		exit (CID_ERROR_READING_ARGS);
+	}
+	
+	if (bSafeMode) {
+		cid->bSafeMode = TRUE;
+		g_print ("Safe Mode\n");
+	}
+	
+	if (bDebugMode) {
+		g_free (cid->pVerbosity);
+		cid->pVerbosity = g_strdup ("debug");
+	}
+
+	_cid_set_verbosity (cid->pVerbosity);
+
+	if (bPrintVersion) {
+		g_print ("Version: %s\n",CID_VERSION);
+		exit (CID_EXIT_SUCCESS);
+	}
+
+	if (bTestingMode) {
+		cid->bTesting = TRUE;
+		cid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),SVN_CONF_FILE);
+	}
+	
+		int i=0;
 	gboolean bEasterEggs = FALSE;
 	for (; i<argc; i++) {
 		if (strcmp(argv[i], "coin-coin" ) == 0) {
@@ -162,34 +190,6 @@ Hum... I'd say it's a kinda Penguin ! \n\
 			DEFAULT_IMAGE = g_strdup(TESTING_COVER);
 			cid->bDevMode = TRUE;
 		}
-	}
-	
-	if (erreur != NULL)
-	{
-		g_print ("ERROR : %s\n", erreur->message);
-		exit (CID_ERROR_READING_ARGS);
-	}
-	
-	if (bSafeMode) {
-		cid->bSafeMode = TRUE;
-		g_print ("Safe Mode\n");
-	}
-	
-	if (bDebugMode) {
-		g_free (cid->pVerbosity);
-		cid->pVerbosity = g_strdup ("debug");
-	}
-
-	_cid_set_verbosity (cid->pVerbosity);
-
-	if (bPrintVersion) {
-		g_print ("Version: %s\n",CID_VERSION);
-		exit (CID_EXIT_SUCCESS);
-	}
-
-	if (bTestingMode) {
-		cid->bTesting = TRUE;
-		cid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),SVN_CONF_FILE);
 	}
 }
 	
