@@ -55,6 +55,13 @@ static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
  * @param imageSize Taille de l'image que l'on souhaite
  */
 void cid_stream_file(const char *filename, gchar **cValue) {
+	/*
+	* this initialize the library and check potential ABI mismatches
+	* between the version it was compiled for and the actual shared
+	* library used.
+	*/
+	LIBXML_TEST_VERSION
+	
 	xmlTextReaderPtr reader;
 	flag = FALSE;
 	found=FALSE;
@@ -73,6 +80,14 @@ void cid_stream_file(const char *filename, gchar **cValue) {
 	} else {
 		cid_warning ("Unable to open %s\n", filename);
 	}
+	/*
+	 * Cleanup function for the XML library.
+	 */
+	xmlCleanupParser();
+	/*
+	 * this is to debug memory for regression tests
+	 */
+	xmlMemoryDump();
 }
 
 gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
@@ -82,7 +97,7 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
 	gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);
 	gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
 	
-	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2 > /dev/null", cFileToDownload, cTmpFilePath);
+	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2 > /dev/null 2>&1", cFileToDownload, cTmpFilePath);
 	cid_debug ("%s\n",cCommand);
 	system (cCommand);
 	g_free (cCommand);
@@ -92,7 +107,7 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
 }
 
 gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) {
-	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2 > /dev/null", cURL, cDestPath);
+	gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s' -t 2 -T 2 > /dev/null 2>&1", cURL, cDestPath);
 	cid_debug ("%s\n",cCommand);
 	system (cCommand);
 	g_free (cCommand);
@@ -101,31 +116,6 @@ gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
 	g_free (cCommand);
 	return TRUE;
 }
-
-/*
-int main(int argc, char **argv) {
-	if (argc != 2)
-		return(1);
-
-	/*
-	* this initialize the library and check potential ABI mismatches
-	* between the version it was compiled for and the actual shared
-	* library used.
-	*/
-//	LIBXML_TEST_VERSION
-
-//	streamFile(argv[1]);
-
-	/*
-	 * Cleanup function for the XML library.
-	 */
-//	xmlCleanupParser();
-	/*
-	 * this is to debug memory for regression tests
-	 */
-//	xmlMemoryDump();
-//	return(0);
-//}
 
 #endif
 

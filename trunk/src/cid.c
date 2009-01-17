@@ -47,33 +47,17 @@ static gchar *cLaunchCommand = NULL;
 
 void cid_init (CidMainContainer *pCid) {	
 	
-	//pCid->pPlayer=NULL;
-	
 	pCid->pVerbosity=NULL;
-	
-	//pCid->bHide=FALSE;
 	
 	pCid->bTesting=FALSE;
 	
 	pCid->iCheckIter=0;
-	
-	//pCid->iInter=5 * 1000;
-	
-	//pCid->iPosX=0;
-	
-	//pCid->iPosY=0;
-	
-	//pCid->iWidth=150;
-	
-	//pCid->iHeight=150;
 	
 	pCid->gColorSize=0;
 	
 	pCid->dAngle=0;
 	
 	pCid->iCurrentlyDrawing=0;
-	
-	//pCid->bAnimation=FALSE;
 	
 	pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 	

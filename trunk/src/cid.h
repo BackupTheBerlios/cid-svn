@@ -21,6 +21,7 @@
 #include <pthread.h>
 
 #include "cid-amarok.h"
+#include "cid-exaile.h"
 #include "cid-rhythmbox.h"
 #include "cid-dbus.h"
 #include "cid-main.h"

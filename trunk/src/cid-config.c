@@ -180,6 +180,11 @@ void cid_read_key_file (const gchar *f) {
 	cid->iPlayer        = CID_CONFIG_GET_INTEGER ("System", "PLAYER");
 	cid->iInter         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("System", "INTER", 5) * 1000;
 	cid->bMonitorPlayer = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "MONITOR", TRUE);
+	cid->bPlayerState   = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "STATE", TRUE);
+	cid->bDisplayTitle  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "TITLE", TRUE);
+	cid->dPoliceSize    = g_key_file_get_double  (cid->pKeyFile, "System", "POLICE_SIZE", NULL);
+	cid->dPoliceColor   = g_key_file_get_double_list (cid->pKeyFile, "System", "POLICE_COLOR", &cid->gPlainTextSize, NULL);
+	cid->dOutlineTextColor = g_key_file_get_double_list (cid->pKeyFile, "System", "OUTLINE_COLOR", &cid->gOutlineTextSize, NULL);
 
 	// [Options] configuration
 	cid->bHide           = CID_CONFIG_GET_BOOLEAN ("Options", "HIDE");
@@ -203,11 +208,14 @@ void cid_read_key_file (const gchar *f) {
 	cid->bKeepCorners   = CID_CONFIG_GET_BOOLEAN ("Behaviour", "KEEP_CORNERS");
 	cid->bAllDesktop    = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "ALL_DESKTOP", TRUE);
 	cid->bLockPosition  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "LOCK", TRUE);
+	cid->bMask          = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "MASK", TRUE);
 	
-	cid->dRed   = cid->dColor[0];
-	cid->dGreen = cid->dColor[1];
-	cid->dBlue  = cid->dColor[2];
-	cid->dAlpha = cid->dColor[3];
+	cid->dRed            = cid->dColor[0];
+	cid->dGreen          = cid->dColor[1];
+	cid->dBlue           = cid->dColor[2];
+	cid->dAlpha          = cid->dColor[3];
+	cid->dFocusVariation = cid->dFlyingColor[3]>cid->dAlpha ? +.05 : -.05;
+	
 	
 	cid_key_file_free();
 }
@@ -247,6 +255,11 @@ void cid_save_data () {
 	g_key_file_set_integer (cid->pKeyFile, "System", "PLAYER", cid->iPlayer);
 	g_key_file_set_integer (cid->pKeyFile, "System", "INTER", cid->iInter/1000);
 	g_key_file_set_boolean (cid->pKeyFile, "System", "MONITOR", cid->bMonitorPlayer);
+	g_key_file_set_boolean (cid->pKeyFile, "System", "STATE", cid->bPlayerState);
+	g_key_file_set_boolean (cid->pKeyFile, "System", "TITLE", cid->bDisplayTitle);
+	g_key_file_set_double (cid->pKeyFile, "System", "POLICE_SIZE",(cid->dPoliceSize));
+	g_key_file_set_double_list (cid->pKeyFile, "System", "POLICE_COLOR", (cid->dPoliceColor), cid->gPlainTextSize);
+	g_key_file_set_double_list (cid->pKeyFile, "System", "OUTLINE_COLOR", (cid->dOutlineTextColor), cid->gOutlineTextSize);
 
 	// [Options] configuration
 	g_key_file_set_boolean (cid->pKeyFile, "Options", "ANIMATION", cid->bRunAnimation);
@@ -273,6 +286,7 @@ void cid_save_data () {
 	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "KEEP_CORNERS", cid->bKeepCorners);
 	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "ALL_DESKTOP", cid->bAllDesktop);
 	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "LOCK", cid->bLockPosition);
+	g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "MASK", cid->bMask);
 
 	cid_write_keys_to_file (cid->pKeyFile, cid->pConfFile);
 }

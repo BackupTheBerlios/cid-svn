@@ -46,7 +46,7 @@ void cid_display_image(gchar *image) {
 cairo_surface_t *cid_get_image (char *cImagePath, gdouble iWidth, gdouble iHeight) {
 	cid_debug ("%s (%s);\n",__func__,cImagePath);
 	
-//	cairo_surface_t* pNewSurface = NULL;
+	cairo_surface_t* pNewSurface = NULL;
 	gboolean bIsSVG = FALSE, bIsPNG = FALSE, bIsXPM = FALSE;
 	FILE *fd = fopen (cImagePath, "r");
 	
@@ -71,28 +71,14 @@ cairo_surface_t *cid_get_image (char *cImagePath, gdouble iWidth, gdouble iHeigh
 			bIsPNG = TRUE;
 	}
 
-	//if (!bIsPNG) {
+//	if (!bIsPNG) {
 		// buffer de pixels après redimenssionement
 		GdkPixbuf *nCover;
-		// pochette
-		GtkWidget *cCover;
-	
-		/* On récupère l'image depuis son chemin, sinon on sort */
-		cCover = cid_get_image_widget(cImagePath);
-		if(!cCover)
-			cid_exit(CID_GTK_ERROR,"%s() : error loading image",__func__);
-	
-		nCover = gdk_pixbuf_scale_simple(cid_get_pixbuf(cCover), iWidth, iHeight, GDK_INTERP_BILINEAR);
-		
-		if (!bIsSVG)	
-			gtk_widget_destroy(cCover);
-		
-		return cid_get_image_from_pixbuf (nCover);
-	
-		/// /!\ Fatal IO error 14 (Bad address) on X server :0.0.
-		//g_object_unref(nCover);
-		//gtk_widget_destroy(cCover);
- /*
+		nCover = gdk_pixbuf_new_from_file_at_scale (cImagePath,iWidth, iHeight, FALSE, NULL);
+		pNewSurface = cid_get_image_from_pixbuf (&nCover);
+		if (!bIsSVG)
+			g_object_unref (nCover);
+/*
 	} else {
 		cairo_surface_t* surface_ini;
 		cairo_t* pCairoContext = NULL;
@@ -111,30 +97,46 @@ cairo_surface_t *cid_get_image (char *cImagePath, gdouble iWidth, gdouble iHeigh
 			cairo_destroy (pCairoContext);
 		}
 		cairo_surface_destroy (surface_ini);
-	}
-*/	
-	//return pNewSurface;
+	}	
+*/
+	return pNewSurface;
 }
 
-GdkPixbuf *cid_get_pixbuf (GtkWidget *imageWidget) {
-	return gtk_image_get_pixbuf(GTK_IMAGE(imageWidget));
+GdkPixbuf *cid_get_pixbuf (GtkWidget **imageWidget) {
+	return gtk_image_get_pixbuf(GTK_IMAGE(*imageWidget));
 }
 
-GtkWidget *cid_get_image_widget(char *imageURI) {
-	return gtk_image_new_from_file(imageURI);
+GtkWidget *cid_get_image_widget(char **imageURI) {
+	return gtk_image_new_from_file(*imageURI);
+}
+
+cairo_surface_t *_cid_create_blank_surface (cairo_t *pSourceContext, int iWidth, int iHeight)
+{
+	if (pSourceContext != NULL)
+		return cairo_surface_create_similar (cairo_get_target (pSourceContext),
+			CAIRO_CONTENT_COLOR_ALPHA,
+			iWidth,
+			iHeight);
+	else
+		return cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+			iWidth,
+			iHeight);
 }
 
 /* Crée une image à partir d'un buffer de pixels */
-cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf *pixbuf) {
+cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
 	cid_debug (" %s ();\n",__func__);
-	GdkPixbuf *pPixbufWithAlpha = pixbuf;
-	if (! gdk_pixbuf_get_has_alpha (pixbuf)) // on lui rajoute un canal alpha s'il n'en a pas.
-		pPixbufWithAlpha = gdk_pixbuf_add_alpha (pixbuf, FALSE, 255, 255, 255);  // TRUE <=> les pixels blancs deviennent transparents.
 
-	// On pre-multiplie chaque composante par le alpha (necessaire pour libcairo).
+	GdkPixbuf *pPixbufWithAlpha = *pixbuf;
+	if (! gdk_pixbuf_get_has_alpha (*pixbuf)) {  // on lui rajoute un canal alpha s'il n'en a pas.
+		//g_print ("  ajout d'un canal alpha\n");
+		pPixbufWithAlpha = gdk_pixbuf_add_alpha (*pixbuf, FALSE, 255, 255, 255);  // TRUE <=> les pixels blancs deviennent transparents.
+	}
+
+	//\____________________ On pre-multiplie chaque composante par le alpha (necessaire pour libcairo).
 	int iNbChannels = gdk_pixbuf_get_n_channels (pPixbufWithAlpha);
 	int iRowstride = gdk_pixbuf_get_rowstride (pPixbufWithAlpha);
-	guchar *p=0, *pixels = gdk_pixbuf_get_pixels (pPixbufWithAlpha);
+	guchar *p, *pixels = gdk_pixbuf_get_pixels (pPixbufWithAlpha);
 
 	int w = gdk_pixbuf_get_width (pPixbufWithAlpha);
 	int h = gdk_pixbuf_get_height (pPixbufWithAlpha);
@@ -159,8 +161,21 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf *pixbuf) {
 		gdk_pixbuf_get_width (pPixbufWithAlpha),
 		gdk_pixbuf_get_height (pPixbufWithAlpha),
 		gdk_pixbuf_get_rowstride (pPixbufWithAlpha));
-	gdk_pixbuf_unref (pPixbufWithAlpha);
-	return surface_ini;
+
+	cairo_surface_t *pNewSurface = _cid_create_blank_surface (NULL,
+		cid->iWidth,
+		cid->iHeight);
+	cairo_t *pCairoContext = cairo_create (pNewSurface);
+
+	cairo_set_source_surface (pCairoContext, surface_ini, 0, 0);
+	cairo_paint (pCairoContext);
+	cairo_surface_destroy (surface_ini);
+	cairo_destroy (pCairoContext);
+	
+	if (pPixbufWithAlpha != *pixbuf)
+		g_object_unref (pPixbufWithAlpha);
+
+	return pNewSurface;
 }
 
 
@@ -196,17 +211,18 @@ void cid_create_main_window() {
 		GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
 	
 	/* On intercepte et traite les évènements */
-	g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
-	g_signal_connect (G_OBJECT(cid->cWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
-	if (cid->bTesting && cid->bUnstable) {
-		g_signal_connect (G_OBJECT(cid->cWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
-		g_signal_connect (G_OBJECT(cid->cWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
-	}
-
 	g_signal_connect (G_OBJECT (cid->cWindow), "expose-event", G_CALLBACK (cid_draw_window), NULL);
 	g_signal_connect (G_OBJECT (cid->cWindow), "screen-changed", G_CALLBACK (cid_set_colormap), NULL);
 	
 	g_signal_connect (G_OBJECT(cid->cWindow), "delete-event", G_CALLBACK(_cid_quit), NULL); // On ferme la fenêtre
+	
+	
+	g_signal_connect (G_OBJECT(cid->cWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
+	g_signal_connect (G_OBJECT(cid->cWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
+	
+	
+	g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
+	g_signal_connect (G_OBJECT(cid->cWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
  
 	cid_set_colormap (cid->cWindow, NULL, NULL);
 	
@@ -237,20 +253,11 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 	cairo_t *cr = pContext;
 	cairo_surface_t *image;
 	
-	cairo_set_source_rgba (cr, cid->dRed, cid->dGreen, cid->dBlue, cid->dAlpha);
-	
-
-	/*
-	if (CID_PARAMETERS.iPlayer==PLAYER_RHYTHMBOX) {
-		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_set_font_size (cr, 10.0);
-		cairo_move_to (cr, 10.0, 135.0);
-		cairo_show_text (cr, rhythmboxData.playing_title);
-		cairo_fill_preserve (cr);
-		cairo_set_line_width (cr, 2.56);
-		cairo_stroke (cr);
-	}
-	*/
+	if (!cid->bMask)
+		cairo_set_source_rgba (cr, cid->dRed, cid->dGreen, cid->dBlue, cid->dAlpha);
+	else
+		cairo_set_source_rgba (cr, cid->dColor[0], cid->dColor[1], cid->dColor[2], cid->dColor[3]);
+		
 	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 	cairo_paint (cr);
 		
@@ -274,22 +281,22 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 	// Si le lecteur est lance ou qu'on ne cache pas cid
 	if ( musicData.opening || !cid->bHide ) {
 		cairo_save (cr);
+
+		///\_______ des maths... je suis nul en maths xD
+		///			le but c'est calculer le bon ratio pour l'image pendant une rotation		
+		//gdouble theta = fabs (cid->dRotate);
+		//if (theta > M_PI/2)
+		//	theta -= M_PI/2;
 		
-		gdouble theta = fabs (cid->dRotate+cid->dAngle);
-		while (theta > 90) {
-			theta -= 90;
-		}
+		//gdouble alpha = atan2 (cid->iHeight, cid->iWidth);
 		
-		gdouble alpha = atan (theta);
-		gdouble opp = alpha * (cid->iHeight/2);
+		gdouble hyp = sqrt (pow(cid->iWidth,2)+pow(cid->iHeight,2));
 		
-		gdouble scaledWidth = cid->iWidth/2 + opp;
-		gdouble scaledHeight = cid->iHeight/2 - opp;
+		//gdouble scaledWidth = fabs (cid->iWidth / (hyp * sin (alpha + theta)));
+		//gdouble scaledHeight = fabs (cid->iHeight / (hyp * cos (alpha - theta)));
 		
-		//g_print ("theta : %f, alpha : %f, opp : %f\n",theta,alpha,opp);
-	
-		gdouble hyp = cid->bTesting && cid->bUnstable ? sqrt (pow(scaledWidth,2)+pow(scaledHeight,2)) : sqrt (pow(cid->iWidth,2)+pow(cid->iHeight,2));		
-		
+		//g_print ("theta : %f, alpha : %f, d : %f, scaledX : %f, scaledY : %f\n",theta,alpha, d, scaledWidth, scaledHeight);
+
 		cairo_translate (cr, cid->iWidth/2, cid->iHeight/2);
 		
 		// Est ce qu'on est durant une animation
@@ -301,26 +308,70 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		// Est ce qu'on coupe les coins
 		if (cid->bKeepCorners)
 			cairo_scale  (cr, cid->iWidth/hyp, cid->iHeight/hyp);
+		
 
 		cairo_translate (cr, -cid->iWidth/2, -cid->iHeight/2);
 		
 		cairo_set_source_surface (cr, cid->cSurface, 0, 0);
+
 		cairo_paint (cr);
 		cairo_restore (cr);
 	}
-/*
-	if ( cid->bCurrentlyPlaying ) {
+	
+	// Si on affiche l'etat du lecteur
+	if (cid->bPlayerState) {
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+
 		cairo_save(cr);
-		//GtkWidget *im = cid_get_image_widget("../data/play.svg");
-		//GdkPixbuf *image = cid_get_pixbuf(im);
-		//cairo_surface_t *play = cid_get_image_from_pixbuf(image);
-		cairo_set_source_surface (cr, cid_get_image("../data/play.svg",16,16), 0, 0);
+		cairo_set_source_rgba (cr, 0, 0, 0, 0);
+		cairo_set_source_surface (cr, cid->cState, 0, 0);
 		cairo_paint (cr);
+		cairo_restore (cr);	
+	}
+	
+	if (cid->bTesting && cid->bUnstable && cid->bDisplayTitle) {	
+		cairo_set_source_rgba (cr, 1, 0, 0, 1);
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+
+		cairo_save(cr);
+
+		cairo_text_extents_t extents;
+
+		cairo_text_extents(cr, musicData.playing_title, &extents);
+		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size (cr, cid->dPoliceSize);
+		cairo_move_to (cr, (cid->iWidth/2) - (extents.width/2 + extents.x_bearing) , cid->iHeight - cid->dPoliceSize);
+		
+		cairo_text_path (cr, musicData.playing_title);
+		cairo_set_source_rgba (cr, cid->dPoliceColor[0], cid->dPoliceColor[1], cid->dPoliceColor[2], cid->dPoliceColor[3]);
+		cairo_fill_preserve (cr);
+		cairo_set_source_rgba (cr, cid->dOutlineTextColor[0], cid->dOutlineTextColor[1], cid->dOutlineTextColor[2], cid->dOutlineTextColor[3]);
+		cairo_set_line_width (cr, cid->dPoliceSize/15.0);
+
+		cairo_stroke (cr);
 		cairo_restore (cr);
 	}
-*/	
+	
+	// Si on survolle CID et qu'on affiche un masque
+	if (cid->bCurrentlyFlying && cid->bMask) {
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+		cairo_save(cr);
+		cairo_set_source_rgba (cr, cid->dRed, cid->dGreen, cid->dBlue, cid->dAlpha);
+		cairo_paint (cr);
+		cairo_restore (cr);	
+	}
 	
 	cairo_destroy (cr);
+}
+
+void cid_set_state_icon (void) {
+	cairo_surface_destroy (cid->cState);
+	// On affiche une image selon l'etat
+	if ( musicData.playing )
+		cid->cState = cid_get_image(g_strdup_printf("%s/play.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),16,16);
+	else
+		cid->cState = cid_get_image(g_strdup_printf("%s/pause.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),16,16);
+	gtk_widget_queue_draw (cid->cWindow);
 }
 
 /* redessine la fenêtre */
@@ -515,6 +566,11 @@ void cid_run_with_player (void) {
 			} else {
 				cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
 			}
+			break;
+		/* Exaile */
+		case PLAYER_EXAILE:
+			cid_build_exaile_menu ();
+			cid_connect_to_exaile(cid->iInter);
 			break;
 		/* Sinon, on a un lecteur inconnu */
 		default:

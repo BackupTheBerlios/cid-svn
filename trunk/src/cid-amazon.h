@@ -22,12 +22,35 @@ G_BEGIN_DECLS
 #define DEFAULT_XML_LOCATION "/tmp/cid_amazon.xml"
 #define DEFAULT_DOWNLOADED_IMAGE_LOCATION "/tmp/default.jpg"
 
+/**
+ * Lit les noeuds du fichier en cours de parsage
+ * @param reader le noeud courrant
+ * @param imageSize Noeud que l'on cherche
+ */
 static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue);
 
+/**
+ * Parse le fichier XML passé en argument
+ * à la recherche de l'URL de la pochette
+ * @param filename URI du fichier à lire
+ * @param imageSize Taille de l'image que l'on souhaite
+ */
 void cid_stream_file(const char *filename, gchar **cValue);
 
+/**
+ * Recupere le fichier xml sur amazon.
+ * @param artist Nom de l'artiste.
+ * @param album Nom de l'album.
+ * @return succes du telechargement.
+ */
 gboolean cid_get_xml_file (const gchar *artist, const gchar *album);
 
+/**
+ * Recupere la pochette.
+ * @param cURL URL de la pochette.
+ * @param cDestPath Ou en enregistre la pochette telechargee.
+ * @return succes du telechargement.
+ */
 gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath);
 
 G_END_DECLS

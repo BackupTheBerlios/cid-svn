@@ -42,13 +42,13 @@ void cid_create_main_window();
  * Crée un buffer de pixels à partir d'un
  * GtkWidget image 
  */
-GdkPixbuf *cid_get_pixbuf (GtkWidget *imageWidget);
+GdkPixbuf *cid_get_pixbuf (GtkWidget **imageWidget);
 
 /**
  * Crée un GtkWidget image à partir de
  * l'URI de l'image
  */
-GtkWidget *cid_get_image_widget(gchar *imageURI);
+GtkWidget *cid_get_image_widget(gchar **imageURI);
 
 /**
  * determine si un gestionnaire de composite est présent 
@@ -63,7 +63,7 @@ void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userda
  * @param buffer de pixels
  * @return image à partir du buffer
  */
-cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf *pixbuf);
+cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf);
 
 /** 
  * dessine l'image à partir de son URI 
@@ -79,6 +79,11 @@ cairo_surface_t *cid_get_image (gchar *cImagePath, gdouble iWidth, gdouble iHeig
  * @param non utilisé
  */
 void cid_draw_window (GtkWidget *widget, GdkEventExpose *event, gpointer *userdata);
+
+/**
+ * On dessine l'etat du lecteur
+ */
+void cid_set_state_icon (void);
 
 G_END_DECLS
 #endif

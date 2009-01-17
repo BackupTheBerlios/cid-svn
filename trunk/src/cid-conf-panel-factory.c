@@ -436,13 +436,12 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 								1,
 								MAX (1, (iMaxValue - iMinValue) / 20),
 								0);
-
+							bAddBackButton = TRUE;
 							if (iElementType == 'I') {
 								pOneWidget = gtk_hscale_new (GTK_ADJUSTMENT (pAdjustment));
 								gtk_scale_set_digits (GTK_SCALE (pOneWidget), 0);
 								gtk_widget_set (pOneWidget, "width-request", 150, NULL);
 							} else {
-								bAddBackButton = TRUE;
 								pOneWidget = gtk_spin_button_new (GTK_ADJUSTMENT (pAdjustment),
 									1.,
 									0);

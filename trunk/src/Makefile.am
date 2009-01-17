@@ -38,6 +38,8 @@ cid_SOURCES = \
 	cid-config.h \
 	cid-dbus.c \
 	cid-dbus.h \
+	cid-exaile.c \
+	cid-exaile.h \
 	cid-main.c \
 	cid-main.h \
 	cid-menu-factory.c \
@@ -73,6 +75,7 @@ cidsubinclude_HEADERS = \
 	cid-conf-panel-factory.h \
 	cid-config.h \
 	cid-dbus.h \
+	cid-exaile.h \
 	cid-main.h \
 	cid-menu-factory.h \
 	cid-messages.h \

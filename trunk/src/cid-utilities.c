@@ -40,6 +40,7 @@ void cid_disconnect_player () {
 	//}
 	cid_disconnect_from_amarok();
 	rhythmbox_dbus_disconnect_from_bus();
+	cid_disconnect_from_exaile();
 }
 
 void cid_free_musicData(void) {
@@ -84,7 +85,7 @@ int cid_read_string(char* chaine) {
 void cid_read_parameters (int argc, char **argv) {
 	
 	GError *erreur=NULL;
-	gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE, bSafeMode = FALSE;
+	gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE, bSafeMode = FALSE, bCafe = FALSE;
 	
 	GOptionEntry TableDesOptions[] =
 	{
@@ -103,6 +104,9 @@ void cid_read_parameters (int argc, char **argv) {
 		{"safe", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bSafeMode,
 			_("runs CID in safe mode."), NULL},
+		{"cafe", 'C', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
+			&bCafe,
+			_("runs CID in debug mode. (equivalent to '-l debug')"), NULL},
 		{"version", 'v', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bPrintVersion,
 			_("print version and quit."), NULL}
@@ -133,6 +137,11 @@ void cid_read_parameters (int argc, char **argv) {
 
 	if (bPrintVersion) {
 		g_print ("Version: %s\n",CID_VERSION);
+		exit (CID_EXIT_SUCCESS);
+	}
+	
+	if (bCafe) {
+		g_print ("Please insert coin.\n");
 		exit (CID_EXIT_SUCCESS);
 	}
 
@@ -274,8 +283,7 @@ gboolean cid_launch_command_full (const gchar *cCommandFormat, gchar *cWorkingDi
 	cid_debug ("%s (%s , %s)", __func__, cCommand, cWorkingDirectory);
 	
 	gchar *cBGCommand;
-	if (cCommand[strlen (cCommand)-1] != '&')
-	{
+	if (cCommand[strlen (cCommand)-1] != '&') {
 		cBGCommand = g_strconcat (cCommand, " &", NULL);
 		g_free (cCommand);
 	}
@@ -283,8 +291,7 @@ gboolean cid_launch_command_full (const gchar *cCommandFormat, gchar *cWorkingDi
 		cBGCommand = cCommand;
 	GError *erreur = NULL;
 	GThread* pThread = g_thread_create ((GThreadFunc) _cid_launch_threaded, cBGCommand, FALSE, &erreur);
-	if (erreur != NULL)
-	{
+	if (erreur != NULL)	{
 		cid_warning ("couldn't launch this command (%s)", erreur->message);
 		g_error_free (erreur);
 		g_free (cBGCommand);

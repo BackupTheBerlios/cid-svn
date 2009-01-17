@@ -20,7 +20,8 @@ gchar *cid_rhythmbox_cover() {
 		if (rhythmbox_getPlaying ()) {
 			rhythmbox_getPlayingUri();
 			getSongInfos();
-		        if (rhythmboxData.playing_cover != NULL) 
+		    if (rhythmboxData.playing_cover != NULL) 
+		    	cid_set_state_icon();
 				return rhythmboxData.playing_cover;
 			return DEFAULT_IMAGE;
 		} else {
@@ -274,6 +275,7 @@ void onChangeState(DBusGProxy *player_proxy, gboolean a_playing, gpointer data) 
 		//	rhythmbox_set_surface (PLAYER_PAUSED);
 		}
 	}
+	cid_set_state_icon();
 }
 
 //*********************************************************************************

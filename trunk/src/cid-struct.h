@@ -62,7 +62,8 @@ typedef enum {
  */
 typedef enum {
 	PLAYER_RHYTHMBOX,
-	PLAYER_AMAROK_1 
+	PLAYER_AMAROK_1,
+	PLAYER_EXAILE 
 } PlayerIndice;
 
 /**
@@ -118,6 +119,8 @@ struct _CidMainContainer {
 	
 	// pochette
 	cairo_surface_t *cSurface;
+	// statut
+	cairo_surface_t *cState;
 	
 	// cairo context
 	cairo_t *pContext;
@@ -155,6 +158,10 @@ struct _CidMainContainer {
 	gdouble *dColor;
 	// couleur au survol
 	gdouble *dFlyingColor;
+	// couleur de police
+	gdouble *dPoliceColor;
+	// couleur de contour de police
+	gdouble *dOutlineTextColor;
 	// angle de cid
 	gdouble dRotate;
 	// opacité de la fenêtre
@@ -167,6 +174,10 @@ struct _CidMainContainer {
 	gdouble dBlue;
 	// current animation angle
 	gdouble dAngle;
+	// variation focus
+	gdouble dFocusVariation;
+	// taille de la police
+	gdouble dPoliceSize;
 	
 	// image par défaut
 	gchar *pDefaultImage;
@@ -203,16 +214,31 @@ struct _CidMainContainer {
 	gboolean bDevMode;
 	// options instables ?
 	gboolean bUnstable;
-	//
+	// survol de cid ?
+	gboolean bCurrentlyFlying;
+	// afficher le statut
+	gboolean bPlayerState;
+	// on affiche un masque au survol ?
+	gboolean bMask;
+	// afficher le titre ?
+	gboolean bDisplayTitle;
+	// CID en mode de secours ?
 	gboolean bSafeMode;
+	// La fenetre de conf est ouverte ?
 	gboolean bBlockedWidowActive;
+	// On a active/desactive les options instables ?
 	gboolean bChangedTestingConf;
+	//
 	gboolean bConfFilePanel;
 	
 	// taille de la couleur
 	gsize gColorSize;
 	// taille de la couleur de survol
 	gsize gFlyingColorSize;
+	// taille de la couleur de police
+	gsize gPlainTextSize;
+	// taille de la couleur de contour de police
+	gsize gOutlineTextSize;
 	
 	// keyFile
 	GKeyFile *pKeyFile;

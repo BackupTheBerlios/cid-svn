@@ -173,7 +173,7 @@ void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
 	if (!cid->bConfFilePanel) {
 		cid_save_data();
 	
-		cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 690, 480, '\0', NULL, (CidReadConfigFunc) cid->bSafeMode ? cid_read_config : cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+		cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, (CidReadConfigFunc) cid->bSafeMode ? cid_read_config : cid_read_config_after_update, CID_GETTEXT_PACKAGE);
 	}
 }
 

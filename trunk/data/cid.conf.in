@@ -46,7 +46,7 @@ h_separator1=
 #F+[Style;gtk-select-color]
 frame_colors=
 
-#e-[-360;360] Rotation of CID :
+#I-[-360;360] Rotation of CID :
 #{in degree}
 ROTATION=0
 
@@ -56,8 +56,11 @@ KEEP_CORNERS=
 #c+4[0;1] Color of the background (r,g,b,a) :
 COLOR=1;1;1;0.2;
 
-#tc+4[0;1] Idem when the mouse is over :
+#c+4[0;1] Color of the mask when the mouse is over :
 FLYING_COLOR=0;0;0;0.7;
+
+#b Show the mask over the image :
+MASK=
 
 ##########################################
 ############# SYSTEM OPTIONS #############
@@ -69,16 +72,38 @@ FLYING_COLOR=0;0;0;0.7;
 #F+[Monitoring player options;gtk-preferences]
 frame_2=
 
-#r[Rhythmbox;Amarok] Wich player you want to monitor :
+#r[Rhythmbox;Amarok;Exaile] Wich player you want to monitor :
 PLAYER=rhythmbox
 
-#i Interval between two refresh :
+#i[0;30] Interval between two refresh :
 #{in seconds. Doesn't matter for rhythmbox support.}
 INTER=5
 
 #b Allow CID to monitor your player :
 #{Contextual menu in right clic. Play/Pause by left clicking. Next by middle clicking.}
 MONITOR=
+
+#b Give the play/pause status :
+STATE=
+
+#tv-
+h_separator_title=
+
+#tX+[Display Title;gtk-select-color]
+frame_title =
+
+#tb Display song's name :
+TITLE=
+
+#ti[5;20] Size of the police :
+POLICE_SIZE=15
+
+#tc+4[0;1] Color of the police :
+POLICE_COLOR=1;1;1;1;
+
+#tc+4[0;1] Color of outline police :
+OUTLINE_COLOR=0;0;0;1;
+
 
 ##########################################
 ############## CID OPTIONS ###############

@@ -14,7 +14,7 @@
 gboolean cid_focus_in(void *ptr) {
 	cid->iCurrentlyDrawing = 1;
     
-	cid->dAlpha+=.05;
+	cid->dAlpha += cid->dFocusVariation;
 	
 	if (cid->bThreaded)
 		gdk_threads_enter();
@@ -23,16 +23,16 @@ gboolean cid_focus_in(void *ptr) {
 		gdk_threads_leave();
 	
 	cid->iCurrentlyDrawing = 0;
-	return cid->dAlpha < cid->dFlyingColor[3];
+	return cid->dFocusVariation>0 ? cid->dAlpha < cid->dFlyingColor[3] : cid->dAlpha > cid->dFlyingColor[3];
 }
 
 /* On restaure la couleur de fond d'origine lorsqu'on quitte la fenêtre */
 gboolean cid_focus_out(void *ptr) {
 	cid->iCurrentlyDrawing = 1;
     
-	cid->dAlpha-=.05;
+	cid->dAlpha -= cid->dFocusVariation;
 
-	if (cid->dAlpha <= cid->dColor[3]) {
+	if (cid->dFocusVariation>0 ? cid->dAlpha <= cid->dColor[3] : cid->dAlpha >= cid->dColor[3]) {
 		cid->dRed = cid->dColor[0];
 		cid->dGreen = cid->dColor[1];
 		cid->dBlue = cid->dColor[2];
@@ -45,7 +45,8 @@ gboolean cid_focus_out(void *ptr) {
 		gdk_threads_leave();
 	
 	cid->iCurrentlyDrawing = 0;
-	return cid->dAlpha > cid->dColor[3];
+	cid->bCurrentlyFlying = cid->dFocusVariation>0 ? cid->dAlpha > cid->dColor[3] : cid->dAlpha < cid->dColor[3];
+	return cid->bCurrentlyFlying;
 }
 
 /* On appelle la fonction adéquate selon qu'on "expose" ou non la fenêtre */
@@ -56,6 +57,7 @@ void cid_focus (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
 	cid_info ("CID is currently focused %s.\n", bFocusIn ? "in" : "out");
 	
 	if (bFocusIn) {
+		cid->bCurrentlyFlying = TRUE;
 		// On change la couleur du fond par celle choisie
 		cid->dRed = cid->dFlyingColor[0];
 		cid->dGreen = cid->dFlyingColor[1];
@@ -67,7 +69,7 @@ void cid_focus (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
 
 }
 
-/* callback de rotation threadé */
+/* callback de rotation */
 gboolean cid_rotate_on_changing_song (void *ptr) {
 	cid->iCurrentlyDrawing = 1;
     cid->bAnimation = TRUE;
@@ -89,7 +91,7 @@ gboolean cid_rotate_on_changing_song (void *ptr) {
     return cid->bAnimation;
 }
 
-/* on lance un thread pour la rotation */
+/* on lance un thread pour une animation */
 gboolean cid_threaded_animation (gpointer *data) {
 	AnimationType cAnim = GPOINTER_TO_INT(&data[0]);
 	static gboolean first_execution = TRUE;
@@ -127,27 +129,28 @@ gboolean cid_threaded_animation (gpointer *data) {
 /* G_PRIORITY_HIGH */
 /* On anime l'image par une rotation */
 void cid_animation (AnimationType iAnim) {
-	if (cid->bRunAnimation) {
-		switch(iAnim) {
-        	case CID_ROTATE:
-        		if (!cid->bAnimation)
-        			if (cid->bThreaded)
-						g_timeout_add_full (-50, 5, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_ROTATE), NULL);
-					else 
-        				g_timeout_add_full (-50, 5, (GSourceFunc) cid_rotate_on_changing_song, NULL, NULL);
-        		break;
-        	case CID_FOCUS_IN:
-        		//if (cid->bThreaded)
-				//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN));
-				//else 
-        			g_timeout_add (15, (GSourceFunc) cid_focus_in, NULL);
-        		break;
-        	case CID_FOCUS_OUT:
-        		//if (cid->bThreaded)
-				//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_OUT));
-				//else 
-        			g_timeout_add (15, (GSourceFunc) cid_focus_out, NULL);
-        		break;
-		}	
+	switch(iAnim) {
+       	case CID_ROTATE:
+       		if (cid->bRunAnimation && !cid->bAnimation)
+       			if (cid->bThreaded)
+					g_timeout_add_full (-50, 5, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_ROTATE), NULL);
+				else 
+       				g_timeout_add_full (-50, 5, (GSourceFunc) cid_rotate_on_changing_song, NULL, NULL);
+       		break;
+       	case CID_FOCUS_IN:
+       		///\______  ces fonctions threadees se bloquent quand une autre est en cours...
+       		///			comportement etrange car avant je n'utilisais QUE des animations threadees 
+       		///			sans avoir aucun probleme.
+       		//if (cid->bThreaded)
+			//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN));
+			//else 
+       			g_timeout_add (15, (GSourceFunc) cid_focus_in, NULL);
+       		break;
+       	case CID_FOCUS_OUT:
+       		//if (cid->bThreaded)
+			//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_OUT));
+			//else 
+       			g_timeout_add (15, (GSourceFunc) cid_focus_out, NULL);
+       		break;
 	}
 }
