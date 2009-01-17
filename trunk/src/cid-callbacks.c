@@ -146,7 +146,7 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
 	gtk_label_set_markup (GTK_LABEL (pAboutLabel), cAboutText);
 }
 
-gpointer _cid_proceed_download_cover (gpointer p) {
+gboolean _cid_proceed_download_cover (gpointer p) {
 	if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
 		gchar *cImageURL = NULL;
 		cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
@@ -156,7 +156,7 @@ gpointer _cid_proceed_download_cover (gpointer p) {
 		cid_debug ("URL : %s",cImageURL);
 	} else
 		cid_debug ("Téléchargement impossible\n");
-	return NULL;
+	return FALSE;
 }
 
 gboolean _check_cover_is_present (gpointer data) {
@@ -168,13 +168,14 @@ gboolean _check_cover_is_present (gpointer data) {
 		musicData.iSidCheckCover = 0;
 		return FALSE;
 	} else if (cid->iCheckIter > cid->iTimeToWait) {
-		GError *erreur = NULL;
-		GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
-		if (erreur != NULL)	{
-			cid_warning ("couldn't launch this command (%s)", erreur->message);
-			g_error_free (erreur);
-			return FALSE;
-		}
+		//GError *erreur = NULL;
+		//GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
+		//if (erreur != NULL)	{
+		//	cid_warning ("couldn't launch this command (%s)", erreur->message);
+		//	g_error_free (erreur);
+		//	return FALSE;
+		//}
+		g_timeout_add (0,(GSourceFunc) _cid_proceed_download_cover, NULL);
 		return FALSE;
 	} else {
 		return TRUE;

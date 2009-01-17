@@ -75,7 +75,7 @@ gboolean _check_cover_is_present (gpointer data);
 /**
  * Lance le telechargement des pochettes
  */
-gpointer _cid_proceed_download_cover (gpointer p);
+gboolean _cid_proceed_download_cover (gpointer p);
 
 /******************************************************************************************************\
 |*                  Fonctions necessaires à la génération du conf panel                               *|

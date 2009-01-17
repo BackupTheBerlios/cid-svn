@@ -116,13 +116,14 @@ gboolean get_amarock_musicData () {
 gboolean cid_download_amarok_cover (gpointer data) {
 	cid->iCheckIter++;
 	if (cid->iCheckIter > cid->iTimeToWait) {
-		GError *erreur = NULL;
-		GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
-		if (erreur != NULL)	{
-			cid_warning ("couldn't launch this command (%s)", erreur->message);
-			g_error_free (erreur);
-			return FALSE;
-		}
+		//GError *erreur = NULL;
+		//GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
+		//if (erreur != NULL)	{
+		//	cid_warning ("couldn't launch this command (%s)", erreur->message);
+		//	g_error_free (erreur);
+		//	return FALSE;
+		//}
+		g_timeout_add (0,(GSourceFunc) _cid_proceed_download_cover, NULL);
 		return FALSE;
 	}
 	return TRUE;

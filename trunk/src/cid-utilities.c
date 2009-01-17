@@ -106,7 +106,7 @@ void cid_read_parameters (int argc, char **argv) {
 			_("runs CID in safe mode."), NULL},
 		{"cafe", 'C', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bCafe,
-			_("do you want a cup of coffe ?"), NULL},
+			_("do you want a cup of coffee ?"), NULL},
 		{"version", 'v', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
 			&bPrintVersion,
 			_("print version and quit."), NULL}
