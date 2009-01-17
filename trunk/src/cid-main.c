@@ -260,26 +260,11 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		
 	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 	cairo_paint (cr);
-		
-	cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-	/*
-	if (cid->iPlayer==PLAYER_RHYTHMBOX) {
-		//text = gdk_cairo_create (widget->window);
-		//cairo_save (cr);
-		
-		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_set_font_size (cr, 10.0);
-		cairo_move_to (cr, 10.0, 135.0);
-		cairo_show_text (cr, rhythmboxData.playing_title);
-		cairo_fill_preserve (cr);
-		cairo_set_line_width (cr, 2.56);
-		cairo_stroke (cr);
-		//cairo_restore (cr);
-	}
-	*/
+
 	
 	// Si le lecteur est lance ou qu'on ne cache pas cid
 	if ( musicData.opening || !cid->bHide ) {
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 		cairo_save (cr);
 
 		///\_______ des maths... je suis nul en maths xD
@@ -319,9 +304,8 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 	}
 	
 	// Si on affiche l'etat du lecteur
-	if (cid->bPlayerState) {
+	if (cid->bPlayerState && (musicData.opening || !cid->bHide)) {
 		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-
 		cairo_save(cr);
 		cairo_set_source_rgba (cr, 0, 0, 0, 0);
 		cairo_set_source_surface (cr, cid->cState, 0, 0);
@@ -329,7 +313,7 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		cairo_restore (cr);	
 	}
 	
-	if (cid->bTesting && cid->bUnstable && cid->bDisplayTitle) {	
+	if (cid->bTesting && cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) {	
 		cairo_set_source_rgba (cr, 1, 0, 0, 1);
 		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 
