@@ -1142,7 +1142,9 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
 		
 		i ++;
 	}
-
+	
+	gtk_window_set_position (GTK_WINDOW (pDialog), GTK_WIN_POS_CENTER_ALWAYS);
+	
 	gtk_tooltips_enable (GTK_TOOLTIPS (pToolTipsGroup));
 	gtk_widget_show_all (pDialog);
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (pNoteBook), iPresentedNumPage);

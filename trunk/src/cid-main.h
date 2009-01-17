@@ -66,11 +66,13 @@ void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userda
 cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf);
 
 /** 
- * dessine l'image à partir de son URI 
- * @param URI de l'image à dessiner
- * @return image
+ * retourne une image aux dimensions voulues à partir de son URI.
+ * @param cImagePath URI de l'image à charger.
+ * @param iWidth Largeur.
+ * @param iHeight Hauteur.
+ * @return image.
  */
-cairo_surface_t *cid_get_image (gchar *cImagePath, gdouble iWidth, gdouble iHeight);
+cairo_surface_t *cid_get_cairo_image (gchar *cImagePath, gdouble iWidth, gdouble iHeight);
 
 /**
  * Fonction appelée pour dessiner la fenêtre

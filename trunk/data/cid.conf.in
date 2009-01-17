@@ -33,13 +33,9 @@ SIZE_Y=150
 ALL_DESKTOP=
 
 #b Lock CID position :
-#{You can still move it with ALT + left_clic. This will disable the play/pause command.}
+#{You can still move it with ALT + left_clic.}
 LOCK=
 
-
-
-#v-
-h_separator1=
 
 
 
@@ -62,6 +58,7 @@ FLYING_COLOR=0;0;0;0.7;
 #b Show the mask over the image :
 MASK=
 
+
 ##########################################
 ############# SYSTEM OPTIONS #############
 ##########################################
@@ -73,9 +70,9 @@ MASK=
 frame_2=
 
 #r[Rhythmbox;Amarok;Exaile] Wich player you want to monitor :
-PLAYER=rhythmbox
+PLAYER=0
 
-#i[0;30] Interval between two refresh :
+#i[1;30] Interval between two refresh :
 #{in seconds. Doesn't matter for rhythmbox support.}
 INTER=5
 
@@ -86,8 +83,6 @@ MONITOR=
 #b Give the play/pause status :
 STATE=
 
-#tv-
-h_separator_title=
 
 #tX+[Display Title;gtk-select-color]
 frame_title =
@@ -98,11 +93,11 @@ TITLE=
 #ti[5;20] Size of the police :
 POLICE_SIZE=15
 
-#tc+4[0;1] Color of the police :
+#tc+4[0;1] Color of the text :
 POLICE_COLOR=1;1;1;1;
 
-#tc+4[0;1] Color of outline police :
-OUTLINE_COLOR=0;0;0;1;
+#tc+4[0;1] Color of outline's text :
+OUTLINE_COLOR=0;0;0;0.5;
 
 
 ##########################################
@@ -124,27 +119,19 @@ HIDE=
 
 
 
-#v-
-h_separator2=
-
-
 #F+[Animation;@prefix@/@DATADIRNAME@/@PACKAGE@/animation.png]
 frame_animation=
 
 #b Run an animation when the music change :
 ANIMATION=
 
-#r[Rotate] Animation to use :
+#r[Rotate;Fade in out] Animation to use :
 ANIMATION_TYPE=0
 
 #b Use threaded animations :
 #{This can not work properly depending your processor.}
 THREAD=
 
-
-
-#v-
-h_separator3=
 
 
 
@@ -168,10 +155,6 @@ D_SIZE=
 #X+
 frame_sep_ =
 
-
-
-#tv-
-h_separator4=
 
 
 

@@ -61,7 +61,7 @@ void cid_init (CidMainContainer *pCid) {
 	
 	pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 	
-	//pCid->pDefaultImage = g_strdup(CID_DEFAULT_IMAGE);
+	pCid->iExtraSize = 16;
 	
 	pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
 	

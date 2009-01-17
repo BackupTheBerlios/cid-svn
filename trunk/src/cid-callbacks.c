@@ -35,24 +35,25 @@ void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
 
 void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
 
-	if (pButton->button == 1 && pButton->type == GDK_BUTTON_PRESS) { // clic gauche
-		cid_info ("Clic gauche %s\n",(pButton->type == GDK_BUTTON_RELEASE) ? "relaché" : "maintenu");
+	// si on a un clic gauche, que le clic est maintenu, et qu'on se trouve dans la zone permettant le deplacement
+	if (pButton->button == 1 && pButton->type == GDK_BUTTON_PRESS && pButton->x > cid->iWidth-cid->iExtraSize && pButton->y < cid->iExtraSize) { // clic gauche
+		// si on ne verouille pas la position
 		if (!cid->bLockPosition)
 			gtk_window_begin_move_drag (GTK_WINDOW (gtk_widget_get_toplevel (p_widget)),
 										pButton->button,
 										pButton->x_root,
 										pButton->y_root,
-										pButton->time);
+										pButton->time); // alors on se deplace
 	} else if (pButton->button == 1 && pButton->type == GDK_BUTTON_RELEASE) {
-		cid_info("Clic court");
+		// on relache un clic gauche, donc on lance la fonction 'play/pause'
 		if (cid->bMonitorPlayer)
 			cid->pMonitorList->p_fPlayPause();
 	} else if (pButton->button == 2 && pButton->type == GDK_BUTTON_RELEASE) { // clic milieu
-		cid_info ("Clic milieu\n");
+		// on relache un clic du milieu, donc on lance la fonction 'Next'
 		if (cid->bMonitorPlayer)
 			cid->pMonitorList->p_fNext();
 	} else if (pButton->button == 3 && pButton->type == GDK_BUTTON_RELEASE){ //clic droit
-		cid_info ("clic droit\n");
+		// On relache un clic droit, donc on affiche le menu contextuel
 		
 		GtkWidget *menu = cid_build_menu (cid);  
 
@@ -70,7 +71,7 @@ void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
 	(void)p_widget;
 }
 
-void _cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointer user_data) {
+void _cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointer *user_data) {
 	cid_launch_web_browser(link_);
 }
 
@@ -103,19 +104,19 @@ void _cid_about (GtkMenuItem *pMenuItem, gpointer *data) {
 	
 	_cid_add_about_page (pNoteBook,
 		"Development",
-		"<b>Main developers :</b>\n  Benjamin SANS\n  Charlie MERLAND\n\
+		_("<b>Main developers :</b>\n  Benjamin SANS\n  Charlie MERLAND\n\
 <b>Original idea/first development :</b>\n  Charlie MERLAND\n\
 <b>Translations :</b>\n  Benjamin SANS\n\
 <b>Source references :</b>\n  some part of the code is inspired by Cairo-Dock\n\
-<b>Special Thanks :</b>\n  Adrien Pilleboue\n  Fabrice Rey\n");
+<b>Special Thanks :</b>\n  Adrien Pilleboue\n  Fabrice Rey\n"));
 	
 	_cid_add_about_page (pNoteBook,
 		"Support",
-		"<b>Installation script :</b>\n  Benjamin SANS\n\
+		_("<b>Installation script :</b>\n  Benjamin SANS\n\
 <b>Site (http://cid.freezee.org/) :</b>\n  Charlie MERLAND\n\
 <b>Suggestions/Comments/Beta-Testers :</b>\n  Les forumeurs de ubuntu-fr\n  Les forumeurs de jeuxvideo.com\n\
 \n\
-<b>Any suggestion? Leave it on :</b>\n  http://cid.freezee.org/\n");
+<b>Any suggestion? Leave it on :</b>\n  http://cid.freezee.org/\n"));
 	
 	gtk_widget_show_all (pDialog);
 	gtk_window_set_position (GTK_WINDOW (pDialog), GTK_WIN_POS_CENTER_ALWAYS);
@@ -145,6 +146,19 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
 	gtk_label_set_markup (GTK_LABEL (pAboutLabel), cAboutText);
 }
 
+gpointer _cid_proceed_download_cover (gpointer p) {
+	if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
+		gchar *cImageURL = NULL;
+		cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
+		if (cImageURL)
+			if (cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION))
+				cid_display_image(DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+		cid_debug ("URL : %s",cImageURL);
+	} else
+		cid_debug ("Téléchargement impossible\n");
+	return NULL;
+}
+
 gboolean _check_cover_is_present (gpointer data) {
 	//cid_debug ("On cherche....\n");
 	cid->iCheckIter++;
@@ -154,15 +168,13 @@ gboolean _check_cover_is_present (gpointer data) {
 		musicData.iSidCheckCover = 0;
 		return FALSE;
 	} else if (cid->iCheckIter > cid->iTimeToWait) {
-		if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
-			gchar *cImageURL = NULL;
-			cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
-			if (cImageURL)
-				if (cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION))
-					cid_display_image(DEFAULT_DOWNLOADED_IMAGE_LOCATION);
-			cid_debug ("URL : %s",cImageURL);
-		} else
-			cid_debug ("Téléchargement impossible\n");
+		GError *erreur = NULL;
+		GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
+		if (erreur != NULL)	{
+			cid_warning ("couldn't launch this command (%s)", erreur->message);
+			g_error_free (erreur);
+			return FALSE;
+		}
 		return FALSE;
 	} else {
 		return TRUE;

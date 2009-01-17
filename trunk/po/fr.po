@@ -76,6 +76,34 @@ msgstr "Suivant"
 msgid "Previous"
 msgstr "Précédent"
 
+##########################
+### cid-menu-factory.c ###
+##########################
+
+#:../src/cid-callbacks.c:107
+msgid "<b>Main developers :</b>\n  Benjamin SANS\n  Charlie MERLAND\n\
+<b>Original idea/first development :</b>\n  Charlie MERLAND\n\
+<b>Translations :</b>\n  Benjamin SANS\n\
+<b>Source references :</b>\n  some part of the code is inspired by Cairo-Dock\n\
+<b>Special Thanks :</b>\n  Adrien Pilleboue\n  Fabrice Rey\n"
+msgstr "<b>Développeurs principaux :</b>\n  Benjamin SANS\n  Charlie MERLAND\n\
+<b>Idée originale/premier développement :</b>\n  Charlie MERLAND\n\
+<b>Traductions :</b>\n  Benjamin SANS\n\
+<b>Sources :</b>\n  Certaines parties du code sont inspirées de Cairo-Dock\n\
+<b>Remerciement particulier :</b>\n  Adrien Pilleboue\n  Fabrice Rey\n"
+
+#:../src/cid-callbacks.c:115
+msgid "<b>Installation script :</b>\n  Benjamin SANS\n\
+<b>Site (http://cid.freezee.org/) :</b>\n  Charlie MERLAND\n\
+<b>Suggestions/Comments/Beta-Testers :</b>\n  Les forumeurs de ubuntu-fr\n  Les forumeurs de jeuxvideo.com\n\
+\n\
+<b>Any suggestion? Leave it on :</b>\n  http://cid.freezee.org/\n"
+msgstr "<b>Script d'installation :</b>\n  Benjamin SANS\n\
+<b>Site (http://cid.freezee.org/) :</b>\n  Charlie MERLAND\n\
+<b>Suggestions/Commentaires/Bêta-Testeurs :</b>\n  Les forumeurs de ubuntu-fr\n  Les forumeurs de jeuxvideo.com\n\
+\n\
+<b>Des suggestions ? Laissez les sur :</b>\n  http://cid.freezee.org/\n"
+
 ################
 ### cid.conf ###
 ################
@@ -111,28 +139,34 @@ msgid "Lock CID position :"
 msgstr "Vérouiller la position de CID :"
 
 #:../data/cid.conf:36
-msgid "You can still move it with ALT + left_clic. This will disable the play/pause command."
-msgstr "Vous pouvez toujours le déplacer avec ALT + clic_gauche. Cela désactive la commande jouer/pause."
+msgid "You can still move it with ALT + left_clic."
+msgstr "Vous pouvez toujours le déplacer avec ALT + clic_gauche."
 
-#:../data/cid.conf:39
+#:../data/cid.conf:45
 msgid "Rotation of CID :"
 msgstr "Rotation de CID :"
 
-#:../data/cid.conf:50
+#:../data/cid.conf:46
 msgid "in degree"
 msgstr "en degrés"
 
-#:../data/cid.conf:53
+#:../data/cid.conf:49
 msgid "Keep corners during rotate :"
 msgstr "Ne pas couper les coins durant la rotation :"
 
-#:../data/cid.conf:56
+#:../data/cid.conf:52
 msgid "Color of the background (r,g,b,a) :"
 msgstr "Couleur de l'arrière plan (r,v,b,a) :"
 
-#:../data/cid.conf:59
-msgid "Idem when the mouse is over :"
-msgstr "Même chose au survol de la souris :"
+#:../data/cid.conf:55
+msgid "Color of the mask when the mouse is over :"
+msgstr "Couleur du masque de survol :"
+
+#:../data/cid.conf:58
+msgid "Show the mask over the image :"
+msgstr "Afficher le masque au dessus :"
+
+
 
 ############# SYSTEM OPTIONS #############
 
@@ -164,6 +198,30 @@ msgstr "Autoriser CID à contrôler le lecteur :"
 msgid "Contextual menu in right clic. Play/Pause by left clicking. Next by middle clicking."
 msgstr "Menu contextuel au clic. Jouer/pause par clic gauche. Suivant par clic milieu."
 
+#:../data/cid.conf:83
+msgid "Give the play/pause status :"
+msgstr "Afficher l'état 'jouer/pause' du lecteur :"
+
+#:../data/cid.conf:87
+msgid "Display Title"
+msgstr "Afficher le Titre"
+
+#:../data/cid.conf:90
+msgid "Display song's name :"
+msgstr "Afficher le titre joué :"
+
+#:../data/cid.conf:93
+msgid "Size of the police :"
+msgstr "Taille de la police :"
+
+#:../data/cid.conf:96
+msgid "Color of the text :"
+msgstr "Couleur du texte :"
+
+#:../data/cid.conf:99
+msgid "Color of outline's text :"
+msgstr "Couleur de la bordure du texte :"
+
 ############## CID OPTIONS ###############
 
 #:../data/cid.conf:90
@@ -193,6 +251,10 @@ msgstr "Animation à utiliser :"
 #:../data/cid.conf:112
 msgid "Rotate"
 msgstr "Rotation"
+
+#:../data/cid.conf:112
+msgid "Fade in out"
+msgstr "Fondu enchaîné"
 
 #:../data/cid.conf:115
 msgid "Use threaded animations :"

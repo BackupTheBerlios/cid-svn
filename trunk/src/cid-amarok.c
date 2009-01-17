@@ -25,6 +25,7 @@ gboolean get_amarock_musicData () {
 	if (!fgets (gStatus,128,status)) {
 		cid_warning ("Couldn't get status");
 		musicData.opening = FALSE;
+		cid_set_state_icon();
 		pclose (status);
 		if (run) {
 			cid_display_image(DEFAULT_IMAGE);
@@ -32,6 +33,15 @@ gboolean get_amarock_musicData () {
 		}
 		return FALSE;
 	}
+	
+	gint state = atoi(gStatus);
+	if (state == 1)
+		musicData.playing = FALSE;
+	else if (state == 2)
+		musicData.playing = TRUE;
+		
+	cid_set_state_icon();
+	
 	
 	FILE *artist = popen ("dcop amarok player artist","r"), 
 		 *album = popen ("dcop amarok player album","r"),
@@ -103,13 +113,29 @@ gboolean get_amarock_musicData () {
 	return TRUE;
 }
 
+gboolean cid_download_amarok_cover (gpointer data) {
+	cid->iCheckIter++;
+	if (cid->iCheckIter > cid->iTimeToWait) {
+		GError *erreur = NULL;
+		GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
+		if (erreur != NULL)	{
+			cid_warning ("couldn't launch this command (%s)", erreur->message);
+			g_error_free (erreur);
+			return FALSE;
+		}
+		return FALSE;
+	}
+	return TRUE;
+}
+
 gchar *cid_check_amarok_cover_exists (gchar *cURI) {
 	gchar **cCleanURI = g_strsplit (cURI,"@",0);
 	gchar **cSplitedURI = g_strsplit (cCleanURI[1],".",0);
 	if (g_strcasecmp(cSplitedURI[0],"nocover")==0) {
 		g_free (cCleanURI);
 		g_free (cSplitedURI);
-		
+		cid->iCheckIter = 0;
+		g_timeout_add (1000, (GSourceFunc) cid_download_amarok_cover, (gpointer) NULL);
 		return g_strdup(DEFAULT_IMAGE);
 	}
 	g_free (cCleanURI);

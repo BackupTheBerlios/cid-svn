@@ -20,22 +20,26 @@ void cid_display_image(gchar *image) {
 	/* debuggage */
 	cid_debug (" %s (%s);\n",__func__,image);
 	
-	cairo_surface_destroy (cid->cSurface);
+	//if (cid->cPreviousSurface)
+	//	cairo_surface_destroy (cid->cPreviousSurface);
+	cid->cPreviousSurface = cid->cSurface;
+	//if (cid->cSurface)
+	//	cairo_surface_destroy (cid->cSurface);
 
 	if (g_file_test (image, G_FILE_TEST_EXISTS)) {
-		cid->cSurface = cid_get_image (image, cid->iWidth, cid->iHeight);
+		cid->cSurface = cid_get_cairo_image (image, cid->iWidth, cid->iHeight);
 		musicData.cover_exist = TRUE;
 		if (musicData.iSidCheckCover != 0) {
 			g_source_remove (musicData.iSidCheckCover);
 			musicData.iSidCheckCover = 0;
 		}
 	} else {
-		cid->cSurface = cid_get_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
+		cid->cSurface = cid_get_cairo_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
 		musicData.cover_exist = FALSE;
 		cid->iCheckIter = 0;
 		if (/*image != NULL && */musicData.iSidCheckCover == 0) {
 			cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
-			musicData.iSidCheckCover = g_timeout_add_seconds (1, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
+			musicData.iSidCheckCover = g_timeout_add (1000, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
 		}
 	}
 	
@@ -43,7 +47,7 @@ void cid_display_image(gchar *image) {
 }
 
 /* On dessine l'image à partir de son URI */
-cairo_surface_t *cid_get_image (char *cImagePath, gdouble iWidth, gdouble iHeight) {
+cairo_surface_t *cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble iHeight) {
 	cid_debug ("%s (%s);\n",__func__,cImagePath);
 	
 	cairo_surface_t* pNewSurface = NULL;
@@ -226,6 +230,8 @@ void cid_create_main_window() {
  
 	cid_set_colormap (cid->cWindow, NULL, NULL);
 	
+	cid->cCross = cid_get_cairo_image(g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
+	
 	gtk_widget_show_all(cid->cWindow);
 }
 
@@ -246,6 +252,90 @@ void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userda
 	}
  
 	gtk_widget_set_colormap (widget, colormap);
+}
+
+void cid_draw_text (cairo_t *cr) {
+	cairo_set_source_rgba (cr, 1, 0, 0, 1);
+	cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+
+	cairo_save(cr);
+
+	cairo_text_extents_t extents;
+
+	cairo_text_extents(cr, musicData.playing_title, &extents);
+	cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (cr, cid->dPoliceSize);
+	
+	gdouble posX = ((cid->iWidth/2) - (extents.width/2 - extents.x_bearing));
+	//g_print ("posX : %f | taille-text : %f | bearing : %f",posX, extents.width, extents.x_bearing);
+	
+	cairo_move_to (cr, posX , cid->iHeight - extents.height);
+		
+	cairo_text_path (cr, musicData.playing_title);
+	cairo_set_source_rgba (cr, cid->dPoliceColor[0], cid->dPoliceColor[1], cid->dPoliceColor[2], cid->dPoliceColor[3]);
+	cairo_fill_preserve (cr);
+	cairo_set_source_rgba (cr, cid->dOutlineTextColor[0], cid->dOutlineTextColor[1], cid->dOutlineTextColor[2], cid->dOutlineTextColor[3]);
+	cairo_set_line_width (cr, cid->dPoliceSize/15.0);
+
+	cairo_stroke (cr);
+	cairo_restore (cr);
+/*
+	// a custom shape that could be wrapped in a function 
+	double x0      = 25.6,   // parameters like cairo_rectangle 
+    	   y0      = 25.6,
+    	   rect_width  = extents.width,
+    	   rect_height = extents.height,
+	       radius = 102.4;   // and an approximate curvature radius
+
+	double x1,y1;
+
+	x1=x0+rect_width;
+	y1=y0+rect_height;
+	if (!rect_width || !rect_height)
+	    return;
+	if (rect_width/2<radius) {
+	    if (rect_height/2<radius) {
+	        cairo_move_to  (cr, x0, (y0 + y1)/2);
+	        cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
+	        cairo_curve_to (cr, x1, y0, x1, y0, x1, (y0 + y1)/2);
+	        cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
+	        cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
+	    } else {
+	        cairo_move_to  (cr, x0, y0 + radius);
+	        cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
+	        cairo_curve_to (cr, x1, y0, x1, y0, x1, y0 + radius);
+	        cairo_line_to (cr, x1 , y1 - radius);
+	        cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
+	        cairo_curve_to (cr, x0, y1, x0, y1, x0, y1- radius);
+	    }
+	} else {
+	    if (rect_height/2<radius) {
+	        cairo_move_to  (cr, x0, (y0 + y1)/2);
+	        cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
+	        cairo_line_to (cr, x1 - radius, y0);
+	        cairo_curve_to (cr, x1, y0, x1, y0, x1, (y0 + y1)/2);
+	        cairo_curve_to (cr, x1, y1, x1, y1, x1 - radius, y1);
+	        cairo_line_to (cr, x0 + radius, y1);
+	        cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
+	    } else {
+	        cairo_move_to  (cr, x0, y0 + radius);
+	        cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
+	        cairo_line_to (cr, x1 - radius, y0);
+	        cairo_curve_to (cr, x1, y0, x1, y0, x1, y0 + radius);
+	        cairo_line_to (cr, x1 , y1 - radius);
+	        cairo_curve_to (cr, x1, y1, x1, y1, x1 - radius, y1);
+	        cairo_line_to (cr, x0 + radius, y1);
+	        cairo_curve_to (cr, x0, y1, x0, y1, x0, y1- radius);
+	    }
+	}
+	cairo_close_path (cr);
+
+	cairo_set_source_rgb (cr, 0.5, 0.5, 1);
+	cairo_fill_preserve (cr);
+	cairo_set_source_rgba (cr, 0.5, 0, 0, 0.5);
+	cairo_set_line_width (cr, 10.0);
+	cairo_stroke (cr);
+*/
 }
 
 /* Fonction qui s'occupe de dessiner la fenêtre */
@@ -296,10 +386,17 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		
 
 		cairo_translate (cr, -cid->iWidth/2, -cid->iHeight/2);
-		
-		cairo_set_source_surface (cr, cid->cSurface, 0, 0);
 
-		cairo_paint (cr);
+		// Si on utilise le fondu, et qu'on a un alpha <1 on dessine nos 2 surfaces :)
+		if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT && cid->dFadeInOutAlpha < 1) {
+			cairo_set_source_surface (cr, cid->cPreviousSurface, 0, 0);
+			cairo_paint_with_alpha (cr, 1-cid->dFadeInOutAlpha);
+			cairo_set_source_surface (cr, cid->cSurface, 0, 0);
+			cairo_paint_with_alpha (cr, cid->dFadeInOutAlpha);
+		} else {
+			cairo_set_source_surface (cr, cid->cSurface, 0, 0);
+			cairo_paint (cr);
+		}
 		cairo_restore (cr);
 	}
 	
@@ -313,27 +410,10 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		cairo_restore (cr);	
 	}
 	
+	///\_______ TESTING OPTION
+	// si on lit de la musique et qu'on ne cache pas cid, on affiche le nom de la piste jouee
 	if (cid->bTesting && cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) {	
-		cairo_set_source_rgba (cr, 1, 0, 0, 1);
-		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-
-		cairo_save(cr);
-
-		cairo_text_extents_t extents;
-
-		cairo_text_extents(cr, musicData.playing_title, &extents);
-		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_set_font_size (cr, cid->dPoliceSize);
-		cairo_move_to (cr, (cid->iWidth/2) - (extents.width/2 + extents.x_bearing) , cid->iHeight - cid->dPoliceSize);
-		
-		cairo_text_path (cr, musicData.playing_title);
-		cairo_set_source_rgba (cr, cid->dPoliceColor[0], cid->dPoliceColor[1], cid->dPoliceColor[2], cid->dPoliceColor[3]);
-		cairo_fill_preserve (cr);
-		cairo_set_source_rgba (cr, cid->dOutlineTextColor[0], cid->dOutlineTextColor[1], cid->dOutlineTextColor[2], cid->dOutlineTextColor[3]);
-		cairo_set_line_width (cr, cid->dPoliceSize/15.0);
-
-		cairo_stroke (cr);
-		cairo_restore (cr);
+		cid_draw_text(cr);
 	}
 	
 	// Si on survolle CID et qu'on affiche un masque
@@ -345,6 +425,17 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		cairo_restore (cr);	
 	}
 	
+	// Si on survolle et qu'on autorise le deplacement, on affiche une petite croix
+	if (cid->bCurrentlyFlying && !cid->bLockPosition) {
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+		cairo_save(cr);
+		cairo_set_source_rgba (cr, 0, 0, 0, 0);
+		cairo_translate (cr, cid->iWidth-16, 0);
+		cairo_set_source_surface (cr, cid->cCross, 0, 0);
+		cairo_paint (cr);
+		cairo_restore (cr);	
+	}
+	
 	cairo_destroy (cr);
 }
 
@@ -352,22 +443,20 @@ void cid_set_state_icon (void) {
 	cairo_surface_destroy (cid->cState);
 	// On affiche une image selon l'etat
 	if ( musicData.playing )
-		cid->cState = cid_get_image(g_strdup_printf("%s/play.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),16,16);
+		cid->cState = cid_get_cairo_image(g_strdup_printf("%s/play.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
 	else
-		cid->cState = cid_get_image(g_strdup_printf("%s/pause.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),16,16);
+		cid->cState = cid_get_cairo_image(g_strdup_printf("%s/pause.svg",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
 	gtk_widget_queue_draw (cid->cWindow);
 }
 
 /* redessine la fenêtre */
 void cid_draw_window (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
-	//cairo_t* pCairoContext = NULL;
 
 	cid->pContext = gdk_cairo_create (cid->cWindow->window);
 	if (!cid->pContext)
 		return;
 
-	cid_set_render (cid->pContext, userdata);
-	//cairo_destroy (pCairoContext);	
+	cid_set_render (cid->pContext, userdata);	
 }
 
 double cid_draw_frame (cairo_t *pCairoContext, double fRadius, double fLineWidth, double fFrameWidth, double fFrameHeight, double fDockOffsetX, double fDockOffsetY, int sens, double fInclination) { // la largeur est donnee par rapport "au fond".

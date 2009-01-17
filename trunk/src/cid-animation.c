@@ -10,9 +10,32 @@
 
 #include "cid.h"
 
+/* On fait un fondu */
+gboolean cid_fade_in_out (void *ptr) {
+	cid->iCurrentlyDrawing = 1;
+    cid->bAnimation = TRUE;
+    
+    if (cid->dFadeInOutAlpha >= 1)
+		cid->dFadeInOutAlpha = 0;
+		
+	cid->dFadeInOutAlpha += .01;
+	
+	if (cid->bThreaded)
+		gdk_threads_enter();
+	gtk_widget_queue_draw(cid->cWindow);
+	if (cid->bThreaded)
+		gdk_threads_leave();
+	
+	cid->iCurrentlyDrawing = 0;
+	
+	cid->bAnimation = cid->dFadeInOutAlpha < 1;
+	return cid->bAnimation;
+}
+
 /* On change la couleur de fond de la fenêtre au passage de la souris */
 gboolean cid_focus_in(void *ptr) {
 	cid->iCurrentlyDrawing = 1;
+    cid->bAnimation = TRUE;
     
 	cid->dAlpha += cid->dFocusVariation;
 	
@@ -23,12 +46,16 @@ gboolean cid_focus_in(void *ptr) {
 		gdk_threads_leave();
 	
 	cid->iCurrentlyDrawing = 0;
-	return cid->dFocusVariation>0 ? cid->dAlpha < cid->dFlyingColor[3] : cid->dAlpha > cid->dFlyingColor[3];
+	
+	cid->bAnimation = cid->dFocusVariation>0 ? cid->dAlpha < cid->dFlyingColor[3] : cid->dAlpha > cid->dFlyingColor[3];
+	return cid->bAnimation;
 }
 
 /* On restaure la couleur de fond d'origine lorsqu'on quitte la fenêtre */
 gboolean cid_focus_out(void *ptr) {
 	cid->iCurrentlyDrawing = 1;
+    
+    cid->bAnimation = TRUE;
     
 	cid->dAlpha -= cid->dFocusVariation;
 
@@ -46,6 +73,7 @@ gboolean cid_focus_out(void *ptr) {
 	
 	cid->iCurrentlyDrawing = 0;
 	cid->bCurrentlyFlying = cid->dFocusVariation>0 ? cid->dAlpha > cid->dColor[3] : cid->dAlpha < cid->dColor[3];
+	cid->bAnimation = cid->bCurrentlyFlying;
 	return cid->bCurrentlyFlying;
 }
 
@@ -112,6 +140,9 @@ gboolean cid_threaded_animation (gpointer *data) {
         	case CID_ROTATE:
         		iret = pthread_create( &thread_info, NULL, cid_rotate_on_changing_song, NULL);
         		break;
+        	case CID_FADE_IN_OUT:
+        		iret = pthread_create( &thread_info, NULL, cid_fade_in_out, NULL);
+        		break;
         	case CID_FOCUS_IN:
         		iret = pthread_create( &thread_info, NULL, cid_focus_in, NULL);
         		break;
@@ -137,19 +168,26 @@ void cid_animation (AnimationType iAnim) {
 				else 
        				g_timeout_add_full (-50, 5, (GSourceFunc) cid_rotate_on_changing_song, NULL, NULL);
        		break;
+       	case CID_FADE_IN_OUT:
+       		if (cid->bRunAnimation && !cid->bAnimation)
+       			if (cid->bThreaded)
+       				g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FADE_IN_OUT), NULL);
+       			else
+       				g_timeout_add_full (-50, 15, (GSourceFunc) cid_fade_in_out, NULL, NULL);
+       		break;
        	case CID_FOCUS_IN:
        		///\______  ces fonctions threadees se bloquent quand une autre est en cours...
        		///			comportement etrange car avant je n'utilisais QUE des animations threadees 
        		///			sans avoir aucun probleme.
-       		//if (cid->bThreaded)
-			//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN));
-			//else 
+       		if (cid->bThreaded)
+				g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN), NULL);
+			else 
        			g_timeout_add (15, (GSourceFunc) cid_focus_in, NULL);
        		break;
        	case CID_FOCUS_OUT:
-       		//if (cid->bThreaded)
-			//	g_timeout_add (15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_OUT));
-			//else 
+       		if (cid->bThreaded)
+				g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_OUT), NULL);
+			else 
        			g_timeout_add (15, (GSourceFunc) cid_focus_out, NULL);
        		break;
 	}

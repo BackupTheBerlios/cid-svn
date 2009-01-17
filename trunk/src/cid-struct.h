@@ -71,6 +71,7 @@ typedef enum {
  */
 typedef enum {
 	CID_ROTATE,
+	CID_FADE_IN_OUT,
 	CID_FOCUS_IN,
 	CID_FOCUS_OUT
 } AnimationType;
@@ -119,8 +120,12 @@ struct _CidMainContainer {
 	
 	// pochette
 	cairo_surface_t *cSurface;
+	// pochette precedente
+	cairo_surface_t *cPreviousSurface;
 	// statut
 	cairo_surface_t *cState;
+	// croix pour le deplacement
+	cairo_surface_t *cCross;
 	
 	// cairo context
 	cairo_t *pContext;
@@ -141,6 +146,8 @@ struct _CidMainContainer {
 	gint iTimeToWait;
 	// temps ecoule avant le telechargement
 	gint iCheckIter;
+	// taille des images "extras"
+	gint iExtraSize;
 	
 	// lecteur a monitorer
 	PlayerIndice iPlayer;
@@ -178,6 +185,8 @@ struct _CidMainContainer {
 	gdouble dFocusVariation;
 	// taille de la police
 	gdouble dPoliceSize;
+	// alpha pour le fade in
+	gdouble dFadeInOutAlpha;
 	
 	// image par défaut
 	gchar *pDefaultImage;

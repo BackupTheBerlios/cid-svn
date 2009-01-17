@@ -72,6 +72,11 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
  */
 gboolean _check_cover_is_present (gpointer data);
 
+/**
+ * Lance le telechargement des pochettes
+ */
+gpointer _cid_proceed_download_cover (gpointer p);
+
 /******************************************************************************************************\
 |*                  Fonctions necessaires à la génération du conf panel                               *|
 \******************************************************************************************************/ 
