@@ -7,11 +7,9 @@
    *             ----------------------------
    *
    *
-   *    Source originale: Cairo-dock
-   *    Auteur origial: Adrien Pilleboue
 */
-#ifndef __CID_RHYTHMBOX__
-#define  __CID_RHYTHMBOX__
+#ifndef __CID_AMAROK_2__
+#define  __CID_AMAROK_2__
 
 #include <dbus/dbus-glib.h>
 
@@ -23,45 +21,45 @@ G_BEGIN_DECLS
  * recherche d'image 
  * @return URI de l'image à afficher
  */
-gchar *cid_rhythmbox_cover(void);
+gchar *cid_amarok_2_cover(void);
 
 /**
  * Fonction permettant de se connecter 
  * au bus de rhythmbox 
  * @return VRAI ou FAUX
  */
-gboolean rhythmbox_dbus_connect_to_bus(void);
+gboolean amarok_2_dbus_connect_to_bus(void);
 
 /** 
  * Fonction permettant de se déconnecter 
  * du bus de rhythmbox 
  */
-void rhythmbox_dbus_disconnect_from_bus (void);
+void amarok_2_dbus_disconnect_from_bus (void);
 
 /**
  * Fonction permettant de savoir si rhythmbox 
  * est lancé ou non 
  * @return VRAI ou FAUX en fonction
  */
-gboolean dbus_detect_rhythmbox(void);
+gboolean dbus_detect_amarok_2(void);
 
 /**
  * Test si Rhythmbox joue de la musique ou non 
  * @return VRAI ou FAUX
  */
-gboolean rhythmbox_getPlaying(void);
+gboolean amarok_2_getPlaying(void);
 
 /**
  * renvoie l'URI du fichier en cours de lecture 
  * @return URI du fichier joué
  */
-gchar *rhythmbox_getPlayingUri(void);
+gchar *amarok_2_getPlayingUri(void);
 
 /** 
  * récupère l'ensemble des informations disponibles 
  * sur le fichier joué 
  */
-void getSongInfos(void);
+void am_getSongInfos(void);
 
 /**
  * Fonction exécutée (automatiquement) au changement 
@@ -70,7 +68,7 @@ void getSongInfos(void);
  * @param URI du fichier joué
  * @param pointeur de données (non utilisé)
  */
-void rb_onChangeSong(DBusGProxy *player_proxy, const gchar *uri, gpointer data);
+void am_onChangeSong(DBusGProxy *player_proxy, const gchar *uri, gpointer data);
 
 /**
  * Fonction exécutée (automatiquement) au changement d'état Play/Pause 
@@ -78,15 +76,7 @@ void rb_onChangeSong(DBusGProxy *player_proxy, const gchar *uri, gpointer data);
  * @param flag on joue ou non
  * @param pointeur de données (non utilisé)
  */
-void rb_onChangeState(DBusGProxy *player_proxy,gboolean playing, gpointer data);
-
-/**
- * Fonction exécutée (automatiquement) à chaque changement de temps joué 
- * @param bus de connection
- * @param durée écoulée
- * @param pointeur de données (non utilisé)
- */
-void rb_onElapsedChanged(DBusGProxy *player_proxy,int elapsed, gpointer data);
+void am_onChangeState(DBusGProxy *player_proxy,gboolean playing, gpointer data);
 
 /**
  * Fonction exécutée (automatiquement) à chaque changement d'URI 
@@ -95,14 +85,14 @@ void rb_onElapsedChanged(DBusGProxy *player_proxy,int elapsed, gpointer data);
  * @param URI de la nouvelle image
  * @param pointeur de données (non utilisé)
  */
-void rb_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data);
+void am_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data);
 
 
 /**
  * Permet d'ajouter des options de monitoring pour rhythmbox
  * @param menu
  */
-void cid_build_rhythmbox_menu (void);
+void cid_build_amarok_2_menu (void);
 
 G_END_DECLS
 #endif

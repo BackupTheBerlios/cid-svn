@@ -25,7 +25,9 @@ cid_SOURCES = \
 	cid.c \
 	cid.h \
 	cid-amarok.c \
-	cid-amarok.h \
+	cid-amarok.h \ 
+	cid-amarok2.c \
+	cid-amarok2.h \
 	cid-amazon.c \
 	cid-amazon.h \
 	cid-animation.c \
@@ -69,6 +71,7 @@ cidsubincludedir =\
 
 cidsubinclude_HEADERS = \
 	cid-amarok.h \
+	cid-amarok2.h \
 	cid-amazon.h \
 	cid-animation.h \
 	cid-callbacks.h \

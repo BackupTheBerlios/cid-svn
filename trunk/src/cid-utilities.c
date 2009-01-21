@@ -41,6 +41,7 @@ void cid_disconnect_player () {
 	cid_disconnect_from_amarok();
 	rhythmbox_dbus_disconnect_from_bus();
 	cid_disconnect_from_exaile();
+	amarok_2_dbus_disconnect_from_bus();
 }
 
 void cid_free_musicData(void) {

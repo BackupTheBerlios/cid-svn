@@ -1,6 +1,6 @@
 /*
    *
-   *                               cid-gtk.c
+   *                              cid-main.c
    *                                -------
    *                          Conky Images Display
    *                    Charlie MERLAND / Benjamin SANS
@@ -20,11 +20,16 @@ void cid_display_image(gchar *image) {
 	/* debuggage */
 	cid_debug (" %s (%s);\n",__func__,image);
 	
-	//if (cid->cPreviousSurface)
-	//	cairo_surface_destroy (cid->cPreviousSurface);
-	cid->cPreviousSurface = cid->cSurface;
-	//if (cid->cSurface)
-	//	cairo_surface_destroy (cid->cSurface);
+	if (cid->cPreviousSurface) {
+		cairo_surface_destroy (cid->cPreviousSurface);
+		cid->cPreviousSurface = NULL;
+	}
+	if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
+		cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
+	if (cid->cSurface) {
+		cairo_surface_destroy (cid->cSurface);
+		cid->cSurface = NULL;
+	}
 
 	if (g_file_test (image, G_FILE_TEST_EXISTS)) {
 		cid->cSurface = cid_get_cairo_image (image, cid->iWidth, cid->iHeight);
@@ -341,7 +346,6 @@ void cid_draw_text (cairo_t *cr) {
 /* Fonction qui s'occupe de dessiner la fenêtre */
 void cid_set_render (cairo_t *pContext, gpointer *pData) {		
 	cairo_t *cr = pContext;
-	cairo_surface_t *image;
 	
 	if (!cid->bMask)
 		cairo_set_source_rgba (cr, cid->dRed, cid->dGreen, cid->dBlue, cid->dAlpha);
@@ -388,7 +392,7 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 		cairo_translate (cr, -cid->iWidth/2, -cid->iHeight/2);
 
 		// Si on utilise le fondu, et qu'on a un alpha <1 on dessine nos 2 surfaces :)
-		if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT && cid->dFadeInOutAlpha < 1) {
+		if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT && cid->dFadeInOutAlpha < 1 && cid->bAnimation) {
 			cairo_set_source_surface (cr, cid->cPreviousSurface, 0, 0);
 			cairo_paint_with_alpha (cr, 1-cid->dFadeInOutAlpha);
 			cairo_set_source_surface (cr, cid->cSurface, 0, 0);
@@ -401,7 +405,7 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 	}
 	
 	// Si on affiche l'etat du lecteur
-	if (cid->bPlayerState && (musicData.opening || !cid->bHide)) {
+	if (cid->bPlayerState && (musicData.opening)) {
 		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 		cairo_save(cr);
 		cairo_set_source_rgba (cr, 0, 0, 0, 0);
@@ -629,10 +633,20 @@ void cid_run_with_player (void) {
 			cid_build_amarok_menu ();
 			cid_connect_to_amarok(cid->iInter);
 			break;
+		/* Amarok 2 */
+		case PLAYER_AMAROK_2:
+			cid_build_amarok_2_menu ();
+			if (amarok_2_dbus_connect_to_bus()) {
+				cid_debug ("\ndbus connected\n");
+				cid_display_image(cid_amarok_2_cover());
+			} else {
+				cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
+			}
+			break;
 		/* Rhythmbox */
 		case PLAYER_RHYTHMBOX:
-			/* Initialisation de DBus */
 			cid_build_rhythmbox_menu ();
+			/* Initialisation de DBus */
 			if (rhythmbox_dbus_connect_to_bus()) {
 				cid_debug ("\ndbus connected\n");
 				cid_display_image(cid_rhythmbox_cover());

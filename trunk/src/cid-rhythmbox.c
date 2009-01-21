@@ -3,7 +3,7 @@
    *                    cid-rhythmbox.c
    *                       -------
    *                 Conky Images Display
-   *              22/08/2008 - SANS Benjamin
+   *                     SANS Benjamin
    *             ----------------------------
    *
    *
@@ -61,16 +61,16 @@ gboolean rhythmbox_dbus_connect_to_bus (void) {
 			G_TYPE_INVALID);
 		
 		dbus_g_proxy_connect_signal(dbus_proxy_player, "playingChanged",
-			G_CALLBACK(onChangeState), NULL, NULL);
+			G_CALLBACK(rb_onChangeState), NULL, NULL);
 			
 		dbus_g_proxy_connect_signal(dbus_proxy_player, "playingUriChanged",
-			G_CALLBACK(onChangeSong), NULL, NULL);
+			G_CALLBACK(rb_onChangeSong), NULL, NULL);
 		
 		dbus_g_proxy_connect_signal(dbus_proxy_player, "elapsedChanged",
-			G_CALLBACK(onElapsedChanged), NULL, NULL);
+			G_CALLBACK(rb_onElapsedChanged), NULL, NULL);
 		
 		dbus_g_proxy_connect_signal(dbus_proxy_player, "rb:CovertArt-uri",
-			G_CALLBACK(onCovertArtChanged), NULL, NULL);
+			G_CALLBACK(rb_onCovertArtChanged), NULL, NULL);
 		
 		return TRUE;
 	}
@@ -80,19 +80,19 @@ gboolean rhythmbox_dbus_connect_to_bus (void) {
 void rhythmbox_dbus_disconnect_from_bus (void) {
 	if (dbus_proxy_player != NULL) {
 		dbus_g_proxy_disconnect_signal(dbus_proxy_player, "playingChanged",
-			G_CALLBACK(onChangeState), NULL);
+			G_CALLBACK(rb_onChangeState), NULL);
 		cid_debug ("playingChanged deconnecte\n");
 		
 		dbus_g_proxy_disconnect_signal(dbus_proxy_player, "playingUriChanged",
-			G_CALLBACK(onChangeSong), NULL);
+			G_CALLBACK(rb_onChangeSong), NULL);
 		cid_debug ("playingUriChanged deconnecte\n");
 		
 		dbus_g_proxy_disconnect_signal(dbus_proxy_player, "elapsedChanged",
-			G_CALLBACK(onElapsedChanged), NULL);
+			G_CALLBACK(rb_onElapsedChanged), NULL);
 		cid_debug ("elapsedChanged deconnecte\n");
 		
 		dbus_g_proxy_disconnect_signal(dbus_proxy_player, "rb:CovertArt-uri",
-			G_CALLBACK(onCovertArtChanged), NULL);
+			G_CALLBACK(rb_onCovertArtChanged), NULL);
 		cid_debug ("onCovertArtChanged deconnecte\n");
 		
 		g_object_unref (dbus_proxy_player);
@@ -227,7 +227,7 @@ void getSongInfos(void) {
 //*********************************************************************************
 // rhythmbox_onChangeSong() : Fonction executée à chaque changement de musique
 //*********************************************************************************
-void onChangeSong(DBusGProxy *player_proxy,const gchar *uri, gpointer data) {
+void rb_onChangeSong(DBusGProxy *player_proxy,const gchar *uri, gpointer data) {
 	cid_message ("-> %s (%s)\n",__func__,uri);
 	
 	g_free (rhythmboxData.playing_uri);
@@ -262,7 +262,7 @@ void onChangeSong(DBusGProxy *player_proxy,const gchar *uri, gpointer data) {
 //*********************************************************************************
 // rhythmbox_onChangeState() : Fonction executée à chaque changement play/pause
 //*********************************************************************************
-void onChangeState(DBusGProxy *player_proxy, gboolean a_playing, gpointer data) {
+void rb_onChangeState(DBusGProxy *player_proxy, gboolean a_playing, gpointer data) {
 	cid_message ("-> %s () : %s\n",__func__,a_playing ? "PLAY" : "PAUSE");
 	rhythmboxData.playing = a_playing;
 	if(! rhythmboxData.cover_exist && rhythmboxData.playing_uri != NULL) {
@@ -281,7 +281,7 @@ void onChangeState(DBusGProxy *player_proxy, gboolean a_playing, gpointer data) 
 //*********************************************************************************
 // rhythmbox_elapsedChanged() : Fonction executée à chaque changement de temps joué
 //*********************************************************************************
-void onElapsedChanged(DBusGProxy *player_proxy,int elapsed, gpointer data) {
+void rb_onElapsedChanged(DBusGProxy *player_proxy,int elapsed, gpointer data) {
 	if(elapsed > 0) {
 		//g_print ("%s () : %ds\n", __func__, elapsed);
 /*
@@ -305,7 +305,7 @@ void onElapsedChanged(DBusGProxy *player_proxy,int elapsed, gpointer data) {
 }
 
 
-void onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data) {
+void rb_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data) {
 	cid_debug ("%s (%s)",__func__,cImageURI);
 	g_free (rhythmboxData.playing_cover);
 	rhythmboxData.playing_cover = g_strdup (cImageURI);

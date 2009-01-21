@@ -15,7 +15,7 @@ gboolean cid_fade_in_out (void *ptr) {
 	cid->iCurrentlyDrawing = 1;
     cid->bAnimation = TRUE;
     
-    if (cid->dFadeInOutAlpha >= 1)
+    if (cid->dFadeInOutAlpha > 1)
 		cid->dFadeInOutAlpha = 0;
 		
 	cid->dFadeInOutAlpha += .01;
@@ -103,7 +103,7 @@ gboolean cid_rotate_on_changing_song (void *ptr) {
     cid->bAnimation = TRUE;
     
     if (cid->dAngle < 360) {
-        cid->dAngle+=.5;
+        cid->dAngle+=1.0;
         if (cid->bThreaded)
         	gdk_threads_enter();
         gtk_widget_queue_draw(cid->cWindow);
@@ -176,9 +176,6 @@ void cid_animation (AnimationType iAnim) {
        				g_timeout_add_full (-50, 15, (GSourceFunc) cid_fade_in_out, NULL, NULL);
        		break;
        	case CID_FOCUS_IN:
-       		///\______  ces fonctions threadees se bloquent quand une autre est en cours...
-       		///			comportement etrange car avant je n'utilisais QUE des animations threadees 
-       		///			sans avoir aucun probleme.
        		if (cid->bThreaded)
 				g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN), NULL);
 			else 

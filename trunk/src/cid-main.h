@@ -1,10 +1,10 @@
 /*
    *
-   *                               cid-gtk.h
+   *                              cid-main.h
    *                                -------
    *                          Conky Images Display
-   *             05/10/2008 - Charlie MERLAND / Benjamin SANS
-   *             --------------------------------------------
+   *                    Charlie MERLAND / Benjamin SANS
+   *                    --------------------------------
    *
 */
 #ifndef __CID_GTK__

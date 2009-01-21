@@ -3,7 +3,7 @@
    *                    cid-struct.h
    *                       -------
    *                 Conky Images Display
-   *              06/10/2008 - SANS Benjamin
+   *                     SANS Benjamin
    *             ----------------------------
    *
    *
@@ -63,7 +63,8 @@ typedef enum {
 typedef enum {
 	PLAYER_RHYTHMBOX,
 	PLAYER_AMAROK_1,
-	PLAYER_EXAILE 
+	PLAYER_EXAILE,
+	PLAYER_AMAROK_2 
 } PlayerIndice;
 
 /**

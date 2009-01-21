@@ -34,6 +34,7 @@
 #include "cid-menu-factory.h"
 #include "cid-conf-panel-factory.h"
 #include "cid-animation.h"
+#include "cid-amarok2.h"
 
 G_BEGIN_DECLS
 
