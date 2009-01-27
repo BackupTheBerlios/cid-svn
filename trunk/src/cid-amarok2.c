@@ -100,7 +100,7 @@ gboolean amarok_2_getPlaying (void) {
 	///\______ ICI ON DOIT RECUPERER LE STATUS ET DONNER UNE VALEUR AU BOOLEAN 'playing'
 	///        j'arrive pas a determiner le type (iii)... tableau ?
 	//gint status = dbus_get_uinteger(dbus_proxy_player, "GetStatus");
-	g_print ("%d\n",status);
+        //g_print ("%d\n",status);
 	return musicData.playing;
 }
 
