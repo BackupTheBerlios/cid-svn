@@ -3,7 +3,6 @@
    *                            cid-callbacks.h
    *                                -------
    *                          Conky Images Display
-   *                              Benjamin SANS
    *                    --------------------------------
    *
 */

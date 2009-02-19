@@ -3,7 +3,6 @@
    *                            cid-callbacks.c
    *                                -------
    *                          Conky Images Display
-   *                              Benjamin SANS
    *                    --------------------------------
    *
 */
@@ -150,8 +149,7 @@ gboolean _cid_proceed_download_cover (gpointer p) {
 	if (cid->bDownload && cid_get_xml_file(musicData.playing_artist,musicData.playing_album)) {
 		gchar *cImageURL = NULL;
 		cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
-		if (cImageURL)
-			if (cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION))
+		if (cImageURL && cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION))
 				cid_display_image(DEFAULT_DOWNLOADED_IMAGE_LOCATION);
 		cid_debug ("URL : %s",cImageURL);
 	} else
@@ -168,10 +166,11 @@ gboolean _check_cover_is_present (gpointer data) {
 		musicData.iSidCheckCover = 0;
 		return FALSE;
 	} else if (cid->iCheckIter > cid->iTimeToWait) {
+		///\____ fonction bloquante a corriger...
 		//GError *erreur = NULL;
 		//GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
 		//if (erreur != NULL)	{
-		//	cid_warning ("couldn't launch this command (%s)", erreur->message);
+		//	cid_warning ("couldn't launch this thread (%s)", erreur->message);
 		//	g_error_free (erreur);
 		//	return FALSE;
 		//}

@@ -3,7 +3,6 @@
    *                  cid-utilities.h
    *                      -------
    *                Conky Images Display
-   *             05/10/2008 - Benjamin SANS
    *             --------------------------
    *
 */

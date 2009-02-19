@@ -3,7 +3,6 @@
    *                         cid-conf-panel-factory.c
    *                                -------
    *                          Conky Images Display
-   *                              Benjamin SANS
    *                    --------------------------------
    * Sources: Cairo-Dock
    * Author:  Fabrice Rey

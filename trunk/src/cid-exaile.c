@@ -3,7 +3,6 @@
    *                     cid-exaile.c
    *                       -------
    *                 Conky Images Display
-   *              17/01/2009 - SANS Benjamin
    *             ----------------------------
    *
    *
@@ -83,6 +82,22 @@ gboolean exaile_getPlaying (void) {
 	return musicData.playing;
 }
 
+gboolean cid_download_exaile_cover (gpointer data) {
+	cid->iCheckIter++;
+	if (cid->iCheckIter > cid->iTimeToWait) {
+		//GError *erreur = NULL;
+		//GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
+		//if (erreur != NULL)	{
+		//	cid_warning ("couldn't launch this command (%s)", erreur->message);
+		//	g_error_free (erreur);
+		//	return FALSE;
+		//}
+		g_timeout_add (0,(GSourceFunc) _cid_proceed_download_cover, NULL);
+		return FALSE;
+	}
+	return TRUE;
+}
+
 gchar *cid_check_exaile_cover_exists (gchar *cURI) {
 	gint cpt=0;
 	gchar **cCleanURI = g_strsplit (cURI,"/",0);
@@ -92,7 +107,10 @@ gchar *cid_check_exaile_cover_exists (gchar *cURI) {
 	if (g_strcasecmp(cSplitedURI[0],"nocover")==0) {
 		g_free (cCleanURI);
 		g_free (cSplitedURI);
-		
+		if (bSongChanged) {
+			cid->iCheckIter = 0;
+			g_timeout_add (1000, (GSourceFunc) cid_download_exaile_cover, (gpointer) NULL);
+		}
 		return g_strdup(DEFAULT_IMAGE);
 	}
 	g_free (cCleanURI);

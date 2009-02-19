@@ -3,7 +3,6 @@
    *                              cid-main.c
    *                                -------
    *                          Conky Images Display
-   *                    Charlie MERLAND / Benjamin SANS
    *                    --------------------------------
    *
 */
@@ -17,7 +16,6 @@ gboolean g_bRoundedBottomCorner = FALSE;
 /* Fonction qui nous sert à afficher l'image dont le chemin
    est passé en argument. */
 void cid_display_image(gchar *image) {
-	/* debuggage */
 	cid_debug (" %s (%s);\n",__func__,image);
 	
 	if (cid->cPreviousSurface) {

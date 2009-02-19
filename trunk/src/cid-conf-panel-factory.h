@@ -3,7 +3,6 @@
    *                         cid-conf-panel-factory.h
    *                                -------
    *                          Conky Images Display
-   *                              Benjamin SANS
    *                    --------------------------------
    *
 */

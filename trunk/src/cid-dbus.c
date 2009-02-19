@@ -3,7 +3,6 @@
    *                    simple-dbus.c
    *                       -------
    *                 Conky Images Display
-   *              11/08/2008 - SANS Benjamin
    *             ----------------------------
    *
    *

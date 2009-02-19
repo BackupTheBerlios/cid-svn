@@ -3,7 +3,6 @@
    *                    cid-rhythmbox.c
    *                       -------
    *                 Conky Images Display
-   *                     SANS Benjamin
    *             ----------------------------
    *
    *

@@ -3,7 +3,6 @@
    *                     cid-amarok.h
    *                       -------
    *                 Conky Images Display
-   *              22/08/2008 - SANS Benjamin
    *             ----------------------------
    *
 */

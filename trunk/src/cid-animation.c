@@ -3,7 +3,6 @@
    *                             cid-animation.c
    *                                -------
    *                          Conky Images Display
-   *                       03/01/2009 - Benjamin SANS
    *             --------------------------------------------
    *
 */

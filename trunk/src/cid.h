@@ -3,7 +3,6 @@
    *                              cid.h
    *                             -------
    *                       Conky Images Display
-   *             05/10/2008 - Charlie MERLAND / Benjamin SANS
    *             --------------------------------------------
    *
 */

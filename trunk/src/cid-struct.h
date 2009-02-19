@@ -3,7 +3,6 @@
    *                    cid-struct.h
    *                       -------
    *                 Conky Images Display
-   *                     SANS Benjamin
    *             ----------------------------
    *
    *

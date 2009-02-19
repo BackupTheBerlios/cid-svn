@@ -3,7 +3,6 @@
    *                     cid-amazon.h
    *                       -------
    *                 Conky Images Display
-   *              06/10/2008 - SANS Benjamin
    *             ----------------------------
    *
    *

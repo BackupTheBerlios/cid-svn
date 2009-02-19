@@ -3,7 +3,6 @@
    *                              cid-main.h
    *                                -------
    *                          Conky Images Display
-   *                    Charlie MERLAND / Benjamin SANS
    *                    --------------------------------
    *
 */

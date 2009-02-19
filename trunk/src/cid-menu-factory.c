@@ -3,7 +3,6 @@
    *                           cid-menu-factory.c
    *                                -------
    *                          Conky Images Display
-   *                              Benjamin SANS
    *                    --------------------------------
    *
 */

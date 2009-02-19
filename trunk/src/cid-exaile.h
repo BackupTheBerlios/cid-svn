@@ -3,7 +3,6 @@
    *                    cid-exaile.h
    *                       -------
    *                 Conky Images Display
-   *              17/01/2009 - SANS Benjamin
    *             ----------------------------
    *
    *

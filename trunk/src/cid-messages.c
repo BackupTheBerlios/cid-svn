@@ -3,7 +3,6 @@
    *                   cid-messages.c
    *                      -------
    *                Conky Images Display
-   *             23/08/2008 - Benjamin SANS
    *             --------------------------
    *
    * Inspired by Cairo-dock

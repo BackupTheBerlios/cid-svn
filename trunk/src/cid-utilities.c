@@ -3,7 +3,6 @@
    *                  cid-utilities.c
    *                      -------
    *                Conky Images Display
-   *             05/10/2008 - Benjamin SANS
    *             --------------------------
    *
 */
@@ -30,14 +29,6 @@ int cid_player_evaluation (gchar *player) {
 }
 
 void cid_disconnect_player () {
-	//switch (cid->iPlayer) {
-	//	case PLAYER_AMAROK_1:
-	//		rhythmbox_dbus_disconnect_from_bus();
-	//		break;
-	//	case PLAYER_RHYTHMBOX:
-	//		cid_disconnect_from_amarok();
-	//		break;
-	//}
 	cid_disconnect_from_amarok();
 	rhythmbox_dbus_disconnect_from_bus();
 	cid_disconnect_from_exaile();
@@ -148,7 +139,7 @@ void cid_read_parameters (int argc, char **argv) {
 
 	if (bTestingMode) {
 		cid->bTesting = TRUE;
-		cid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),SVN_CONF_FILE);
+		//cid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),SVN_CONF_FILE);
 	}
 	
 		int i=0;

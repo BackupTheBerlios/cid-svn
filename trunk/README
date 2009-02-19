@@ -10,8 +10,9 @@ Une sorte de librairie interne DBus a été rédigée pour permettre l'intégrat
 
 Pour compiler manuellement le programme, il vous faut certains paquets d'installés.
 
-En lançant le script download.sh avec l'option --testing, cette vérification devrait être automatique. 
-Le ./configure vous dira également quels paquets sont manquants si besoin.
+En lançant le script download.sh, cette vérification devrait être automatique. 
+
+La liste des paquets necessaires est la suivante : libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
 
 Pour installer le programme, ./configure && make
 Ensuite sudo make install
@@ -30,8 +31,8 @@ Original projects are available here : http://forum.ubuntu-fr.org/viewtopic.php?
 
 To compile manually, you need some additional libs.
 
-Running the download.sh script with the --testing option should check it automatically.
-Anyway, ./configure will tell you what is missing.
+Running the download.sh script should check it automatically.
+Nevertheless, the list of needed package is : libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
 
 To install the programm, type ./configure && make
 Then type sudo make install
@@ -40,3 +41,18 @@ If it does not work, you ca try autoreconf -isvf just before the ./configure.
 If it still doesn't work, e-mail me so we can have a look together.
 
 Now you can run the programm with the --help option (cid --help) to learn how to use it.
+
+---------------------------------------------------------
+
+Resume/Summary
+
+1. apt-get install libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
+
+2. ./configure
+
+3. make
+
+4. passer root / login as root
+   make install
+
+5. cid --help

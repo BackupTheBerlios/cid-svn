@@ -1,9 +1,8 @@
 /*
    *
-   *                    cid-rhythmbox.h
+   *                    cid-amarok2.h
    *                       -------
    *                 Conky Images Display
-   *                     SANS Benjamin
    *             ----------------------------
    *
    *
@@ -25,26 +24,26 @@ gchar *cid_amarok_2_cover(void);
 
 /**
  * Fonction permettant de se connecter 
- * au bus de rhythmbox 
+ * au bus de amarok2 
  * @return VRAI ou FAUX
  */
 gboolean amarok_2_dbus_connect_to_bus(void);
 
 /** 
  * Fonction permettant de se déconnecter 
- * du bus de rhythmbox 
+ * du bus de amarok2 
  */
 void amarok_2_dbus_disconnect_from_bus (void);
 
 /**
- * Fonction permettant de savoir si rhythmbox 
+ * Fonction permettant de savoir si amarok2 
  * est lancé ou non 
  * @return VRAI ou FAUX en fonction
  */
 gboolean dbus_detect_amarok_2(void);
 
 /**
- * Test si Rhythmbox joue de la musique ou non 
+ * Test si amarok2 joue de la musique ou non 
  * @return VRAI ou FAUX
  */
 gboolean amarok_2_getPlaying(void);
@@ -68,7 +67,7 @@ void am_getSongInfos(void);
  * @param URI du fichier joué
  * @param pointeur de données (non utilisé)
  */
-void am_onChangeSong(DBusGProxy *player_proxy, const gchar *uri, gpointer data);
+void am_onChangeSong(DBusGProxy *player_proxy, GHashTable *data_list, gpointer data);
 
 /**
  * Fonction exécutée (automatiquement) au changement d'état Play/Pause 
@@ -76,11 +75,11 @@ void am_onChangeSong(DBusGProxy *player_proxy, const gchar *uri, gpointer data);
  * @param flag on joue ou non
  * @param pointeur de données (non utilisé)
  */
-void am_onChangeState(DBusGProxy *player_proxy,gboolean playing, gpointer data);
+void am_onChangeState(DBusGProxy *player_proxy,GValueArray *status, gpointer data);
 
 /**
  * Fonction exécutée (automatiquement) à chaque changement d'URI 
- * du fichier image utilisé par rhythmbox 
+ * du fichier image utilisé par amarok2 
  * @param bus de connection
  * @param URI de la nouvelle image
  * @param pointeur de données (non utilisé)
@@ -89,7 +88,7 @@ void am_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpoi
 
 
 /**
- * Permet d'ajouter des options de monitoring pour rhythmbox
+ * Permet d'ajouter des options de monitoring pour amarok2
  * @param menu
  */
 void cid_build_amarok_2_menu (void);
