@@ -182,6 +182,10 @@ msgstr "Options de contrôle du lecteur"
 msgid "Wich player you want to monitor :"
 msgstr "Quel lecteur surveiller :"
 
+#:../data/cid.conf:72
+msgid "None"
+msgstr "Aucun"
+
 #:../data/cid.conf:75
 msgid "Interval between two refresh :"
 msgstr "Interval entre deux vérifications  :"

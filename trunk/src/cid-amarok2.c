@@ -15,7 +15,7 @@ static GHashTable *change_song = NULL;
 gchar *cid_amarok_2_cover() {
 	if (dbus_detect_amarok_2()) {
 		if (amarok_2_getPlaying ()) {
-			amarok_2_getPlayingUri();
+			//amarok_2_getPlayingUri();
 			am_getSongInfos();
 		    if (musicData.playing_cover != NULL) 
 		    	cid_set_state_icon();
@@ -189,7 +189,7 @@ void am_getSongInfos(void) {
 		
 		g_hash_table_destroy (data_list);
 	} else {
-		cid_error ("  can't get song properties");
+		cid_warning ("  can't get song properties");
 		g_free (musicData.playing_uri);
 		musicData.playing_uri = NULL;
 		g_free (musicData.playing_cover);
@@ -202,7 +202,7 @@ void am_getSongInfos(void) {
 // am_onChangeSong() : Fonction executée à chaque changement de musique
 //*********************************************************************************
 void am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer data) {
-	
+	/*
 	GValue *value;
 	
 	// Tester si la table de hachage n'est pas vide
@@ -239,8 +239,8 @@ void am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer da
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_cover = g_strdup (g_value_get_string(value));
 	else musicData.playing_cover = NULL;
 	cid_message ("playing_cover <- %s", musicData.playing_cover);
-	
-	cid_display_image(musicData.playing_cover);
+	*/
+	cid_display_image(cid_amarok_2_cover());
 }
 
 //*********************************************************************************

@@ -60,6 +60,7 @@ typedef enum {
  * Liste des lecteurs supportés
  */
 typedef enum {
+	PLAYER_NONE,
 	PLAYER_RHYTHMBOX,
 	PLAYER_AMAROK_1,
 	PLAYER_EXAILE,
@@ -148,6 +149,9 @@ struct _CidMainContainer {
 	gint iCheckIter;
 	// taille des images "extras"
 	gint iExtraSize;
+	
+	// pipe
+	guint iPipe;
 	
 	// lecteur a monitorer
 	PlayerIndice iPlayer;

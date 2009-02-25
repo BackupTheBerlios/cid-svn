@@ -48,6 +48,9 @@ Resume/Summary
 
 1. apt-get install libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
 
+1.1. /!\ only if you downloaded the svn version /!\
+     autoreconf -isvf
+
 2. ./configure
 
 3. make

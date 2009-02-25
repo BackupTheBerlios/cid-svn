@@ -9,8 +9,10 @@
 
 #include "cid.h"
 
-gboolean cont;
+static gboolean cont;
 gboolean run = FALSE;
+
+///dcop amarok playlist addMediaList [ "file:///home/benjamin/Music/aboutagirl.mp3" ]
 
 gboolean get_amarock_musicData () {
 	FILE *status = popen ("dcop amarok player status","r");
@@ -24,22 +26,24 @@ gboolean get_amarock_musicData () {
 	if (!fgets (gStatus,128,status)) {
 		cid_warning ("Couldn't get status");
 		musicData.opening = FALSE;
-		cid_set_state_icon();
 		pclose (status);
 		if (run) {
 			cid_display_image(DEFAULT_IMAGE);
+			cid_set_state_icon();
 			run = FALSE;
 		}
 		return FALSE;
 	}
 	
+	gboolean bOldState = musicData.playing;
 	gint state = atoi(gStatus);
 	if (state == 1)
 		musicData.playing = FALSE;
 	else if (state == 2)
 		musicData.playing = TRUE;
 		
-	cid_set_state_icon();
+	if (bOldState!=musicData.playing)
+		cid_set_state_icon();
 	
 	
 	FILE *artist = popen ("dcop amarok player artist","r"), 
@@ -163,11 +167,12 @@ gboolean cid_amarok_cover() {
 }
 
 void cid_amarok_pipe (gint iInter) {
-	g_timeout_add_full (G_PRIORITY_HIGH, iInter,(gpointer) cid_amarok_cover, NULL, NULL);
+	cid->iPipe = g_timeout_add_full (G_PRIORITY_HIGH, iInter,(gpointer) cid_amarok_cover, NULL, NULL);
 }
 
 void cid_disconnect_from_amarok () {
 	cont = FALSE;
+	g_source_remove (cid->iPipe);
 }
 
 void cid_connect_to_amarok(gint iInter) {

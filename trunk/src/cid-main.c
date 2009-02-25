@@ -18,12 +18,6 @@ gboolean g_bRoundedBottomCorner = FALSE;
 void cid_display_image(gchar *image) {
 	cid_debug (" %s (%s);\n",__func__,image);
 	
-	if (cid->cPreviousSurface) {
-		cairo_surface_destroy (cid->cPreviousSurface);
-		cid->cPreviousSurface = NULL;
-	}
-	if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
-		cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
 	if (cid->cSurface) {
 		cairo_surface_destroy (cid->cSurface);
 		cid->cSurface = NULL;
@@ -45,6 +39,14 @@ void cid_display_image(gchar *image) {
 			musicData.iSidCheckCover = g_timeout_add (1000, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
 		}
 	}
+        
+        // On recupere l'ancienne image pour faire le fondu
+        if (cid->cPreviousSurface) {
+		cairo_surface_destroy (cid->cPreviousSurface);
+		cid->cPreviousSurface = NULL;
+	}
+        if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
+		cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
 	
 	gtk_widget_queue_draw (cid->cWindow);
 }
@@ -185,6 +187,21 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
 	return pNewSurface;
 }
 
+void onDragDataReceived(GtkWidget *wgt, GdkDragContext *context, int x, int y,
+                        GtkSelectionData *seldata, guint info, guint time,
+                        gpointer userdata) {
+	gchar *cReceivedData = (gchar *) seldata->data;
+	g_return_if_fail (cReceivedData != NULL);
+	int length = strlen (cReceivedData);
+	if (cReceivedData[length-1] == '\n')
+		cReceivedData[--length] = '\0';  // on vire le retour chariot final.
+	if (cReceivedData[length-1] == '\r')
+		cReceivedData[--length] = '\0';
+		
+	g_print("d&d >>> %s\n",cReceivedData);
+	//system (g_strdup_printf("nautilus %s &",cReceivedData));
+}
+
 
 /* Fonction qui créée la fenêtre, la déplace à la position
    voulue, et la dimensionne */
@@ -227,6 +244,23 @@ void cid_create_main_window() {
 	g_signal_connect (G_OBJECT(cid->cWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
 	g_signal_connect (G_OBJECT(cid->cWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
 	
+	GtkTargetEntry *pTargetEntry = g_new0 (GtkTargetEntry, 6);
+	pTargetEntry[0].target = "text/*";
+	pTargetEntry[0].flags = (GtkTargetFlags) 0;
+	pTargetEntry[0].info = 0;
+	pTargetEntry[1].target = "text/uri-list";
+	pTargetEntry[2].target = "text/plain";
+	pTargetEntry[3].target = "text/plain;charset=UTF-8";
+	pTargetEntry[4].target = "text/directory";
+	pTargetEntry[5].target = "text/html";
+	gtk_drag_dest_set (cid->cWindow,
+		GTK_DEST_DEFAULT_DROP | GTK_DEST_DEFAULT_MOTION,  // GTK_DEST_DEFAULT_HIGHLIGHT ne rend pas joli je trouve.
+		pTargetEntry,
+		6,
+		GDK_ACTION_COPY | GDK_ACTION_MOVE);  // le 'GDK_ACTION_MOVE' c'est pour KDE.
+	g_free (pTargetEntry);
+	
+	g_signal_connect (G_OBJECT(cid->cWindow), "drag-data-received", G_CALLBACK(onDragDataReceived), NULL);
 	
 	g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
 	g_signal_connect (G_OBJECT(cid->cWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
@@ -656,6 +690,10 @@ void cid_run_with_player (void) {
 		case PLAYER_EXAILE:
 			cid_build_exaile_menu ();
 			cid_connect_to_exaile(cid->iInter);
+			break;
+		/* None */
+		case PLAYER_NONE:
+			cid_display_image(NULL);
 			break;
 		/* Sinon, on a un lecteur inconnu */
 		default:

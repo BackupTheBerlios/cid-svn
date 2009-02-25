@@ -11,13 +11,15 @@
 
 static DBusGProxy *dbus_proxy_player = NULL;
 
-gboolean cont;
-gboolean bSongChanged;
-gboolean bPreviousState;
-gboolean bFirstLoop;
+static gboolean cont;
+static gboolean bSongChanged;
+static gboolean bPreviousState;
+static gboolean bFirstLoop;
+static gboolean bCantConnect;
 
 gboolean cid_exaile_cover() {
 	if (dbus_detect_exaile()) {
+		bCantConnect = FALSE;
 		if (exaile_getPlaying ()) {
 			getExaileSongInfos();
 			if (!bSongChanged)
@@ -30,7 +32,11 @@ gboolean cid_exaile_cover() {
 			cid_display_image (DEFAULT_IMAGE);
 		}
 	} else {
-		cid_display_image (DEFAULT_IMAGE);
+		if (!bCantConnect) {
+			bCantConnect = TRUE;
+			cid_display_image (DEFAULT_IMAGE);
+		}
+		return cont;
 	}
 	return cont;
 }
@@ -125,7 +131,6 @@ void getExaileSongInfos(void) {
 	musicData.playing_artist = dbus_get_string (dbus_proxy_player, "get_artist");
 	musicData.playing_title  = dbus_get_string (dbus_proxy_player, "get_title");
 	musicData.playing_duration = atoi (dbus_get_string (dbus_proxy_player, "get_length"));
-	musicData.playing_cover  = cid_check_exaile_cover_exists(dbus_get_string (dbus_proxy_player, "get_cover_path"));
 	
 	musicData.playing_uri = NULL;
 	musicData.playing_track = 0;
@@ -134,6 +139,9 @@ void getExaileSongInfos(void) {
 		bSongChanged = TRUE;
 	else
 		bSongChanged = FALSE;
+        
+	if (bSongChanged)
+		musicData.playing_cover  = cid_check_exaile_cover_exists(dbus_get_string (dbus_proxy_player, "get_cover_path"));
 		
 	g_free (cOldArtist);
 	g_free (cOldTitle);
@@ -141,12 +149,13 @@ void getExaileSongInfos(void) {
 }
 
 void cid_exaile_pipe (gint iInter) {
-	g_timeout_add_full (G_PRIORITY_HIGH, iInter,(gpointer) cid_exaile_cover, NULL, NULL);
+	cid->iPipe = g_timeout_add_full (G_PRIORITY_HIGH, iInter,(gpointer) cid_exaile_cover, NULL, NULL);
 }
 
 void cid_disconnect_from_exaile () {
 	cont = FALSE;
 	exaile_dbus_disconnect_from_bus();
+	g_source_remove (cid->iPipe);
 }
 
 void cid_connect_to_exaile(gint iInter) {
