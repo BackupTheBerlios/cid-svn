@@ -93,8 +93,10 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
 	
 	cid_free_musicData();
 	
-	if (cid->pMonitorList) 
+	if (cid->pMonitorList) {
 		g_slice_free (CidControlFunctionsList,cid->pMonitorList);
+		cid->pMonitorList = NULL;
+	}
 	
 	
 	cid_run_with_player();
