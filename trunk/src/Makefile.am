@@ -25,7 +25,7 @@ cid_SOURCES = \
 	cid.c \
 	cid.h \
 	cid-amarok.c \
-	cid-amarok.h \ 
+	cid-amarok.h \
 	cid-amarok2.c \
 	cid-amarok2.h \
 	cid-amazon.c \
@@ -40,10 +40,10 @@ cid_SOURCES = \
 	cid-config.h \
 	cid-dbus.c \
 	cid-dbus.h \
+	cid-draw.c \
+	cid-draw.h \
 	cid-exaile.c \
 	cid-exaile.h \
-	cid-main.c \
-	cid-main.h \
 	cid-menu-factory.c \
 	cid-menu-factory.h \
 	cid-messages.c \
@@ -78,8 +78,8 @@ cidsubinclude_HEADERS = \
 	cid-conf-panel-factory.h \
 	cid-config.h \
 	cid-dbus.h \
+	cid-draw.h \
 	cid-exaile.h \
-	cid-main.h \
 	cid-menu-factory.h \
 	cid-messages.h \
 	cid-rhythmbox.h \

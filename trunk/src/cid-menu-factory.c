@@ -7,7 +7,12 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-menu-factory.h"
+#include "cid-callbacks.h"
+#include "cid-utilities.h"
+
+extern CidMainContainer *cid;
 
 GtkWidget *cid_build_menu (CidMainContainer *pCid) {
 	static gpointer *data = NULL;

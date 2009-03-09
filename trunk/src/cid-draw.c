@@ -1,14 +1,25 @@
 /*
    *
-   *                              cid-main.c
+   *                              cid-draw.c
    *                                -------
    *                          Conky Images Display
    *                    --------------------------------
    *
 */
 
-#include "cid.h"
 #include <math.h>
+#include <signal.h>
+//#include <gtk/gtkgl.h>
+
+#include "cid-draw.h"
+#include "cid-animation.h"
+#include "cid-utilities.h"
+#include "cid-callbacks.h"
+#include "cid-messages.h"
+
+extern CidMainContainer *cid;
+
+static pthread_mutex_t render_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 gboolean supports_alpha = FALSE;
 gboolean g_bRoundedBottomCorner = FALSE;
@@ -271,6 +282,28 @@ void cid_create_main_window() {
 	
 	gtk_widget_show_all(cid->cWindow);
 }
+
+//void cid_set_opengl_context (void) {
+	
+	//GdkGLConfig *glConfig;
+	/*
+	 * Configure a OpenGL-capable context.
+	 */
+	// Try to make it double-buffered.
+	//glConfig = gdk_gl_config_new_by_mode (GDK_GL_MODE_RGB | GDK_GL_MODE_DEPTH | GDK_GL_MODE_DOUBLE);
+	//if (glConfig == NULL) {
+
+	//	cid_warning ("Cannot configure a double-buffered context.\n");
+	//	cid_warning ("Will try a single-buffered context.\n");
+
+		// If we can't configure a double-buffered context, try for single-buffered.
+	//	glConfig = gdk_gl_config_new_by_mode (GDK_GL_MODE_RGB | GDK_GL_MODE_DEPTH);
+	//	if (glConfig == NULL)
+	//		cid_error (CID_OPEN_GL_ERROR, "Aargh!  Cannot configure any type of OpenGL-capable context.  Exiting.");
+	//}
+	
+	//gtk_widget_set_gl_capability (cid->cWindow, glConfig, NULL, TRUE, GDK_GL_RGBA_TYPE);
+//}
 
 /* On détermine si un gestionnaire de composite est présent ou non */
 void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userdata) {
@@ -659,7 +692,7 @@ cairo_surface_t *cid_create_surface_from_text_full (gchar *cText, cairo_t* pSour
 void cid_run_with_player (void) {
 	/* On lance telle ou telle fonction selon le lecteur selectionne */
 	if (cid->iPlayer!=PLAYER_NONE)
-		cid->pMonitorList = g_slice_new (CidControlFunctionsList);
+		cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
 	switch (cid->iPlayer) {
 		/* Amarok 1.4 */
 		case PLAYER_AMAROK_1:
@@ -709,6 +742,8 @@ void cid_display_init(int argc, char **argv) {
 	if (!cid->bRunning)
 		cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
 
+	//gtk_gl_init (&argc, &argv);
+	
 	/* On intercepte les signaux */
 	signal (SIGINT, cid_interrupt); // ctrl+c
 
@@ -718,8 +753,17 @@ void cid_display_init(int argc, char **argv) {
 	/* On créé la fenêtre */
 	cid_create_main_window();
 	
+	/// Initialise the render mutex.
+	//pthread_mutex_init (&render_mutex, NULL);
+	
+	/* On lance le context OpenGL */
+	//cid_set_opengl_context();
+	
 	/* On lance le monitoring du player */
 	cid_run_with_player();	
+        
+    /// Start the render timer.
+	//g_timeout_add (1000 / 60, rotate_cube, theDrawingarea);
         
 	/* Enfin on lance la boucle infinie Gtk */
 	gtk_main();

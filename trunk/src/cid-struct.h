@@ -10,6 +10,8 @@
 #ifndef __CID_STRUCT__
 #define  __CID_STRUCT__
 
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 ///\______ Structures de donnees
 typedef struct _CidMainContainer CidMainContainer;
@@ -81,10 +83,11 @@ typedef enum {
  * Codes de retours spécifiques à CID
  */
 typedef enum {
-	CID_EXIT_SUCCESS=EXIT_SUCCESS,
+	CID_EXIT_SUCCESS=0,
 	CID_ERROR_READING_FILE,
 	CID_ERROR_READING_ARGS,
 	CID_GTK_ERROR,
+	CID_OPEN_GL_ERROR,
 	CID_PLAYER_ERROR,
 	CID_EXIT_ERROR
 } codesRetours;
@@ -243,6 +246,8 @@ struct _CidMainContainer {
 	gboolean bChangedTestingConf;
 	//
 	gboolean bConfFilePanel;
+	// On a lance un pipe ?
+	gboolean bPipeRunning;
 	
 	// taille de la couleur
 	gsize gColorSize;

@@ -7,7 +7,13 @@
    *
    *
 */
-#include "cid.h"
+//#include "cid.h"
+#include "cid-amarok2.h"
+#include "cid-struct.h"
+#include "cid-messages.h"
+#include "cid-utilities.h"
+
+extern CidMainContainer *cid;
 
 static DBusGProxy *dbus_proxy_player = NULL;
 static GHashTable *change_song = NULL;

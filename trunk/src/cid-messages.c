@@ -11,7 +11,9 @@
 
 #define _INSIDE_CID_MESSAGES_C_
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-messages.h"
+#include "cid-utilities.h"
 
 char s_iLogColor = '0';
 static GLogLevelFlags gLogLevel = 0;

@@ -7,7 +7,13 @@
    * Sources: Cairo-Dock
    * Author:  Fabrice Rey
 */
-#include "cid.h"
+//#include "cid.h"
+#include "cid-conf-panel-factory.h"
+#include "cid-messages.h"
+#include "cid-callbacks.h"
+#include "cid-utilities.h"
+
+extern CidMainContainer *cid;
 
 #define _allocate_new_buffer\
 	data = g_new (gpointer, 3); \

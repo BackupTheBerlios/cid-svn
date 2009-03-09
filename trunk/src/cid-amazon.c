@@ -7,7 +7,12 @@
    *
    *
 */
-#include "cid.h"
+//#include "cid.h"
+#include "cid-amazon.h"
+#include "cid-struct.h"
+#include "cid-messages.h"
+
+extern CidMainContainer *cid;
 
 #ifdef LIBXML_READER_ENABLED
 
@@ -114,6 +119,12 @@ gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
 	system (cCommand);
 	g_free (cCommand);
 	return TRUE;
+}
+
+#else
+
+gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
+	return FALSE;
 }
 
 #endif

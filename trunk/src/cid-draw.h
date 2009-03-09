@@ -1,6 +1,6 @@
 /*
    *
-   *                              cid-main.h
+   *                              cid-draw.h
    *                                -------
    *                          Conky Images Display
    *                    --------------------------------

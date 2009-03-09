@@ -7,7 +7,16 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-callbacks.h"
+#include "cid-messages.h"
+#include "cid-struct.h"
+#include "cid-conf-panel-factory.h"
+#include "cid-amazon.h"
+#include "cid-config.h"
+#include "cid-utilities.h"
+
+extern CidMainContainer *cid;
 
 void cid_interrupt (int signal) {
 	_cid_quit(NULL,NULL);
@@ -15,7 +24,7 @@ void cid_interrupt (int signal) {
 
 void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
 
-	rhythmbox_dbus_disconnect_from_bus();
+	cid_disconnect_player();
 
 	cid_save_data ();
 

@@ -9,7 +9,16 @@
 #ifndef __CID_UTILITIES__
 #define  __CID_UTILITIES__
 
+#include <locale.h>
+#include <libintl.h>
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
+
+#define _(string) gettext (string)
+
+/* Alias pour récupérer l'URI de l'image par défaut */
+#define DEFAULT_IMAGE cid->pDefaultImage
 
 #define TESTING_COVER "../data/default.svg"
 #define TESTING_FILE "../data/cid.conf"

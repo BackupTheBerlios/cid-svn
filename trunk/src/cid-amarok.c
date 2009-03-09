@@ -7,7 +7,14 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-amarok.h"
+#include "cid-struct.h"
+#include "cid-messages.h"
+#include "cid-utilities.h"
+#include "cid-callbacks.h"
+
+extern CidMainContainer *cid;
 
 static gboolean cont;
 gboolean run = FALSE;
@@ -172,11 +179,14 @@ void cid_amarok_pipe (gint iInter) {
 
 void cid_disconnect_from_amarok () {
 	cont = FALSE;
-	g_source_remove (cid->iPipe);
+	if (cid->bPipeRunning)
+		g_source_remove (cid->iPipe);
+	cid->bPipeRunning = FALSE;
 }
 
 void cid_connect_to_amarok(gint iInter) {
 	cont = TRUE;
+	cid->bPipeRunning = TRUE;
 	cid_display_image(DEFAULT_IMAGE);
 	cid_amarok_pipe (iInter);	
 }

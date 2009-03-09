@@ -10,8 +10,8 @@
 #ifndef __CID_AMAZON__
 #define  __CID_AMAZON__
 
-#include <stdio.h>
 #include <libxml/xmlreader.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

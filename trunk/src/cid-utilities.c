@@ -7,7 +7,13 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-utilities.h"
+#include "cid-struct.h"
+#include "cid-callbacks.h"
+#include "cid-messages.h"
+
+extern CidMainContainer *cid;
 
 /* Fonction de sortie en cas d'erreur, avec affichage d'un
    éventuel message d'erreur */
@@ -185,8 +191,8 @@ Hum... I'd say it's a kinda Penguin ! \n\
 		}
 		if (strcmp(argv[i], "dev" ) == 0) {
 			g_print("/!\\ CAUTION /!\\\nDevelopment mode !\n");
-			g_free (cid->pConfFile);
-			g_free (cid->pDefaultImage);
+			//g_free (cid->pConfFile);
+			//g_free (cid->pDefaultImage);
 			cid->pConfFile = g_strdup(TESTING_FILE);
 			DEFAULT_IMAGE = g_strdup(TESTING_COVER);
 			cid->bDevMode = TRUE;

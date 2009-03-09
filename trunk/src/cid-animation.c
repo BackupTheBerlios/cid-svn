@@ -7,7 +7,11 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
+#include "cid-animation.h"
+#include "cid-messages.h"
+
+extern CidMainContainer *cid;
 
 /* On fait un fondu */
 gboolean cid_fade_in_out (void *ptr) {

@@ -5,7 +5,7 @@
 **
 ** License :
 **    This program is free software; you can redistribute it and/or modify
-**    it under the terms of the GNU General Public License, version 3 or above.
+**    it under the terms of the GNU General Public License, version 2 or above.
 **    If you don't know what that means take a look at:
 **       http://www.gnu.org/licenses/licenses.html#GPL
 **
@@ -21,7 +21,7 @@
 **    Originally conceived to use it with conky to display amarok's cover 
 **    on desktop.
 **    The project was re-write separatly for rhythmbox.
-**    In the end, we deceided to merge our two programs "clearly" with a DBus
+**    In the end, we deceided to merge our two programs "cleanly" with a DBus
 **    support to add amarok2 and other players in the future...
 **
 **
@@ -41,6 +41,8 @@
 */
 
 #include "cid.h"
+
+CidMainContainer *cid;
 
 static gchar *cLaunchCommand = NULL;
 
@@ -86,7 +88,8 @@ void cid_set_signal_interception (void) {
 /* Fonction principale */
 
 int main ( int argc, char **argv ) {		
-	cid = malloc (sizeof *cid);
+
+	cid = g_new0(CidMainContainer,1);
 	
 	int i;
 	GString *sCommandString = g_string_new (argv[0]);
@@ -117,7 +120,7 @@ int main ( int argc, char **argv ) {
 	if (!g_thread_supported ()){ g_thread_init(NULL); }
     gdk_threads_init();
 	
-	cid_display_init (0,NULL);
+	cid_display_init (&argc,&argv);
 
 	return CID_EXIT_SUCCESS;
 	

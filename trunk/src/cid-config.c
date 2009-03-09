@@ -7,8 +7,16 @@
    *
 */
 
-#include "cid.h"
+//#include "cid.h"
 #include <math.h>
+
+#include "cid-config.h"
+#include "cid-messages.h"
+#include "cid-utilities.h"
+#include "cid-conf-panel-factory.h"
+#include "cid-callbacks.h"
+
+extern CidMainContainer *cid;
 
 static gint iNbRead=0;
 
@@ -189,7 +197,7 @@ void cid_read_key_file (const gchar *f) {
 
 	// [Options] configuration
 	cid->bHide           = CID_CONFIG_GET_BOOLEAN ("Options", "HIDE");
-	cid->pDefaultImage   = CID_CONFIG_GET_FILE_PATH  ("Options", "IMAGE", CID_DEFAULT_IMAGE);
+	cid->pDefaultImage   = CID_CONFIG_GET_FILE_PATH  ("Options", "IMAGE", cid->bDevMode ? TESTING_COVER : CID_DEFAULT_IMAGE);
 	cid->bRunAnimation   = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "ANIMATION", TRUE);
 	cid->iAnimationType  = CID_CONFIG_GET_INTEGER ("Options", "ANIMATION_TYPE");
 	cid->bThreaded       = CID_CONFIG_GET_BOOLEAN ("Options", "THREAD");

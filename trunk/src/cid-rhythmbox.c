@@ -9,7 +9,14 @@
    *    Source originale: applet rhythmbox pour Cairo-dock
    *    Auteur origial: Adrien Pilleboue
 */
-#include "cid.h"
+//#include "cid.h"
+#include "cid-rhythmbox.h"
+#include "cid-dbus.h"
+#include "cid-messages.h"
+#include "cid-utilities.h"
+#include "cid-struct.h"
+
+extern CidMainContainer *cid;
 
 static DBusGProxy *dbus_proxy_player = NULL;
 static DBusGProxy *dbus_proxy_shell = NULL;

@@ -7,7 +7,15 @@
    *
    *
 */
-#include "cid.h"
+//#include "cid.h"
+#include "cid-exaile.h"
+#include "cid-struct.h"
+#include "cid-amazon.h"
+#include "cid-dbus.h"
+#include "cid-callbacks.h"
+#include "cid-utilities.h"
+
+extern CidMainContainer *cid;
 
 static DBusGProxy *dbus_proxy_player = NULL;
 
@@ -155,12 +163,15 @@ void cid_exaile_pipe (gint iInter) {
 void cid_disconnect_from_exaile () {
 	cont = FALSE;
 	exaile_dbus_disconnect_from_bus();
-	g_source_remove (cid->iPipe);
+	if (cid->bPipeRunning)
+		g_source_remove (cid->iPipe);
+	cid->bPipeRunning = FALSE;
 }
 
 void cid_connect_to_exaile(gint iInter) {
 	cont = TRUE;
 	bFirstLoop = TRUE;
+	cid->bPipeRunning = TRUE;
 	exaile_dbus_connect_to_bus ();
 	cid_exaile_cover();
 	cid_exaile_pipe (iInter);	

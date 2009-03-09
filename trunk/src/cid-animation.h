@@ -11,6 +11,8 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkscreen.h>
+#include <pthread.h>
+
 #include "cid-struct.h"
 
 /**

@@ -11,6 +11,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkscreen.h>
+#include "cid-struct.h"
 
 G_BEGIN_DECLS
 
