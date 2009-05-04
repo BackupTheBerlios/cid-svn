@@ -1,11 +1,8 @@
-Conky Images Display v1.1.1
+Conky Images Display v1.1.2
 
-* a few bug fixing
+* a few bug fixing (as usual)
 * memory improvements
-* new configuration panel
-* new configuration options
-* exaile support
-* amarok2 support
-* download of missing covers
-* a few eye-candy stuff
-* what else?
+* threads improvements
+* downloads improvements
+* controls improvements
+* actually, a lot of improvements :D

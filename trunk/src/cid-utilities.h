@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * @param ... 
  */
 gboolean cid_launch_command_full (const gchar *cCommandFormat, gchar *cWorkingDirectory, ...);
-	
+    
 /**
  * sort en retournant le code de retour donné en paramètre
  * @param code de retour

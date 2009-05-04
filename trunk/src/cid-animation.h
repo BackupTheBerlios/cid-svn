@@ -11,9 +11,13 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkscreen.h>
-#include <pthread.h>
+
+//#include <pthread.h>
+
 
 #include "cid-struct.h"
+
+#define CID_REDRAW gtk_widget_queue_draw(cid->cWindow);
 
 /**
  * Fonction appelee au focus
@@ -33,7 +37,7 @@ void cid_animation (AnimationType iAnim);
 /**
  * Fonction permettant de lancer une animation threadée
  */
-gboolean cid_threaded_animation (gpointer *data);
+void cid_threaded_animation (AnimationType iAnim, gint iDelay);
 
 G_END_DECLS
 #endif

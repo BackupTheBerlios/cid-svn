@@ -6,8 +6,8 @@
    *                    --------------------------------
    *
 */
-#ifndef __CID_GTK__
-#define  __CID_GTK__
+#ifndef __CID_DRAW__
+#define  __CID_DRAW__
 
 #include <gtk/gtk.h>
 #include <gdk/gdkscreen.h>
@@ -16,6 +16,9 @@
 //#include <librsvg/rsvg-cairo.h>
 
 G_BEGIN_DECLS
+
+static gchar *STATE_SYMBOL[] = {"play","pause","next","prev"};
+static gchar *STATE_COLOR[]  = {"white","yellow","red"};
 
 /**
  * affiche l'image dont le chemin
@@ -85,6 +88,11 @@ void cid_draw_window (GtkWidget *widget, GdkEventExpose *event, gpointer *userda
  * On dessine l'etat du lecteur
  */
 void cid_set_state_icon (void);
+
+/**
+ * Permet de charger tous les symboles de control du lecteur
+ */
+void cid_load_symbols (void);
 
 G_END_DECLS
 #endif

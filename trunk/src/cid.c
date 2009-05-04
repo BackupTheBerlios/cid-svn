@@ -46,83 +46,79 @@ CidMainContainer *cid;
 
 static gchar *cLaunchCommand = NULL;
 
-void cid_init (CidMainContainer *pCid) {	
-	
-	pCid->pVerbosity=NULL;
-	
-	pCid->bTesting=FALSE;
-	
-	pCid->iCheckIter=0;
-	
-	pCid->gColorSize=0;
-	
-	pCid->dAngle=0;
-	
-	pCid->iCurrentlyDrawing=0;
-	
-	pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
-	
-	pCid->iExtraSize = 16;
-	
-	pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
-	
-	pCid->pKeyFile = NULL;
+void cid_init (CidMainContainer *pCid) {    
+    
+    pCid->pVerbosity = NULL;
+    
+    pCid->bTesting = FALSE;
+    
+    pCid->bShowAbove = TRUE;
+    
+    pCid->dAngle = 0;
+    
+    pCid->iCurrentlyDrawing = 0;
+    
+    pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+    
+    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
+    
+    pCid->pKeyFile = NULL;
 }
 
 /* Methode appelée pour relancer cid en cas de plantage */
 void cid_intercept_signal (int signal) {
-	cid_warning ("Attention : cid has crashed (sig %d).\nIt will be restarted now.\n", signal);
-	cid_sortie (CID_EXIT_ERROR);
-	execl ("/bin/sh", "/bin/sh", "-c", cLaunchCommand, NULL);  // on ne revient pas de cette fonction.
-	cid_error ("Sorry, couldn't restart cid");
+    cid_warning ("Attention : cid has crashed (sig %d).\nIt will be restarted now.\n", signal);
+    execl ("/bin/sh", "/bin/sh", "-c", cLaunchCommand, NULL);  // on ne revient pas de cette fonction.
+    cid_error ("Sorry, couldn't restart cid");
+    cid_sortie (CID_EXIT_ERROR);
 }
 
 /* Methode initialisant les signaux à intercepter */
 void cid_set_signal_interception (void) {
-	signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
-	signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
-	signal (SIGILL, cid_intercept_signal);  // Illegal instruction
-	//signal (SIGABRT, cid_intercept_signal);  // Abort
+    signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
+    signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
+    signal (SIGILL, cid_intercept_signal);  // Illegal instruction
+    //signal (SIGABRT, cid_intercept_signal);  // Abort
 }
 
 /* Fonction principale */
 
-int main ( int argc, char **argv ) {		
+int main ( int argc, char **argv ) {        
 
-	cid = g_new0(CidMainContainer,1);
-	
-	int i;
-	GString *sCommandString = g_string_new (argv[0]);
-	for (i = 1; i < argc; i ++)
-	{
-		g_string_append_printf (sCommandString, " %s", argv[i]);
-	}
-	g_string_append_printf (sCommandString, " -s");
-	cLaunchCommand = sCommandString->str;
-	g_string_free (sCommandString, FALSE);
-	
-	cid_log_set_level(0);
-	
-	cid_init(cid);
-	
-	cid_set_signal_interception ();
-	
-	cid_read_parameters (argc,argv);
+    cid = g_new0(CidMainContainer,1);
+    
+    int i;
+    GString *sCommandString = g_string_new (argv[0]);
+    for (i = 1; i < argc; i ++)
+    {
+        g_string_append_printf (sCommandString, " %s", argv[i]);
+    }
+    g_string_append_printf (sCommandString, " -s");
+    cLaunchCommand = sCommandString->str;
+    g_string_free (sCommandString, FALSE);
+    
+    cid_log_set_level(0);
+    
+    cid_init(cid);
+    
+    cid_set_signal_interception ();
+    
+    cid_read_parameters (argc,argv);
 
-	// On internationalise l'appli.
-	bindtextdomain (CID_GETTEXT_PACKAGE, CID_LOCALE_DIR);
-	bind_textdomain_codeset (CID_GETTEXT_PACKAGE, "UTF-8");
-	textdomain (CID_GETTEXT_PACKAGE);
-	
-	cid_read_config (cid->pConfFile, NULL);
-	cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
-	
-	if (!g_thread_supported ()){ g_thread_init(NULL); }
+    // On internationalise l'appli.
+    bindtextdomain (CID_GETTEXT_PACKAGE, CID_LOCALE_DIR);
+    bind_textdomain_codeset (CID_GETTEXT_PACKAGE, "UTF-8");
+    textdomain (CID_GETTEXT_PACKAGE);
+    
+    cid_read_config (cid->pConfFile, NULL);
+    cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
+    
+    if (!g_thread_supported ()){ g_thread_init(NULL); }
     gdk_threads_init();
-	
-	cid_display_init (&argc,&argv);
+    
+    cid_display_init (&argc,&argv);
 
-	return CID_EXIT_SUCCESS;
-	
+    return CID_EXIT_SUCCESS;
+    
 }
 
