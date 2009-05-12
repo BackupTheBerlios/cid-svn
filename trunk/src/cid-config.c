@@ -15,17 +15,19 @@
 #include "cid-utilities.h"
 #include "cid-conf-panel-factory.h"
 #include "cid-callbacks.h"
+#include "cid-panel-callbacks.h"
 
 extern CidMainContainer *cid;
 
 static gint iNbRead=0;
 gboolean bChangedDesktop;
+static gboolean bUnvalidKey;
 PlayerIndice iPlayerChanged;
 SymbolColor iSymbolChanged;
 
 void cid_check_file (const gchar *f) {
     gchar *cCommand=NULL;
-    gchar *cFileName = cid->bTesting && !cid->bDevMode ? g_strdup(SVN_CONF_FILE) : g_strdup(CID_CONFIG_FILE);
+    gchar *cFileName = g_strdup(CID_CONFIG_FILE);
     if (!g_file_test (f, G_FILE_TEST_EXISTS)) {
         cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
         system (cCommand);
@@ -36,25 +38,24 @@ void cid_check_file (const gchar *f) {
                                         g_getenv("HOME"),
                                         OLD_CONFIG_FILE,
                                         g_getenv("HOME"),
-                                        cFileName);
+                                        CID_CONFIG_FILE);
         else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
             cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
                                         g_getenv("HOME"),
                                         OLD_CONFIG_FILE,
                                         g_getenv("HOME"),
-                                        cFileName);
+                                        CID_CONFIG_FILE);
         else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),cFileName), G_FILE_TEST_EXISTS))
             cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
                                         g_getenv("HOME"),
-                                        cFileName,
+                                        CID_CONFIG_FILE,
                                         g_getenv("HOME"),
-                                        cFileName);
+                                        CID_CONFIG_FILE);
         else 
             cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
         cid_info ("Commande: %s\n", cCommand);
         system (cCommand);
         g_free (cCommand);
-        g_free (cFileName);
     }
 }
 
@@ -65,18 +66,16 @@ gboolean cid_check_conf_file_version (const gchar *f) {
     f1 = fopen ((const char *)g_strdup_printf("%s/%s",CID_DATA_DIR, CID_CONFIG_FILE),"r");
     f2 = fopen ((const char *)f,"r");
     
-    if (!fgets(line_f1,80,f1))
-        cid_exit (3,"couldn't read conf file, try to delete it");
-    if (!fgets(line_f2,80,f2))
+    if (!fgets(line_f1,80,f1) || !fgets(line_f2,80,f2))
         cid_exit (3,"couldn't read conf file, try to delete it");
     
     fclose (f1);
     fclose (f2);
     
-    cid_info ("line_f1 %s\nline_f2 %s\n",line_f1,line_f2);
+    cid_message ("line_f1 %s / line_f2 %s\n",line_f1,line_f2);
         
-    if (strcmp(line_f1,line_f2)!=0) {
-        cid_info ("bad file version, building a new one\n");
+    if (strcmp(line_f1,line_f2)!=0 || bUnvalidKey) {
+        cid_warning ("bad file version, building a new one\n");
         cCommand = g_strdup_printf("rm -rf %s > /dev/null",f);
         system (cCommand);
         g_free (cCommand);
@@ -146,7 +145,7 @@ gboolean cid_load_key_file(const gchar *cFile) {
 
     /* Load the GKeyFile from keyfile.conf or return. */
     if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) {
-        g_error (error->message);
+        cid_warning (error->message);
         return FALSE;
     }
     return TRUE;
@@ -160,6 +159,8 @@ gboolean cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *c
     GError *error = NULL;
     gboolean bGet = g_key_file_get_boolean (pKeyFile, cGroup, cKey, &error);
     if (error != NULL) {
+        bUnvalidKey = TRUE;
+        cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
         error = NULL;
         bGet = bDefault;
@@ -171,6 +172,8 @@ gchar *cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey
     GError *error = NULL;
     gchar *cGet = g_key_file_get_string (pKeyFile, cGroup, cKey, &error);
     if (error != NULL && bDefault) {
+        bUnvalidKey = TRUE;
+        cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
         error = NULL;
         cGet = cDefault;
@@ -189,6 +192,8 @@ gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbo
     GError *error = NULL;
     gint iGet = g_key_file_get_integer (pKeyFile, cGroup, cKey, &error);
     if (error != NULL && bDefault) {
+        bUnvalidKey = TRUE;
+        cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
         error = NULL;
         iGet = iDefault;
@@ -198,25 +203,40 @@ gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbo
     return iGet;
 }
 
+void cid_free_and_debug_error (GError **error) {
+    if (*error != NULL) {
+        bUnvalidKey = TRUE;
+        cid_warning("Unable to find key\n=> %s",(*error)->message);
+        g_error_free(*error);
+        *error = NULL;
+    }
+}
+
 void cid_read_key_file (const gchar *f) {   
     if (!cid_load_key_file(f))
         cid_exit(CID_ERROR_READING_FILE,"Key File error");
-        
+
     bChangedDesktop = cid->bAllDesktop;
     iPlayerChanged  = cid->iPlayer;
     iSymbolChanged  = cid->iSymbolColor;
+
+    GError *error = NULL;
+    bUnvalidKey = FALSE;
     
     // [System] configuration
     cid->iPlayer         = CID_CONFIG_GET_INTEGER ("System", "PLAYER");
-    cid->iInter          = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("System", "INTER", 5) * 1000;
+    cid->iInter          = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("System", "INTER", 5) SECONDES;
     cid->bMonitorPlayer  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "MONITOR", TRUE);
     cid->bPlayerState    = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "STATE", TRUE);
     cid->bDisplayTitle   = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "TITLE", TRUE);
     cid->iSymbolColor    = CID_CONFIG_GET_INTEGER ("System", "SYMBOL_COLOR");
     cid->bDisplayControl = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("System", "CONTROLS", TRUE);
-    cid->dPoliceSize     = g_key_file_get_double  (cid->pKeyFile, "System", "POLICE_SIZE", NULL);
-    cid->dPoliceColor    = g_key_file_get_double_list (cid->pKeyFile, "System", "POLICE_COLOR", &cid->gPlainTextSize, NULL);
-    cid->dOutlineTextColor = g_key_file_get_double_list (cid->pKeyFile, "System", "OUTLINE_COLOR", &cid->gOutlineTextSize, NULL);
+    cid->dPoliceSize     = g_key_file_get_double  (cid->pKeyFile, "System", "POLICE_SIZE", &error);
+    cid_free_and_debug_error(&error);
+    cid->dPoliceColor    = g_key_file_get_double_list (cid->pKeyFile, "System", "POLICE_COLOR", &cid->gPlainTextSize, &error);
+    cid_free_and_debug_error(&error);
+    cid->dOutlineTextColor = g_key_file_get_double_list (cid->pKeyFile, "System", "OUTLINE_COLOR", &cid->gOutlineTextSize, &error);
+    cid_free_and_debug_error(&error);
 
     // [Options] configuration
     cid->bHide           = CID_CONFIG_GET_BOOLEAN ("Options", "HIDE");
@@ -227,30 +247,34 @@ void cid_read_key_file (const gchar *f) {
     cid->bDownload       = CID_CONFIG_GET_BOOLEAN ("Options", "DOWNLOAD");
     cid->iImageSize      = CID_CONFIG_GET_INTEGER ("Options", "D_SIZE");
     cid->iTimeToWait     = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("Options", "DELAY", 5);
-    cid->bUnstable       = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "B_UNSTABLE", TRUE);
+    cid->bUnstable       = cid->bTesting && CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "B_UNSTABLE", TRUE);
     
     // [Behaviour] configuration
     cid->iPosX          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_X");
     cid->iPosY          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_Y");    
     cid->iWidth         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_X", 150, 175);
     cid->iHeight        = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_Y", 150, 175);
-    cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", NULL);
-    cid->dColor         = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "COLOR", &cid->gColorSize, NULL);
-    cid->dFlyingColor   = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "FLYING_COLOR", &cid->gFlyingColorSize, NULL);
+    cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", &error);
+    cid_free_and_debug_error(&error);
+    cid->dColor         = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "COLOR", &cid->gColorSize, &error);
+    cid_free_and_debug_error(&error);
+    cid->dFlyingColor   = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "FLYING_COLOR", &cid->gFlyingColorSize, &error);
+    cid_free_and_debug_error(&error);
     cid->bKeepCorners   = CID_CONFIG_GET_BOOLEAN ("Behaviour", "KEEP_CORNERS");
     cid->bAllDesktop    = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "ALL_DESKTOP", TRUE);
     cid->bLockPosition  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "LOCK", TRUE);
     cid->bMask          = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "MASK", TRUE);
     
-    cid->dRed            = cid->dColor[0];
-    cid->dGreen          = cid->dColor[1];
-    cid->dBlue           = cid->dColor[2];
-    cid->dAlpha          = cid->dColor[3];
-    cid->dFocusVariation = cid->dFlyingColor[3]>cid->dAlpha ? +.05 : -.05;
-    cid->iExtraSize      = (cid->iHeight + cid->iWidth)/20;
-    cid->iPrevNextSize   = cid->iExtraSize * 2;
-    cid->iPlayPauseSize  = cid->iExtraSize * 3;
-    
+    if (!bUnvalidKey) {
+        cid->dRed            = cid->dColor[0];
+        cid->dGreen          = cid->dColor[1];
+        cid->dBlue           = cid->dColor[2];
+        cid->dAlpha          = cid->dColor[3];
+        cid->dFocusVariation = cid->dFlyingColor[3]>cid->dAlpha ? +.05 : -.05;
+        cid->iExtraSize      = (cid->iHeight + cid->iWidth)/20;
+        cid->iPrevNextSize   = cid->iExtraSize * 2;
+        cid->iPlayPauseSize  = cid->iExtraSize * 3;
+    }
     
     cid_key_file_free();
 }
@@ -352,132 +376,5 @@ void cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath) {
         cid_warning ("Error while writing data : %s", erreur->message);
         g_error_free (erreur);
         return ;
-    }
-}
-
-void cid_update_keyfile_from_widget_list (GKeyFile *pKeyFile, GSList *pWidgetList) {
-    g_slist_foreach (pWidgetList, (GFunc) _cid_get_each_widget_value, pKeyFile);
-}
-
-void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
-    gchar *cGroupName = data[0];
-    gchar *cKeyName = data[1];
-    GSList *pSubWidgetList = data[2];
-    GSList *pList;
-    gsize i = 0, iNbElements = g_slist_length (pSubWidgetList);
-    GtkWidget *pOneWidget = pSubWidgetList->data;
-
-    if (GTK_IS_CHECK_BUTTON (pOneWidget))
-    {
-        gboolean *tBooleanValues = g_new0 (gboolean, iNbElements);
-        for (pList = pSubWidgetList; pList != NULL; pList = pList->next)
-        {
-            pOneWidget = pList->data;
-            tBooleanValues[i] = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pOneWidget));
-            i ++;
-        }
-        if (iNbElements > 1)
-            g_key_file_set_boolean_list (pKeyFile, cGroupName, cKeyName, tBooleanValues, iNbElements);
-        else
-            g_key_file_set_boolean (pKeyFile, cGroupName, cKeyName, tBooleanValues[0]);
-        g_free (tBooleanValues);
-    }
-    else if (GTK_IS_SPIN_BUTTON (pOneWidget) || GTK_IS_HSCALE (pOneWidget))
-    {
-        gboolean bIsSpin = GTK_IS_SPIN_BUTTON (pOneWidget);
-        
-        if ((bIsSpin && gtk_spin_button_get_digits (GTK_SPIN_BUTTON (pOneWidget)) == 0) || (! bIsSpin && gtk_scale_get_digits (GTK_SCALE (pOneWidget)) == 0))
-        {
-            int *tIntegerValues = g_new0 (int, iNbElements);
-            for (pList = pSubWidgetList; pList != NULL; pList = pList->next)
-            {
-                pOneWidget = pList->data;
-                tIntegerValues[i] = (bIsSpin ? gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pOneWidget)) : gtk_range_get_value (GTK_RANGE (pOneWidget)));
-                i ++;
-            }
-            if (iNbElements > 1)
-                g_key_file_set_integer_list (pKeyFile, cGroupName, cKeyName, tIntegerValues, iNbElements);
-            else
-                g_key_file_set_integer (pKeyFile, cGroupName, cKeyName, tIntegerValues[0]);
-            g_free (tIntegerValues);
-        }
-        else
-        {
-            double *tDoubleValues = g_new0 (double, iNbElements);
-            for (pList = pSubWidgetList; pList != NULL; pList = pList->next)
-            {
-                pOneWidget = pList->data;
-                tDoubleValues[i] = (bIsSpin ? gtk_spin_button_get_value (GTK_SPIN_BUTTON (pOneWidget)) : gtk_range_get_value (GTK_RANGE (pOneWidget)));
-                i ++;
-            }
-            if (iNbElements > 1)
-                g_key_file_set_double_list (pKeyFile, cGroupName, cKeyName, tDoubleValues, iNbElements);
-            else
-                g_key_file_set_double (pKeyFile, cGroupName, cKeyName, tDoubleValues[0]);
-            g_free (tDoubleValues);
-        }
-    }
-    else if (GTK_IS_COMBO_BOX (pOneWidget))
-    {
-        GtkTreeIter iter;
-        gchar *cValue =  NULL;
-        if (GTK_IS_COMBO_BOX_ENTRY (pOneWidget))
-        {
-            cValue = gtk_combo_box_get_active_text (GTK_COMBO_BOX (pOneWidget));
-        }
-        else if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (pOneWidget), &iter))
-        {
-            GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (pOneWidget));
-            if (model != NULL)
-                gtk_tree_model_get (model, &iter, CID_MODEL_RESULT, &cValue, -1);
-        }
-        g_key_file_set_string (pKeyFile, cGroupName, cKeyName, (cValue != NULL ? cValue : "\0"));
-        g_free (cValue);
-    }
-    else if (GTK_IS_ENTRY (pOneWidget))
-    {
-        const gchar *cValue = gtk_entry_get_text (GTK_ENTRY (pOneWidget));
-        const gchar* const * cPossibleLocales = g_get_language_names ();
-        gchar *cKeyNameFull, *cTranslatedValue;
-        while (cPossibleLocales[i] != NULL)  // g_key_file_set_locale_string ne marche pas avec une locale NULL comme le fait 'g_key_file_get_locale_string', il faut donc le faire a la main !
-        {
-            cKeyNameFull = g_strdup_printf ("%s[%s]", cKeyName, cPossibleLocales[i]);
-            cTranslatedValue = g_key_file_get_string (pKeyFile, cGroupName, cKeyNameFull, NULL);
-            g_free (cKeyNameFull);
-            if (cTranslatedValue != NULL && strcmp (cTranslatedValue, "") != 0)
-                {
-                g_free (cTranslatedValue);
-                break;
-                }
-            g_free (cTranslatedValue);
-            i ++;
-        }
-        if (cPossibleLocales[i] != NULL)
-            g_key_file_set_locale_string (pKeyFile, cGroupName, cKeyName, cPossibleLocales[i], (cValue!=NULL ? cValue : "\0"));
-        else
-            g_key_file_set_string (pKeyFile, cGroupName, cKeyName, (cValue!=NULL ? cValue : "\0"));
-    }
-    else if (GTK_IS_TREE_VIEW (pOneWidget))
-    {
-        GtkTreeModel *pModel = gtk_tree_view_get_model (GTK_TREE_VIEW (pOneWidget));
-        GSList *pActiveElementList = NULL;
-        gtk_tree_model_foreach (GTK_TREE_MODEL (pModel), (GtkTreeModelForeachFunc) _cid_get_active_elements, &pActiveElementList);
-
-        iNbElements = g_slist_length (pActiveElementList);
-        gchar **tStringValues = g_new0 (gchar *, iNbElements + 1);
-
-        i = 0;
-        GSList * pListElement;
-        for (pListElement = pActiveElementList; pListElement != NULL; pListElement = pListElement->next)
-        {
-            tStringValues[i] = pListElement->data;
-            i ++;
-        }
-        if (iNbElements > 1)
-            g_key_file_set_string_list (pKeyFile, cGroupName, cKeyName, (const gchar * const *)tStringValues, iNbElements);
-        else
-            g_key_file_set_string (pKeyFile, cGroupName, cKeyName, (tStringValues[0] != NULL ? tStringValues[0] : ""));
-        g_slist_free (pActiveElementList);  // ses donnees sont dans 'tStringValues' et seront donc liberees avec.
-        g_strfreev (tStringValues);
     }
 }

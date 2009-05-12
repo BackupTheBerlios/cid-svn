@@ -39,11 +39,7 @@ gboolean amarok_2_dbus_connect_to_bus (void) {
     g_type_init ();
     if (dbus_is_enabled ()) {
         // On se connecte au bus org.kde.amarok /Player org.freedesktop.MediaPlayer
-        dbus_proxy_player = create_new_session_proxy (
-            "org.kde.amarok",
-            "/Player",
-            "org.freedesktop.MediaPlayer"
-        );
+        dbus_proxy_player = (DBusGProxy *) create_new_session_proxy ("org.kde.amarok","/Player","org.freedesktop.MediaPlayer");
         
         // On s'abonne aux signaux
         dbus_g_proxy_add_signal(dbus_proxy_player, "TrackChange",
@@ -277,7 +273,7 @@ void _previous_amarok_2 (void) {
 }
 
 void cid_build_amarok_2_menu (void) {
-    cid->pMonitorList->p_fPlayPause = (CidControlFunction) _playPause_amarok_2;
-    cid->pMonitorList->p_fNext = (CidControlFunction) _next_amarok_2;
-    cid->pMonitorList->p_fPrevious = (CidControlFunction) _previous_amarok_2;
+    cid->pMonitorList->p_fPlayPause = _playPause_amarok_2;
+    cid->pMonitorList->p_fNext = _next_amarok_2;
+    cid->pMonitorList->p_fPrevious = _previous_amarok_2;
 }

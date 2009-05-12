@@ -328,7 +328,7 @@ void _previous_rhythmbox (void) {
 }
 
 void cid_build_rhythmbox_menu (void) {
-    cid->pMonitorList->p_fPlayPause = &_playPause_rhythmbox;
-    cid->pMonitorList->p_fNext = &_next_rhythmbox;
-    cid->pMonitorList->p_fPrevious = &_previous_rhythmbox;
+    cid->pMonitorList->p_fPlayPause = _playPause_rhythmbox;
+    cid->pMonitorList->p_fNext = _next_rhythmbox;
+    cid->pMonitorList->p_fPrevious = _previous_rhythmbox;
 }

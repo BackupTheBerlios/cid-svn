@@ -14,6 +14,7 @@ cid_CFLAGS = \
     -DCID_LOCALE_DIR=\""$(datadir)/locale"\"\
     -DCID_GETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"\
     -W \
+    -Werror \
     -fno-builtin \
     -g  
 
@@ -52,6 +53,8 @@ cid_SOURCES = \
     cid-menu-factory.h \
     cid-messages.c \
     cid-messages.h \
+    cid-panel-callbacks.c \
+    cid-panel-callbacks.h \
     cid-rhythmbox.c \
     cid-rhythmbox.h \
     cid-utilities.c \
@@ -88,6 +91,7 @@ cidsubinclude_HEADERS = \
     cid-exaile.h \
     cid-menu-factory.h \
     cid-messages.h \
+    cid-panel-callbacks.h \
     cid-rhythmbox.h \
     cid-utilities.h 
 

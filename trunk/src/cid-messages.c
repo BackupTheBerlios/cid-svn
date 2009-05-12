@@ -59,7 +59,7 @@ void cid_log_location(const GLogLevelFlags loglevel,
 
   if (loglevel > gLogLevel)
     return;
-  g_print(_cid_log_level_to_string(loglevel));
+  g_print("%s",_cid_log_level_to_string(loglevel));
   g_print("\033[0;37m(%s:%s:%d) \033[%cm \n  ", file, func, line, s_iLogColor);
   va_start(args, format);
   g_logv(G_LOG_DOMAIN, loglevel, format, args);

@@ -106,7 +106,7 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
     gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
     
     gchar *cCommand = g_strdup_printf ("rm %s", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
-    system (cCommand);
+    if (!system (cCommand)) return FALSE;
     g_free (cCommand);
     cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cFileToDownload, cTmpFilePath, cTmpFilePath, cTmpFilePath);
     cid_debug ("%s\n",cCommand);
@@ -127,7 +127,7 @@ gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
     bCurrentlyDownloading = TRUE;
     g_free (cCommand);
     cCommand = g_strdup_printf ("rm %s", DEFAULT_XML_LOCATION);
-    system (cCommand);
+    if (!system (cCommand)) return FALSE;
     g_free (cCommand);
     return TRUE;
 }

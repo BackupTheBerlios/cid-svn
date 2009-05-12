@@ -12,10 +12,14 @@
 #include <locale.h>
 #include <libintl.h>
 #include <gtk/gtk.h>
+#include <ctype.h>
 
 G_BEGIN_DECLS
 
 #define _(string) gettext (string)
+#define SECONDES * 1000
+#define MINUTES * 60
+#define HEURES * 60
 
 /* Alias pour récupérer l'URI de l'image par défaut */
 #define DEFAULT_IMAGE cid->pDefaultImage
@@ -25,6 +29,13 @@ G_BEGIN_DECLS
 #define SVN_CONF_FILE "cid-svn.conf"
 
 #define cid_launch_command(cCommand,...) cid_launch_command_full(cCommand, NULL, ##__VA_ARGS__)
+
+/**
+ * converti une chaine en son équivalent MAJUSCULE
+ * @param cSrc chaine source
+ * @return la chaine 'uppee'
+ */
+gchar *cid_toupper (gchar *cSrc);
 
 /**
  * Permet de lancer une commande
@@ -40,13 +51,6 @@ gboolean cid_launch_command_full (const gchar *cCommandFormat, gchar *cWorkingDi
  * @return code de retournant
  */
 int cid_sortie(int code);
-
-/**
- * évalue le lecteur séléctionné
- * @param nom du lecteur
- * @return code du lecteur
- */
-int cid_player_evaluation (gchar *player);
 
 /**
  * lit les arguments du programme

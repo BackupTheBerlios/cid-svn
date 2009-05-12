@@ -21,7 +21,7 @@ gboolean cid_fade_in_out (void *ptr) {
     cid->iCurrentlyDrawing = 1;
     cid->bAnimation = TRUE;
     
-    if (cid->dFadeInOutAlpha > 1)
+    if (cid->dFadeInOutAlpha > .99)
         cid->dFadeInOutAlpha = 0;
         
     cid->dFadeInOutAlpha += .01;
@@ -30,7 +30,7 @@ gboolean cid_fade_in_out (void *ptr) {
     
     cid->iCurrentlyDrawing = 0;
     
-    cid->bAnimation = cid->dFadeInOutAlpha < 1;
+    cid->bAnimation = cid->dFadeInOutAlpha < .99;
     if (!cid->bAnimation)
         cid_stop_measure_timer(pMeasureTimerAnimation);
     return cid->bAnimation;

@@ -35,6 +35,22 @@ void cid_interrupt (int signal);
 void on_clic (GtkWidget *p_widget, GdkEventButton* pButton);
 
 /**
+ * Fonction executee lors d'un drog'n'drop
+ * @param wgt widget that received datas
+ * @param seldata dropped data
+ */
+void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x, int y,
+                        GtkSelectionData *seldata, guint info, guint time,
+                        gpointer userdata);
+
+/**
+ * Fonction executée lors du survol
+ * @param p_widget objet survole
+ * @param event evenement
+ */                        
+void on_motion (GtkWidget *widget, GdkEventMotion *event);
+
+/**
  * Fonction executée pour générer la page "À propos"
  * @param pMenuItem element déclencheur
  * @param data non utilisé
@@ -56,13 +72,6 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
  */
 void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data);
 
-/**
- * Fonction executée par le panneau de configuration
- * @param pDialog element déclencheur
- * @param action action sur la configuration
- * @param user_data données modifiées
- */
-void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data);
 
 /**
  * Vérifie si l'image à afficher existe
@@ -76,46 +85,8 @@ gboolean _check_cover_is_present (gpointer data);
  */
 gboolean _cid_proceed_download_cover (gpointer p);
 
-/******************************************************************************************************\
-|*                  Fonctions necessaires à la génération du conf panel                               *|
-\******************************************************************************************************/ 
-void _cid_set_color (GtkColorButton *pColorButton, GSList *pWidgetList);
-
-void _cid_get_current_color (GtkColorButton *pColorButton, GSList *pWidgetList);
-
-gboolean _cid_find_iter_from_name (GtkListStore *pModele, gchar *cName, GtkTreeIter *iter);
-
-gboolean _cid_test_one_name (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer *data);
-
-void _cid_go_up (GtkButton *button, GtkTreeView *pTreeView);
-
-void _cid_go_down (GtkButton *button, GtkTreeView *pTreeView);
-
-void _cid_add (GtkButton *button, gpointer *data);
-
-void _cid_remove (GtkButton *button, gpointer *data);
-
-void _cid_pick_a_file (GtkButton *button, gpointer *data);
-
-void _cid_play_a_sound (GtkButton *button, gpointer *data);
-
-void _cid_set_font (GtkFontButton *widget, GtkEntry *pEntry);
-
-void _cid_key_grab_clicked (GtkButton *button, gpointer *data);
-
 gpointer _cid_launch_threaded (gchar *cCommand);
 
-void _cid_select_one_item_in_combo (GtkComboBox *widget, gpointer *data);
-
-void _cid_configure_renderer (GtkButton *button, gpointer *data);
-
-void _cid_configure (GtkButton *button, gpointer *data);
-
-gboolean _cid_select_one_item_in_tree (GtkTreeSelection * selection, GtkTreeModel * model, GtkTreePath * path, gboolean path_currently_selected, gpointer *data);
-
-gboolean _cid_get_active_elements (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, GSList **pStringList);
-
-void cid_free_generated_widget_list (GSList *pWidgetList);
 
 G_END_DECLS
 #endif

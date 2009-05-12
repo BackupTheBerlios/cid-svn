@@ -113,11 +113,11 @@ typedef enum {
  */
 struct _CidControlFunctionsList {
     // fonction 'play/pause'
-    CidControlFunction (*p_fPlayPause)(void);
+    CidControlFunction p_fPlayPause;
     // fonction 'next'
-    CidControlFunction (*p_fNext)(void);
+    CidControlFunction p_fNext;
     // fonction 'previous'
-    CidControlFunction (*p_fPrevious)(void);
+    CidControlFunction p_fPrevious;
 };
 
 /**

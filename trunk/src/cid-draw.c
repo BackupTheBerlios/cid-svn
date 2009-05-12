@@ -20,7 +20,7 @@ extern CidMainContainer *cid;
 
 static gboolean supports_alpha = FALSE;
 static gboolean g_bRoundedBottomCorner = FALSE;
-gboolean bFlyingButton;
+extern gboolean bFlyingButton;
 
 static gchar *cid_get_symbol_path (StateSymbol iState, SymbolColor iColor) {
     return g_strdup_printf("%s/%s-%s.png",cid->bDevMode ? "../data" : CID_DATA_DIR, STATE_SYMBOL[iState], STATE_COLOR[iColor]);
@@ -47,9 +47,9 @@ void cid_display_image(gchar *image) {
         cid->cSurface = cid_get_cairo_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
         musicData.cover_exist = FALSE;
         cid->iCheckIter = 0;
-        if (/*image != NULL && */musicData.iSidCheckCover == 0) {
+        if (musicData.iSidCheckCover == 0) {
             cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
-            musicData.iSidCheckCover = g_timeout_add (1000, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
+            musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
         }
     }
         
@@ -199,60 +199,6 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
     return pNewSurface;
 }
 
-void onDragDataReceived(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-                        GtkSelectionData *seldata, guint info, guint time,
-                        gpointer userdata) {
-    gchar *cReceivedData = (gchar *) seldata->data;
-    g_return_if_fail (cReceivedData != NULL);
-    int length = strlen (cReceivedData);
-    if (cReceivedData[length-1] == '\n')
-        cReceivedData[--length] = '\0';  // on vire le retour chariot final.
-    if (cReceivedData[length-1] == '\r')
-        cReceivedData[--length] = '\0';
-        
-    gchar **cReceivedDataList = g_strsplit(cReceivedData,"\n",0);
-    //g_free (cReceivedData);
-    
-    while (*cReceivedDataList != NULL) {
-        g_print (">>> %s\n",*cReceivedDataList);
-        cReceivedDataList++;
-    }
-        
-    //g_print("d&d >>> %s\n",cReceivedData);
-    //system (g_strdup_printf("nautilus %s &",cReceivedData));
-    //g_free (cReceivedDataList);
-    //g_free (cReceivedData);
-}
-
-
-void on_motion (GtkWidget *widget, GdkEventMotion *event) {
-    
-    cid->iCursorX = event->x;
-    cid->iCursorY = event->y;
-    
-    
-    if ((cid->iCursorX < cid->iPrevNextSize &&
-        cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
-        cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2)
-    ||
-        (cid->iCursorX > cid->iWidth - cid->iPrevNextSize &&
-        cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
-        cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2)
-    ||
-        (cid->iCursorX < (cid->iWidth + cid->iPlayPauseSize)/2 &&
-        cid->iCursorX > (cid->iWidth - cid->iPlayPauseSize)/2 &&
-        cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
-        cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2)) {
-        
-        gtk_widget_queue_draw(cid->cWindow);
-        bFlyingButton = TRUE;
-    } else if (bFlyingButton) {
-        bFlyingButton = FALSE;
-        gtk_widget_queue_draw(cid->cWindow);
-    }
-}
-
-
 /* Fonction qui créée la fenêtre, la déplace à la position
    voulue, et la dimensionne */
 void cid_create_main_window() {
@@ -314,7 +260,7 @@ void cid_create_main_window() {
     g_free (pTargetEntry);
     
     /* traitement du d'n'd */
-    g_signal_connect (G_OBJECT(cid->cWindow), "drag-data-received", G_CALLBACK(onDragDataReceived), NULL);
+    g_signal_connect (G_OBJECT(cid->cWindow), "drag-data-received", G_CALLBACK(on_dragNdrop_data_received), NULL);
     
     /* traitement des clics */
     g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
@@ -531,7 +477,7 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
     
     ///\_______ TESTING OPTION
     // si on lit de la musique et qu'on ne cache pas cid, on affiche le nom de la piste jouee
-    if (cid->bTesting && cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) {  
+    if (cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) {  
         cid_draw_text(cr);
     }
     
@@ -621,12 +567,6 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 }
 
 void cid_set_state_icon (void) {
-    //cairo_surface_destroy (cid->cState);
-    // On affiche une image selon l'etat
-    //if ( musicData.playing )
-    //    cid->cState = cid_get_cairo_image(cid_get_symbol_path(CID_PLAY,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
-    //else
-    //    cid->cState = cid_get_cairo_image(cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
     gtk_widget_queue_draw (cid->cWindow);
 }
 
@@ -802,9 +742,9 @@ cairo_surface_t *cid_create_surface_from_text_full (gchar *cText, cairo_t* pSour
 }
 
 void cid_run_with_player (void) {
-    /* On lance telle ou telle fonction selon le lecteur selectionne */
-    if (cid->iPlayer!=PLAYER_NONE)
+    if (cid->iPlayer != PLAYER_NONE)
         cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
+    /* On lance telle ou telle fonction selon le lecteur selectionne */
     switch (cid->iPlayer) {
         /* Amarok 1.4 */
         case PLAYER_AMAROK_1:
@@ -816,7 +756,7 @@ void cid_run_with_player (void) {
             cid_build_amarok_2_menu ();
             if (amarok_2_dbus_connect_to_bus()) {
                 cid_debug ("\ndbus connected\n");
-                cid_display_image(cid_amarok_2_cover());
+                cid_display_image((gchar *)cid_amarok_2_cover());
             } else {
                 cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
             }
@@ -827,7 +767,7 @@ void cid_run_with_player (void) {
             /* Initialisation de DBus */
             if (rhythmbox_dbus_connect_to_bus()) {
                 cid_debug ("\ndbus connected\n");
-                cid_display_image(cid_rhythmbox_cover());
+                cid_display_image((gchar *)cid_rhythmbox_cover());
             } else {
                 cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
             }

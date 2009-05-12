@@ -11,6 +11,7 @@
 #include "cid-conf-panel-factory.h"
 #include "cid-messages.h"
 #include "cid-callbacks.h"
+#include "cid-panel-callbacks.h"
 #include "cid-utilities.h"
 
 extern CidMainContainer *cid;
@@ -41,10 +42,10 @@ gboolean cid_edit_conf_file_with_panel (GtkWindow *pWindow, gchar *cConfFilePath
     return cid_edit_conf_file_core (pWindow, g_strdup (cConfFilePath), g_strdup (cTitle), iWindowWidth, iWindowHeight, iIdentifier, cPresentedGroup, pConfigFunc, cGettextDomain);
 }
 
-gboolean on_delete_main_gui (GtkWidget *pWidget, GdkEvent *event, GMainLoop *pBlockingLoop) {
-    g_print ("%s (%x)\n", __func__, pBlockingLoop);
+gboolean on_delete_main_gui (GMainLoop *pBlockingLoop) {
+    g_print ("%s (%x)\n", __func__, (unsigned int)pBlockingLoop);
     if (pBlockingLoop != NULL) {
-        g_print ("dialogue detruit, on sort de la boucle");
+        g_print ("dialogue detruit, on sort de la boucle\n");
         if (g_main_loop_is_running (pBlockingLoop))
             g_main_loop_quit (pBlockingLoop);
     }
@@ -80,7 +81,7 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
         
     gtk_window_present (GTK_WINDOW (s_pDialog));
     
-    gpointer *user_data = g_new (gpointer, 11);
+    gpointer *user_data = g_new (gpointer, 12);
     user_data[0] = pKeyFile;
     user_data[1] = pWidgetList;
     user_data[2] = cConfFilePath;
@@ -94,18 +95,17 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
     user_data[10] = pDataGarbage;
         
     g_signal_connect (s_pDialog, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
-    g_signal_connect (s_pDialog, "delete-event", G_CALLBACK (_cid_user_action_on_config), user_data);
-        
-    if (cid->bSafeMode)
-    {
+    
+    if (cid->bSafeMode) {
         cid->bBlockedWidowActive = TRUE;
         gtk_window_set_title (GTK_WINDOW (s_pDialog), _("< Maintenance mode >"));
         GMainLoop *pBlockingLoop = g_main_loop_new (NULL, FALSE);
         g_object_set_data (G_OBJECT (s_pDialog), "loop", pBlockingLoop);
+        user_data[11] = pBlockingLoop;
         g_signal_connect (s_pDialog,
             "delete-event",
-            G_CALLBACK (on_delete_main_gui),
-            pBlockingLoop);
+            G_CALLBACK (_cid_user_action_on_config),
+            user_data);
         
         g_print ("debut de boucle bloquante ...\n");
         GDK_THREADS_LEAVE ();
@@ -114,7 +114,9 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
         g_print ("fin de boucle bloquante\n");
         
         g_main_loop_unref (pBlockingLoop);
-    }   
+    } else {
+        g_signal_connect (s_pDialog, "delete-event", G_CALLBACK (_cid_user_action_on_config), user_data);
+    }
         
     return FALSE;
 }
@@ -155,7 +157,8 @@ GtkWidget *cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitl
     gpointer *pGroupKeyWidget;
     int i, j, k, iNbElements;
     int iNumPage=0, iPresentedNumPage=0;
-    char iElementType, iHiddenType;
+    char iElementType; 
+    char iHiddenType = 0;
     gboolean bIsAligned;
     gboolean bValue, *bValueList;
     gboolean bAddBackButton;

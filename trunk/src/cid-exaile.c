@@ -190,7 +190,7 @@ void _previous_exaile (void) {
 }
 
 void cid_build_exaile_menu (void) {
-    cid->pMonitorList->p_fPlayPause = (CidControlFunction) _playPause_exaile;
-    cid->pMonitorList->p_fNext = (CidControlFunction) _next_exaile;
-    cid->pMonitorList->p_fPrevious = (CidControlFunction) _previous_exaile;
+    cid->pMonitorList->p_fPlayPause = _playPause_exaile;
+    cid->pMonitorList->p_fNext = _next_exaile;
+    cid->pMonitorList->p_fPrevious = _previous_exaile;
 }

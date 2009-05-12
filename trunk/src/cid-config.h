@@ -90,10 +90,6 @@ void cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath);
  */
 gboolean cid_check_conf_file_version (const gchar *f);
 
-void cid_update_keyfile_from_widget_list (GKeyFile *pKeyFile, GSList *pWidgetList);
-
-void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile);
-
 /**
  * Permet de recharger la configuration lorsqu'on applique des changement via le GUI.
  */

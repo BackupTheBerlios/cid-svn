@@ -89,8 +89,7 @@ int main ( int argc, char **argv ) {
     
     int i;
     GString *sCommandString = g_string_new (argv[0]);
-    for (i = 1; i < argc; i ++)
-    {
+    for (i = 1; i < argc; i ++) {
         g_string_append_printf (sCommandString, " %s", argv[i]);
     }
     g_string_append_printf (sCommandString, " -s");
@@ -115,8 +114,10 @@ int main ( int argc, char **argv ) {
     
     if (!g_thread_supported ()){ g_thread_init(NULL); }
     gdk_threads_init();
-    
-    cid_display_init (&argc,&argv);
+
+    //\___ FIXME Pas bien :/
+//    cid_display_init (argc,argv);
+    cid_display_init (0,NULL);
 
     return CID_EXIT_SUCCESS;
     
