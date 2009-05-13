@@ -57,6 +57,7 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
     if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_REJECT || action == GTK_RESPONSE_NONE) {
         if (cid->bSafeMode && cid->bBlockedWidowActive) {
             cid->bBlockedWidowActive = FALSE;
+            cid->bSafeMode = FALSE;
             //g_signal_emit_by_name(GTK_OBJECT(pDialog),"delete-event");
             on_delete_main_gui(pBlockingLoop);
         }

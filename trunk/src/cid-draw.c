@@ -31,6 +31,14 @@ static gchar *cid_get_symbol_path (StateSymbol iState, SymbolColor iColor) {
 void cid_display_image(gchar *image) {
     cid_debug (" %s (%s);\n",__func__,image);
     
+    // On recupere l'ancienne image pour faire le fondu
+    if (cid->cPreviousSurface) {
+        cairo_surface_destroy (cid->cPreviousSurface);
+        cid->cPreviousSurface = NULL;
+    }
+    if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
+        cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
+        
     if (cid->cSurface) {
         cairo_surface_destroy (cid->cSurface);
         cid->cSurface = NULL;
@@ -38,6 +46,7 @@ void cid_display_image(gchar *image) {
 
     if (g_file_test (image, G_FILE_TEST_EXISTS)) {
         cid->cSurface = cid_get_cairo_image (image, cid->iWidth, cid->iHeight);
+        musicData.playing_cover = g_strdup(image);
         musicData.cover_exist = TRUE;
         if (musicData.iSidCheckCover != 0) {
             g_source_remove (musicData.iSidCheckCover);
@@ -52,14 +61,6 @@ void cid_display_image(gchar *image) {
             musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
         }
     }
-        
-    // On recupere l'ancienne image pour faire le fondu
-    if (cid->cPreviousSurface) {
-        cairo_surface_destroy (cid->cPreviousSurface);
-        cid->cPreviousSurface = NULL;
-    }
-    if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
-        cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
     
     gtk_widget_queue_draw (cid->cWindow);
 }
@@ -451,18 +452,21 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
         
 
         cairo_translate (cr, -cid->iWidth/2, -cid->iHeight/2);
-
+        
         // Si on utilise le fondu, et qu'on a un alpha <1 on dessine nos 2 surfaces :)
         if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT && cid->dFadeInOutAlpha < 1 && cid->bAnimation) {
             cairo_set_source_surface (cr, cid->cPreviousSurface, 0, 0);
             cairo_paint_with_alpha (cr, 1-cid->dFadeInOutAlpha);
+            
             cairo_set_source_surface (cr, cid->cSurface, 0, 0);
             cairo_paint_with_alpha (cr, cid->dFadeInOutAlpha);
+            
+            
         } else {
             cairo_set_source_surface (cr, cid->cSurface, 0, 0);
             cairo_paint (cr);
         }
-        cairo_restore (cr);
+        cairo_restore (cr); 
     }
     
     // Si on affiche l'etat du lecteur

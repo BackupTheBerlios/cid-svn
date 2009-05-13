@@ -20,10 +20,11 @@
 extern CidMainContainer *cid;
 
 static gint iNbRead=0;
-gboolean bChangedDesktop;
+static gboolean bChangedDesktop;
 static gboolean bUnvalidKey;
-PlayerIndice iPlayerChanged;
-SymbolColor iSymbolChanged;
+static PlayerIndice iPlayerChanged;
+static SymbolColor iSymbolChanged;
+static gint iOldWidth, iOldHeight;
 
 void cid_check_file (const gchar *f) {
     gchar *cCommand=NULL;
@@ -130,6 +131,12 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
             gtk_window_stick(GTK_WINDOW(cid->cWindow));
     }
     
+    // Enfin, si on redimenssionne, on recharge les images
+    if (cid->iWidth != iOldWidth || cid->iHeight != iOldHeight) {
+        cid_display_image (musicData.playing_cover);
+        cid_load_symbols();
+    }
+    
     gtk_widget_queue_draw (cid->cWindow);
     
     (void) pData;
@@ -219,6 +226,8 @@ void cid_read_key_file (const gchar *f) {
     bChangedDesktop = cid->bAllDesktop;
     iPlayerChanged  = cid->iPlayer;
     iSymbolChanged  = cid->iSymbolColor;
+    iOldWidth       = cid->iWidth;
+    iOldHeight      = cid->iHeight;
 
     GError *error = NULL;
     bUnvalidKey = FALSE;
@@ -252,8 +261,8 @@ void cid_read_key_file (const gchar *f) {
     // [Behaviour] configuration
     cid->iPosX          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_X");
     cid->iPosY          = CID_CONFIG_GET_INTEGER ("Behaviour", "GAP_Y");    
-    cid->iWidth         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_X", 150, 175);
-    cid->iHeight        = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_Y", 150, 175);
+    cid->iWidth         = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_X", 150, 1024);
+    cid->iHeight        = CID_CONFIG_GET_INTEGER_WITH_DEFAULT_AND_MAX ("Behaviour", "SIZE_Y", 150, 1024);
     cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", &error);
     cid_free_and_debug_error(&error);
     cid->dColor         = g_key_file_get_double_list (cid->pKeyFile, "Behaviour", "COLOR", &cid->gColorSize, &error);
@@ -264,6 +273,7 @@ void cid_read_key_file (const gchar *f) {
     cid->bAllDesktop    = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "ALL_DESKTOP", TRUE);
     cid->bLockPosition  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "LOCK", TRUE);
     cid->bMask          = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "MASK", TRUE);
+    cid->bShowAbove     = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "SWITCH_ABOVE", TRUE);
     
     if (!bUnvalidKey) {
         cid->dRed            = cid->dColor[0];
@@ -348,6 +358,7 @@ void cid_save_data () {
     g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "ALL_DESKTOP", cid->bAllDesktop);
     g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "LOCK", cid->bLockPosition);
     g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "MASK", cid->bMask);
+    g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "SWITCH_ABOVE", cid->bShowAbove);
 
     cid_write_keys_to_file (cid->pKeyFile, cid->pConfFile);
 }

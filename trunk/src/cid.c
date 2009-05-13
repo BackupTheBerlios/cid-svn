@@ -52,8 +52,6 @@ void cid_init (CidMainContainer *pCid) {
     
     pCid->bTesting = FALSE;
     
-    pCid->bShowAbove = TRUE;
-    
     pCid->dAngle = 0;
     
     pCid->iCurrentlyDrawing = 0;

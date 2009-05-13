@@ -21,11 +21,11 @@ GAP_X=0
 #{in pixels}
 GAP_Y=0
 
-#i[50;175] Width :
+#i[50;1024] Width :
 #{in pixels}
 SIZE_X=150
 
-#i[50;175] Height :
+#i[50;1024] Height :
 #{in pixels}
 SIZE_Y=150
 
@@ -36,7 +36,8 @@ ALL_DESKTOP=
 #{You can still move it with ALT + left_clic.}
 LOCK=
 
-
+#b Keep above on mouse hovering :
+SWITCH_ABOVE=
 
 
 #F+[Style;gtk-select-color]
@@ -80,8 +81,14 @@ INTER=5
 #{Contextual menu in right clic. Play/Pause by left clicking. Next by middle clicking.}
 MONITOR=
 
+#b Display the controls :
+CONTROLS=
+
 #b Give the play/pause status :
 STATE=
+
+#r[White;Yellow;Red] Status symbols color :
+SYMBOL_COLOR=
 
 
 #tX+[Display Title;gtk-select-color]
