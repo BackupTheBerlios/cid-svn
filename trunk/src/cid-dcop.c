@@ -13,15 +13,15 @@ static gchar *setMessage(const gchar *cCommand, gint iCode) {
     return g_strdup_printf(CID_DCOP_MESSAGES[iCode-1],cCommand);
 }
 
-static void setError (CIDError *error, gint iCode, const gchar *cCommand) {
-    if (error) {
-        error = g_new0(CIDError,1);
-        error->message = setMessage(cCommand,iCode);
-        error->code    = iCode;
-    }
+static void setError (CIDError **error, gint iCode, const gchar *cCommand) {
+    
+    *error = g_new0(CIDError,1);
+    (*error)->message = setMessage(cCommand,iCode);
+    (*error)->code    = iCode;
+    
 }
 
-gchar *cid_dcop_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, CIDError *error) {
+gchar *cid_dcop_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, CIDError **error) {
     FILE *pPipe = popen (cCommand,"r");
     if (!pPipe) {
         setError(error,CID_DCOP_UNREACHABLE, cCommand);
@@ -39,7 +39,7 @@ gchar *cid_dcop_get_string_with_error_full (const gchar *cCommand, gchar *cDefau
     return cRead;
 }
 
-gint cid_dcop_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDError *error) {
+gint cid_dcop_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDError **error) {
     FILE *pPipe = popen (cCommand,"r");
     if (!pPipe) {
         setError(error,CID_DCOP_UNREACHABLE, cCommand);
@@ -58,7 +58,7 @@ gint cid_dcop_get_int_with_error_full (const gchar *cCommand, gint iDefault, CID
     return iRet;
 }
 
-gboolean cid_dcop_get_boolean_with_error_full (const gchar *cCommand, gboolean bDefault, CIDError *error) {
+gboolean cid_dcop_get_boolean_with_error_full (const gchar *cCommand, gboolean bDefault, CIDError **error) {
     FILE *pPipe = popen (cCommand,"r");
     if (!pPipe) {
         setError(error,CID_DCOP_UNREACHABLE, cCommand);

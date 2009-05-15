@@ -19,7 +19,7 @@
 #include "cid-asynchrone.h"
 
 extern CidMainContainer *cid;
-extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML;
+extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML, bCurrentlyFocused;
 
 gboolean bFlyingButton;
 
@@ -60,12 +60,16 @@ void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
     // si on a un clic gauche, que le clic est maintenu, et qu'on se trouve dans la zone permettant le deplacement
     if (pButton->button == 1 && pButton->type == GDK_BUTTON_PRESS && pButton->x > cid->iWidth-cid->iExtraSize && pButton->y < cid->iExtraSize) { // clic gauche
         // si on ne verouille pas la position
-        if (!cid->bLockPosition)
+        if (!cid->bLockPosition) {
+            if (cid->bShowAbove)
+                gtk_window_set_keep_below(GTK_WINDOW (cid->cWindow), TRUE);
             gtk_window_begin_move_drag (GTK_WINDOW (gtk_widget_get_toplevel (p_widget)),
                                         pButton->button,
                                         pButton->x_root,
                                         pButton->y_root,
                                         pButton->time); // alors on se deplace
+        
+        }
     } else if (pButton->button == 1 && pButton->type == GDK_BUTTON_RELEASE) {
         // on relache un clic gauche, donc on lance la fonction 'play/pause'/'next'/'previous'
         if (cid->bMonitorPlayer && cid->iPlayer != PLAYER_NONE) {
@@ -301,7 +305,7 @@ gboolean _check_cover_is_present (gpointer data) {
             if (cid_measure_is_active(pMeasureTimer))
                 cid_free_measure_timer(pMeasureTimer);
         }
-        pMeasureTimer = cid_new_measure_timer (2000, NULL, NULL, (CidUpdateTimerFunc) _cid_proceed_download_cover, NULL);
+        pMeasureTimer = cid_new_measure_timer (2 SECONDES, NULL, NULL, (CidUpdateTimerFunc) _cid_proceed_download_cover, NULL);
         
         cid_launch_measure (pMeasureTimer);
         

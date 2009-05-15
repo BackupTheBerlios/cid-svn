@@ -98,7 +98,6 @@ gboolean cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, cons
     
     if (cid->bSafeMode) {
         cid->bBlockedWidowActive = TRUE;
-        gtk_window_set_title (GTK_WINDOW (s_pDialog), _("< Maintenance mode >"));
         GMainLoop *pBlockingLoop = g_main_loop_new (NULL, FALSE);
         g_object_set_data (G_OBJECT (s_pDialog), "loop", pBlockingLoop);
         user_data[11] = pBlockingLoop;

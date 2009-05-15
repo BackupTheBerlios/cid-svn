@@ -86,6 +86,9 @@ void cid_focus (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
     
     cid_info ("CID is currently focused %s.\n", bFocusIn ? "in" : "out");
     
+    if (cid->bShowAbove)
+        gtk_window_set_keep_below (GTK_WINDOW (cid->cWindow), !bFocusIn);
+    
     if (bFocusIn) {
         cid->bCurrentlyFlying = TRUE;
         // On change la couleur du fond par celle choisie
@@ -96,9 +99,6 @@ void cid_focus (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
         cid_animation(CID_FOCUS_IN);
     } else 
         cid_animation(CID_FOCUS_OUT);
-
-    if (cid->bShowAbove)
-        gtk_window_set_keep_below (GTK_WINDOW (cid->cWindow), !bFocusIn);
 }
 
 /* callback de rotation */

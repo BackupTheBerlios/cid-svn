@@ -25,21 +25,21 @@ struct _CIDError {
 /**
  * Lecture d'une chaine de caracteres sur un pipe
  */
-gchar *cid_dcop_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, CIDError *error);
+gchar *cid_dcop_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, CIDError **error);
 #define cid_dcop_get_string(cCommand) cid_dcop_get_string_with_error_full(cCommand,NULL,NULL)
 #define cid_dcop_get_string_full(cCommand,cDefault) cid_dcop_get_string_with_error_full(cCommand,cDefault,NULL)
 
 /**
  * Lecture d'un entier sur un pipe
  */
-gint cid_dcop_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDError *error);
+gint cid_dcop_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDError **error);
 #define cid_dcop_get_int(cCommand) cid_dcop_get_int_with_error_full(cCommand,-1,NULL)
 #define cid_dcop_get_int_full(cCommand,iDefault) cid_dcop_get_int_with_error_full(cCommand,iDefault,NULL)
 
 /**
  * Lecture d'un booleen sur un pipe
  */
-gboolean cid_dcop_get_boolean_with_error_full (const gchar *cCommand, gboolean bDefault, CIDError *error);
+gboolean cid_dcop_get_boolean_with_error_full (const gchar *cCommand, gboolean bDefault, CIDError **error);
 #define cid_dcop_get_boolean(cCommand) cid_dcop_get_boolean_with_error_full(cCommand,FALSE,NULL)
 #define cid_dcop_get_boolean_full(cCommand,bDefault) cid_dcop_get_boolean_with_error_full(cCommand,bDefault,NULL)
 

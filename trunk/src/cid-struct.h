@@ -25,6 +25,8 @@ typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
 
 typedef void (* CidControlFunction) (void);
 
+typedef void (* CidManagePlaylistFunction) (gchar *cSong);
+
 #define rhythmboxData musicData
 
 /**
@@ -118,6 +120,8 @@ struct _CidControlFunctionsList {
     CidControlFunction p_fNext;
     // fonction 'previous'
     CidControlFunction p_fPrevious;
+    // fonction d'ajout a la playlist
+    CidManagePlaylistFunction p_fAddToQueue;
 };
 
 /**

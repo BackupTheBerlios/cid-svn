@@ -24,7 +24,7 @@ gboolean run = FALSE;
 
 gboolean get_amarock_musicData () {
     CIDError *error = NULL;
-    gint state = cid_dcop_get_int_with_error_full("dcop amarok player status",-1,error);
+    gint state = cid_dcop_get_int_with_error_full("dcop amarok player status",-1,&error);
     //FILE *status = popen ("dcop amarok player status","r");
     //gchar gStatus[128];
     musicData.opening = TRUE;
@@ -36,7 +36,7 @@ gboolean get_amarock_musicData () {
     //    return FALSE;
     //}
     //if (!fgets (gStatus,128,status)) {
-    if (error && error->code == CID_DCOP_CANT_READ_PIPE) {
+    if (error) {
     //  cid_warning ("Couldn't get status");
         cid_warning (error->message);
         if (error->code == CID_DCOP_CANT_READ_PIPE) {
@@ -63,51 +63,20 @@ gboolean get_amarock_musicData () {
         cid_set_state_icon();
     
     
-    FILE *artist = popen ("dcop amarok player artist","r"), 
-         *album = popen ("dcop amarok player album","r"),
-         *title = popen ("dcop amarok player title","r"),
-         *uri = popen ("dcop amarok player encodedURL","r"),
-         *coverURI = popen ("dcop amarok player coverImage","r");
-    gchar gArtist[128], gAlbum[128], gTitle[128], gPlayingURI[256], gCoverURI[256];
-    if (!artist || !album || !title || !uri || !coverURI) {
-        pclose (artist);
-        pclose (album);
-        pclose (title);
-        pclose (uri);
-        pclose (coverURI);
-        cid_warning ("Couldn't get data");
-        return FALSE;
-    }
+    gchar *gArtist, *gAlbum, *gTitle, *gPlayingURI, *gCoverURI;
     
     
-    if (!fgets (gArtist,128,artist) || !fgets (gAlbum,128,album) || !fgets (gTitle,128,title) || !fgets (gPlayingURI,256,uri)) {
-        pclose (artist);
-        pclose (album);
-        pclose (title);
-        pclose (uri);
-        pclose (coverURI);
-        return FALSE;
-    }
+    gArtist = cid_dcop_get_string ("dcop amarok player artist");
+    gAlbum = cid_dcop_get_string ("dcop amarok player album");
+    gTitle = cid_dcop_get_string ("dcop amarok player title");
+    gPlayingURI = cid_dcop_get_string ("dcop amarok player encodedURL");
+    gCoverURI = cid_dcop_get_string ("dcop amarok player coverImage");
     
     g_free (musicData.playing_cover);
-    if (!fgets (gCoverURI,256,coverURI))
+    if (gCoverURI == NULL)
         musicData.playing_cover = g_strdup (DEFAULT_IMAGE);
-    else {
-        strtok (gCoverURI,"\n");
+    else 
         musicData.playing_cover = g_strdup (gCoverURI);
-    }
-    
-    pclose (artist);
-    pclose (album);
-    pclose (title);
-    pclose (uri);
-    pclose (coverURI);
-
-    strtok (gArtist,"\n");
-    strtok (gAlbum,"\n");
-    strtok (gTitle,"\n");
-    strtok (gPlayingURI,"\n");
-    //strtok (gStatus,"\n");
     
     if (musicData.playing_uri != NULL && strcmp (musicData.playing_uri,gPlayingURI)==0)
         return FALSE;
@@ -124,10 +93,10 @@ gboolean get_amarock_musicData () {
     
     
     //if (gStatus != NULL && (strcmp (gStatus,"1")==0 || strcmp (gStatus,"2")==0))
-    if (state == 1 || state == 2)
-        musicData.playing = TRUE;
-    else
-        musicData.playing = FALSE;
+    //if (state == 1 || state == 2)
+    //    musicData.playing = TRUE;
+    //else
+    //    musicData.playing = FALSE;
     
     run = TRUE;
     cid_info ("\nartist : %s\nalbum : %s\ntitle : %s\nsong uri : %s\ncover uri : %s\n",gArtist,gAlbum,gTitle,gPlayingURI,gCoverURI);

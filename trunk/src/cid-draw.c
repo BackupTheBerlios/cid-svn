@@ -46,7 +46,10 @@ void cid_display_image(gchar *image) {
 
     if (g_file_test (image, G_FILE_TEST_EXISTS)) {
         cid->cSurface = cid_get_cairo_image (image, cid->iWidth, cid->iHeight);
-        musicData.playing_cover = g_strdup(image);
+        if (musicData.playing_cover && strcmp(musicData.playing_cover,image)!=0) {
+            g_free(musicData.playing_cover);
+            musicData.playing_cover = g_strdup(image);
+        }
         musicData.cover_exist = TRUE;
         if (musicData.iSidCheckCover != 0) {
             g_source_remove (musicData.iSidCheckCover);
@@ -273,7 +276,6 @@ void cid_create_main_window() {
     cid_set_colormap (cid->cWindow, NULL, NULL);
     
     /* Chargement des dessins */
-    cid->cCross = cid_get_cairo_image(g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
     cid_load_symbols ();
     
     gtk_widget_show_all(cid->cWindow);
@@ -396,6 +398,8 @@ void cid_load_symbols (void) {
         cairo_surface_destroy (cid->cPlay_big);
     if (cid->cPause_big)
         cairo_surface_destroy (cid->cPause_big);
+    if (cid->cCross)
+        cairo_surface_destroy (cid->cCross);
     
     cid->cPlay      = cid_get_cairo_image(cid_get_symbol_path(CID_PLAY,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
     cid->cPause     = cid_get_cairo_image(cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
@@ -403,6 +407,7 @@ void cid_load_symbols (void) {
     cid->cPrev      = cid_get_cairo_image(cid_get_symbol_path(CID_PREV,cid->iSymbolColor),cid->iPrevNextSize,cid->iPrevNextSize);
     cid->cPlay_big  = cid_get_cairo_image(cid_get_symbol_path(CID_PLAY,cid->iSymbolColor),cid->iPlayPauseSize,cid->iPlayPauseSize);
     cid->cPause_big = cid_get_cairo_image(cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor),cid->iPlayPauseSize,cid->iPlayPauseSize);
+    cid->cCross = cid_get_cairo_image(g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
 }
 
 /* Fonction qui s'occupe de dessiner la fenêtre */
