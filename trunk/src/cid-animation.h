@@ -12,12 +12,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkscreen.h>
 
-//#include <pthread.h>
-
 
 #include "cid-struct.h"
 
-#define CID_REDRAW gtk_widget_queue_draw(cid->cWindow);
+#define CID_REDRAW gtk_widget_queue_draw(cid->pWindow);
 
 /**
  * Fonction appelee au focus

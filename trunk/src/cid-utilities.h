@@ -17,16 +17,6 @@
 G_BEGIN_DECLS
 
 #define _(string) gettext (string)
-#define SECONDES * 1000
-#define MINUTES * 60
-#define HEURES * 60
-
-/* Alias pour récupérer l'URI de l'image par défaut */
-#define DEFAULT_IMAGE cid->pDefaultImage
-
-#define TESTING_COVER "../data/default.svg"
-#define TESTING_FILE "../data/cid.conf"
-#define SVN_CONF_FILE "cid-svn.conf"
 
 #define cid_launch_command(cCommand,...) cid_launch_command_full(cCommand, NULL, ##__VA_ARGS__)
 

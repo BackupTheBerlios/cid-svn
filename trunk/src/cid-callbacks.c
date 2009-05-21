@@ -17,6 +17,7 @@
 #include "cid-config.h"
 #include "cid-utilities.h"
 #include "cid-asynchrone.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML, bCurrentlyFocused;
@@ -62,7 +63,7 @@ void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
         // si on ne verouille pas la position
         if (!cid->bLockPosition) {
             if (cid->bShowAbove)
-                gtk_window_set_keep_below(GTK_WINDOW (cid->cWindow), TRUE);
+                gtk_window_set_keep_below (GTK_WINDOW (cid->pWindow), TRUE);
             gtk_window_begin_move_drag (GTK_WINDOW (gtk_widget_get_toplevel (p_widget)),
                                         pButton->button,
                                         pButton->x_root,
@@ -137,7 +138,45 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
     
     
     while (*cReceivedDataList != NULL) {
-        g_print (">>> %s\n",cid_toupper(*cReceivedDataList));
+        gboolean isImage = g_str_has_suffix(*cReceivedDataList,"JPG")
+                        || g_str_has_suffix(*cReceivedDataList,"jpg")
+                        || g_str_has_suffix(*cReceivedDataList,"JPEG")
+                        || g_str_has_suffix(*cReceivedDataList,"jpeg")
+                        || g_str_has_suffix(*cReceivedDataList,"PNG")
+                        || g_str_has_suffix(*cReceivedDataList,"png")
+                        || g_str_has_suffix(*cReceivedDataList,"SVG")
+                        || g_str_has_suffix(*cReceivedDataList,"svg");
+        if(isImage) {
+            if(musicData.playing_artist != NULL && musicData.playing_album != NULL) {
+                cid_debug("Le fichier est une image");
+                GString *command = g_string_new ("");
+                if(strncmp(*cReceivedDataList, "http://", 7) == 0) {
+                    cid_debug("Le fichier est distant");
+                    g_string_printf (command, "wget -O /tmp/\"%s - %s.jpg\" %s",
+                        musicData.playing_artist,
+                        musicData.playing_album,
+                        *cReceivedDataList);
+                } else {
+                    cid_debug("Le fichier est local");
+                    gchar *cFilePath = (**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL));
+                    g_string_printf (command, "cp %s /tmp/\"%s - %s.jpg\"",
+                        cFilePath,
+                        musicData.playing_artist,
+                        musicData.playing_album);
+                    g_free (cFilePath);
+                }
+                cid_launch_command (command->str);                
+                g_string_free (command, TRUE);
+                cid_display_image(g_strdup_printf("/tmp/%s - %s.jpg",musicData.playing_artist,musicData.playing_album));
+                cid_animation(cid->iAnimationType);
+            } else {
+                cid_display_image((**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL)));
+                cid_animation(cid->iAnimationType);
+            }
+        } else {
+            cid_debug("On ajoute à la playlist");
+            cid->pMonitorList->p_fAddToQueue(*cReceivedDataList);
+        }
         cReceivedDataList++;
     }
         
@@ -167,11 +206,11 @@ void on_motion (GtkWidget *widget, GdkEventMotion *event) {
         cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
         cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2)) {
         
-        gtk_widget_queue_draw(cid->cWindow);
+        gtk_widget_queue_draw(cid->pWindow);
         bFlyingButton = TRUE;
     } else if (bFlyingButton) {
         bFlyingButton = FALSE;
-        gtk_widget_queue_draw(cid->cWindow);
+        gtk_widget_queue_draw(cid->pWindow);
     }
 }
 
@@ -181,7 +220,7 @@ void _cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointe
 
 void _cid_about (GtkMenuItem *pMenuItem, gpointer *data) {
     
-    GtkWidget *pDialog = gtk_message_dialog_new (GTK_WINDOW (cid->cWindow),
+    GtkWidget *pDialog = gtk_message_dialog_new (GTK_WINDOW (cid->pWindow),
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE,
@@ -319,6 +358,6 @@ void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
     if (!cid->bConfFilePanel) {
         cid_save_data();
     
-        cid_edit_conf_file_with_panel (GTK_WINDOW(cid->cWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+        cid_edit_conf_file_with_panel (GTK_WINDOW(cid->pWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
     }
 }

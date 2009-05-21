@@ -4,8 +4,14 @@ SUBDIRS = .
 bin_PROGRAMS = \
     cid
 
+if WITH_OPENGL
+have_opengl=-DHAVE_OPENGL="1"
+endif
+
 cid_CFLAGS = \
     $(PACKAGE_CFLAGS) \
+    $(OPENGL_CFLAGS) \
+    $(have_opengl) \
     -DCID_DEFAULT_IMAGE=\""$(pkgdatadir)/default.svg"\"\
     -DCID_CONFIG_FILE=\""cid.conf"\"\
     -DCID_DATA_DIR=\""$(pkgdatadir)"\"\
@@ -19,8 +25,11 @@ cid_CFLAGS = \
     -g  
 
 cid_LDFLAGS = \
-    -Wl,--export-dynamic \
-    $(PACKAGE_LIBS)
+    -Wl,--export-dynamic
+
+cid_LDADD = \
+    $(PACKAGE_LIBS) \
+    $(OPENGL_LIBS)
 
 cid_SOURCES = \
     cid.c \
@@ -41,6 +50,7 @@ cid_SOURCES = \
     cid-conf-panel-factory.h \
     cid-config.c \
     cid-config.h \
+    cid-constantes.h \
     cid-dbus.c \
     cid-dbus.h \
     cid-dcop.c \
@@ -85,6 +95,7 @@ cidsubinclude_HEADERS = \
     cid-callbacks.h \
     cid-conf-panel-factory.h \
     cid-config.h \
+    cid-constantes.h \
     cid-dbus.h \
     cid-dcop.h \
     cid-draw.h \

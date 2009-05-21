@@ -14,46 +14,42 @@
 #include "cid-utilities.h"
 #include "cid-callbacks.h"
 #include "cid-dcop.h"
+#include "cid-constantes.h"
+#include "cid-asynchrone.h"
 
 extern CidMainContainer *cid;
 
 static gboolean cont;
 gboolean run = FALSE;
+static CidMeasure *pMeasureTimer = NULL;
+extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML;
 
 ///dcop amarok playlist addMediaList [ "file:///home/benjamin/Music/aboutagirl.mp3" ]
 
 gboolean get_amarock_musicData () {
     CIDError *error = NULL;
-    gint state = cid_dcop_get_int_with_error_full("dcop amarok player status",-1,&error);
-    //FILE *status = popen ("dcop amarok player status","r");
-    //gchar gStatus[128];
+    gint state = cid_dcop_get_int_with_error_full("dcop amarok player status >/dev/null 2>&1",-1,&error);
+    
     musicData.opening = TRUE;
-    //if (!status) {
-    //if (error && error->code == CID_DCOP_UNREACHABLE) {
-        //cid_warning ("Couldn't reach amarok");
-    //    cid_warning (error->message);
-    //  pclose (status);
-    //    return FALSE;
-    //}
-    //if (!fgets (gStatus,128,status)) {
+    
     if (error) {
-    //  cid_warning ("Couldn't get status");
         cid_warning (error->message);
-        if (error->code == CID_DCOP_CANT_READ_PIPE) {
-            musicData.opening = FALSE;
-    //  pclose (status);
-            if (run) {
-                cid_display_image(DEFAULT_IMAGE);
-                cid_set_state_icon();
-                run = FALSE;
-            }
+        
+        musicData.opening = FALSE;
+        musicData.playing = FALSE;
+    
+        if (run) {
+            cid_display_image(DEFAULT_IMAGE);
+            cid_set_state_icon();
+            run = FALSE;
         }
+        
         cid_free_error (error);
         return FALSE;
     }
     
     gboolean bOldState = musicData.playing;
-    //gint state = atoi(gStatus);
+    
     if (state == 1)
         musicData.playing = FALSE;
     else if (state == 2)
@@ -66,11 +62,11 @@ gboolean get_amarock_musicData () {
     gchar *gArtist, *gAlbum, *gTitle, *gPlayingURI, *gCoverURI;
     
     
-    gArtist = cid_dcop_get_string ("dcop amarok player artist");
-    gAlbum = cid_dcop_get_string ("dcop amarok player album");
-    gTitle = cid_dcop_get_string ("dcop amarok player title");
-    gPlayingURI = cid_dcop_get_string ("dcop amarok player encodedURL");
-    gCoverURI = cid_dcop_get_string ("dcop amarok player coverImage");
+    gArtist = cid_dcop_get_string ("dcop amarok player artist >/dev/null 2>&1");
+    gAlbum = cid_dcop_get_string ("dcop amarok player album >/dev/null 2>&1");
+    gTitle = cid_dcop_get_string ("dcop amarok player title >/dev/null 2>&1");
+    gPlayingURI = cid_dcop_get_string ("dcop amarok player encodedURL >/dev/null 2>&1");
+    gCoverURI = cid_dcop_get_string ("dcop amarok player coverImage >/dev/null 2>&1");
     
     g_free (musicData.playing_cover);
     if (gCoverURI == NULL)
@@ -91,13 +87,6 @@ gboolean get_amarock_musicData () {
     musicData.playing_artist = g_strdup (gArtist);
     
     
-    
-    //if (gStatus != NULL && (strcmp (gStatus,"1")==0 || strcmp (gStatus,"2")==0))
-    //if (state == 1 || state == 2)
-    //    musicData.playing = TRUE;
-    //else
-    //    musicData.playing = FALSE;
-    
     run = TRUE;
     cid_info ("\nartist : %s\nalbum : %s\ntitle : %s\nsong uri : %s\ncover uri : %s\n",gArtist,gAlbum,gTitle,gPlayingURI,gCoverURI);
     return TRUE;
@@ -106,14 +95,15 @@ gboolean get_amarock_musicData () {
 gboolean cid_download_amarok_cover (gpointer data) {
     cid->iCheckIter++;
     if (cid->iCheckIter > cid->iTimeToWait) {
-        //GError *erreur = NULL;
-        //GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
-        //if (erreur != NULL)   {
-        //  cid_warning ("couldn't launch this command (%s)", erreur->message);
-        //  g_error_free (erreur);
-        //  return FALSE;
-        //}
-        g_timeout_add (0,(GSourceFunc) _cid_proceed_download_cover, NULL);
+        if (pMeasureTimer) {
+            if (cid_measure_is_running(pMeasureTimer))
+                cid_stop_measure_timer(pMeasureTimer);
+            if (cid_measure_is_active(pMeasureTimer))
+                cid_free_measure_timer(pMeasureTimer);
+        }
+        pMeasureTimer = cid_new_measure_timer (2 SECONDES, NULL, NULL, (CidUpdateTimerFunc) _cid_proceed_download_cover, NULL);
+        
+        cid_launch_measure (pMeasureTimer);
         return FALSE;
     }
     return TRUE;
@@ -129,8 +119,8 @@ gchar *cid_check_amarok_cover_exists (gchar *cURI) {
         g_timeout_add (1000, (GSourceFunc) cid_download_amarok_cover, (gpointer) NULL);
         return g_strdup(DEFAULT_IMAGE);
     }
-    g_free (cCleanURI);
-    g_free (cSplitedURI);
+    g_strfreev (cCleanURI);
+    g_strfreev (cSplitedURI);
     return cURI;
 }
 
@@ -172,15 +162,15 @@ void cid_connect_to_amarok(gint iInter) {
 }
 
 void _playPause_amarok (void) {
-    if (!system ("dcop amarok player playPause")) return;
+    cid_launch_command ("dcop amarok player playPause >/dev/null 2>&1");
 }
 
 void _next_amarok (void) {
-    if (!system ("dcop amarok player next")) return;
+    cid_launch_command ("dcop amarok player next >/dev/null 2>&1");
 }
 
 void _previous_amarok (void) {
-    if (!system ("dcop amarok player prev")) return;
+    cid_launch_command ("dcop amarok player prev >/dev/null 2>&1");
 }
 
 void cid_build_amarok_menu (void) {

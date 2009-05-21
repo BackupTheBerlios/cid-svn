@@ -16,6 +16,7 @@
 #include "cid-conf-panel-factory.h"
 #include "cid-callbacks.h"
 #include "cid-panel-callbacks.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 
@@ -97,7 +98,7 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
     // Si on active les fonctions 'instables', on détruit puis recree la fenetre
     if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) {
         cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
-        gtk_widget_destroy(cid->cWindow);
+        gtk_widget_destroy(cid->pWindow);
         cid_create_main_window();
     }
     
@@ -120,15 +121,15 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
     if (iSymbolChanged != cid->iSymbolColor)
         cid_load_symbols();
     
-    gtk_window_move (GTK_WINDOW(cid->cWindow), cid->iPosX, cid->iPosY);
-    gtk_window_resize (GTK_WINDOW (cid->cWindow), cid->iWidth, cid->iHeight);
+    gtk_window_move (GTK_WINDOW(cid->pWindow), cid->iPosX, cid->iPosY);
+    gtk_window_resize (GTK_WINDOW (cid->pWindow), cid->iWidth, cid->iHeight);
     
     // Si on change l'affichage
     if (bChangedDesktop != cid->bAllDesktop) {
         if (!cid->bAllDesktop)
-            gtk_window_unstick(GTK_WINDOW(cid->cWindow));
+            gtk_window_unstick(GTK_WINDOW(cid->pWindow));
         else
-            gtk_window_stick(GTK_WINDOW(cid->cWindow));
+            gtk_window_stick(GTK_WINDOW(cid->pWindow));
     }
     
     // Enfin, si on redimenssionne, on recharge les images
@@ -137,7 +138,7 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
         cid_load_symbols();
     }
     
-    gtk_widget_queue_draw (cid->cWindow);
+    gtk_widget_queue_draw (cid->pWindow);
     
     (void) pData;
 }
@@ -172,6 +173,7 @@ gboolean cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *c
         error = NULL;
         bGet = bDefault;
     }
+    cid_debug ("%s:%s=%s",cGroup,cKey,bGet?"TRUE":"FALSE");
     return bGet;
 }
 
@@ -192,6 +194,7 @@ gchar *cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey
         else 
             return NULL;
     }       
+    cid_debug ("%s:%s=%s",cGroup,cKey,cGet);
     return cGet;
 }
 
@@ -205,6 +208,7 @@ gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbo
         error = NULL;
         iGet = iDefault;
     }
+    cid_debug ("%s:%s=%d",cGroup,cKey,(bMax && iGet > iMax)?iMax:iGet);
     if (bMax && iGet > iMax)
         return iMax;
     return iGet;
@@ -307,17 +311,17 @@ int cid_read_config (const char *f, gpointer *pData) {
 
 void cid_get_data () {
     /* On récupère la position de cid */
-    gtk_window_get_position(GTK_WINDOW (cid->cWindow), &cid->iPosX, &cid->iPosY);
+    gtk_window_get_position(GTK_WINDOW (cid->pWindow), &cid->iPosX, &cid->iPosY);
     
     /* On récupère la taille de cid */
-    gtk_window_get_size(GTK_WINDOW (cid->cWindow), &cid->iWidth, &cid->iHeight);
+    gtk_window_get_size(GTK_WINDOW (cid->pWindow), &cid->iWidth, &cid->iHeight);
 }
 
 void cid_save_data () {
     if (!cid_load_key_file(cid->pConfFile))
         cid_exit(CID_ERROR_READING_FILE,"Key File error");
     
-    if (cid->cWindow!=NULL)
+    if (cid->pWindow!=NULL)
         cid_get_data();
     
     // [System] configuration

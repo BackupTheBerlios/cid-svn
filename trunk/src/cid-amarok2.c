@@ -12,6 +12,7 @@
 #include "cid-struct.h"
 #include "cid-messages.h"
 #include "cid-utilities.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 

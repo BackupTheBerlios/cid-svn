@@ -127,11 +127,11 @@ void cid_stop_measure_timer (CidMeasure *pMeasureTimer) {
     
     _cid_pause_measure_timer (pMeasureTimer);
     
-    cid_message ("***on attend que le thread termine...(%d)", g_atomic_int_get (&pMeasureTimer->iThreadIsRunning));
+    cid_debug ("***on attend que le thread termine...(%d)", g_atomic_int_get (&pMeasureTimer->iThreadIsRunning));
     while (g_atomic_int_get (&pMeasureTimer->iThreadIsRunning))
         g_usleep (10);
         ///gtk_main_iteration ();
-    cid_message ("***temine.");
+    cid_debug ("***temine.");
 }
 
 void cid_free_measure_timer (CidMeasure *pMeasureTimer) {

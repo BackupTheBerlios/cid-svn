@@ -129,7 +129,7 @@ struct _CidControlFunctionsList {
  */
 struct _CidMainContainer {
     // fenêtre principale
-    GtkWidget *cWindow;
+    GtkWidget *pWindow;
     
     ///\________ Toutes nos images
     // pochette

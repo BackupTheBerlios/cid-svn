@@ -87,7 +87,7 @@ void cid_focus (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
     cid_info ("CID is currently focused %s.\n", bFocusIn ? "in" : "out");
     
     if (cid->bShowAbove)
-        gtk_window_set_keep_below (GTK_WINDOW (cid->cWindow), !bFocusIn);
+        gtk_window_set_keep_below (GTK_WINDOW (cid->pWindow), !bFocusIn);
     
     if (bFocusIn) {
         cid->bCurrentlyFlying = TRUE;
@@ -122,40 +122,6 @@ gboolean cid_rotate_on_changing_song (void *ptr) {
 
 /* on lance un thread pour une animation */
 void cid_threaded_animation (AnimationType iAnim, gint iDelay) {
-    //AnimationType cAnim = GPOINTER_TO_INT(&data[0]);
-    //static gboolean first_execution = TRUE;
-
-    //use a safe function to get the value of currently_drawing so
-    //we don't run into the usual multithreading issues
-    //gint drawing_status = g_atomic_int_get(&cid->iCurrentlyDrawing);
-
-    //if we are not currently drawing anything, launch a thread to 
-    //update our pixmap
-    //if(drawing_status == 0){
-    //    static pthread_t thread_info;
-    //    int  iret;
-    //    if(first_execution != TRUE){
-    //        pthread_join(thread_info, NULL);
-    //    }
-    //    switch(cAnim) {
-    //        case CID_ROTATE:
-    //            iret = pthread_create( &thread_info, NULL, cid_rotate_on_changing_song, NULL);
-    //            break;
-    //        case CID_FADE_IN_OUT:
-    //            iret = pthread_create( &thread_info, NULL, cid_fade_in_out, NULL);
-    //            break;
-    //        case CID_FOCUS_IN:
-    //            iret = pthread_create( &thread_info, NULL, cid_focus_in, NULL);
-    //            break;
-    //        case CID_FOCUS_OUT:
-    //            iret = pthread_create( &thread_info, NULL, cid_focus_out, NULL);
-    //            break;
-    //    }
-    //}
-    
-    //first_execution = FALSE;
-
-    //return cid->bAnimation || cid->bFocusAnimation;
     switch(iAnim) {
         case CID_ROTATE:
             if (pMeasureTimerAnimation) {
@@ -211,7 +177,6 @@ void cid_animation (AnimationType iAnim) {
         case CID_ROTATE:
             if (cid->bRunAnimation && !cid->bAnimation)
                 if (cid->bThreaded)
-                    //g_timeout_add_full (-50, 5, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_ROTATE), NULL);
                     cid_threaded_animation(iAnim,5);
                 else 
                     g_timeout_add_full (-50, 5, (GSourceFunc) cid_rotate_on_changing_song, NULL, NULL);
@@ -219,21 +184,18 @@ void cid_animation (AnimationType iAnim) {
         case CID_FADE_IN_OUT:
             if (cid->bRunAnimation && !cid->bAnimation)
                 if (cid->bThreaded)
-                    //g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FADE_IN_OUT), NULL);
                     cid_threaded_animation(iAnim,15);
                 else
                     g_timeout_add_full (-50, 15, (GSourceFunc) cid_fade_in_out, NULL, NULL);
             break;
         case CID_FOCUS_IN:
             if (cid->bThreaded)
-                //g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_IN), NULL);
                 cid_threaded_animation(iAnim,15);
             else 
                 g_timeout_add (15, (GSourceFunc) cid_focus_in, NULL);
             break;
         case CID_FOCUS_OUT:
             if (cid->bThreaded)
-                //g_timeout_add_full (-50, 15, (GSourceFunc) cid_threaded_animation, GINT_TO_POINTER(CID_FOCUS_OUT), NULL);
                 cid_threaded_animation(iAnim,15);
             else 
                 g_timeout_add (15, (GSourceFunc) cid_focus_out, NULL);

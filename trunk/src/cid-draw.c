@@ -15,6 +15,7 @@
 #include "cid-utilities.h"
 #include "cid-callbacks.h"
 #include "cid-messages.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 
@@ -59,13 +60,13 @@ void cid_display_image(gchar *image) {
         cid->cSurface = cid_get_cairo_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
         musicData.cover_exist = FALSE;
         cid->iCheckIter = 0;
-        if (musicData.iSidCheckCover == 0) {
+        if (musicData.iSidCheckCover == 0 && cid->iPlayer != PLAYER_NONE) {
             cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
             musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
         }
     }
     
-    gtk_widget_queue_draw (cid->cWindow);
+    gtk_widget_queue_draw (cid->pWindow);
 }
 
 /* On dessine l'image à partir de son URI */
@@ -207,29 +208,29 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
    voulue, et la dimensionne */
 void cid_create_main_window() {
     /* On crée la fenêtre */
-    cid->cWindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    cid->pWindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     
     /* On place, nomme, et dimenssione la fenetre */
-    gtk_window_set_title (GTK_WINDOW (cid->cWindow), "cid");
-    gtk_window_move (GTK_WINDOW(cid->cWindow), cid->iPosX, cid->iPosY);
-    gtk_window_set_default_size (GTK_WINDOW(cid->cWindow), cid->iWidth, cid->iHeight);
-    gtk_window_set_gravity (GTK_WINDOW (cid->cWindow), GDK_GRAVITY_STATIC);
+    gtk_window_set_title (GTK_WINDOW (cid->pWindow), "cid");
+    gtk_window_move (GTK_WINDOW(cid->pWindow), cid->iPosX, cid->iPosY);
+    gtk_window_set_default_size (GTK_WINDOW(cid->pWindow), cid->iWidth, cid->iHeight);
+    gtk_window_set_gravity (GTK_WINDOW (cid->pWindow), GDK_GRAVITY_STATIC);
 
     /* On affiche cid sur tous les bureaux, ou pas */
     if (cid->bAllDesktop)
-        gtk_window_stick (GTK_WINDOW (cid->cWindow));
+        gtk_window_stick (GTK_WINDOW (cid->pWindow));
     /* On bloque le déplacement (marche pas :/), on enlève les
        barre de titre et bordures, on empêche l'apparition dans
        la taskbar et le pager, et on la garde en arrière-plan. */
-    gtk_window_set_decorated(GTK_WINDOW(cid->cWindow), FALSE);
-    gtk_window_set_keep_below (GTK_WINDOW (cid->cWindow), TRUE);
-    gtk_window_set_skip_pager_hint (GTK_WINDOW (cid->cWindow), TRUE);
-    gtk_window_set_skip_taskbar_hint (GTK_WINDOW (cid->cWindow), TRUE);
-    gtk_window_set_type_hint (GTK_WINDOW (cid->cWindow), cid->cidHint);
-    gtk_widget_set_app_paintable (cid->cWindow, TRUE);
+    gtk_window_set_decorated(GTK_WINDOW(cid->pWindow), FALSE);
+    gtk_window_set_keep_below (GTK_WINDOW (cid->pWindow), TRUE);
+    gtk_window_set_skip_pager_hint (GTK_WINDOW (cid->pWindow), TRUE);
+    gtk_window_set_skip_taskbar_hint (GTK_WINDOW (cid->pWindow), TRUE);
+    gtk_window_set_type_hint (GTK_WINDOW (cid->pWindow), cid->cidHint);
+    gtk_widget_set_app_paintable (cid->pWindow, TRUE);
 
     /* On s'abonne aux évènement */
-    gtk_widget_add_events  (cid->cWindow,
+    gtk_widget_add_events  (cid->pWindow,
                             GDK_BUTTON_PRESS_MASK | 
                             GDK_BUTTON_RELEASE_MASK |
                             GDK_KEY_PRESS_MASK |
@@ -237,14 +238,14 @@ void cid_create_main_window() {
                             GDK_POINTER_MOTION_HINT_MASK);
     
     /* On intercepte et traite les évènements */
-    g_signal_connect (G_OBJECT (cid->cWindow), "expose-event", G_CALLBACK (cid_draw_window), NULL);
-    g_signal_connect (G_OBJECT (cid->cWindow), "screen-changed", G_CALLBACK (cid_set_colormap), NULL);
+    g_signal_connect (G_OBJECT (cid->pWindow), "expose-event", G_CALLBACK (cid_draw_window), NULL);
+    g_signal_connect (G_OBJECT (cid->pWindow), "screen-changed", G_CALLBACK (cid_set_colormap), NULL);
     
-    g_signal_connect (G_OBJECT(cid->cWindow), "delete-event", G_CALLBACK(_cid_quit), NULL); // On ferme la fenêtre
+    g_signal_connect (G_OBJECT(cid->pWindow), "delete-event", G_CALLBACK(_cid_quit), NULL); // On ferme la fenêtre
     
     /* Ici on traite le focus in/out */
-    g_signal_connect (G_OBJECT(cid->cWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
-    g_signal_connect (G_OBJECT(cid->cWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
+    g_signal_connect (G_OBJECT(cid->pWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
+    g_signal_connect (G_OBJECT(cid->pWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
     
     /* On prépare le traitement du d'n'd */
     GtkTargetEntry *pTargetEntry = g_new0 (GtkTargetEntry, 6);
@@ -256,7 +257,7 @@ void cid_create_main_window() {
     pTargetEntry[3].target = "text/plain;charset=UTF-8";
     pTargetEntry[4].target = "text/directory";
     pTargetEntry[5].target = "text/html";
-    gtk_drag_dest_set (cid->cWindow,
+    gtk_drag_dest_set (cid->pWindow,
         GTK_DEST_DEFAULT_DROP | GTK_DEST_DEFAULT_MOTION,  // GTK_DEST_DEFAULT_HIGHLIGHT ne rend pas joli je trouve.
         pTargetEntry,
         6,
@@ -264,21 +265,21 @@ void cid_create_main_window() {
     g_free (pTargetEntry);
     
     /* traitement du d'n'd */
-    g_signal_connect (G_OBJECT(cid->cWindow), "drag-data-received", G_CALLBACK(on_dragNdrop_data_received), NULL);
+    g_signal_connect (G_OBJECT(cid->pWindow), "drag-data-received", G_CALLBACK(on_dragNdrop_data_received), NULL);
     
     /* traitement des clics */
-    g_signal_connect (G_OBJECT(cid->cWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
-    g_signal_connect (G_OBJECT(cid->cWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
+    g_signal_connect (G_OBJECT(cid->pWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
+    g_signal_connect (G_OBJECT(cid->pWindow), "button-release-event", G_CALLBACK(on_clic), NULL); // Clic de souris
     
     /* On veut connaitre la position du curseur */
-    g_signal_connect (G_OBJECT(cid->cWindow), "motion-notify-event", G_CALLBACK(on_motion), NULL);
+    g_signal_connect (G_OBJECT(cid->pWindow), "motion-notify-event", G_CALLBACK(on_motion), NULL);
  
-    cid_set_colormap (cid->cWindow, NULL, NULL);
+    cid_set_colormap (cid->pWindow, NULL, NULL);
     
     /* Chargement des dessins */
     cid_load_symbols ();
     
-    gtk_widget_show_all(cid->cWindow);
+    gtk_widget_show_all(cid->pWindow);
 }
 
 /* On détermine si un gestionnaire de composite est présent ou non */
@@ -576,13 +577,13 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 }
 
 void cid_set_state_icon (void) {
-    gtk_widget_queue_draw (cid->cWindow);
+    gtk_widget_queue_draw (cid->pWindow);
 }
 
 /* redessine la fenêtre */
 void cid_draw_window (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
 
-    cid->pContext = gdk_cairo_create (cid->cWindow->window);
+    cid->pContext = gdk_cairo_create (cid->pWindow->window);
     if (!cid->pContext)
         return;
 

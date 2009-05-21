@@ -14,7 +14,8 @@ static gchar *setMessage(const gchar *cCommand, gint iCode) {
 }
 
 static void setError (CIDError **error, gint iCode, const gchar *cCommand) {
-    
+    if (*error)
+        cid_free_error(*error);
     *error = g_new0(CIDError,1);
     (*error)->message = setMessage(cCommand,iCode);
     (*error)->code    = iCode;

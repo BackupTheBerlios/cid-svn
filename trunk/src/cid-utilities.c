@@ -7,11 +7,11 @@
    *
 */
 
-//#include "cid.h"
 #include "cid-utilities.h"
 #include "cid-struct.h"
 #include "cid-callbacks.h"
 #include "cid-messages.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 

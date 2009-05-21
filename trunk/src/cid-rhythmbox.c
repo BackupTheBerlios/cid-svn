@@ -15,6 +15,7 @@
 #include "cid-messages.h"
 #include "cid-utilities.h"
 #include "cid-struct.h"
+#include "cid-constantes.h"
 
 extern CidMainContainer *cid;
 
@@ -189,7 +190,8 @@ void getSongInfos(void) {
                 rhythmboxData.playing_cover = g_strdup (cString);
             }
         } else {
-            gchar *tabFiles[]={"cover", "album", "albumart", ".folder", "folder", "Cover", "Folder"};
+            const gchar *tabFiles[]={"cover", "album", "albumart", ".folder", "folder", "Cover", "Folder"};
+            //gchar **pFilesPattern = (gchar **)tabFiles;
             gchar *cSongPath = g_filename_from_uri (rhythmboxData.playing_uri, NULL, NULL);  // on teste d'abord dans le repertoire de la chanson.
             int i=0;
             if (cSongPath != NULL)
@@ -207,12 +209,19 @@ void getSongInfos(void) {
                 }
                 if (! g_file_test (rhythmboxData.playing_cover, G_FILE_TEST_EXISTS))
                 {
-                    cid_debug ("   test de %s (if .gnome2)\n", rhythmboxData.playing_cover);
+                    cid_debug ("   test de %s (.gnome2)\n", rhythmboxData.playing_cover);
                     g_free (rhythmboxData.playing_cover);
                     rhythmboxData.playing_cover = g_strdup_printf("%s/.gnome2/rhythmbox/covers/%s - %s.jpg", g_getenv("HOME"),rhythmboxData.playing_artist, rhythmboxData.playing_album);
                 }
+                if (! g_file_test (rhythmboxData.playing_cover, G_FILE_TEST_EXISTS))
+                {
+                    cid_debug ("    test de %s (.cache)\n", rhythmboxData.playing_cover);
+                    g_free (rhythmboxData.playing_cover);
+                    rhythmboxData.playing_cover = g_strdup_printf("%s/.cache/rhythmbox/covers/%s - %s.jpg", g_getenv("HOME"),rhythmboxData.playing_artist, rhythmboxData.playing_album);
+                }
                 g_free (cSongDir);
             }
+            //g_free (tabFiles);
         }
         cid_message ("  playing_cover <- %s\n", rhythmboxData.playing_cover);
         
@@ -327,8 +336,16 @@ void _previous_rhythmbox (void) {
     dbus_call (dbus_proxy_player,"previous");
 }
 
+void _add_to_queue_rhythmbox (gchar *cPath) {
+    dbus_g_proxy_call_no_reply (dbus_proxy_shell, "addToQueue",
+        G_TYPE_STRING,
+        cPath,
+        G_TYPE_INVALID);
+}
+
 void cid_build_rhythmbox_menu (void) {
     cid->pMonitorList->p_fPlayPause = _playPause_rhythmbox;
     cid->pMonitorList->p_fNext = _next_rhythmbox;
     cid->pMonitorList->p_fPrevious = _previous_rhythmbox;
+    cid->pMonitorList->p_fAddToQueue = _add_to_queue_rhythmbox;
 }

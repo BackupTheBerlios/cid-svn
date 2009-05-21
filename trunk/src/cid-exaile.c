@@ -14,6 +14,8 @@
 #include "cid-dbus.h"
 #include "cid-callbacks.h"
 #include "cid-utilities.h"
+#include "cid-constantes.h"
+#include "cid-asynchrone.h"
 
 extern CidMainContainer *cid;
 
@@ -24,6 +26,8 @@ static gboolean bSongChanged;
 static gboolean bPreviousState;
 static gboolean bFirstLoop;
 static gboolean bCantConnect;
+static CidMeasure *pMeasureTimer = NULL;
+extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML;
 
 gboolean cid_exaile_cover() {
     if (dbus_detect_exaile()) {
@@ -39,6 +43,7 @@ gboolean cid_exaile_cover() {
         } else {
             cid_display_image (DEFAULT_IMAGE);
         }
+        cid_animation(cid->iAnimationType);
     } else {
         if (!bCantConnect) {
             bCantConnect = TRUE;
@@ -99,14 +104,15 @@ gboolean exaile_getPlaying (void) {
 gboolean cid_download_exaile_cover (gpointer data) {
     cid->iCheckIter++;
     if (cid->iCheckIter > cid->iTimeToWait) {
-        //GError *erreur = NULL;
-        //GThread* pThread = g_thread_create ((GThreadFunc) _cid_proceed_download_cover, NULL, FALSE, &erreur);
-        //if (erreur != NULL)   {
-        //  cid_warning ("couldn't launch this command (%s)", erreur->message);
-        //  g_error_free (erreur);
-        //  return FALSE;
-        //}
-        g_timeout_add (0,(GSourceFunc) _cid_proceed_download_cover, NULL);
+        if (pMeasureTimer) {
+            if (cid_measure_is_running(pMeasureTimer))
+                cid_stop_measure_timer(pMeasureTimer);
+            if (cid_measure_is_active(pMeasureTimer))
+                cid_free_measure_timer(pMeasureTimer);
+        }
+        pMeasureTimer = cid_new_measure_timer (2 SECONDES, NULL, NULL, (CidUpdateTimerFunc) _cid_proceed_download_cover, NULL);
+        
+        cid_launch_measure (pMeasureTimer);
         return FALSE;
     }
     return TRUE;
@@ -127,8 +133,8 @@ gchar *cid_check_exaile_cover_exists (gchar *cURI) {
         }
         return g_strdup(DEFAULT_IMAGE);
     }
-    g_free (cCleanURI);
-    g_free (cSplitedURI);
+    g_strfreev (cCleanURI);
+    g_strfreev (cSplitedURI);
     return cURI;
 }
 
