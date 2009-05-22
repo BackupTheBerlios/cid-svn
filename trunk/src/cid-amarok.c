@@ -177,4 +177,5 @@ void cid_build_amarok_menu (void) {
     cid->pMonitorList->p_fPlayPause = _playPause_amarok;
     cid->pMonitorList->p_fNext = _next_amarok;
     cid->pMonitorList->p_fPrevious = _previous_amarok;
+    cid->pMonitorList->p_fAddToQueue = NULL;
 }

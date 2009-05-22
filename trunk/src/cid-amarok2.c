@@ -7,7 +7,7 @@
    *
    *
 */
-//#include "cid.h"
+
 #include "cid-amarok2.h"
 #include "cid-struct.h"
 #include "cid-messages.h"
@@ -22,11 +22,11 @@ static GHashTable *change_song = NULL;
 gchar *cid_amarok_2_cover() {
     if (dbus_detect_amarok_2()) {
         if (amarok_2_getPlaying ()) {
-            //amarok_2_getPlayingUri();
             am_getSongInfos();
-            if (musicData.playing_cover != NULL) 
+            if (musicData.playing_cover != NULL)  {
                 cid_set_state_icon();
                 return musicData.playing_cover;
+            }
             return DEFAULT_IMAGE;
         } else {
             return DEFAULT_IMAGE;
@@ -40,7 +40,9 @@ gboolean amarok_2_dbus_connect_to_bus (void) {
     g_type_init ();
     if (dbus_is_enabled ()) {
         // On se connecte au bus org.kde.amarok /Player org.freedesktop.MediaPlayer
-        dbus_proxy_player = (DBusGProxy *) create_new_session_proxy ("org.kde.amarok","/Player","org.freedesktop.MediaPlayer");
+        dbus_proxy_player = (DBusGProxy *) create_new_session_proxy ("org.kde.amarok",
+                            "/Player",
+                            "org.freedesktop.MediaPlayer");
         
         // On s'abonne aux signaux
         dbus_g_proxy_add_signal(dbus_proxy_player, "TrackChange",
@@ -49,9 +51,6 @@ gboolean amarok_2_dbus_connect_to_bus (void) {
         dbus_g_proxy_add_signal(dbus_proxy_player, "StatusChange",
             dbus_g_type_get_struct ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID),
             G_TYPE_INVALID);
-        //dbus_g_proxy_add_signal(dbus_proxy_player, "CapsChange",
-        //  G_TYPE_UINT,
-        //  G_TYPE_INVALID);
         
         // Puis on connecte les signaux a l'application pour les traiter un par un
         dbus_g_proxy_connect_signal(dbus_proxy_player, "TrackChange",
@@ -59,9 +58,6 @@ gboolean amarok_2_dbus_connect_to_bus (void) {
             
         dbus_g_proxy_connect_signal(dbus_proxy_player, "StatusChange",
             G_CALLBACK(am_onChangeState), NULL, NULL);
-        
-        //dbus_g_proxy_connect_signal(dbus_proxy_player, "CapsChange",
-        //  G_CALLBACK(am_onCovertArtChanged), NULL, NULL);
         
         return TRUE;
     }
@@ -78,10 +74,6 @@ void amarok_2_dbus_disconnect_from_bus (void) {
         dbus_g_proxy_disconnect_signal(dbus_proxy_player, "StatusChange",
             G_CALLBACK(am_onChangeState), NULL);
         cid_debug ("StatusChange deconnecte\n");
-        
-        //dbus_g_proxy_disconnect_signal(dbus_proxy_player, "CapsChange",
-        //  G_CALLBACK(am_onCovertArtChanged), NULL);
-        //cid_debug ("CapsChange deconnecte\n");
         
         g_object_unref (dbus_proxy_player);
         dbus_proxy_player = NULL;
@@ -101,16 +93,17 @@ gboolean dbus_detect_amarok_2(void) {
 gboolean amarok_2_getPlaying (void) {
     GValueArray *s = 0;
     GValue *v;
-    gint status;
-    dbus_g_proxy_call (dbus_proxy_player, "GetStatus", NULL,
-    G_TYPE_INVALID,
-    dbus_g_type_get_struct ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID),
-    &s,
-    G_TYPE_INVALID);
+    gint status = 100;
+    if (dbus_detect_amarok_2()) {
+        dbus_g_proxy_call (dbus_proxy_player, "GetStatus", NULL,
+            G_TYPE_INVALID,
+            dbus_g_type_get_struct ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID),
+            &s,
+            G_TYPE_INVALID);
     
-    v = g_value_array_get_nth(s, 0);
-    status = g_value_get_int(v);
-    
+        v = g_value_array_get_nth(s, 0);
+        status = g_value_get_int(v);
+    }
     cid_debug("Status : %i",status);
     //switch (status) {
     //  case 0:
@@ -126,7 +119,7 @@ gboolean amarok_2_getPlaying (void) {
     //      break;
     //}
     musicData.playing = FALSE;
-    if (status == 0)
+    if (status == 0 && musicData.opening)
         musicData.playing = TRUE;
     return musicData.playing;
 }
@@ -158,36 +151,59 @@ void am_getSongInfos(void) {
         // Tester si la table de hachage n'est pas vide
         g_free (musicData.playing_artist);
         value = (GValue *) g_hash_table_lookup(data_list, "artist");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_artist = g_strdup (g_value_get_string(value));
-        else musicData.playing_artist = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            musicData.playing_artist = g_strdup (g_value_get_string(value));
+        else 
+            musicData.playing_artist = NULL;
         cid_message ("playing_artist <- %s", musicData.playing_artist);
         
         g_free (musicData.playing_album);
         value = (GValue *) g_hash_table_lookup(data_list, "album");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_album = g_strdup (g_value_get_string(value));
-        else musicData.playing_album = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            musicData.playing_album = g_strdup (g_value_get_string(value));
+        else 
+            musicData.playing_album = NULL;
         cid_message ("playing_album <- %s", musicData.playing_album);
         
         g_free (musicData.playing_title);
         value = (GValue *) g_hash_table_lookup(data_list, "title");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_title = g_strdup (g_value_get_string(value));
-        else musicData.playing_title = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            musicData.playing_title = g_strdup (g_value_get_string(value));
+        else 
+            musicData.playing_title = NULL;
         cid_message ("playing_title <- %s", musicData.playing_title);
         
         value = (GValue *) g_hash_table_lookup(data_list, "tracknumber");
-        if (value != NULL && G_VALUE_HOLDS_UINT(value)) musicData.playing_track = g_value_get_uint(value);
-        else musicData.playing_track = 0;
+        if (value != NULL && G_VALUE_HOLDS_UINT(value)) 
+            musicData.playing_track = g_value_get_uint(value);
+        else 
+            musicData.playing_track = 0;
         cid_message ("playing_track <- %d", musicData.playing_track);
         
         value = (GValue *) g_hash_table_lookup(data_list, "time");
-        if (value != NULL && G_VALUE_HOLDS_INT(value)) musicData.playing_duration = (g_value_get_int(value));
-        else musicData.playing_duration = 0;
+        if (value != NULL && G_VALUE_HOLDS_INT(value)) 
+            musicData.playing_duration = (g_value_get_int(value));
+        else 
+            musicData.playing_duration = 0;
         cid_message ("playing_duration <- %ds", musicData.playing_duration);
         
         g_free (musicData.playing_cover);
         value = (GValue *) g_hash_table_lookup(data_list, "arturl");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_cover = g_strdup (g_value_get_string(value));
-        else musicData.playing_cover = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value))  {
+            //musicData.playing_cover = g_strdup (g_value_get_string(value));
+            GError *erreur = NULL;
+            const gchar *cString = g_value_get_string(value);
+            if (cString != NULL && strncmp (cString, "file://", 7) == 0) {
+                musicData.playing_cover = g_filename_from_uri (cString, NULL, &erreur);
+                if (erreur != NULL) {
+                    cid_warning ("Attention : %s\n", erreur->message);
+                    g_error_free (erreur);
+                }
+            } else {
+                musicData.playing_cover = g_strdup (cString);
+            }
+        } else 
+            musicData.playing_cover = NULL;
         cid_message ("playing_cover <- %s", musicData.playing_cover);
         
         g_hash_table_destroy (data_list);
@@ -205,45 +221,9 @@ void am_getSongInfos(void) {
 // am_onChangeSong() : Fonction executée à chaque changement de musique
 //*********************************************************************************
 void am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer data) {
-    /*
-    GValue *value;
     
-    // Tester si la table de hachage n'est pas vide
-    g_free (musicData.playing_artist);
-    value = (GValue *) g_hash_table_lookup(data_list, "artist");
-    if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_artist = g_strdup (g_value_get_string(value));
-    else musicData.playing_artist = NULL;
-    cid_message ("playing_artist <- %s", musicData.playing_artist);
-    
-    g_free (musicData.playing_album);
-    value = (GValue *) g_hash_table_lookup(data_list, "album");
-    if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_album = g_strdup (g_value_get_string(value));
-    else musicData.playing_album = NULL;
-    cid_message ("playing_album <- %s", musicData.playing_album);
-    
-    g_free (musicData.playing_title);
-    value = (GValue *) g_hash_table_lookup(data_list, "title");
-    if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_title = g_strdup (g_value_get_string(value));
-    else musicData.playing_title = NULL;
-    cid_message ("playing_title <- %s", musicData.playing_title);
-    
-    value = (GValue *) g_hash_table_lookup(data_list, "tracknumber");
-    if (value != NULL && G_VALUE_HOLDS_UINT(value)) musicData.playing_track = g_value_get_uint(value);
-    else musicData.playing_track = 0;
-    cid_message ("playing_track <- %d", musicData.playing_track);
-    
-    value = (GValue *) g_hash_table_lookup(data_list, "time");
-    if (value != NULL && G_VALUE_HOLDS_INT(value)) musicData.playing_duration = (g_value_get_int(value));
-    else musicData.playing_duration = 0;
-    cid_message ("playing_duration <- %ds", musicData.playing_duration);
-    
-    g_free (musicData.playing_cover);
-    value = (GValue *) g_hash_table_lookup(data_list, "arturl");
-    if (value != NULL && G_VALUE_HOLDS_STRING(value)) musicData.playing_cover = g_strdup (g_value_get_string(value));
-    else musicData.playing_cover = NULL;
-    cid_message ("playing_cover <- %s", musicData.playing_cover);
-    */
     cid_display_image(cid_amarok_2_cover());
+    cid_animation(cid->iAnimationType);
 }
 
 //*********************************************************************************
@@ -277,4 +257,5 @@ void cid_build_amarok_2_menu (void) {
     cid->pMonitorList->p_fPlayPause = _playPause_amarok_2;
     cid->pMonitorList->p_fNext = _next_amarok_2;
     cid->pMonitorList->p_fPrevious = _previous_amarok_2;
+    cid->pMonitorList->p_fAddToQueue = NULL;
 }

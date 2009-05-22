@@ -149,30 +149,40 @@ void getSongInfos(void) {
                             G_TYPE_INVALID)) {
         g_free (rhythmboxData.playing_artist);
         value = (GValue *) g_hash_table_lookup(data_list, "artist");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) rhythmboxData.playing_artist = g_strdup (g_value_get_string(value));
-        else rhythmboxData.playing_artist = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            rhythmboxData.playing_artist = g_strdup (g_value_get_string(value));
+        else 
+            rhythmboxData.playing_artist = NULL;
         cid_message ("  playing_artist <- %s\n", rhythmboxData.playing_artist);
         
         g_free (rhythmboxData.playing_album);
         value = (GValue *) g_hash_table_lookup(data_list, "album");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) rhythmboxData.playing_album = g_strdup (g_value_get_string(value));
-        else rhythmboxData.playing_album = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            rhythmboxData.playing_album = g_strdup (g_value_get_string(value));
+        else 
+            rhythmboxData.playing_album = NULL;
         cid_message ("  playing_album <- %s\n", rhythmboxData.playing_album);
         
         g_free (rhythmboxData.playing_title);
         value = (GValue *) g_hash_table_lookup(data_list, "title");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value)) rhythmboxData.playing_title = g_strdup (g_value_get_string(value));
-        else rhythmboxData.playing_title = NULL;
+        if (value != NULL && G_VALUE_HOLDS_STRING(value)) 
+            rhythmboxData.playing_title = g_strdup (g_value_get_string(value));
+        else 
+            rhythmboxData.playing_title = NULL;
         cid_message ("  playing_title <- %s\n", rhythmboxData.playing_title);
         
         value = (GValue *) g_hash_table_lookup(data_list, "track-number");
-        if (value != NULL && G_VALUE_HOLDS_UINT(value)) rhythmboxData.playing_track = g_value_get_uint(value);
-        else rhythmboxData.playing_track = 0;
+        if (value != NULL && G_VALUE_HOLDS_UINT(value)) 
+            rhythmboxData.playing_track = g_value_get_uint(value);
+        else 
+            rhythmboxData.playing_track = 0;
         cid_message ("  playing_track <- %d\n", rhythmboxData.playing_track);
         
         value = (GValue *) g_hash_table_lookup(data_list, "duration");
-        if (value != NULL && G_VALUE_HOLDS_UINT(value)) rhythmboxData.playing_duration = g_value_get_uint(value);
-        else rhythmboxData.playing_duration = 0;
+        if (value != NULL && G_VALUE_HOLDS_UINT(value)) 
+            rhythmboxData.playing_duration = g_value_get_uint(value);
+        else 
+            rhythmboxData.playing_duration = 0;
         cid_message ("  playing_duration <- %ds\n", rhythmboxData.playing_duration);
         
         value = (GValue *) g_hash_table_lookup(data_list, "rb:coverArt-uri");

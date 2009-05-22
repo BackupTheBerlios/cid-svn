@@ -175,7 +175,8 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
             }
         } else {
             cid_debug("On ajoute à la playlist");
-            cid->pMonitorList->p_fAddToQueue(*cReceivedDataList);
+            if (cid->pMonitorList->p_fAddToQueue!=NULL)
+                cid->pMonitorList->p_fAddToQueue(*cReceivedDataList);
         }
         cReceivedDataList++;
     }
@@ -358,6 +359,6 @@ void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
     if (!cid->bConfFilePanel) {
         cid_save_data();
     
-        cid_edit_conf_file_with_panel (GTK_WINDOW(cid->pWindow), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+        cid_edit_conf_file_with_panel (GTK_WINDOW(gtk_window_new (GTK_WINDOW_TOPLEVEL)), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
     }
 }
