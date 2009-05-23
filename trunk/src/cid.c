@@ -71,12 +71,81 @@ void cid_intercept_signal (int signal) {
     cid_sortie (CID_EXIT_ERROR);
 }
 
+void cid_run_with_player (void) {
+    if (cid->iPlayer != PLAYER_NONE)
+        cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
+    /* On lance telle ou telle fonction selon le lecteur selectionne */
+    switch (cid->iPlayer) {
+        /* Amarok 1.4 */
+        case PLAYER_AMAROK_1:
+            cid_build_amarok_menu ();
+            cid_connect_to_amarok(cid->iInter);
+            break;
+        /* Amarok 2 */
+        case PLAYER_AMAROK_2:
+            cid_build_amarok_2_menu ();
+            if (amarok_2_dbus_connect_to_bus()) {
+                cid_debug ("\ndbus connected\n");
+                cid_display_image((gchar *)cid_amarok_2_cover());
+            } else {
+                cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
+            }
+            break;
+        /* Rhythmbox */
+        case PLAYER_RHYTHMBOX:
+            cid_build_rhythmbox_menu ();
+            /* Initialisation de DBus */
+            if (rhythmbox_dbus_connect_to_bus()) {
+                cid_debug ("\ndbus connected\n");
+                cid_display_image((gchar *)cid_rhythmbox_cover());
+            } else {
+                cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
+            }
+            break;
+        /* Exaile */
+        case PLAYER_EXAILE:
+            cid_build_exaile_menu ();
+            cid_connect_to_exaile(cid->iInter);
+            break;
+        /* None */
+        case PLAYER_NONE:
+            cid_display_image(NULL);
+            break;
+        /* Sinon, on a un lecteur inconnu */
+        default:
+            cid_exit (CID_PLAYER_ERROR,"ERROR: \"%d\" is not recognize as a supported player\n",cid->iPlayer);
+    }
+}
+
 /* Methode initialisant les signaux à intercepter */
 void cid_set_signal_interception (void) {
     signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
     signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
     signal (SIGILL, cid_intercept_signal);  // Illegal instruction
     //signal (SIGABRT, cid_intercept_signal);  // Abort
+}
+
+void cid_display_init(int argc, char **argv) {
+    /* Initialisation de Gtk */
+    if (!cid->bRunning)
+        cid->bRunning = gtk_init_check(&argc, &argv);
+    if (!cid->bRunning)
+        cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
+    
+    /* On intercepte les signaux */
+    signal (SIGINT, cid_interrupt); // ctrl+c
+
+    if (cid->bSafeMode) {
+        _cid_conf_panel(NULL,NULL);
+    }
+    /* On créé la fenêtre */
+    cid_create_main_window();
+    
+    /* On lance le monitoring du player */
+    cid_run_with_player();  
+        
+    /* Enfin on lance la boucle Gtk */
+    gtk_main();
 }
 
 /* Fonction principale */
@@ -113,9 +182,19 @@ int main ( int argc, char **argv ) {
     if (!g_thread_supported ()){ g_thread_init(NULL); }
     gdk_threads_init();
 
+    // La on lance la boucle GTK
     //\___ FIXME Pas bien :/
 //    cid_display_init (argc,argv);
     cid_display_init (0,NULL);
+    
+    // Si on est ici, c'est qu'on a coupé la boucle GTK
+    // Du coup, on en profite pour faire un peu de ménage
+    // histoire de pas laisser la baraque dans un sale etat
+    cid_key_file_free();
+    cid_free_musicData();
+    cid_free_main_structure (cid);
+    
+    g_print ("Bye !\n");
 
     return CID_EXIT_SUCCESS;
     

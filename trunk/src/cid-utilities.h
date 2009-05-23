@@ -13,11 +13,17 @@
 #include <libintl.h>
 #include <gtk/gtk.h>
 #include <ctype.h>
+#include "cid-struct.h"
 
 G_BEGIN_DECLS
 
 #define _(string) gettext (string)
 
+/**
+ * Permet de lancer une commande en arrière plan
+ * @param cCommand 'forme' de la commande
+ * @param ... paramètres
+ */
 #define cid_launch_command(cCommand,...) cid_launch_command_full(cCommand, NULL, ##__VA_ARGS__)
 
 /**
@@ -70,6 +76,11 @@ void cid_disconnect_player ();
  * Nettoyage des données musicales
  */
 void cid_free_musicData(void);
+
+/**
+ * Nettoyage de notre structure principale
+ */
+void cid_free_main_structure (CidMainContainer *pCid);
 
 /**
  * permet de jouer un son

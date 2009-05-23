@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT([CID], [1.1.2], [Benjamin SANS (sans_ben@yahoo.fr)])
+AC_INIT([CID], [1.1.3], [Benjamin SANS (sans_ben@yahoo.fr)])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 

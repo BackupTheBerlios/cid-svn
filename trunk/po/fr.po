@@ -142,6 +142,10 @@ msgstr "Vérouiller la position de CID :"
 msgid "You can still move it with ALT + left_clic."
 msgstr "Vous pouvez toujours le déplacer avec ALT + clic_gauche."
 
+#:../data/cid.conf:39
+msgid "Keep above on mouse hovering :"
+msgstr "Passer au premier plan au survol de la souris :"
+
 #:../data/cid.conf:45
 msgid "Rotation of CID :"
 msgstr "Rotation de CID :"
@@ -203,107 +207,127 @@ msgid "Contextual menu in right clic. Play/Pause by left clicking. Next by middl
 msgstr "Menu contextuel au clic. Jouer/pause par clic gauche. Suivant par clic milieu."
 
 #:../data/cid.conf:83
+msgid "Display the controls :"
+msgstr "Afficher les contrôles :"
+
+#:../data/cid.conf:86
 msgid "Give the play/pause status :"
 msgstr "Afficher l'état 'jouer/pause' du lecteur :"
 
-#:../data/cid.conf:87
+#:../data/cid.conf:89
+msgid "Status symbols color :"
+msgstr "Couleur des symboles :"
+
+#:../data/cid.conf:89
+msgid "Yellow"
+msgstr "Jaune"
+
+#:../data/cid.conf:89
+msgid "Red"
+msgstr "Rouge"
+
+#:../data/cid.conf:89
+msgid "White"
+msgstr "Blanc"
+
+#:../data/cid.conf:93
 msgid "Display Title"
 msgstr "Afficher le Titre"
 
-#:../data/cid.conf:90
+#:../data/cid.conf:96
 msgid "Display song's name :"
 msgstr "Afficher le titre joué :"
 
-#:../data/cid.conf:93
+#:../data/cid.conf:99
 msgid "Size of the police :"
 msgstr "Taille de la police :"
 
-#:../data/cid.conf:96
+#:../data/cid.conf:102
 msgid "Color of the text :"
 msgstr "Couleur du texte :"
 
-#:../data/cid.conf:99
+#:../data/cid.conf:105
 msgid "Color of outline's text :"
 msgstr "Couleur de la bordure du texte :"
 
 ############## CID OPTIONS ###############
 
-#:../data/cid.conf:90
+#:../data/cid.conf:116
 msgid "Customisation options"
 msgstr "Customisation"
 
-#:../data/cid.conf:93
+#:../data/cid.conf:119
 msgid "Default image :"
 msgstr "Image par défaut :"
 
-#:../data/cid.conf:94
+#:../data/cid.conf:120
 msgid "Instead of the beautiful CD."
 msgstr "À la place du magnifique CD."
 
-#:../data/cid.conf:97
+#:../data/cid.conf:123
 msgid "Hide CID when the player isn't running :"
 msgstr "Cacher CID lorsque le lecteur n'est pas lancé :"
 
-#:../data/cid.conf:109
+#:../data/cid.conf:131
 msgid "Run an animation when the music change :"
 msgstr "Lancer une animation au changement de musique :"
 
-#:../data/cid.conf:112
+#:../data/cid.conf:134
 msgid "Animation to use :"
 msgstr "Animation à utiliser :"
 
-#:../data/cid.conf:112
+#:../data/cid.conf:134
 msgid "Rotate"
 msgstr "Rotation"
 
-#:../data/cid.conf:112
+#:../data/cid.conf:134
 msgid "Fade in out"
 msgstr "Fondu enchaîné"
 
-#:../data/cid.conf:115
+#:../data/cid.conf:137
 msgid "Use threaded animations :"
 msgstr "Utiliser des animations threadées :"
 
-#:../data/cid.conf:116
+#:../data/cid.conf:138
 msgid "This can not work properly depending your processor."
 msgstr "Peut ne pas être efficace en fonction de votre processeur."
 
-#:../data/cid.conf:126
+#:../data/cid.conf:144
 msgid "Downloads"
 msgstr "Téléchargements"
 
-#:../data/cid.conf:129
+#:../data/cid.conf:147
 msgid "Allow CID to download missing covers :"
 msgstr "Autoriser CID à télécharger les pochettes manquantes :"
 
-#:../data/cid.conf:130
+#:../data/cid.conf:148
 msgid "You need to be connected to the Internet."
 msgstr "Vous devez être connecté à Internet."
 
-#:../data/cid.conf:133
+#:../data/cid.conf:151
 msgid "Delay before checking for missing covers :"
 msgstr "Délai avant de télécharger les pochettes manquantes :"
 
-#:../data/cid.conf:134
+#:../data/cid.conf:152
 msgid "in seconds"
 msgstr "en secondes"
 
-#:../data/cid.conf:137
+#:../data/cid.conf:155
 msgid "Medium"
 msgstr "Moyenne"
 
-#:../data/cid.conf:137
+#:../data/cid.conf:155
 msgid "Large"
 msgstr "Grande"
 
-#:../data/cid.conf:137
+#:../data/cid.conf:155
 msgid "Size of the downloaded covers :"
 msgstr "Taille des images téléchargées :"
 
-#:../data/cid.conf:138
+#:../data/cid.conf:156
 msgid "The smaller image will be downloaded faster than a big one."
 msgstr "Les petites images sont téléchargées plus vite que les grandes."
 
-#:../data/cid.conf:153
+#:../data/cid.conf:167
 msgid "Active unstable functions :"
 msgstr "Activer les fonctions instables :"

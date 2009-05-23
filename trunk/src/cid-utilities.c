@@ -60,6 +60,44 @@ void cid_free_musicData(void) {
     musicData.opening = FALSE;
 }
 
+void cid_free_main_structure (CidMainContainer *pCid) {
+    if (pCid->pWindow)
+        gtk_widget_destroy(pCid->pWindow);
+    if (pCid->cSurface)
+        cairo_surface_destroy(pCid->cSurface);
+    if (pCid->cPreviousSurface)
+        cairo_surface_destroy(pCid->cPreviousSurface);
+    if (pCid->cCross)
+        cairo_surface_destroy(pCid->cCross);
+    if (pCid->cPlay)
+        cairo_surface_destroy(pCid->cPlay);
+    if (pCid->cPause)
+        cairo_surface_destroy(pCid->cPause);
+    if (pCid->cPlay_big)
+        cairo_surface_destroy(pCid->cPlay_big);
+    if (pCid->cPause_big)
+        cairo_surface_destroy(pCid->cPause_big);
+    if (pCid->cNext)
+        cairo_surface_destroy(pCid->cPrev);
+    if (pCid->pConfFile)
+        g_free(pCid->pConfFile);
+    if (pCid->pVerbosity)
+        g_free(pCid->pVerbosity);
+        
+    pCid->pWindow = NULL;
+    pCid->cSurface = NULL;
+    pCid->cPreviousSurface = NULL;
+    pCid->cCross = NULL;
+    pCid->cPlay = NULL;
+    pCid->cPause = NULL;
+    pCid->cPlay_big = NULL;
+    pCid->cPause_big = NULL;
+    pCid->cPrev = NULL;
+    pCid->pConfFile = NULL;
+    pCid->pVerbosity = NULL;
+}
+    
+
 /*
 int cid_read_string(char* chaine) {
     if (strcmp(chaine, "-d\0" ) == 0 || strcmp(chaine, "--debug\0" ) == 0) return CID_DEBUG_MODE;

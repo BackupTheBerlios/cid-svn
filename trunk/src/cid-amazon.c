@@ -105,7 +105,7 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
     gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);
     gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
     
-    gchar *cCommand = g_strdup_printf ("rm %s", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+    gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
     if (!system (cCommand)) return FALSE;
     g_free (cCommand);
     cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cFileToDownload, cTmpFilePath, cTmpFilePath, cTmpFilePath);
@@ -126,7 +126,7 @@ gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
     cid_launch_command (cCommand);
     bCurrentlyDownloading = TRUE;
     g_free (cCommand);
-    cCommand = g_strdup_printf ("rm %s", DEFAULT_XML_LOCATION);
+    cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_XML_LOCATION);
     if (!system (cCommand)) return FALSE;
     g_free (cCommand);
     return TRUE;

@@ -100,5 +100,10 @@ void cid_read_config_after_update (const char *f, gpointer *pData);
  */
 void cid_read_key_file (const gchar *f);
 
+/**
+ * Permet de libérer le fichier de clés
+ */
+void cid_key_file_free(void);
+
 G_END_DECLS
 #endif

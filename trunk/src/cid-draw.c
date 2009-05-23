@@ -247,25 +247,28 @@ void cid_create_main_window() {
     g_signal_connect (G_OBJECT(cid->pWindow), "enter-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(TRUE)); // On passe le curseur sur la fenêtre
     g_signal_connect (G_OBJECT(cid->pWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
     
-    /* On prépare le traitement du d'n'd */
-    GtkTargetEntry *pTargetEntry = g_new0 (GtkTargetEntry, 6);
-    pTargetEntry[0].target = "text/*";
-    pTargetEntry[0].flags = (GtkTargetFlags) 0;
-    pTargetEntry[0].info = 0;
-    pTargetEntry[1].target = "text/uri-list";
-    pTargetEntry[2].target = "text/plain";
-    pTargetEntry[3].target = "text/plain;charset=UTF-8";
-    pTargetEntry[4].target = "text/directory";
-    pTargetEntry[5].target = "text/html";
-    gtk_drag_dest_set (cid->pWindow,
-        GTK_DEST_DEFAULT_DROP | GTK_DEST_DEFAULT_MOTION,  // GTK_DEST_DEFAULT_HIGHLIGHT ne rend pas joli je trouve.
-        pTargetEntry,
-        6,
-        GDK_ACTION_COPY | GDK_ACTION_MOVE);  // le 'GDK_ACTION_MOVE' c'est pour KDE.
-    g_free (pTargetEntry);
+    ///\_______ TESTING OPTION
+    if (cid->bUnstable) {
+        /* On prépare le traitement du d'n'd */
+        GtkTargetEntry *pTargetEntry = g_new0 (GtkTargetEntry, 6);
+        pTargetEntry[0].target = "text/*";
+        pTargetEntry[0].flags = (GtkTargetFlags) 0;
+        pTargetEntry[0].info = 0;
+        pTargetEntry[1].target = "text/uri-list";
+        pTargetEntry[2].target = "text/plain";
+        pTargetEntry[3].target = "text/plain;charset=UTF-8";
+        pTargetEntry[4].target = "text/directory";
+        pTargetEntry[5].target = "text/html";
+        gtk_drag_dest_set (cid->pWindow,
+            GTK_DEST_DEFAULT_DROP | GTK_DEST_DEFAULT_MOTION,  // GTK_DEST_DEFAULT_HIGHLIGHT ne rend pas joli je trouve.
+            pTargetEntry,
+            6,
+            GDK_ACTION_COPY | GDK_ACTION_MOVE);  // le 'GDK_ACTION_MOVE' c'est pour KDE.
+        g_free (pTargetEntry);
     
-    /* traitement du d'n'd */
-    g_signal_connect (G_OBJECT(cid->pWindow), "drag-data-received", G_CALLBACK(on_dragNdrop_data_received), NULL);
+        /* traitement du d'n'd */
+        g_signal_connect (G_OBJECT(cid->pWindow), "drag-data-received", G_CALLBACK(on_dragNdrop_data_received), NULL);
+    }
     
     /* traitement des clics */
     g_signal_connect (G_OBJECT(cid->pWindow), "button-press-event", G_CALLBACK(on_clic), NULL); // Clic de souris
@@ -749,73 +752,4 @@ cairo_surface_t *cid_create_surface_from_text_full (gchar *cText, cairo_t* pSour
     
     g_object_unref (pLayout);
     return pNewSurface;
-}
-
-void cid_run_with_player (void) {
-    if (cid->iPlayer != PLAYER_NONE)
-        cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
-    /* On lance telle ou telle fonction selon le lecteur selectionne */
-    switch (cid->iPlayer) {
-        /* Amarok 1.4 */
-        case PLAYER_AMAROK_1:
-            cid_build_amarok_menu ();
-            cid_connect_to_amarok(cid->iInter);
-            break;
-        /* Amarok 2 */
-        case PLAYER_AMAROK_2:
-            cid_build_amarok_2_menu ();
-            if (amarok_2_dbus_connect_to_bus()) {
-                cid_debug ("\ndbus connected\n");
-                cid_display_image((gchar *)cid_amarok_2_cover());
-            } else {
-                cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
-            }
-            break;
-        /* Rhythmbox */
-        case PLAYER_RHYTHMBOX:
-            cid_build_rhythmbox_menu ();
-            /* Initialisation de DBus */
-            if (rhythmbox_dbus_connect_to_bus()) {
-                cid_debug ("\ndbus connected\n");
-                cid_display_image((gchar *)cid_rhythmbox_cover());
-            } else {
-                cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
-            }
-            break;
-        /* Exaile */
-        case PLAYER_EXAILE:
-            cid_build_exaile_menu ();
-            cid_connect_to_exaile(cid->iInter);
-            break;
-        /* None */
-        case PLAYER_NONE:
-            cid_display_image(NULL);
-            break;
-        /* Sinon, on a un lecteur inconnu */
-        default:
-            cid_exit (CID_PLAYER_ERROR,"ERROR: \"%d\" is not recognize as a supported player\n",cid->iPlayer);
-    }
-}
-
-void cid_display_init(int argc, char **argv) {
-    /* Initialisation de Gtk */
-    if (!cid->bRunning)
-        cid->bRunning = gtk_init_check(&argc, &argv);
-    if (!cid->bRunning)
-        cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
-    
-    /* On intercepte les signaux */
-    signal (SIGINT, cid_interrupt); // ctrl+c
-
-    if (cid->bSafeMode) {
-        _cid_conf_panel(NULL,NULL);
-    }
-    /* On créé la fenêtre */
-    cid_create_main_window();
-    
-    /* On lance le monitoring du player */
-    cid_run_with_player();  
-        
-    /* Enfin on lance la boucle infinie Gtk */
-    gtk_main();
 }

@@ -10,13 +10,7 @@
 #ifndef __CID__
 #define  __CID__
 
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <unistd.h>
 #include <signal.h>
-//#include <libintl.h>
-//#include <locale.h>
-
 #include <pthread.h>
 
 #include "cid-amarok.h"

@@ -7,7 +7,6 @@
    *
 */
 
-//#include "cid.h"
 #include <math.h>
 
 #include "cid-config.h"
@@ -17,6 +16,7 @@
 #include "cid-callbacks.h"
 #include "cid-panel-callbacks.h"
 #include "cid-constantes.h"
+#include "cid-draw.h"
 
 extern CidMainContainer *cid;
 
@@ -138,7 +138,7 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
         cid_load_symbols();
     }
     
-    gtk_widget_queue_draw (cid->pWindow);
+    CID_REDRAW;
     
     (void) pData;
 }
@@ -151,7 +151,7 @@ gboolean cid_load_key_file(const gchar *cFile) {
     cid->pKeyFile = g_key_file_new ();
     flags = G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS;
 
-    /* Load the GKeyFile from keyfile.conf or return. */
+    /* Load the GKeyFile or return. */
     if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) {
         cid_warning (error->message);
         return FALSE;

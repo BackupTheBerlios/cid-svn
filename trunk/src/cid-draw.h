@@ -21,18 +21,16 @@ static gchar *STATE_SYMBOL[] = {"play","pause","next","prev"};
 static gchar *STATE_COLOR[]  = {"white","yellow","red"};
 
 /**
+ * Permet de redessiner la fenêtre
+ */
+#define CID_REDRAW gtk_widget_queue_draw(cid->pWindow)
+
+/**
  * affiche l'image dont le chemin
  * est passé en argument. 
  * @param URI de l'image à afficher
  */
 void cid_display_image(gchar *image);
-
-/**
- * boucle cid/gtk 
- * @param nombre d'argument de CID
- * @param liste des arguments de CID
- */
-void cid_display_init(int argc, char **argv);
 
 /**
  * crée une fenêtre, la déplace à la position

@@ -33,15 +33,11 @@ void cid_interrupt (int signal) {
 
 void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
 
-    cid_disconnect_player();
-
     cid_save_data ();
 
-    gchar *cCommand = g_strdup_printf ("rm %s", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+    gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
     if (!system (cCommand)) return;
     g_free (cCommand);
-
-    g_print ("Bye !\n");
 
     cid_sortie (CID_EXIT_SUCCESS);
 
@@ -359,6 +355,6 @@ void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
     if (!cid->bConfFilePanel) {
         cid_save_data();
     
-        cid_edit_conf_file_with_panel (GTK_WINDOW(gtk_window_new (GTK_WINDOW_TOPLEVEL)), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 480, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+        cid_edit_conf_file_with_panel (GTK_WINDOW(gtk_window_new (GTK_WINDOW_TOPLEVEL)), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 500, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
     }
 }

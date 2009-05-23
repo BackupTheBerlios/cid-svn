@@ -39,7 +39,6 @@ LOCK=
 #b Keep above on mouse hovering :
 SWITCH_ABOVE=
 
-
 #F+[Style;gtk-select-color]
 frame_colors=
 

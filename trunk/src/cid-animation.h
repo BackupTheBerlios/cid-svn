@@ -15,8 +15,6 @@
 
 #include "cid-struct.h"
 
-#define CID_REDRAW gtk_widget_queue_draw(cid->pWindow);
-
 /**
  * Fonction appelee au focus
  */

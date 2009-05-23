@@ -10,6 +10,7 @@
 #include "cid-animation.h"
 #include "cid-messages.h"
 #include "cid-asynchrone.h"
+#include "cid-draw.h"
 
 extern CidMainContainer *cid;
 
@@ -26,7 +27,7 @@ gboolean cid_fade_in_out (void *ptr) {
         
     cid->dFadeInOutAlpha += .01;
     
-    CID_REDRAW
+    CID_REDRAW;
     
     cid->iCurrentlyDrawing = 0;
     
@@ -44,7 +45,7 @@ gboolean cid_focus_in(void *ptr) {
     cid->dAlpha += cid->dFocusVariation;
     cid->dAnimationProgress = cid->dAlpha / (cid->dFocusVariation > 0 ? cid->dFlyingColor[3]-cid->dColor[3] : cid->dColor[3]-cid->dFlyingColor[3]);
     
-    CID_REDRAW
+    CID_REDRAW;
     
     cid->iCurrentlyDrawing = 0;
     
@@ -69,7 +70,7 @@ gboolean cid_focus_out(void *ptr) {
         cid->dBlue = cid->dColor[2];
     }
     
-    CID_REDRAW
+    CID_REDRAW;
     
     cid->iCurrentlyDrawing = 0;
     cid->bCurrentlyFlying = cid->dFocusVariation>0 ? cid->dAlpha > cid->dColor[3] : cid->dAlpha < cid->dColor[3];
@@ -108,7 +109,7 @@ gboolean cid_rotate_on_changing_song (void *ptr) {
     
     if (cid->dAngle < 360) {
         cid->dAngle+=1.0;
-        CID_REDRAW
+        CID_REDRAW;
     } else {
         cid->bAnimation = FALSE;
         cid->dAngle = 0;
