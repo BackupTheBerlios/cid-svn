@@ -41,11 +41,30 @@
 */
 
 #include "cid.h"
+#include <X11/Xlib.h>
 
 CidMainContainer *cid;
 
 static gchar *cLaunchCommand = NULL;
+static Display *s_XDisplay = NULL;
 
+static int _cid_xerror_handler (Display * pDisplay, XErrorEvent *pXError)
+{
+    cid_debug ("Erreur (%d, %d, %d) lors d'une requete X sur %d", pXError->error_code, pXError->request_code, pXError->minor_code, pXError->resourceid);
+    return 0;
+}
+
+void cid_get_X_infos (void) {
+    s_XDisplay = XOpenDisplay (0);
+    
+    XSetErrorHandler (_cid_xerror_handler);
+    
+    Screen *XScreen = XDefaultScreenOfDisplay (s_XDisplay);
+    int XScreenWidth  = WidthOfScreen (XScreen);
+    int XScreenHeight = HeightOfScreen (XScreen);
+    
+    g_print ("%dx%d\n",XScreenWidth,XScreenHeight);
+}
 void cid_init (CidMainContainer *pCid) {    
     
     pCid->pVerbosity = NULL;
@@ -122,7 +141,7 @@ void cid_set_signal_interception (void) {
     signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
     signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
     signal (SIGILL, cid_intercept_signal);  // Illegal instruction
-    //signal (SIGABRT, cid_intercept_signal);  // Abort
+    signal (SIGABRT, cid_intercept_signal);  // Abort
 }
 
 void cid_display_init(int argc, char **argv) {
@@ -168,13 +187,13 @@ int main ( int argc, char **argv ) {
     cid_init(cid);
     
     cid_set_signal_interception ();
-    
-    cid_read_parameters (argc,argv);
 
     // On internationalise l'appli.
     bindtextdomain (CID_GETTEXT_PACKAGE, CID_LOCALE_DIR);
     bind_textdomain_codeset (CID_GETTEXT_PACKAGE, "UTF-8");
     textdomain (CID_GETTEXT_PACKAGE);
+    
+    cid_read_parameters (argc,argv);
     
     cid_read_config (cid->pConfFile, NULL);
     cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
@@ -196,6 +215,8 @@ int main ( int argc, char **argv ) {
     
     g_print ("Bye !\n");
 
+    cid_get_X_infos();
+    
     return CID_EXIT_SUCCESS;
     
 }

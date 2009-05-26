@@ -246,7 +246,7 @@ void _cid_about (GtkMenuItem *pMenuItem, gpointer *data) {
 <b>Original idea/first development :</b>\n  Charlie MERLAND\n\
 <b>Translations :</b>\n  Benjamin SANS\n\
 <b>Source references :</b>\n  some part of the code is inspired by Cairo-Dock\n\
-<b>Special Thanks :</b>\n  Adrien Pilleboue\n  Fabrice Rey\n"));
+<b>Special Thanks :</b>\n  Cairo-Dock's team\n"));
     
     _cid_add_about_page (pNoteBook,
         "Support",

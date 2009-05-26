@@ -7,7 +7,7 @@
    * Sources: Cairo-Dock
    * Author:  Fabrice Rey
 */
-//#include "cid.h"
+
 #include "cid-conf-panel-factory.h"
 #include "cid-messages.h"
 #include "cid-callbacks.h"

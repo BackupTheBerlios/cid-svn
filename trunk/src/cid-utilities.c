@@ -141,7 +141,11 @@ void cid_read_parameters (int argc, char **argv) {
     };
 
     GOptionContext *context = g_option_context_new ("");
-    g_option_context_set_summary (context,_("Conky Images Display is a programm written in C.\nIts goal is to display the cover of the song which is currently playing in the player you choose on the desktop like conky does with other informations.\nYou can use it with the following options:\n"));
+    g_option_context_set_summary (context,_("Conky Images Display is a programm written in C.\n\
+Its goal is to display the cover of the song which \
+is currently playing in the player you chooseon the \
+desktop like conky does with other informations.\n\
+You can use it with the following options:\n"));
     g_option_context_add_main_entries (context, TableDesOptions, NULL);
     g_option_context_parse (context, &argc, &argv, &erreur);
     

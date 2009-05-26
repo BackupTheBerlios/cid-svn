@@ -26,6 +26,8 @@ static gboolean bSongChanged;
 static gboolean bPreviousState;
 static gboolean bFirstLoop;
 static gboolean bCantConnect;
+static gboolean bStateChanged = TRUE;
+static gboolean bFirstDisplay = TRUE;
 static CidMeasure *pMeasureTimer = NULL;
 extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML;
 
@@ -36,14 +38,16 @@ gboolean cid_exaile_cover() {
             getExaileSongInfos();
             if (!bSongChanged)
                 return cont;
-            if (musicData.playing_cover != NULL) 
+            if (musicData.playing_cover != NULL) {
                 cid_display_image (musicData.playing_cover);
-            else
+            } else {
                 cid_display_image (DEFAULT_IMAGE);
-        } else {
+            }
+            cid_animation(cid->iAnimationType);
+        } else if (bStateChanged || bFirstDisplay) {
             cid_display_image (DEFAULT_IMAGE);
+            bFirstDisplay = FALSE;
         }
-        cid_animation(cid->iAnimationType);
     } else {
         if (!bCantConnect) {
             bCantConnect = TRUE;
@@ -87,15 +91,20 @@ gboolean dbus_detect_exaile(void) {
 // exaile_getPlaying() : Test si exaile joue de la musique ou non
 //*********************************************************************************
 gboolean exaile_getPlaying (void) {
+    bStateChanged = FALSE;
     gchar *status = dbus_get_string (dbus_proxy_player, "query");
-    gchar **cSplitedQuery = g_strsplit (status," ",0);
+    gchar **cSplitedQuery = NULL;
+    if (status != NULL)
+        cSplitedQuery = g_strsplit (status," ",0);
     bPreviousState = musicData.playing;
-    if (! g_ascii_strcasecmp(cSplitedQuery[1], "playing")) 
+    if (cSplitedQuery[1]!=NULL && ! g_ascii_strcasecmp(cSplitedQuery[1], "playing")) 
         musicData.playing = TRUE;
     else
         musicData.playing = FALSE;
-    if (bPreviousState != musicData.playing)
+    if (bPreviousState != musicData.playing) {
         cid_set_state_icon();
+        bStateChanged = TRUE;
+    }
     g_free (cSplitedQuery);
     g_free (status);
     return musicData.playing;
@@ -141,6 +150,7 @@ gchar *cid_check_exaile_cover_exists (gchar *cURI) {
 void getExaileSongInfos(void) { 
     gchar *cOldArtist = musicData.playing_artist;
     gchar *cOldTitle  = musicData.playing_title;
+
     musicData.playing_album  = dbus_get_string (dbus_proxy_player, "get_album");
     musicData.playing_artist = dbus_get_string (dbus_proxy_player, "get_artist");
     musicData.playing_title  = dbus_get_string (dbus_proxy_player, "get_title");

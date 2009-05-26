@@ -158,6 +158,7 @@ gchar *dbus_get_string (DBusGProxy *pDbusProxy, const gchar *cParameter) {
     if (erreur != NULL) {
         cid_warning ("Attention : %s\n", erreur->message);
         g_error_free (erreur);
+        return NULL;
     }
     return cValue;
 }
