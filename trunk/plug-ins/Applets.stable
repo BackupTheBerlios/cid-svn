@@ -1,0 +1,50 @@
+###Core plug-ins :
+###you *should* integrate them in a whole, as they extend the dock's functionnalities.
+dock-rendering
+desklet-rendering
+gnome-integration-old
+gnome-integration
+xfce-integration
+Dbus
+###Stable applets, considered as finished :
+shortcuts
+clock
+logout
+dustbin
+showDesklets
+Xgamma
+alsaMixer
+weather
+terminal
+Cairo-Penguin
+showDesktop
+rhythmbox
+xmms
+compiz-icon
+cpusage
+rame
+netspeed
+slider
+Clipper
+GMenu
+###Stable as far as we know :
+wifi
+tomboy
+systray
+nVidia
+stack
+###Stable but still under development :
+powermanager
+switcher
+###Last addition of v2.0.0 :
+Animated-icons
+icon-effect
+drop-indicator
+motion-blur
+show-mouse
+illusion
+keyboard-indicator
+quick-browser
+mail
+Toons
+###All other applets are considered to be either not enough functionnal, buggy/untested, or under heavy development.
