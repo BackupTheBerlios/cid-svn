@@ -27,11 +27,15 @@ gboolean bFlyingButton;
 static gchar *cImageURL = NULL;
 static CidMeasure *pMeasureTimer = NULL;
 
-void cid_interrupt (int signal) {
+void 
+cid_interrupt (int signal) 
+{
     _cid_quit(NULL,NULL);
 }
 
-void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
+void 
+_cid_quit (GtkWidget *p_widget, gpointer user_data) 
+{
 
     cid_save_data ();
 
@@ -46,18 +50,23 @@ void _cid_quit (GtkWidget *p_widget, gpointer user_data) {
     (void)user_data;
 }
 
-gpointer _cid_launch_threaded (gchar *cCommand) {
-    if (!system (cCommand)) return NULL;
+gpointer 
+_cid_launch_threaded (gchar *cCommand) 
+{    if (!system (cCommand)) return NULL;
     g_free (cCommand);
     return NULL;
 }
 
-void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
+void 
+on_clic (GtkWidget *p_widget, GdkEventButton* pButton) 
+{
 
     // si on a un clic gauche, que le clic est maintenu, et qu'on se trouve dans la zone permettant le deplacement
-    if (pButton->button == 1 && pButton->type == GDK_BUTTON_PRESS && pButton->x > cid->iWidth-cid->iExtraSize && pButton->y < cid->iExtraSize) { // clic gauche
+    if (pButton->button == 1 && pButton->type == GDK_BUTTON_PRESS 
+        && pButton->x > cid->iWidth-cid->iExtraSize && pButton->y < cid->iExtraSize) { // clic gauche
         // si on ne verouille pas la position
-        if (!cid->bLockPosition) {
+        if (!cid->bLockPosition) 
+        {
             if (cid->bShowAbove)
                 gtk_window_set_keep_below (GTK_WINDOW (cid->pWindow), TRUE);
             gtk_window_begin_move_drag (GTK_WINDOW (gtk_widget_get_toplevel (p_widget)),
@@ -65,41 +74,54 @@ void on_clic (GtkWidget *p_widget, GdkEventButton* pButton) {
                                         pButton->x_root,
                                         pButton->y_root,
                                         pButton->time); // alors on se deplace
-        
         }
-    } else if (pButton->button == 1 && pButton->type == GDK_BUTTON_RELEASE) {
+    } 
+    else if (pButton->button == 1 && pButton->type == GDK_BUTTON_RELEASE) 
+    {
         // on relache un clic gauche, donc on lance la fonction 'play/pause'/'next'/'previous'
-        if (cid->bMonitorPlayer && cid->iPlayer != PLAYER_NONE) {
-            if (cid->bDisplayControl) {
+        if (cid->bMonitorPlayer && cid->iPlayer != PLAYER_NONE) 
+        {
+            if (cid->bDisplayControl) 
+            {
                 if (pButton->x < cid->iPrevNextSize &&
                     pButton->y < (cid->iHeight + cid->iPrevNextSize)/2 &&
                     pButton->y > (cid->iHeight - cid->iPrevNextSize)/2) {
                     
                     cid->pMonitorList->p_fPrevious();
                     
-                } else if  (pButton->x < (cid->iWidth + cid->iPlayPauseSize)/2 &&
-                            pButton->x > (cid->iWidth - cid->iPlayPauseSize)/2 &&
-                            pButton->y < (cid->iHeight + cid->iPlayPauseSize)/2 &&
-                            pButton->y > (cid->iHeight - cid->iPlayPauseSize)/2) {
+                } 
+                else if (pButton->x < (cid->iWidth + cid->iPlayPauseSize)/2 &&
+                         pButton->x > (cid->iWidth - cid->iPlayPauseSize)/2 &&
+                         pButton->y < (cid->iHeight + cid->iPlayPauseSize)/2 &&
+                         pButton->y > (cid->iHeight - cid->iPlayPauseSize)/2) 
+                {
                 
                     cid->pMonitorList->p_fPlayPause();
                 
-                } else if  (pButton->x > cid->iWidth - cid->iPrevNextSize &&
-                            pButton->y < (cid->iHeight + cid->iPrevNextSize)/2 &&
-                            pButton->y > (cid->iHeight - cid->iPrevNextSize)/2) {
+                } 
+                else if (pButton->x > cid->iWidth - cid->iPrevNextSize &&
+                         pButton->y < (cid->iHeight + cid->iPrevNextSize)/2 &&
+                         pButton->y > (cid->iHeight - cid->iPrevNextSize)/2) 
+                {
                 
                     cid->pMonitorList->p_fNext();
                 
                 }
-            } else {
+            } 
+            else 
+            {
                 cid->pMonitorList->p_fPlayPause();
             }
         }
-    } else if (pButton->button == 2 && pButton->type == GDK_BUTTON_RELEASE) { // clic milieu
+    } 
+    else if (pButton->button == 2 && pButton->type == GDK_BUTTON_RELEASE) 
+    { // clic milieu
         // on relache un clic du milieu, donc on lance la fonction 'Next'
         if (cid->bMonitorPlayer && cid->iPlayer != PLAYER_NONE && !cid->bDisplayControl)
             cid->pMonitorList->p_fNext();
-    } else if (pButton->button == 3 && pButton->type == GDK_BUTTON_RELEASE){ //clic droit
+    } 
+    else if (pButton->button == 3 && pButton->type == GDK_BUTTON_RELEASE)
+    { //clic droit
         // On relache un clic droit, donc on affiche le menu contextuel
         
         GtkWidget *menu = (GtkWidget*) cid_build_menu (cid);  
@@ -133,7 +155,8 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
     //g_free (cReceivedData);
     
     
-    while (*cReceivedDataList != NULL) {
+    while (*cReceivedDataList != NULL) 
+    {
         gboolean isImage = g_str_has_suffix(*cReceivedDataList,"JPG")
                         || g_str_has_suffix(*cReceivedDataList,"jpg")
                         || g_str_has_suffix(*cReceivedDataList,"JPEG")
@@ -142,17 +165,22 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
                         || g_str_has_suffix(*cReceivedDataList,"png")
                         || g_str_has_suffix(*cReceivedDataList,"SVG")
                         || g_str_has_suffix(*cReceivedDataList,"svg");
-        if(isImage) {
-            if(musicData.playing_artist != NULL && musicData.playing_album != NULL) {
+        if(isImage) 
+        {
+            if(musicData.playing_artist != NULL && musicData.playing_album != NULL) 
+            {
                 cid_debug("Le fichier est une image");
                 GString *command = g_string_new ("");
-                if(strncmp(*cReceivedDataList, "http://", 7) == 0) {
+                if(strncmp(*cReceivedDataList, "http://", 7) == 0) 
+                {
                     cid_debug("Le fichier est distant");
                     g_string_printf (command, "wget -O /tmp/\"%s - %s.jpg\" %s",
                         musicData.playing_artist,
                         musicData.playing_album,
                         *cReceivedDataList);
-                } else {
+                } 
+                else 
+                {
                     cid_debug("Le fichier est local");
                     gchar *cFilePath = (**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL));
                     g_string_printf (command, "cp %s /tmp/\"%s - %s.jpg\"",
@@ -165,11 +193,15 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
                 g_string_free (command, TRUE);
                 cid_display_image(g_strdup_printf("/tmp/%s - %s.jpg",musicData.playing_artist,musicData.playing_album));
                 cid_animation(cid->iAnimationType);
-            } else {
+            } 
+            else 
+            {
                 cid_display_image((**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL)));
                 cid_animation(cid->iAnimationType);
             }
-        } else {
+        } 
+        else 
+        {
             cid_debug("On ajoute à la playlist");
             if (cid->pMonitorList->p_fAddToQueue!=NULL)
                 cid->pMonitorList->p_fAddToQueue(*cReceivedDataList);
@@ -179,12 +211,14 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
         
     //g_print("d&d >>> %s\n",cReceivedData);
     //system (g_strdup_printf("nautilus %s &",cReceivedData));
-    //g_free (cReceivedDataList);
+    g_strfreev (cReceivedDataList);
     //g_free (cReceivedData);
 }
 
 
-void on_motion (GtkWidget *widget, GdkEventMotion *event) {
+void 
+on_motion (GtkWidget *widget, GdkEventMotion *event) 
+{
     
     cid->iCursorX = event->x;
     cid->iCursorY = event->y;
@@ -205,17 +239,23 @@ void on_motion (GtkWidget *widget, GdkEventMotion *event) {
         
         gtk_widget_queue_draw(cid->pWindow);
         bFlyingButton = TRUE;
-    } else if (bFlyingButton) {
+    } 
+    else if (bFlyingButton) 
+    {
         bFlyingButton = FALSE;
         gtk_widget_queue_draw(cid->pWindow);
     }
 }
 
-void _cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointer *user_data) {
+void 
+_cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointer *user_data) 
+{
     cid_launch_web_browser(link_);
 }
 
-void _cid_about (GtkMenuItem *pMenuItem, gpointer *data) {
+void 
+_cid_about (GtkMenuItem *pMenuItem, gpointer *data) 
+{
     
     GtkWidget *pDialog = gtk_message_dialog_new (GTK_WINDOW (cid->pWindow),
         GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -263,7 +303,9 @@ void _cid_about (GtkMenuItem *pMenuItem, gpointer *data) {
     gtk_widget_destroy (pDialog);
 }
 
-void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText) {
+void 
+_cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText) 
+{
     GtkWidget *pVBox, *pScrolledWindow;
     GtkWidget *pPageLabel, *pAboutLabel;
     
@@ -284,10 +326,13 @@ void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const g
     gtk_label_set_markup (GTK_LABEL (pAboutLabel), cAboutText);
 }
 
-gboolean _cid_proceed_download_cover (gpointer p) {
+gboolean 
+_cid_proceed_download_cover (gpointer p) 
+{
 
     // Si on ne télécharge pas, on arrête la boucle direct
-    if (!cid->bDownload) {
+    if (!cid->bDownload) 
+    {
         cid_stop_measure_timer (pMeasureTimer);
         return FALSE;
     }
@@ -297,16 +342,20 @@ gboolean _cid_proceed_download_cover (gpointer p) {
         cid_get_xml_file(musicData.playing_artist,musicData.playing_album);
 
     // Quand on a le xml, on dl la pochette
-    if (g_file_test (DEFAULT_XML_LOCATION, G_FILE_TEST_EXISTS) && !bCurrentlyDownloading) {
+    if (g_file_test (DEFAULT_XML_LOCATION, G_FILE_TEST_EXISTS) && !bCurrentlyDownloading) 
+    {
         if (cImageURL)
             g_free(cImageURL);
         cImageURL = NULL;
         cid_stream_file(DEFAULT_XML_LOCATION,&cImageURL);
         cid_debug ("URL : %s",cImageURL);
-        if (cImageURL) {
+        if (cImageURL) 
+        {
             cid_download_missing_cover(cImageURL,DEFAULT_DOWNLOADED_IMAGE_LOCATION);
             bCurrentlyDownloadingXML = FALSE;
-        } else {
+        } 
+        else 
+        {
             bCurrentlyDownloadingXML = FALSE;
             bCurrentlyDownloading = FALSE;
             cid_debug ("Téléchargement impossible\n");
@@ -316,7 +365,8 @@ gboolean _cid_proceed_download_cover (gpointer p) {
     }
 
     // Quand on a la pochette, on l'affiche et on stoppe la boucle
-    if (g_file_test (DEFAULT_DOWNLOADED_IMAGE_LOCATION, G_FILE_TEST_EXISTS)) {
+    if (g_file_test (DEFAULT_DOWNLOADED_IMAGE_LOCATION, G_FILE_TEST_EXISTS)) 
+    {
         bCurrentlyDownloadingXML = FALSE;
         bCurrentlyDownloading = FALSE;
         cid_display_image(DEFAULT_DOWNLOADED_IMAGE_LOCATION);
@@ -327,15 +377,19 @@ gboolean _cid_proceed_download_cover (gpointer p) {
     return TRUE;
 }
 
-gboolean _check_cover_is_present (gpointer data) {
+gboolean 
+_check_cover_is_present (gpointer data) 
+{
     cid->iCheckIter++;
-    if (g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS)) {
+    if (g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS)) 
+    {
         cid_display_image(musicData.playing_cover);
         musicData.cover_exist = TRUE;
         musicData.iSidCheckCover = 0;
         return FALSE;
     } else if (cid->iCheckIter > cid->iTimeToWait && cid->bDownload) {
-        if (pMeasureTimer) {
+        if (pMeasureTimer) 
+        {
             if (cid_measure_is_running(pMeasureTimer))
                 cid_stop_measure_timer(pMeasureTimer);
             if (cid_measure_is_active(pMeasureTimer))
@@ -346,13 +400,18 @@ gboolean _check_cover_is_present (gpointer data) {
         cid_launch_measure (pMeasureTimer);
         
         return FALSE;
-    } else {
+    } 
+    else 
+    {
         return TRUE;
     }
 }
 
-void _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) {
-    if (!cid->bConfFilePanel) {
+void 
+_cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data) 
+{
+    if (!cid->bConfFilePanel) 
+    {
         cid_save_data();
     
         cid_edit_conf_file_with_panel (GTK_WINDOW(gtk_window_new (GTK_WINDOW_TOPLEVEL)), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 500, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);

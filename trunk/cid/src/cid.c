@@ -41,31 +41,14 @@
 */
 
 #include "cid.h"
-#include <X11/Xlib.h>
 
 CidMainContainer *cid;
 
 static gchar *cLaunchCommand = NULL;
-static Display *s_XDisplay = NULL;
 
-static int _cid_xerror_handler (Display * pDisplay, XErrorEvent *pXError)
-{
-    cid_debug ("Erreur (%d, %d, %d) lors d'une requete X sur %d", pXError->error_code, pXError->request_code, pXError->minor_code, pXError->resourceid);
-    return 0;
-}
-
-void cid_get_X_infos (void) {
-    s_XDisplay = XOpenDisplay (0);
-    
-    XSetErrorHandler (_cid_xerror_handler);
-    
-    Screen *XScreen = XDefaultScreenOfDisplay (s_XDisplay);
-    int XScreenWidth  = WidthOfScreen (XScreen);
-    int XScreenHeight = HeightOfScreen (XScreen);
-    
-    g_print ("%dx%d\n",XScreenWidth,XScreenHeight);
-}
-void cid_init (CidMainContainer *pCid) {    
+static void 
+cid_init (CidMainContainer *pCid) 
+{    
     
     pCid->pVerbosity = NULL;
     
@@ -77,20 +60,24 @@ void cid_init (CidMainContainer *pCid) {
     
     pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
     
-    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
+    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DESKTOP; // GDK_WINDOW_TYPE_HINT_DOCK
     
     pCid->pKeyFile = NULL;
 }
 
 /* Methode appelée pour relancer cid en cas de plantage */
-void cid_intercept_signal (int signal) {
+static void 
+cid_intercept_signal (int signal) 
+{
     cid_warning ("Attention : cid has crashed (sig %d).\nIt will be restarted now.\n", signal);
     execl ("/bin/sh", "/bin/sh", "-c", cLaunchCommand, NULL);  // on ne revient pas de cette fonction.
     cid_error ("Sorry, couldn't restart cid");
     cid_sortie (CID_EXIT_ERROR);
 }
 
-void cid_run_with_player (void) {
+void 
+cid_run_with_player (void) 
+{
     if (cid->iPlayer != PLAYER_NONE)
         cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
     /* On lance telle ou telle fonction selon le lecteur selectionne */
@@ -103,10 +90,13 @@ void cid_run_with_player (void) {
         /* Amarok 2 */
         case PLAYER_AMAROK_2:
             cid_build_amarok_2_menu ();
-            if (amarok_2_dbus_connect_to_bus()) {
+            if (amarok_2_dbus_connect_to_bus()) 
+            {
                 cid_debug ("\ndbus connected\n");
                 cid_display_image((gchar *)cid_amarok_2_cover());
-            } else {
+            } 
+            else 
+            {
                 cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
             }
             break;
@@ -114,10 +104,13 @@ void cid_run_with_player (void) {
         case PLAYER_RHYTHMBOX:
             cid_build_rhythmbox_menu ();
             /* Initialisation de DBus */
-            if (rhythmbox_dbus_connect_to_bus()) {
+            if (rhythmbox_dbus_connect_to_bus()) 
+            {
                 cid_debug ("\ndbus connected\n");
                 cid_display_image((gchar *)cid_rhythmbox_cover());
-            } else {
+            } 
+            else 
+            {
                 cid_exit (CID_EXIT_ERROR,"\nFailed to connect dbus...\n");
             }
             break;
@@ -137,24 +130,29 @@ void cid_run_with_player (void) {
 }
 
 /* Methode initialisant les signaux à intercepter */
-void cid_set_signal_interception (void) {
+static void 
+cid_set_signal_interception (void) 
+{
     signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
     signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
     signal (SIGILL, cid_intercept_signal);  // Illegal instruction
     signal (SIGABRT, cid_intercept_signal);  // Abort
 }
 
-void cid_display_init(int argc, char **argv) {
+static void 
+cid_display_init(int *argc, char ***argv) 
+{
     /* Initialisation de Gtk */
     if (!cid->bRunning)
-        cid->bRunning = gtk_init_check(&argc, &argv);
+        cid->bRunning = gtk_init_check(argc, argv);
     if (!cid->bRunning)
         cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
     
     /* On intercepte les signaux */
     signal (SIGINT, cid_interrupt); // ctrl+c
 
-    if (cid->bSafeMode) {
+    if (cid->bSafeMode) 
+    {
         _cid_conf_panel(NULL,NULL);
     }
     /* On créé la fenêtre */
@@ -169,13 +167,34 @@ void cid_display_init(int argc, char **argv) {
 
 /* Fonction principale */
 
-int main ( int argc, char **argv ) {        
+int 
+main ( int argc, char **argv ) 
+{        
+
+/// TODO: debug
+/*
+    int argcBis = argc, a=0;
+    char **argvBis = calloc(argc,sizeof(char));
+    if (argvBis==NULL)
+        cid_exit(CID_EXIT_ERROR,"Error while copying args");
+    for (;a<argc;a++) 
+    {
+        argvBis[a] = realloc (argvBis[a],strlen(argv[a])*sizeof(char));
+        if (argvBis[a]!=NULL)
+            strcpy(argvBis[a],argv[a]);
+        else
+            cid_exit(CID_EXIT_ERROR,"Error while copying args");
+    }
+*/
+    //char **argvBis = malloc(sizeof(argv));
+    //memcpy(argvBis,argv,sizeof(argv));
 
     cid = g_new0(CidMainContainer,1);
     
     int i;
     GString *sCommandString = g_string_new (argv[0]);
-    for (i = 1; i < argc; i ++) {
+    for (i = 1; i < argc; i ++) 
+    {
         g_string_append_printf (sCommandString, " %s", argv[i]);
     }
     g_string_append_printf (sCommandString, " -s");
@@ -198,13 +217,14 @@ int main ( int argc, char **argv ) {
     cid_read_config (cid->pConfFile, NULL);
     cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
     
-    if (!g_thread_supported ()){ g_thread_init(NULL); }
+    if (!g_thread_supported ())
+    { g_thread_init(NULL); }
     gdk_threads_init();
 
     // La on lance la boucle GTK
-    //\___ FIXME Pas bien :/
-//    cid_display_init (argc,argv);
+    //cid_display_init (&argc,&argvBis);
     cid_display_init (0,NULL);
+    //free (argvBis);
     
     // Si on est ici, c'est qu'on a coupé la boucle GTK
     // Du coup, on en profite pour faire un peu de ménage
@@ -213,9 +233,20 @@ int main ( int argc, char **argv ) {
     cid_free_musicData();
     cid_free_main_structure (cid);
     
+    ///////////////////////////////////////////////////////////////////////
+    CidDataTable *test = cid_create_datatable(G_TYPE_INT,1,2,3,5,9,28,11);
+    printf("size: %d\n",cid_datatable_length(test));
+    //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
+    test = cid_datatable_append(test,cid_datacontent_new_int((void *)56));
+    printf("size: %d\n",cid_datatable_length(test));
+    //test = cid_datatable_remove(test,cid_datacontent_new_int((void *)2));
+    printf("size: %d\n",cid_datatable_length(test));
+    //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
+    cid_delete_datatable(&test);
+    printf("size: %d\n",cid_datatable_length(test));
     g_print ("Bye !\n");
-
-    cid_get_X_infos();
+    ///////////////////////////////////////////////////////////////////////
+//    g_print ("%s\n",CID_MODULES_DIR);
     
     return CID_EXIT_SUCCESS;
     

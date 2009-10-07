@@ -19,26 +19,38 @@ extern CidMainContainer *cid;
 static DBusGProxy *dbus_proxy_player = NULL;
 static GHashTable *change_song = NULL;
 
-gchar *cid_amarok_2_cover() {
-    if (dbus_detect_amarok_2()) {
-        if (amarok_2_getPlaying ()) {
+gchar *
+cid_amarok_2_cover() 
+{
+    if (dbus_detect_amarok_2()) 
+    {
+        if (amarok_2_getPlaying ()) 
+        {
             am_getSongInfos();
-            if (musicData.playing_cover != NULL)  {
+            if (musicData.playing_cover != NULL)  
+            {
                 cid_set_state_icon();
                 return musicData.playing_cover;
             }
             return DEFAULT_IMAGE;
-        } else {
+        } 
+        else 
+        {
             return DEFAULT_IMAGE;
         }
-    } else {
+    } 
+    else 
+    {
         return DEFAULT_IMAGE;
     }
 }
 
-gboolean amarok_2_dbus_connect_to_bus (void) {
+gboolean 
+amarok_2_dbus_connect_to_bus (void) 
+{
     g_type_init ();
-    if (dbus_is_enabled ()) {
+    if (dbus_is_enabled ()) 
+    {
         // On se connecte au bus org.kde.amarok /Player org.freedesktop.MediaPlayer
         dbus_proxy_player = (DBusGProxy *) create_new_session_proxy ("org.kde.amarok",
                             "/Player",
@@ -64,8 +76,11 @@ gboolean amarok_2_dbus_connect_to_bus (void) {
     return FALSE;
 }
 
-void amarok_2_dbus_disconnect_from_bus (void) {
-    if (dbus_proxy_player != NULL) {
+void 
+amarok_2_dbus_disconnect_from_bus (void) 
+{
+    if (dbus_proxy_player != NULL) 
+    {
         // On se desabonne de tous les signaux
         dbus_g_proxy_disconnect_signal(dbus_proxy_player, "TrackChange",
             G_CALLBACK(am_onChangeSong), NULL);
@@ -80,7 +95,9 @@ void amarok_2_dbus_disconnect_from_bus (void) {
     }
 }
 
-gboolean dbus_detect_amarok_2(void) {
+gboolean 
+dbus_detect_amarok_2(void) 
+{
     // On verifie qu'on trouve bien amarok dans la liste des bus
     musicData.opening = dbus_detect_application ("org.kde.amarok");
     return musicData.opening;
@@ -90,11 +107,14 @@ gboolean dbus_detect_amarok_2(void) {
 //*********************************************************************************
 // amarok_2_getPlaying() : Test si amarok2 joue de la musique ou non
 //*********************************************************************************
-gboolean amarok_2_getPlaying (void) {
+gboolean 
+amarok_2_getPlaying (void) 
+{
     GValueArray *s = 0;
     GValue *v;
     gint status = 100;
-    if (dbus_detect_amarok_2()) {
+    if (dbus_detect_amarok_2()) 
+    {
         dbus_g_proxy_call (dbus_proxy_player, "GetStatus", NULL,
             G_TYPE_INVALID,
             dbus_g_type_get_struct ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID),
@@ -128,7 +148,9 @@ gboolean amarok_2_getPlaying (void) {
 //*********************************************************************************
 // amarok2_getPlayingUri() : Retourne l'adresse de la musique jouée
 //*********************************************************************************
-gchar *amarok_2_getPlayingUri(void) {
+gchar *
+amarok_2_getPlayingUri(void) 
+{
     ///\______ je vois pas ou recuperer cette info...
     g_free (musicData.playing_uri);
     musicData.playing_uri = NULL;
@@ -138,7 +160,9 @@ gchar *amarok_2_getPlayingUri(void) {
 }
 
 
-void am_getSongInfos(void) {    
+void 
+am_getSongInfos(void) 
+{    
     GHashTable *data_list = NULL;
     GValue *value;
 
@@ -189,17 +213,22 @@ void am_getSongInfos(void) {
         
         g_free (musicData.playing_cover);
         value = (GValue *) g_hash_table_lookup(data_list, "arturl");
-        if (value != NULL && G_VALUE_HOLDS_STRING(value))  {
+        if (value != NULL && G_VALUE_HOLDS_STRING(value))  
+        {
             //musicData.playing_cover = g_strdup (g_value_get_string(value));
             GError *erreur = NULL;
             const gchar *cString = g_value_get_string(value);
-            if (cString != NULL && strncmp (cString, "file://", 7) == 0) {
+            if (cString != NULL && strncmp (cString, "file://", 7) == 0) 
+            {
                 musicData.playing_cover = g_filename_from_uri (cString, NULL, &erreur);
-                if (erreur != NULL) {
+                if (erreur != NULL) 
+                {
                     cid_warning ("Attention : %s\n", erreur->message);
                     g_error_free (erreur);
                 }
-            } else {
+            } 
+            else 
+            {
                 musicData.playing_cover = g_strdup (cString);
             }
         } else 
@@ -207,7 +236,9 @@ void am_getSongInfos(void) {
         cid_message ("playing_cover <- %s", musicData.playing_cover);
         
         g_hash_table_destroy (data_list);
-    } else {
+    } 
+    else 
+    {
         cid_warning ("  can't get song properties");
         g_free (musicData.playing_uri);
         musicData.playing_uri = NULL;
@@ -220,7 +251,9 @@ void am_getSongInfos(void) {
 //*********************************************************************************
 // am_onChangeSong() : Fonction executée à chaque changement de musique
 //*********************************************************************************
-void am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer data) {
+void 
+am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer data) 
+{
     
     cid_display_image(cid_amarok_2_cover());
     cid_animation(cid->iAnimationType);
@@ -229,31 +262,43 @@ void am_onChangeSong(DBusGProxy *player_proxy,GHashTable *data_list, gpointer da
 //*********************************************************************************
 // am_onChangeState() : Fonction executée à chaque changement play/pause
 //*********************************************************************************
-void am_onChangeState(DBusGProxy *player_proxy, GValueArray *status, gpointer data) {
+void 
+am_onChangeState(DBusGProxy *player_proxy, GValueArray *status, gpointer data) 
+{
     amarok_2_getPlaying();
     cid_set_state_icon();
 }
 
-void am_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data) {
+void 
+am_onCovertArtChanged(DBusGProxy *player_proxy,const gchar *cImageURI, gpointer data) 
+{
     cid_debug ("%s (%s)",__func__,cImageURI);
     g_free (musicData.playing_cover);
     musicData.playing_cover = g_strdup (cImageURI);
     cid_display_image(musicData.playing_cover);
 }
 
-void _playPause_amarok_2 (void) {
+void 
+_playPause_amarok_2 (void) 
+{
     dbus_call (dbus_proxy_player,musicData.playing ? "Pause" : "Play");
 }
 
-void _next_amarok_2 (void) {
+void 
+_next_amarok_2 (void) 
+{
     dbus_call (dbus_proxy_player,"Next");
 }
 
-void _previous_amarok_2 (void) {
+void 
+_previous_amarok_2 (void) 
+{
     dbus_call (dbus_proxy_player,"Prev");
 }
 
-void cid_build_amarok_2_menu (void) {
+void 
+cid_build_amarok_2_menu (void) 
+{
     cid->pMonitorList->p_fPlayPause = _playPause_amarok_2;
     cid->pMonitorList->p_fNext = _next_amarok_2;
     cid->pMonitorList->p_fPrevious = _previous_amarok_2;

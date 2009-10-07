@@ -28,5 +28,7 @@
 #include "cid-conf-panel-factory.h"
 #include "cid-animation.h"
 #include "cid-amarok2.h"
+#include "cid-console-call.h"
+#include "cid-constantes.h"
 
 #endif

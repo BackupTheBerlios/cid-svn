@@ -27,10 +27,13 @@ static PlayerIndice iPlayerChanged;
 static SymbolColor iSymbolChanged;
 static gint iOldWidth, iOldHeight;
 
-void cid_check_file (const gchar *f) {
+void 
+cid_check_file (const gchar *f) 
+{
     gchar *cCommand=NULL;
     gchar *cFileName = g_strdup(CID_CONFIG_FILE);
-    if (!g_file_test (f, G_FILE_TEST_EXISTS)) {
+    if (!g_file_test (f, G_FILE_TEST_EXISTS)) 
+    {
         cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
         system (cCommand);
         g_free (cCommand);
@@ -61,7 +64,9 @@ void cid_check_file (const gchar *f) {
     }
 }
 
-gboolean cid_check_conf_file_version (const gchar *f) {
+gboolean 
+cid_check_conf_file_version (const gchar *f) 
+{
     gchar *cCommand=NULL;
     gchar line_f1[80], line_f2[80];
     FILE *f1, *f2;
@@ -76,7 +81,8 @@ gboolean cid_check_conf_file_version (const gchar *f) {
     
     cid_message ("line_f1 %s / line_f2 %s\n",line_f1,line_f2);
         
-    if (strcmp(line_f1,line_f2)!=0 || bUnvalidKey) {
+    if (strcmp(line_f1,line_f2)!=0 || bUnvalidKey) 
+    {
         cid_warning ("bad file version, building a new one\n");
         cCommand = g_strdup_printf("rm -rf %s > /dev/null",f);
         system (cCommand);
@@ -92,24 +98,29 @@ gboolean cid_check_conf_file_version (const gchar *f) {
     return TRUE;
 }
 
-void cid_read_config_after_update (const char *f, gpointer *pData) {
+void 
+cid_read_config_after_update (const char *f, gpointer *pData) 
+{
     cid_read_config (f, NULL);
     
     // Si on active les fonctions 'instables', on détruit puis recree la fenetre
-    if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) {
+    if ((cid->bChangedTestingConf != (cid->bUnstable && cid->bTesting))) 
+    {
         cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
         gtk_widget_destroy(cid->pWindow);
         cid_create_main_window();
     }
     
     // Si on change de lecteur
-    if (iPlayerChanged != cid->iPlayer) {
+    if (iPlayerChanged != cid->iPlayer) 
+    {
         cid_disconnect_player ();
     
         cid_free_musicData();
     
-        if (cid->pMonitorList) {
-            g_slice_free (CidControlFunctionsList,cid->pMonitorList);
+        if (cid->pMonitorList) 
+        {
+            //g_slice_free (CidControlFunctionsList,cid->pMonitorList);
             cid->pMonitorList = NULL;
         }
     
@@ -121,11 +132,14 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
     if (iSymbolChanged != cid->iSymbolColor)
         cid_load_symbols();
     
+    cid_check_position();
+    
     gtk_window_move (GTK_WINDOW(cid->pWindow), cid->iPosX, cid->iPosY);
     gtk_window_resize (GTK_WINDOW (cid->pWindow), cid->iWidth, cid->iHeight);
     
     // Si on change l'affichage
-    if (bChangedDesktop != cid->bAllDesktop) {
+    if (bChangedDesktop != cid->bAllDesktop) 
+    {
         if (!cid->bAllDesktop)
             gtk_window_unstick(GTK_WINDOW(cid->pWindow));
         else
@@ -133,7 +147,8 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
     }
     
     // Enfin, si on redimenssionne, on recharge les images
-    if (cid->iWidth != iOldWidth || cid->iHeight != iOldHeight) {
+    if (cid->iWidth != iOldWidth || cid->iHeight != iOldHeight) 
+    {
         cid_display_image (musicData.playing_cover);
         cid_load_symbols();
     }
@@ -143,7 +158,9 @@ void cid_read_config_after_update (const char *f, gpointer *pData) {
     (void) pData;
 }
 
-gboolean cid_load_key_file(const gchar *cFile) {
+gboolean 
+cid_load_key_file(const gchar *cFile) 
+{
     GKeyFileFlags flags;
     GError *error = NULL;
 
@@ -152,21 +169,27 @@ gboolean cid_load_key_file(const gchar *cFile) {
     flags = G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS;
 
     /* Load the GKeyFile or return. */
-    if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) {
+    if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) 
+    {
         cid_warning (error->message);
         return FALSE;
     }
     return TRUE;
 }
 
-void cid_key_file_free(void) {
+void 
+cid_key_file_free(void) 
+{
     g_key_file_free (cid->pKeyFile);
 }
 
-gboolean cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault) {
+gboolean 
+cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault) 
+{
     GError *error = NULL;
     gboolean bGet = g_key_file_get_boolean (pKeyFile, cGroup, cKey, &error);
-    if (error != NULL) {
+    if (error != NULL) 
+    {
         bUnvalidKey = TRUE;
         cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
@@ -177,17 +200,21 @@ gboolean cid_get_boolean_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *c
     return bGet;
 }
 
-gchar *cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gchar *cDefault, gboolean bFile, gboolean bDir) {
+gchar *
+cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gchar *cDefault, gboolean bFile, gboolean bDir) 
+{
     GError *error = NULL;
     gchar *cGet = g_key_file_get_string (pKeyFile, cGroup, cKey, &error);
-    if (error != NULL && bDefault) {
+    if (error != NULL && bDefault) 
+    {
         bUnvalidKey = TRUE;
         cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
         error = NULL;
         cGet = cDefault;
     }
-    if ((bFile || bDir) && cDefault != NULL && !g_file_test (cGet, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS)) {
+    if ((bFile || bDir) && cDefault != NULL && !g_file_test (cGet, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS)) 
+    {
         g_free (cGet);
         if (g_file_test (cDefault, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS))
             return cDefault;
@@ -198,10 +225,13 @@ gchar *cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey
     return cGet;
 }
 
-gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gint iDefault, gboolean bMax, gint iMax) {
+gint 
+cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gboolean bDefault, gint iDefault, gboolean bMax, gint iMax) 
+{
     GError *error = NULL;
     gint iGet = g_key_file_get_integer (pKeyFile, cGroup, cKey, &error);
-    if (error != NULL && bDefault) {
+    if (error != NULL && bDefault) 
+    {
         bUnvalidKey = TRUE;
         cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
@@ -214,8 +244,11 @@ gint cid_get_int_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbo
     return iGet;
 }
 
-void cid_free_and_debug_error (GError **error) {
-    if (*error != NULL) {
+void 
+cid_free_and_debug_error (GError **error) 
+{
+    if (*error != NULL) 
+    {
         bUnvalidKey = TRUE;
         cid_warning("Unable to find key\n=> %s",(*error)->message);
         g_error_free(*error);
@@ -223,7 +256,9 @@ void cid_free_and_debug_error (GError **error) {
     }
 }
 
-void cid_read_key_file (const gchar *f) {   
+void 
+cid_read_key_file (const gchar *f) 
+{   
     if (!cid_load_key_file(f))
         cid_exit(CID_ERROR_READING_FILE,"Key File error");
 
@@ -279,12 +314,13 @@ void cid_read_key_file (const gchar *f) {
     cid->bMask          = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "MASK", TRUE);
     cid->bShowAbove     = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "SWITCH_ABOVE", TRUE);
     
-    if (!bUnvalidKey) {
+    if (!bUnvalidKey) 
+    {
         cid->dRed            = cid->dColor[0];
         cid->dGreen          = cid->dColor[1];
         cid->dBlue           = cid->dColor[2];
         cid->dAlpha          = cid->dColor[3];
-        cid->dFocusVariation = cid->dFlyingColor[3]>cid->dAlpha ? +.05 : -.05;
+        cid->dFocusVariation = cid->dFlyingColor[3]>cid->dAlpha ? +1 : -1;
         cid->iExtraSize      = (cid->iHeight + cid->iWidth)/20;
         cid->iPrevNextSize   = cid->iExtraSize * 2;
         cid->iPlayPauseSize  = cid->iExtraSize * 3;
@@ -293,7 +329,9 @@ void cid_read_key_file (const gchar *f) {
     cid_key_file_free();
 }
 
-int cid_read_config (const char *f, gpointer *pData) {
+int 
+cid_read_config (const char *f, gpointer *pData) 
+{
     cid_info ("Reading file : %s\n",f);
     
     if (!cid->bDevMode) 
@@ -309,7 +347,9 @@ int cid_read_config (const char *f, gpointer *pData) {
     return 0;
 }
 
-void cid_get_data () {
+void 
+cid_get_data () 
+{
     /* On récupère la position de cid */
     gtk_window_get_position(GTK_WINDOW (cid->pWindow), &cid->iPosX, &cid->iPosY);
     
@@ -317,7 +357,9 @@ void cid_get_data () {
     gtk_window_get_size(GTK_WINDOW (cid->pWindow), &cid->iWidth, &cid->iHeight);
 }
 
-void cid_save_data () {
+void 
+cid_save_data () 
+{
     if (!cid_load_key_file(cid->pConfFile))
         cid_exit(CID_ERROR_READING_FILE,"Key File error");
     
@@ -367,12 +409,15 @@ void cid_save_data () {
     cid_write_keys_to_file (cid->pKeyFile, cid->pConfFile);
 }
 
-void cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath) {
+void 
+cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath) 
+{
     cid_debug ("%s (%s)", __func__, cConfFilePath);
     GError *erreur = NULL;
 
     gchar *cDirectory = g_path_get_dirname (cConfFilePath);
-    if (! g_file_test (cDirectory, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) {
+    if (! g_file_test (cDirectory, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) 
+    {
         g_mkdir_with_parents (cDirectory, 7*8*8+7*8+5);
     }
     g_free (cDirectory);
@@ -380,14 +425,16 @@ void cid_write_keys_to_file (GKeyFile *pKeyFile, const gchar *cConfFilePath) {
 
     gsize length;
     gchar *cNewConfFilePath = g_key_file_to_data (pKeyFile, &length, &erreur);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Error while fetching data : %s", erreur->message);
         g_error_free (erreur);
         return ;
     }
 
     g_file_set_contents (cConfFilePath, cNewConfFilePath, length, &erreur);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Error while writing data : %s", erreur->message);
         g_error_free (erreur);
         return ;

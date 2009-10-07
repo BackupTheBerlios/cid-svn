@@ -14,7 +14,9 @@
 
 extern CidMainContainer *cid;
 
-GtkWidget *cid_build_menu (CidMainContainer *pCid) {
+GtkWidget *
+cid_build_menu (CidMainContainer *pCid) 
+{
     static gpointer *data = NULL;
     
     GtkWidget *menu = gtk_menu_new ();
@@ -40,7 +42,8 @@ GtkWidget *cid_build_menu (CidMainContainer *pCid) {
     _add_entry_in_menu (_("About"), GTK_STOCK_ABOUT, _cid_about, pSubMenu);
     _add_entry_in_menu (_("Quit"), GTK_STOCK_QUIT, _cid_quit, pSubMenu);
     
-    if (cid->bMonitorPlayer && cid->iPlayer!=PLAYER_NONE) {
+    if (cid->bMonitorPlayer && cid->iPlayer!=PLAYER_NONE) 
+    {
         pMenuItem = gtk_separator_menu_item_new ();
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), pMenuItem);
     

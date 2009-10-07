@@ -88,5 +88,36 @@ void cid_free_main_structure (CidMainContainer *pCid);
  */
 void cid_launch_web_browser (const gchar *cURL);
 
+/**
+ * permet de verifier que l'utilisateur entre des valeurs
+ * correctes
+ */
+void cid_check_position (void);
+
+/**
+ * Fonction permettant de creer un tableau dynamique
+ */
+CidDataTable *cid_create_datatable (GType iDataType, ...);
+
+void cid_delete_datatable(CidDataTable **p_list);
+CidDataTable *cid_datatable_remove(CidDataTable *p_list, CidDataContent *data);
+CidDataTable *cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data);
+CidDataTable *cid_datatable_remove_id(CidDataTable *p_list, int position);
+size_t cid_datatable_length(CidDataTable *p_list);
+CidDataTable *cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position);
+CidDataTable *cid_datatable_prepend(CidDataTable *p_list, CidDataContent *data);
+CidDataTable *cid_datatable_append(CidDataTable *p_list, CidDataContent *data);
+CidDataContent *cid_datacontent_new (GType iType, void *value);
+gboolean cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2);
+void cid_datatable_foreach (CidDataTable *p_list, CidDataAction func);
+void cid_datacase_print (CidDataCase *pCase);
+
+#define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, val)
+#define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, val)
+#define cid_datacontent_new_boolean(val) cid_datacontent_new(G_TYPE_BOOLEAN, val)
+
+#define cid_datatable_remove_first(list) cid_datatable_remove_id(list, 1)
+#define cid_datatable_remove_last(list) cid_datatable_remove_id(list, cid_datatable_length(list))
+
 G_END_DECLS
 #endif

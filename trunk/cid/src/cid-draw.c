@@ -23,44 +23,56 @@ static gboolean supports_alpha = FALSE;
 static gboolean g_bRoundedBottomCorner = FALSE;
 extern gboolean bFlyingButton;
 
-static gchar *cid_get_symbol_path (StateSymbol iState, SymbolColor iColor) {
+static gchar *
+cid_get_symbol_path (StateSymbol iState, SymbolColor iColor) 
+{
     return g_strdup_printf("%s/%s-%s.png",cid->bDevMode ? "../data" : CID_DATA_DIR, STATE_SYMBOL[iState], STATE_COLOR[iColor]);
 }
 
 /* Fonction qui nous sert à afficher l'image dont le chemin
    est passé en argument. */
-void cid_display_image(gchar *image) {
+void 
+cid_display_image(gchar *image) 
+{
     cid_debug (" %s (%s);\n",__func__,image);
     
     // On recupere l'ancienne image pour faire le fondu
-    if (cid->cPreviousSurface) {
+    if (cid->cPreviousSurface) 
+    {
         cairo_surface_destroy (cid->cPreviousSurface);
         cid->cPreviousSurface = NULL;
     }
     if (cid->iAnimationType == CID_FADE_IN_OUT && cid->bRunAnimation)
         cid->cPreviousSurface = cairo_surface_reference(cid->cSurface);
         
-    if (cid->cSurface) {
+    if (cid->cSurface) 
+    {
         cairo_surface_destroy (cid->cSurface);
         cid->cSurface = NULL;
     }
 
-    if (g_file_test (image, G_FILE_TEST_EXISTS)) {
+    if (g_file_test (image, G_FILE_TEST_EXISTS)) 
+    {
         cid->cSurface = cid_get_cairo_image (image, cid->iWidth, cid->iHeight);
-        if (musicData.playing_cover && strcmp(musicData.playing_cover,image)!=0) {
+        if (musicData.playing_cover && strcmp(musicData.playing_cover,image)!=0) 
+        {
             g_free(musicData.playing_cover);
             musicData.playing_cover = g_strdup(image);
         }
         musicData.cover_exist = TRUE;
-        if (musicData.iSidCheckCover != 0) {
+        if (musicData.iSidCheckCover != 0) 
+        {
             g_source_remove (musicData.iSidCheckCover);
             musicData.iSidCheckCover = 0;
         }
-    } else {
+    } 
+    else 
+    {
         cid->cSurface = cid_get_cairo_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
         musicData.cover_exist = FALSE;
         cid->iCheckIter = 0;
-        if (musicData.iSidCheckCover == 0 && cid->iPlayer != PLAYER_NONE) {
+        if (musicData.iSidCheckCover == 0 && cid->iPlayer != PLAYER_NONE) 
+        {
             cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
             musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
         }
@@ -70,16 +82,20 @@ void cid_display_image(gchar *image) {
 }
 
 /* On dessine l'image à partir de son URI */
-cairo_surface_t *cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble iHeight) {
+cairo_surface_t *
+cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble iHeight) 
+{
     cid_debug ("%s (%s);\n",__func__,cImagePath);
     
     cairo_surface_t* pNewSurface = NULL;
     gboolean bIsSVG = FALSE, bIsPNG = FALSE, bIsXPM = FALSE;
     FILE *fd = fopen (cImagePath, "r");
     
-    if (fd != NULL) {
+    if (fd != NULL) 
+    {
         char buffer[8];
-        if (fgets (buffer, 7, fd) != NULL) {
+        if (fgets (buffer, 7, fd) != NULL) 
+        {
             if (strncmp (buffer+2, "xml", 3) == 0)
                 bIsSVG = TRUE;
             else if (strncmp (buffer+1, "PNG", 3) == 0)
@@ -90,7 +106,8 @@ cairo_surface_t *cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble 
         }
         fclose (fd);
     }
-    if (! bIsSVG && ! bIsPNG && ! bIsXPM) {  // sinon, on se base sur l'extension.
+    if (! bIsSVG && ! bIsPNG && ! bIsXPM) 
+    {  // sinon, on se base sur l'extension.
         cid_debug ("  on se base sur l'extension en desespoir de cause.");
         if (g_str_has_suffix (cImagePath, ".svg"))
             bIsSVG = TRUE;
@@ -106,11 +123,14 @@ cairo_surface_t *cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble 
         if (!bIsSVG)
             g_object_unref (nCover);
 /*
-    } else {
+    } 
+    else 
+    {
         cairo_surface_t* surface_ini;
         cairo_t* pCairoContext = NULL;
         surface_ini = cairo_image_surface_create_from_png (cImagePath);
-        if (cairo_surface_status (surface_ini) == CAIRO_STATUS_SUCCESS) {
+        if (cairo_surface_status (surface_ini) == CAIRO_STATUS_SUCCESS) 
+        {
             
             pNewSurface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                 cairo_image_surface_get_width (surface_ini),
@@ -129,15 +149,21 @@ cairo_surface_t *cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble 
     return pNewSurface;
 }
 
-GdkPixbuf *cid_get_pixbuf (GtkWidget **imageWidget) {
+GdkPixbuf *
+cid_get_pixbuf (GtkWidget **imageWidget) 
+{
     return gtk_image_get_pixbuf(GTK_IMAGE(*imageWidget));
 }
 
-GtkWidget *cid_get_image_widget(char **imageURI) {
+GtkWidget *
+cid_get_image_widget(char **imageURI) 
+{
     return gtk_image_new_from_file(*imageURI);
 }
 
-cairo_surface_t *_cid_create_blank_surface (cairo_t *pSourceContext, int iWidth, int iHeight) {
+cairo_surface_t *
+_cid_create_blank_surface (cairo_t *pSourceContext, int iWidth, int iHeight) 
+{
     if (pSourceContext != NULL)
         return cairo_surface_create_similar (cairo_get_target (pSourceContext),
             CAIRO_CONTENT_COLOR_ALPHA,
@@ -150,11 +176,14 @@ cairo_surface_t *_cid_create_blank_surface (cairo_t *pSourceContext, int iWidth,
 }
 
 /* Crée une image à partir d'un buffer de pixels */
-cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
+cairo_surface_t *
+cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) 
+{
     cid_debug (" %s ();\n",__func__);
 
     GdkPixbuf *pPixbufWithAlpha = *pixbuf;
-    if (! gdk_pixbuf_get_has_alpha (*pixbuf)) {  // on lui rajoute un canal alpha s'il n'en a pas.
+    if (! gdk_pixbuf_get_has_alpha (*pixbuf)) 
+    {  // on lui rajoute un canal alpha s'il n'en a pas.
         //g_print ("  ajout d'un canal alpha\n");
         pPixbufWithAlpha = gdk_pixbuf_add_alpha (*pixbuf, FALSE, 255, 255, 255);  // TRUE <=> les pixels blancs deviennent transparents.
     }
@@ -169,8 +198,10 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
     int x, y;
     int red, green, blue;
     float fAlphaFactor;
-    for (y = 0; y < h; y ++) {
-        for (x = 0; x < w; x ++) {
+    for (y = 0; y < h; y ++) 
+    {
+        for (x = 0; x < w; x ++) 
+        {
             p = pixels + y * iRowstride + x * iNbChannels;
             fAlphaFactor = (float) p[3] / 255;
             red = p[0] * fAlphaFactor;
@@ -206,9 +237,13 @@ cairo_surface_t *cid_get_image_from_pixbuf (GdkPixbuf **pixbuf) {
 
 /* Fonction qui créée la fenêtre, la déplace à la position
    voulue, et la dimensionne */
-void cid_create_main_window() {
+void 
+cid_create_main_window() 
+{
     /* On crée la fenêtre */
     cid->pWindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    
+    cid_check_position ();
     
     /* On place, nomme, et dimenssione la fenetre */
     gtk_window_set_title (GTK_WINDOW (cid->pWindow), "cid");
@@ -248,7 +283,8 @@ void cid_create_main_window() {
     g_signal_connect (G_OBJECT(cid->pWindow), "leave-notify-event", G_CALLBACK(cid_focus), GINT_TO_POINTER(FALSE)); // Le curseur quitte la fenêtre
     
     ///\_______ TESTING OPTION
-    if (cid->bUnstable) {
+    if (cid->bUnstable) 
+    {
         /* On prépare le traitement du d'n'd */
         GtkTargetEntry *pTargetEntry = g_new0 (GtkTargetEntry, 6);
         pTargetEntry[0].target = "text/*";
@@ -286,17 +322,22 @@ void cid_create_main_window() {
 }
 
 /* On détermine si un gestionnaire de composite est présent ou non */
-void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userdata) {
+void 
+cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userdata) 
+{
     GdkScreen *screen = NULL;
     GdkColormap *colormap = NULL;
  
     screen = gtk_widget_get_screen (widget);
     colormap = gdk_screen_get_rgba_colormap (screen);
-    if (colormap == NULL) {
+    if (colormap == NULL) 
+    {
         cid_message ("Your screen does not support alpha channels!\n");
         colormap = gdk_screen_get_rgb_colormap(screen);
         supports_alpha = FALSE;
-    } else {
+    } 
+    else 
+    {
         cid_message ("Your screen supports alpha channels!\n");
         supports_alpha = TRUE;
     }
@@ -304,7 +345,9 @@ void cid_set_colormap (GtkWidget *widget, GdkScreen *old_screen, gpointer userda
     gtk_widget_set_colormap (widget, colormap);
 }
 
-void cid_draw_text (cairo_t *cr) {
+void 
+cid_draw_text (cairo_t *cr) 
+{
     cairo_set_source_rgba (cr, 1, 0, 0, 1);
     cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 
@@ -343,14 +386,18 @@ void cid_draw_text (cairo_t *cr) {
     y1=y0+rect_height;
     if (!rect_width || !rect_height)
         return;
-    if (rect_width/2<radius) {
-        if (rect_height/2<radius) {
+    if (rect_width/2<radius) 
+    {
+        if (rect_height/2<radius) 
+        {
             cairo_move_to  (cr, x0, (y0 + y1)/2);
             cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
             cairo_curve_to (cr, x1, y0, x1, y0, x1, (y0 + y1)/2);
             cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
             cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
-        } else {
+        } 
+        else 
+        {
             cairo_move_to  (cr, x0, y0 + radius);
             cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
             cairo_curve_to (cr, x1, y0, x1, y0, x1, y0 + radius);
@@ -358,8 +405,11 @@ void cid_draw_text (cairo_t *cr) {
             cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
             cairo_curve_to (cr, x0, y1, x0, y1, x0, y1- radius);
         }
-    } else {
-        if (rect_height/2<radius) {
+    } 
+    else 
+    {
+        if (rect_height/2<radius) 
+        {
             cairo_move_to  (cr, x0, (y0 + y1)/2);
             cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
             cairo_line_to (cr, x1 - radius, y0);
@@ -367,7 +417,9 @@ void cid_draw_text (cairo_t *cr) {
             cairo_curve_to (cr, x1, y1, x1, y1, x1 - radius, y1);
             cairo_line_to (cr, x0 + radius, y1);
             cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
-        } else {
+        } 
+        else 
+        {
             cairo_move_to  (cr, x0, y0 + radius);
             cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
             cairo_line_to (cr, x1 - radius, y0);
@@ -389,7 +441,9 @@ void cid_draw_text (cairo_t *cr) {
 }
 
 /* Charge les symbols */
-void cid_load_symbols (void) {
+void 
+cid_load_symbols (void) 
+{
     if (cid->cPlay)
         cairo_surface_destroy (cid->cPlay);
     if (cid->cPause)
@@ -415,7 +469,9 @@ void cid_load_symbols (void) {
 }
 
 /* Fonction qui s'occupe de dessiner la fenêtre */
-void cid_set_render (cairo_t *pContext, gpointer *pData) {      
+void 
+cid_set_render (cairo_t *pContext, gpointer *pData) 
+{      
     cairo_t *cr = pContext;
     
     if (!cid->bMask)
@@ -428,7 +484,8 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
 
     
     // Si le lecteur est lance ou qu'on ne cache pas cid
-    if ( musicData.opening || !cid->bHide ) {
+    if ( musicData.opening || !cid->bHide ) 
+    {
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save (cr);
 
@@ -463,7 +520,8 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
         cairo_translate (cr, -cid->iWidth/2, -cid->iHeight/2);
         
         // Si on utilise le fondu, et qu'on a un alpha <1 on dessine nos 2 surfaces :)
-        if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT && cid->dFadeInOutAlpha < 1 && cid->bAnimation) {
+        if (cid->cPreviousSurface!=NULL && cid->iAnimationType == CID_FADE_IN_OUT 
+            && cid->dFadeInOutAlpha < 1 && cid->bAnimation) {
             cairo_set_source_surface (cr, cid->cPreviousSurface, 0, 0);
             cairo_paint_with_alpha (cr, 1-cid->dFadeInOutAlpha);
             
@@ -471,15 +529,26 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
             cairo_paint_with_alpha (cr, cid->dFadeInOutAlpha);
             
             
-        } else {
+        } 
+        else 
+        {
             cairo_set_source_surface (cr, cid->cSurface, 0, 0);
             cairo_paint (cr);
         }
         cairo_restore (cr); 
+    } 
+    else 
+    {
+        cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+        cairo_save (cr);
+        cairo_set_source_rgba (cr, 0, 0, 0, 0);
+        cairo_paint (cr);
+        cairo_restore (cr);
     }
     
     // Si on affiche l'etat du lecteur
-    if (cid->bPlayerState && (musicData.opening) && cid->iPlayer != PLAYER_NONE) {
+    if (cid->bPlayerState && musicData.opening && cid->iPlayer != PLAYER_NONE) 
+    {
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save(cr);
         cairo_set_source_rgba (cr, 0, 0, 0, 0);
@@ -490,12 +559,14 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
     
     ///\_______ TESTING OPTION
     // si on lit de la musique et qu'on ne cache pas cid, on affiche le nom de la piste jouee
-    if (cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) {  
+    if (cid->bUnstable && cid->bDisplayTitle && (musicData.opening || !cid->bHide)) 
+    {  
         cid_draw_text(cr);
     }
     
     // Si on survolle CID et qu'on affiche un masque
-    if (cid->bCurrentlyFlying && cid->bMask) {
+    if (cid->bCurrentlyFlying && cid->bMask) 
+    {
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save(cr);
         cairo_set_source_rgba (cr, cid->dRed, cid->dGreen, cid->dBlue, cid->dAlpha);
@@ -504,7 +575,8 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
     }
     
     // Si on survolle et qu'on autorise le deplacement, on affiche une petite croix
-    if (cid->bCurrentlyFlying && !cid->bLockPosition) {
+    if (cid->bCurrentlyFlying && !cid->bLockPosition) 
+    {
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save(cr);
         cairo_set_source_rgba (cr, 0, 0, 0, 0);
@@ -515,7 +587,8 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
     }
     
     // Si on survolle et qu'on autorise l'affichage des controles
-    if (cid->bCurrentlyFlying && cid->bDisplayControl && cid->iPlayer != PLAYER_NONE && cid->bMonitorPlayer) {
+    if (cid->bCurrentlyFlying && cid->bDisplayControl && cid->iPlayer != PLAYER_NONE && cid->bMonitorPlayer) 
+    {
         // Previous button
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save(cr);
@@ -528,7 +601,9 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
             
             cairo_paint_with_alpha (cr, .5);
             
-        } else {
+        } 
+        else 
+        {
             if (cid->dAnimationProgress < 1)
                 cairo_paint_with_alpha (cr, cid->dAnimationProgress);
             else
@@ -548,7 +623,9 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
             
             cairo_paint_with_alpha (cr, .5);
             
-        } else {
+        } 
+        else 
+        {
             if (cid->dAnimationProgress < 1)
                 cairo_paint_with_alpha (cr, cid->dAnimationProgress);
             else
@@ -567,7 +644,9 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
             
             cairo_paint_with_alpha (cr, .5);
             
-        } else {
+        } 
+        else 
+        {
             if (cid->dAnimationProgress < 1)
                 cairo_paint_with_alpha (cr, cid->dAnimationProgress);
             else
@@ -579,12 +658,16 @@ void cid_set_render (cairo_t *pContext, gpointer *pData) {
     cairo_destroy (cr);
 }
 
-void cid_set_state_icon (void) {
+void 
+cid_set_state_icon (void) 
+{
     gtk_widget_queue_draw (cid->pWindow);
 }
 
 /* redessine la fenêtre */
-void cid_draw_window (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) {
+void 
+cid_draw_window (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userdata) 
+{
 
     cid->pContext = gdk_cairo_create (cid->pWindow->window);
     if (!cid->pContext)
@@ -593,7 +676,9 @@ void cid_draw_window (GtkWidget *pWidget, GdkEventExpose *event, gpointer *userd
     cid_set_render (cid->pContext, userdata);
 }
 
-double cid_draw_frame (cairo_t *pCairoContext, double fRadius, double fLineWidth, double fFrameWidth, double fFrameHeight, double fDockOffsetX, double fDockOffsetY, int sens, double fInclination) { // la largeur est donnee par rapport "au fond".
+double 
+cid_draw_frame (cairo_t *pCairoContext, double fRadius, double fLineWidth, double fFrameWidth, double fFrameHeight, double fDockOffsetX, double fDockOffsetY, int sens, double fInclination) 
+{ // la largeur est donnee par rapport "au fond".
     if (2*fRadius > fFrameHeight + fLineWidth)
         fRadius = (fFrameHeight + fLineWidth) / 2 - 1;
     double fDeltaXForLoop = fInclination * (fFrameHeight + fLineWidth - (g_bRoundedBottomCorner ? 2 : 1) * fRadius);
@@ -634,7 +719,9 @@ double cid_draw_frame (cairo_t *pCairoContext, double fRadius, double fLineWidth
     return fDeltaXForLoop + fRadius * cosa;
 }
 
-cairo_surface_t *cid_create_surface_from_text_full (gchar *cText, cairo_t* pSourceContext, CidLabelDescription *pLabelDescription, double fMaxScale, int iMaxWidth, int *iTextWidth, int *iTextHeight, double *fTextXOffset, double *fTextYOffset) {
+cairo_surface_t *
+cid_create_surface_from_text_full (gchar *cText, cairo_t* pSourceContext, CidLabelDescription *pLabelDescription, double fMaxScale, int iMaxWidth, int *iTextWidth, int *iTextHeight, double *fTextXOffset, double *fTextYOffset) 
+{
     g_return_val_if_fail (cText != NULL && pLabelDescription != NULL && pSourceContext != NULL && cairo_status (pSourceContext) == CAIRO_STATUS_SUCCESS, NULL);
     
     //\_________________ On ecrit le texte dans un calque Pango.

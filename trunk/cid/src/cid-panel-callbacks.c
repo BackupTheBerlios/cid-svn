@@ -14,7 +14,9 @@
 
 extern CidMainContainer *cid;
 
-void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data) {
+void 
+_cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data) 
+{
     
     GKeyFile *pKeyFile = user_data[0];
     GSList *pWidgetList = user_data[1];
@@ -29,13 +31,17 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
     GPtrArray *pDataGarbage = user_data[10];
     GMainLoop *pBlockingLoop = user_data[11];
 
-    if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_APPLY) {
+    if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_APPLY) 
+    {
         gtk_window_set_modal (GTK_WINDOW (pDialog), TRUE);  // pour prevenir tout interaction avec l'appli pendant sa re-configuration.
 
-        if (pWidgetList != NULL) {
+        if (pWidgetList != NULL) 
+        {
             cid_update_keyfile_from_widget_list (pKeyFile, pWidgetList);
             cid_write_keys_to_file (pKeyFile, cConfFilePath);
-        } else {
+        } 
+        else 
+        {
             GtkTextIter start, end;
             gtk_text_buffer_get_iter_at_offset (pTextBuffer, &start, 0);
             gtk_text_buffer_get_iter_at_offset (pTextBuffer, &end, -1);
@@ -54,8 +60,10 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
         gtk_window_set_modal (GTK_WINDOW (pDialog), FALSE);
     }
 
-    if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_REJECT || action == GTK_RESPONSE_NONE) {
-        if (cid->bSafeMode && cid->bBlockedWidowActive) {
+    if (action == GTK_RESPONSE_ACCEPT || action == GTK_RESPONSE_REJECT || action == GTK_RESPONSE_NONE) 
+    {
+        if (cid->bSafeMode && cid->bBlockedWidowActive) 
+        {
             cid->bBlockedWidowActive = FALSE;
             cid->bSafeMode = FALSE;
             //g_signal_emit_by_name(GTK_OBJECT(pDialog),"delete-event");
@@ -74,7 +82,9 @@ void _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user
     }
 }
 
-void _cid_set_color (GtkColorButton *pColorButton, GSList *pWidgetList) {
+void 
+_cid_set_color (GtkColorButton *pColorButton, GSList *pWidgetList) 
+{
     GdkColor gdkColor;
     gtk_color_button_get_color (pColorButton, &gdkColor);
 
@@ -107,7 +117,9 @@ void _cid_set_color (GtkColorButton *pColorButton, GSList *pWidgetList) {
     }
 }
 
-void _cid_get_current_color (GtkColorButton *pColorButton, GSList *pWidgetList) {
+void 
+_cid_get_current_color (GtkColorButton *pColorButton, GSList *pWidgetList) 
+{
     GdkColor gdkColor;
     GtkSpinButton *pSpinButton;
 
@@ -139,7 +151,9 @@ void _cid_get_current_color (GtkColorButton *pColorButton, GSList *pWidgetList) 
         gtk_color_button_set_alpha (pColorButton, gtk_spin_button_get_value (pSpinButton) * 65535);
 }
 
-gboolean _cid_find_iter_from_name (GtkListStore *pModele, gchar *cName, GtkTreeIter *iter) {
+gboolean 
+_cid_find_iter_from_name (GtkListStore *pModele, gchar *cName, GtkTreeIter *iter) 
+{
     if (cName == NULL)
         return FALSE;
     gboolean bFound = FALSE;
@@ -148,7 +162,9 @@ gboolean _cid_find_iter_from_name (GtkListStore *pModele, gchar *cName, GtkTreeI
     return bFound;
 }
 
-gboolean _cid_test_one_name (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer *data) {
+gboolean 
+_cid_test_one_name (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer *data) 
+{
     gchar *cName = NULL;
     gtk_tree_model_get (model, iter, CID_MODEL_NAME, &cName, -1);
     if (strcmp (data[0], cName) == 0)
@@ -162,7 +178,9 @@ gboolean _cid_test_one_name (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter
     return FALSE;
 }
 
-gboolean _cid_increase_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) {
+gboolean 
+_cid_increase_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) 
+{
     int iMyOrder;
     gtk_tree_model_get (model, iter, CID_MODEL_ORDER, &iMyOrder, -1);
 
@@ -174,7 +192,9 @@ gboolean _cid_increase_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeI
     return FALSE;
 }
 
-void _cid_go_up (GtkButton *button, GtkTreeView *pTreeView) {
+void 
+_cid_go_up (GtkButton *button, GtkTreeView *pTreeView) 
+{
     GtkTreeSelection *pSelection = gtk_tree_view_get_selection (pTreeView);
 
     GtkTreeModel *pModel;
@@ -193,7 +213,9 @@ void _cid_go_up (GtkButton *button, GtkTreeView *pTreeView) {
     gtk_list_store_set (GTK_LIST_STORE (pModel), &iter, CID_MODEL_ORDER, iOrder, -1);
 }
 
-gboolean _cid_decrease_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) {
+gboolean 
+_cid_decrease_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) 
+{
     int iMyOrder;
     gtk_tree_model_get (model, iter, CID_MODEL_ORDER, &iMyOrder, -1);
 
@@ -205,7 +227,9 @@ gboolean _cid_decrease_order (GtkTreeModel * model, GtkTreePath * path, GtkTreeI
     return FALSE;
 }
 
-void _cid_go_down (GtkButton *button, GtkTreeView *pTreeView) {
+void 
+_cid_go_down (GtkButton *button, GtkTreeView *pTreeView) 
+{
     GtkTreeSelection *pSelection = gtk_tree_view_get_selection (pTreeView);
 
     GtkTreeModel *pModel;
@@ -225,7 +249,9 @@ void _cid_go_down (GtkButton *button, GtkTreeView *pTreeView) {
     gtk_list_store_set (GTK_LIST_STORE (pModel), &iter, CID_MODEL_ORDER, iOrder, -1);
 }
 
-void _cid_add (GtkButton *button, gpointer *data) {
+void 
+_cid_add (GtkButton *button, gpointer *data) 
+{
     GtkTreeView *pTreeView = data[0];
     GtkWidget *pEntry = data[1];
 
@@ -257,7 +283,9 @@ void _cid_add (GtkButton *button, gpointer *data) {
     return FALSE;
 }
 
-void _cid_remove (GtkButton *button, gpointer *data) {
+void 
+_cid_remove (GtkButton *button, gpointer *data) 
+{
     GtkTreeView *pTreeView = data[0];
     GtkWidget *pEntry = data[1];
 
@@ -281,7 +309,9 @@ void _cid_remove (GtkButton *button, gpointer *data) {
     g_free (cValue);
 }
 
-void _cid_show_image_preview (GtkFileChooser *pFileChooser, GtkImage *pPreviewImage) {
+void 
+_cid_show_image_preview (GtkFileChooser *pFileChooser, GtkImage *pPreviewImage) 
+{
     gchar *cFileName = gtk_file_chooser_get_preview_filename (pFileChooser);
     if (cFileName == NULL)
         return ;
@@ -297,7 +327,9 @@ void _cid_show_image_preview (GtkFileChooser *pFileChooser, GtkImage *pPreviewIm
         gtk_file_chooser_set_preview_widget_active (pFileChooser, FALSE);
 }
 
-void _cid_pick_a_file (GtkButton *button, gpointer *data) {
+void 
+_cid_pick_a_file (GtkButton *button, gpointer *data) 
+{
     GtkEntry *pEntry = data[0];
     gint iFileType = GPOINTER_TO_INT (data[1]);
     GtkWindow *pParentWindow = data[2];
@@ -330,20 +362,26 @@ void _cid_pick_a_file (GtkButton *button, gpointer *data) {
     gtk_widget_destroy (pFileChooserDialog);
 }
 
-void _cid_play_a_sound (GtkButton *button, gpointer *data) {
+void 
+_cid_play_a_sound (GtkButton *button, gpointer *data) 
+{
     GtkWidget *pEntry = data[0];
     const gchar *cSoundPath = gtk_entry_get_text (GTK_ENTRY (pEntry));
     cid_play_sound (cSoundPath);
 }
 
-void _cid_set_font (GtkFontButton *widget, GtkEntry *pEntry) {
+void 
+_cid_set_font (GtkFontButton *widget, GtkEntry *pEntry) 
+{
     const gchar *cFontName = gtk_font_button_get_font_name (GTK_FONT_BUTTON (widget));
     cid_message (" -> %s\n", cFontName);
     if (cFontName != NULL)
         gtk_entry_set_text (pEntry, cFontName);
 }
 
-void _cid_key_grab_cb (GtkWidget *wizard_window, GdkEventKey *event, GtkEntry *pEntry) {
+void 
+_cid_key_grab_cb (GtkWidget *wizard_window, GdkEventKey *event, GtkEntry *pEntry) 
+{
     gchar *key;
     cid_message ("key press event\n");
     if (gtk_accelerator_valid (event->keyval, event->state))
@@ -374,7 +412,9 @@ void _cid_key_grab_cb (GtkWidget *wizard_window, GdkEventKey *event, GtkEntry *p
     }
 }
 
-void _cid_key_grab_clicked (GtkButton *button, gpointer *data) {
+void 
+_cid_key_grab_clicked (GtkButton *button, gpointer *data) 
+{
     GtkEntry *pEntry = data[0];
     GtkWindow *pParentWindow = data[1];
 
@@ -386,7 +426,9 @@ void _cid_key_grab_clicked (GtkButton *button, gpointer *data) {
     g_signal_connect (GTK_WIDGET(pParentWindow), "key-press-event", GTK_SIGNAL_FUNC(_cid_key_grab_cb), pEntry);
 }
 
-void _cid_selection_changed (GtkTreeModel *model, GtkTreeIter iter, gpointer *data) {
+void 
+_cid_selection_changed (GtkTreeModel *model, GtkTreeIter iter, gpointer *data) 
+{
     GtkLabel *pDescriptionLabel = data[0];
     GtkImage *pPreviewImage = data[1];
 
@@ -493,7 +535,9 @@ void _cid_selection_changed (GtkTreeModel *model, GtkTreeIter iter, gpointer *da
     g_free (cPreviewFilePath);
 }
 
-void _cid_select_one_item_in_combo (GtkComboBox *widget, gpointer *data) {
+void 
+_cid_select_one_item_in_combo (GtkComboBox *widget, gpointer *data) 
+{
     GtkTreeModel *model = gtk_combo_box_get_model (widget);
     g_return_if_fail (model != NULL);
 
@@ -503,14 +547,18 @@ void _cid_select_one_item_in_combo (GtkComboBox *widget, gpointer *data) {
     _cid_selection_changed (model, iter, data);
 }
 
-void _cid_configure_renderer (GtkButton *button, gpointer *data) {
+void 
+_cid_configure_renderer (GtkButton *button, gpointer *data) 
+{
     GtkTreeView *pCombo = data[0];
     GtkWindow *pDialog = data[1];
      
     //cairo_dock_configure_module (pDialog, "rendering");
 }
 
-void _cid_configure (GtkButton *button, gpointer *data) {
+void 
+_cid_configure (GtkButton *button, gpointer *data) 
+{
     GtkTreeView *pTreeView = data[0];
     GtkWindow *pDialog = data[1];
     GtkTreeSelection *pSelection = gtk_tree_view_get_selection (pTreeView);
@@ -527,7 +575,9 @@ void _cid_configure (GtkButton *button, gpointer *data) {
     g_free (cSelectedValue);
 }
 
-gboolean _cid_select_one_item_in_tree (GtkTreeSelection * selection, GtkTreeModel * model, GtkTreePath * path, gboolean path_currently_selected, gpointer *data) {
+gboolean 
+_cid_select_one_item_in_tree (GtkTreeSelection * selection, GtkTreeModel * model, GtkTreePath * path, gboolean path_currently_selected, gpointer *data) 
+{
     GtkTreeIter iter;
     gtk_tree_model_get_iter (model, &iter, path);
 
@@ -535,7 +585,9 @@ gboolean _cid_select_one_item_in_tree (GtkTreeSelection * selection, GtkTreeMode
     return TRUE;
 }
 
-gboolean _cid_get_active_elements (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, GSList **pStringList) {
+gboolean 
+_cid_get_active_elements (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, GSList **pStringList) 
+{
     //g_print ("%s (%d)\n", __func__, *pOrder);
     gboolean bActive;
     gchar *cValue = NULL;
@@ -552,23 +604,31 @@ gboolean _cid_get_active_elements (GtkTreeModel * model, GtkTreePath * path, Gtk
     return FALSE;
 }
 
-void _cid_free_widget_list (gpointer *data, gpointer user_data) {
+void 
+_cid_free_widget_list (gpointer *data, gpointer user_data) 
+{
     //g_print ("%s - %s\n", (gchar *)data[0], (gchar *)data[1]);
     g_free (data[0]);
     g_free (data[1]);
     g_slist_free (data[2]);  // les elements de data[2] sont les widgets, et se feront liberer lors de la destruction de la fenetre.
 }
 
-void cid_free_generated_widget_list (GSList *pWidgetList) {
+void 
+cid_free_generated_widget_list (GSList *pWidgetList) 
+{
     g_slist_foreach (pWidgetList, (GFunc) _cid_free_widget_list, NULL);
     g_slist_free (pWidgetList);
 }
 
-void cid_update_keyfile_from_widget_list (GKeyFile *pKeyFile, GSList *pWidgetList) {
+void 
+cid_update_keyfile_from_widget_list (GKeyFile *pKeyFile, GSList *pWidgetList) 
+{
     g_slist_foreach (pWidgetList, (GFunc) _cid_get_each_widget_value, pKeyFile);
 }
 
-void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
+void 
+_cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) 
+{
     gchar *cGroupName = data[0];
     gchar *cKeyName = data[1];
     GSList *pSubWidgetList = data[2];
@@ -576,9 +636,11 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
     gsize i = 0, iNbElements = g_slist_length (pSubWidgetList);
     GtkWidget *pOneWidget = pSubWidgetList->data;
 
-    if (GTK_IS_CHECK_BUTTON (pOneWidget)) {
+    if (GTK_IS_CHECK_BUTTON (pOneWidget)) 
+    {
         gboolean *tBooleanValues = g_new0 (gboolean, iNbElements);
-        for (pList = pSubWidgetList; pList != NULL; pList = pList->next) {
+        for (pList = pSubWidgetList; pList != NULL; pList = pList->next) 
+        {
             pOneWidget = pList->data;
             tBooleanValues[i] = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pOneWidget));
             i ++;
@@ -591,9 +653,11 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
     } else if (GTK_IS_SPIN_BUTTON (pOneWidget) || GTK_IS_HSCALE (pOneWidget)) {
         gboolean bIsSpin = GTK_IS_SPIN_BUTTON (pOneWidget);
         
-        if ((bIsSpin && gtk_spin_button_get_digits (GTK_SPIN_BUTTON (pOneWidget)) == 0) || (! bIsSpin && gtk_scale_get_digits (GTK_SCALE (pOneWidget)) == 0)) {
+        if ((bIsSpin && gtk_spin_button_get_digits (GTK_SPIN_BUTTON (pOneWidget)) == 0) || (! bIsSpin && gtk_scale_get_digits (GTK_SCALE (pOneWidget)) == 0)) 
+        {
             int *tIntegerValues = g_new0 (int, iNbElements);
-            for (pList = pSubWidgetList; pList != NULL; pList = pList->next) {
+            for (pList = pSubWidgetList; pList != NULL; pList = pList->next) 
+            {
                 pOneWidget = pList->data;
                 tIntegerValues[i] = (bIsSpin ? gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pOneWidget)) : gtk_range_get_value (GTK_RANGE (pOneWidget)));
                 i ++;
@@ -603,9 +667,12 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
             else
                 g_key_file_set_integer (pKeyFile, cGroupName, cKeyName, tIntegerValues[0]);
             g_free (tIntegerValues);
-        } else {
+        } 
+        else 
+        {
             double *tDoubleValues = g_new0 (double, iNbElements);
-            for (pList = pSubWidgetList; pList != NULL; pList = pList->next) {
+            for (pList = pSubWidgetList; pList != NULL; pList = pList->next) 
+            {
                 pOneWidget = pList->data;
                 tDoubleValues[i] = (bIsSpin ? gtk_spin_button_get_value (GTK_SPIN_BUTTON (pOneWidget)) : gtk_range_get_value (GTK_RANGE (pOneWidget)));
                 i ++;
@@ -619,7 +686,8 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
     } else if (GTK_IS_COMBO_BOX (pOneWidget)) {
         GtkTreeIter iter;
         gchar *cValue =  NULL;
-        if (GTK_IS_COMBO_BOX_ENTRY (pOneWidget)) {
+        if (GTK_IS_COMBO_BOX_ENTRY (pOneWidget)) 
+        {
             cValue = gtk_combo_box_get_active_text (GTK_COMBO_BOX (pOneWidget));
         }
         else if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (pOneWidget), &iter)) {
@@ -633,11 +701,13 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
         const gchar *cValue = gtk_entry_get_text (GTK_ENTRY (pOneWidget));
         const gchar* const * cPossibleLocales = g_get_language_names ();
         gchar *cKeyNameFull, *cTranslatedValue;
-        while (cPossibleLocales[i] != NULL) { // g_key_file_set_locale_string ne marche pas avec une locale NULL comme le fait 'g_key_file_get_locale_string', il faut donc le faire a la main !
+        while (cPossibleLocales[i] != NULL) 
+        { // g_key_file_set_locale_string ne marche pas avec une locale NULL comme le fait 'g_key_file_get_locale_string', il faut donc le faire a la main !
             cKeyNameFull = g_strdup_printf ("%s[%s]", cKeyName, cPossibleLocales[i]);
             cTranslatedValue = g_key_file_get_string (pKeyFile, cGroupName, cKeyNameFull, NULL);
             g_free (cKeyNameFull);
-            if (cTranslatedValue != NULL && strcmp (cTranslatedValue, "") != 0) {
+            if (cTranslatedValue != NULL && strcmp (cTranslatedValue, "") != 0) 
+            {
                 g_free (cTranslatedValue);
                 break;
             }
@@ -658,7 +728,8 @@ void _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile) {
 
         i = 0;
         GSList * pListElement;
-        for (pListElement = pActiveElementList; pListElement != NULL; pListElement = pListElement->next) {
+        for (pListElement = pActiveElementList; pListElement != NULL; pListElement = pListElement->next) 
+        {
             tStringValues[i] = pListElement->data;
             i ++;
         }

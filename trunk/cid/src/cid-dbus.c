@@ -16,11 +16,14 @@ static DBusGConnection *s_pSessionConnexion = NULL;
 static DBusGConnection *s_pSystemConnexion = NULL;
 static DBusGProxy *s_pDBusProxy = NULL;
 
-DBusGConnection *get_session_connection (void) {
-    if (s_pSessionConnexion == NULL) {
+DBusGConnection *
+get_session_connection (void) 
+{    if (s_pSessionConnexion == NULL) 
+    {
         GError *erreur = NULL;
         s_pSessionConnexion = dbus_g_bus_get (DBUS_BUS_SESSION, &erreur);
-        if (erreur != NULL) {
+        if (erreur != NULL) 
+        {
             cid_warning ("Attention : %s\n", erreur->message);
             g_error_free (erreur);
             s_pSessionConnexion = NULL;
@@ -29,11 +32,14 @@ DBusGConnection *get_session_connection (void) {
     return s_pSessionConnexion;
 }
 
-DBusGConnection *get_system_connection (void) {
-    if (s_pSystemConnexion == NULL) {
+DBusGConnection *
+get_system_connection (void) 
+{    if (s_pSystemConnexion == NULL) 
+    {
         GError *erreur = NULL;
         s_pSystemConnexion = dbus_g_bus_get (DBUS_BUS_SYSTEM, &erreur);
-        if (erreur != NULL) {
+        if (erreur != NULL) 
+        {
             cid_warning ("Attention : %s\n", erreur->message);
             g_error_free (erreur);
             s_pSystemConnexion = NULL;
@@ -42,8 +48,10 @@ DBusGConnection *get_system_connection (void) {
     return s_pSystemConnexion;
 }
 
-DBusGProxy *get_main_proxy (void) {
-    if (s_pDBusProxy == NULL) {
+DBusGProxy *
+get_main_proxy (void) 
+{    if (s_pDBusProxy == NULL) 
+    {
         s_pDBusProxy = create_new_session_proxy (DBUS_SERVICE_DBUS,
             DBUS_PATH_DBUS,
             DBUS_INTERFACE_DBUS);
@@ -51,26 +59,32 @@ DBusGProxy *get_main_proxy (void) {
     return s_pDBusProxy;
 }
 
-void register_service_name (const gchar *cServiceName) {
+void 
+register_service_name (const gchar *cServiceName) 
+{
     DBusGProxy *pProxy = get_main_proxy ();
     if (pProxy == NULL)
         return ;
     GError *erreur = NULL;
     int request_ret;
     org_freedesktop_DBus_request_name (pProxy, cServiceName, 0, &request_ret, &erreur);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Unable to register service: %s\n", erreur->message);
         g_error_free (erreur);
     }
 }
 
-gboolean dbus_is_enabled (void) {
+gboolean 
+dbus_is_enabled (void) 
+{
     return (get_session_connection () != NULL && get_system_connection () != NULL);
 }
 
 
-DBusGProxy *create_new_session_proxy (const char *name, const char *path, const char *interface) {
-    DBusGConnection *pConnection = get_session_connection ();
+DBusGProxy *
+create_new_session_proxy (const char *name, const char *path, const char *interface) 
+{    DBusGConnection *pConnection = get_session_connection ();
     if (pConnection != NULL)
         return dbus_g_proxy_new_for_name (
             pConnection,
@@ -81,8 +95,9 @@ DBusGProxy *create_new_session_proxy (const char *name, const char *path, const 
         return NULL;
 }
 
-DBusGProxy *create_new_system_proxy (const char *name, const char *path, const char *interface) {
-    DBusGConnection *pConnection = get_system_connection ();
+DBusGProxy *
+create_new_system_proxy (const char *name, const char *path, const char *interface) 
+{    DBusGConnection *pConnection = get_system_connection ();
     if (pConnection != NULL)
         return dbus_g_proxy_new_for_name (
             pConnection,
@@ -93,7 +108,9 @@ DBusGProxy *create_new_system_proxy (const char *name, const char *path, const c
         return NULL;
 }
 
-gboolean dbus_detect_application (const gchar *cName) {
+gboolean 
+dbus_detect_application (const gchar *cName) 
+{
     DBusGProxy *pProxy = get_main_proxy ();
     if (pProxy == NULL)
         return FALSE;
@@ -109,8 +126,10 @@ gboolean dbus_detect_application (const gchar *cName) {
     {
         cid_debug ("detection du service %s ...\n", cName);
         int i;
-        for (i = 0; name_list[i] != NULL; i ++) {
-            if (strcmp (name_list[i], cName) == 0) {
+        for (i = 0; name_list[i] != NULL; i ++) 
+        {
+            if (strcmp (name_list[i], cName) == 0) 
+            {
                 bPresent = TRUE;
                 break;
             }
@@ -120,42 +139,50 @@ gboolean dbus_detect_application (const gchar *cName) {
     return bPresent;
 }
 
-gboolean dbus_get_boolean (DBusGProxy *pDbusProxy, const gchar *cParameter) {
+gboolean 
+dbus_get_boolean (DBusGProxy *pDbusProxy, const gchar *cParameter) 
+{
     GError *erreur = NULL;
     gboolean bValue = FALSE;
     dbus_g_proxy_call (pDbusProxy, cParameter, &erreur,
         G_TYPE_INVALID,
         G_TYPE_BOOLEAN, &bValue,
         G_TYPE_INVALID);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Attention : %s\n", erreur->message);
         g_error_free (erreur);
     }
     return bValue;
 }
 
-guint dbus_get_uinteger (DBusGProxy *pDbusProxy, const gchar *cParameter) {
-    GError *erreur = NULL;
+guint 
+dbus_get_uinteger (DBusGProxy *pDbusProxy, const gchar *cParameter) 
+{    GError *erreur = NULL;
     guint iValue = 0;
     dbus_g_proxy_call (pDbusProxy, cParameter, &erreur,
         G_TYPE_INVALID,
         G_TYPE_UINT, &iValue,
         G_TYPE_INVALID);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Attention : %s\n", erreur->message);
         g_error_free (erreur);
     }
     return iValue;
 }
 
-gchar *dbus_get_string (DBusGProxy *pDbusProxy, const gchar *cParameter) {
+gchar *
+dbus_get_string (DBusGProxy *pDbusProxy, const gchar *cParameter) 
+{
     GError *erreur = NULL;
     gchar *cValue = NULL;
     dbus_g_proxy_call (pDbusProxy, cParameter, &erreur,
         G_TYPE_INVALID,
         G_TYPE_STRING, &cValue,
         G_TYPE_INVALID);
-    if (erreur != NULL) {
+    if (erreur != NULL) 
+    {
         cid_warning ("Attention : %s\n", erreur->message);
         g_error_free (erreur);
         return NULL;
@@ -163,13 +190,17 @@ gchar *dbus_get_string (DBusGProxy *pDbusProxy, const gchar *cParameter) {
     return cValue;
 }
 
-void dbus_call (DBusGProxy *pDbusProxy, const gchar *cCommand) {
+void 
+dbus_call (DBusGProxy *pDbusProxy, const gchar *cCommand) 
+{
     dbus_g_proxy_call_no_reply (pDbusProxy, cCommand,
         G_TYPE_INVALID,
         G_TYPE_INVALID);
 }
 
-void dbus_call_boolean (DBusGProxy *pDbusProxy, const gchar *cCommand, gboolean bAction ) {
+void 
+dbus_call_boolean (DBusGProxy *pDbusProxy, const gchar *cCommand, gboolean bAction ) 
+{
     dbus_g_proxy_call_no_reply (pDbusProxy, cCommand,
         G_TYPE_BOOLEAN,
         bAction,

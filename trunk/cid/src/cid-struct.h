@@ -15,19 +15,24 @@
 G_BEGIN_DECLS
 ///\______ Structures de donnees
 typedef struct _CidMainContainer CidMainContainer;
-
 typedef struct _CidLabelDescription CidLabelDescription;
-
 typedef struct _CidControlFunctionsList CidControlFunctionsList;
-
+typedef struct _CidDataTable CidDataTable;
+typedef struct _CidDataContent CidDataContent;
+typedef struct _CidDataCase CidDataCase;
+/*
+typedef struct _CidModule CidModule;
+typedef struct _CidModuleInterface CidModuleInterface;
+typedef struct _CidModuleInstance CidModuleInstance;
+typedef struct _CidVisitCard CidVisitCard;
+typedef struct _CidInternalModule CidInternalModule;
+typedef struct _CidMinimalAppletConfig CidMinimalAppletConfig;
+*/
 ///\______ Encapsulations
 typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
-
 typedef void (* CidControlFunction) (void);
-
 typedef void (* CidManagePlaylistFunction) (gchar *cSong);
-
-#define rhythmboxData musicData
+typedef void (* CidDataAction) (CidDataCase *pCase);
 
 /**
  * Structure de données utilisée pour stocker les informations
@@ -48,6 +53,31 @@ struct data {
     gboolean playing;
     gboolean opening;
 } musicData;
+
+/**
+ * Structure de données représentant un tableau
+ */
+struct _CidDataTable {
+    GType type;
+    size_t length;
+    CidDataCase *head;
+    CidDataCase *tail;
+};
+
+struct _CidDataContent {
+    union {
+        gchar *string;
+        gint iNumber;
+        gboolean booleen;
+    } value;
+    GType type;
+};
+
+struct _CidDataCase {
+    CidDataContent *content;
+    CidDataCase *next;
+    CidDataCase *prev;
+};
 
 /**
  * Liste des lecteurs supportés
@@ -300,6 +330,10 @@ struct _CidMainContainer {
     
     // keyFile
     GKeyFile *pKeyFile;
+    
+    ///\__ Dimensions de l'ecran
+    int XScreenWidth;
+    int XScreenHeight;
 };
 
 struct _CidLabelDescription {

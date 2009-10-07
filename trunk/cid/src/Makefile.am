@@ -50,11 +50,11 @@ cid_SOURCES = \
     cid-conf-panel-factory.h \
     cid-config.c \
     cid-config.h \
+    cid-console-call.c \
+    cid-console-call.h \
     cid-constantes.h \
     cid-dbus.c \
     cid-dbus.h \
-    cid-dcop.c \
-    cid-dcop.h \
     cid-draw.c \
     cid-draw.h \
     cid-exaile.c \
@@ -95,9 +95,9 @@ cidsubinclude_HEADERS = \
     cid-callbacks.h \
     cid-conf-panel-factory.h \
     cid-config.h \
+    cid-console-call.h \
     cid-constantes.h \
     cid-dbus.h \
-    cid-dcop.h \
     cid-draw.h \
     cid-exaile.h \
     cid-menu-factory.h \

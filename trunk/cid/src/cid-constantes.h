@@ -23,6 +23,9 @@ G_BEGIN_DECLS
 
 #define PLAYLIST_NAME "C.I.D."
 
+#define FADE_VARIATION .15
+#define IN_OUT_VARIATION .05
+
 G_END_DECLS
 
 #endif

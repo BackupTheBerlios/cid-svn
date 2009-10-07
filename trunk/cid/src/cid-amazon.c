@@ -31,7 +31,9 @@ gchar *TAB_IMAGE_SIZES[] = {"MediumImage","LargeImage"};
  * @param reader le noeud courrant
  * @param imageSize Noeud que l'on cherche
  */
-static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
+static void 
+cid_process_node (xmlTextReaderPtr reader, gchar **cValue) 
+{
     const xmlChar *name, *value;
 
     name = xmlTextReaderConstName(reader);
@@ -39,7 +41,8 @@ static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
         name = BAD_CAST "--";
 
         value = xmlTextReaderConstValue(reader);
-        if ((strcmp(name,TAB_IMAGE_SIZES[cid->iImageSize])==0 || flag) && !found) {
+        if ((strcmp(name,TAB_IMAGE_SIZES[cid->iImageSize])==0 || flag) && !found) 
+        {
             //printf("node: %s ", name);
         if (value == NULL)
             cid_message ("");
@@ -48,9 +51,12 @@ static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
             found=TRUE;
             *cValue=g_strdup(value);
         }
-        if (strcmp(name,"#text")!=0) {
+        if (strcmp(name,"#text")!=0) 
+        {
             flag=TRUE;
-        } else {
+        } 
+        else 
+        {
             flag=FALSE;
         }
     }
@@ -62,7 +68,9 @@ static void cid_process_node (xmlTextReaderPtr reader, gchar **cValue) {
  * @param filename URI du fichier à lire
  * @param imageSize Taille de l'image que l'on souhaite
  */
-void cid_stream_file(const char *filename, gchar **cValue) {
+void 
+cid_stream_file(const char *filename, gchar **cValue) 
+{
     /*
     * this initialize the library and check potential ABI mismatches
     * between the version it was compiled for and the actual shared
@@ -75,17 +83,22 @@ void cid_stream_file(const char *filename, gchar **cValue) {
     found=FALSE;
 
     reader = xmlReaderForFile(filename, NULL, 0);
-    if (reader != NULL) {
+    if (reader != NULL) 
+    {
         ret = xmlTextReaderRead(reader);
-        while (ret == 1) {
+        while (ret == 1) 
+        {
             cid_process_node (reader,cValue);
             ret = xmlTextReaderRead(reader);
         }
         xmlFreeTextReader(reader);
-        if (ret != 0) {
+        if (ret != 0) 
+        {
             cid_warning ("%s : failed to parse\n", filename);
         }
-    } else {
+    } 
+    else 
+    {
         cid_warning ("Unable to open %s\n", filename);
     }
     /*
@@ -98,7 +111,9 @@ void cid_stream_file(const char *filename, gchar **cValue) {
     xmlMemoryDump();
 }
 
-gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
+gboolean 
+cid_get_xml_file (const gchar *artist, const gchar *album) 
+{
     if (g_strcasecmp("Unknown",artist)==0 || g_strcasecmp("Unknown",album)==0)
         return FALSE;
         
@@ -119,7 +134,9 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
     return TRUE;
 }
 
-gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) {
+gboolean 
+cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
+{
     gchar *cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cURL, cDestPath, cDestPath, cDestPath);
     cid_debug ("%s\n",cCommand);
     //system (cCommand);
@@ -134,7 +151,9 @@ gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath) 
 
 #else
 
-gboolean cid_get_xml_file (const gchar *artist, const gchar *album) {
+gboolean 
+cid_get_xml_file (const gchar *artist, const gchar *album) 
+{
     return FALSE;
 }
 
