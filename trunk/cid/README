@@ -1,0 +1,61 @@
+
+Conky Images Display est un programme écrit en C qui a pour but de récupérer la pochette du CD en cours de lecture dans un lecteur multimedia et de l'afficher sur le bureau.
+Ce programme est la réunion des programmes acd de Askelon et rb-cover de Jackass059, membres du forum ubuntu-fr.
+Vous trouverez ces programmes ici : http://forum.ubuntu-fr.org/viewtopic.php?pid=1949385#p1949385 (acd)
+				    http://forum.ubuntu-fr.org/viewtopic.php?pid=1957990#p1957990 (rb-cover)
+
+À l'origine, rb-cover utilisait des popen pour récupérer des informations à partir de rhythmbox-client, désormais la partie rhythmbox utilise DBus.
+Les fenêtres étaient gérées par X, elles sont désormais gérées par GTK. 
+Une sorte de librairie interne DBus a été rédigée pour permettre l'intégration future d'autres lecteurs basés sur DBus (comme amarok2).
+
+Pour compiler manuellement le programme, il vous faut certains paquets d'installés.
+
+En lançant le script download.sh, cette vérification devrait être automatique. 
+
+La liste des paquets necessaires est la suivante : libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
+
+Pour installer le programme, ./configure && make
+Ensuite sudo make install
+
+Si ça ne fonctionne pas, vous pouvez essayer un autoreconf -isvf avant le ./configure.
+Si après ça, ça ne fonctionne toujours pas, envoyez moi un mail pour qu'on voit ça de plus près.
+
+Pour le lancer, il ne vous reste plus qu'à taper cid --help pour obtenir les informations necessaires.
+
+---------------------------------------------------------
+
+Conky Images Display is a programm written in C in the aim to display the cover of the song which is currently played in a supported player on the desktop like conky does with other informations.
+The current version is the merge of two similar projects, the first for amarok, the second for rhythmbox.
+Original projects are available here : http://forum.ubuntu-fr.org/viewtopic.php?pid=1949385#p1949385
+				       http://forum.ubuntu-fr.org/viewtopic.php?pid=1957990#p1957990
+
+To compile manually, you need some additional libs.
+
+Running the download.sh script should check it automatically.
+Nevertheless, the list of needed package is : libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
+
+To install the programm, type ./configure && make
+Then type sudo make install
+
+If it does not work, you ca try autoreconf -isvf just before the ./configure.
+If it still doesn't work, e-mail me so we can have a look together.
+
+Now you can run the programm with the --help option (cid --help) to learn how to use it.
+
+---------------------------------------------------------
+
+Resume/Summary
+
+1. apt-get install libdbus-1-dev libglib2.0-dev libdbus-glib-1-dev libgtk2.0-dev autoconf automake1.9 intltool libtool make libxml2-dev
+
+1.1. /!\ only if you downloaded the svn version /!\
+     autoreconf -isvf
+
+2. ./configure
+
+3. make
+
+4. passer root / login as root
+   make install
+
+5. cid --help
