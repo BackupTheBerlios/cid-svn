@@ -232,22 +232,24 @@ main ( int argc, char **argv )
     cid_key_file_free();
     cid_free_musicData();
     cid_free_main_structure (cid);
-    
+/*    
     ///////////////////////////////////////////////////////////////////////
-    CidDataTable *test = cid_create_datatable(G_TYPE_INT,1,2,3,5,9,28,11);
+    CidDataTable *test = cid_create_datatable(G_TYPE_STRING,"blah","blih","bloh","toto","tata","titi","tutu",G_TYPE_INT,5,12,G_TYPE_INVALID);
     printf("size: %d\n",cid_datatable_length(test));
-    //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
-    test = cid_datatable_append(test,cid_datacontent_new_int((void *)56));
+    cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
+    test = cid_datatable_append(test,cid_datacontent_new_int(56));
+    cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
     printf("size: %d\n",cid_datatable_length(test));
-    //test = cid_datatable_remove(test,cid_datacontent_new_int((void *)2));
+    test = cid_datatable_remove(test,cid_datacontent_new_int(2));
+    cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
     printf("size: %d\n",cid_datatable_length(test));
     //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print);
     cid_delete_datatable(&test);
     printf("size: %d\n",cid_datatable_length(test));
-    g_print ("Bye !\n");
     ///////////////////////////////////////////////////////////////////////
 //    g_print ("%s\n",CID_MODULES_DIR);
-    
+*/
+    g_print ("Bye !\n");    
     return CID_EXIT_SUCCESS;
     
 }

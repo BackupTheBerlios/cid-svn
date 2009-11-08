@@ -367,7 +367,6 @@ cid_datatable_new (void)
     CidDataTable *res = g_new0(CidDataTable,1);
     if (res != NULL)
     {
-        res->type = G_TYPE_STRING;
         res->length = 0;
         res->head = NULL;
         res->tail = NULL;
@@ -397,11 +396,14 @@ cid_datacontent_new (GType iType, void *value)
         ret->type = iType;
         switch (iType) {
             case G_TYPE_STRING:
-                ret->value.string = (gchar *) value;
+                ret->string = (gchar *) value;
+                break;
             case G_TYPE_INT:
-                ret->value.iNumber = (gint) value;
+                ret->iNumber = (gint) value;
+                break;
             case G_TYPE_BOOLEAN:
-                ret->value.booleen = (gboolean) value;
+                ret->booleen = (gboolean) value;
+                break;
             default:
                 return NULL;
         }
@@ -412,16 +414,17 @@ cid_datacontent_new (GType iType, void *value)
 gboolean
 cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2)
 {
-    g_return_val_if_fail(d1 == NULL || d2 == NULL,FALSE);
+    if (d1 == NULL || d2 == NULL)
+        return FALSE;
     if (d1->type != d2->type)
         return FALSE;
     switch (d1->type) {
         case G_TYPE_STRING:
-            return g_strcmp0(d1->value.string,d2->value.string) == 0;
+            return g_strcmp0(d1->string,d2->string) == 0;
         case G_TYPE_INT:
-            return d1->value.iNumber == d2->value.iNumber;
+            return d1->iNumber == d2->iNumber;
         case G_TYPE_BOOLEAN:
-            return d1->value.booleen == d2->value.booleen;
+            return d1->booleen == d2->booleen;
     }
 }
 
@@ -532,9 +535,11 @@ cid_delete_datatable(CidDataTable **p_list)
         CidDataCase *p_temp = (*p_list)->head;
         while (p_temp != NULL)
         {
-            //printf("%s\n",p_temp->content->string);
             CidDataCase *p_del = p_temp;
             p_temp = p_temp->next;
+            if (p_del->content->type == G_TYPE_STRING)
+                free(p_del->content->string);
+            free(p_del->content);
             free(p_del);
         }
         free(*p_list), *p_list = NULL;
@@ -562,11 +567,14 @@ cid_datacase_print (CidDataCase *pCase)
     {
         switch (pCase->content->type) {
             case G_TYPE_STRING:
-                g_print ("%s\n",pCase->content->value.string);
+                g_print ("%s\n",pCase->content->string);
+                break;
             case G_TYPE_INT:
-                g_print ("%d\n",pCase->content->value.iNumber);
+                g_print ("%d\n",pCase->content->iNumber);
+                break;
             case G_TYPE_BOOLEAN:
-                g_print ("%s\n",pCase->content->value.booleen ? "TRUE" : "FALSE");
+                g_print ("%s\n",pCase->content->booleen ? "TRUE" : "FALSE");
+                break;
         }
     }
 }
@@ -704,22 +712,33 @@ CidDataTable *
 cid_create_datatable (GType iDataType, ...)
 {
     CidDataTable *res = cid_datatable_new();
-    res->type = iDataType;
+    GType iCurrType = iDataType;
     va_list args;
     va_start(args,iDataType);
     void *current;
-    while ((current = va_arg(args,void *)) != NULL) {
+    while ((current = va_arg(args,void *)) != G_TYPE_INVALID) {
         CidDataContent *tmp = NULL;
-        switch (iDataType) {
+        if ((GType) current == G_TYPE_BOOLEAN || (GType) current == G_TYPE_INT || (GType) current == G_TYPE_STRING)
+        {
+            iCurrType = (GType) current;
+            continue;
+        }
+        switch (iCurrType) {
             case G_TYPE_BOOLEAN:
                 tmp = cid_datacontent_new_boolean(current);
+                break;
             case G_TYPE_STRING:
                 tmp = cid_datacontent_new_string(current);
+                break;
             case G_TYPE_INT:
                 tmp = cid_datacontent_new_int(current);
+                break;
+            default:
+                iCurrType = (GType) current;
         }
         res = cid_datatable_append(res,tmp);
     }
+    va_end(args);
     return res;
 }
 

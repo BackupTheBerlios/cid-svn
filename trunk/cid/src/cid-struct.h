@@ -58,7 +58,6 @@ struct data {
  * Structure de données représentant un tableau
  */
 struct _CidDataTable {
-    GType type;
     size_t length;
     CidDataCase *head;
     CidDataCase *tail;
@@ -69,7 +68,7 @@ struct _CidDataContent {
         gchar *string;
         gint iNumber;
         gboolean booleen;
-    } value;
+    };
     GType type;
 };
 

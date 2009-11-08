@@ -112,9 +112,9 @@ gboolean cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2);
 void cid_datatable_foreach (CidDataTable *p_list, CidDataAction func);
 void cid_datacase_print (CidDataCase *pCase);
 
-#define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, val)
-#define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, val)
-#define cid_datacontent_new_boolean(val) cid_datacontent_new(G_TYPE_BOOLEAN, val)
+#define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, (void*)val)
+#define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, (void*)val)
+#define cid_datacontent_new_boolean(val) cid_datacontent_new(G_TYPE_BOOLEAN, (void*)val)
 
 #define cid_datatable_remove_first(list) cid_datatable_remove_id(list, 1)
 #define cid_datatable_remove_last(list) cid_datatable_remove_id(list, cid_datatable_length(list))
