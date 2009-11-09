@@ -25,6 +25,14 @@ PKG_CHECK_MODULES(PACKAGE, "gtk+-2.0 dbus-1 dbus-glib-1 libxml-2.0 gthread-2.0")
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
+AC_ARG_ENABLE(e17,
+        [ --enable-e17  :  Enable Enlightenment support],
+        [case "${enableval}" in
+            yes) usee17=true ;;
+            no)  usee17=false ;;
+            *)   echo "bad value ${enableval} for --enable-e17" ;;
+        esac],[usee17=false])
+
 AC_ARG_ENABLE(opengl,
         [ --enable-opengl  :  Enable OpenGL],
         [case "${enableval}" in
@@ -52,6 +60,7 @@ fi
 AC_SUBST(opengl_required)
 
 AM_CONDITIONAL( [WITH_OPENGL], [test "$opengl_detected" = "true" ] )
+AM_CONDITIONAL( [E17_ENABLE], [test "$usee17" = "true" ] )
 
 AC_CONFIG_FILES([
 		Makefile
@@ -69,4 +78,9 @@ if test "$opengl_detected" = "true" ; then
     echo " * Use OpenGL : yes"
 else
     echo " * Use OpenGL : no"
+fi
+if test "$usee17" = "true" ; then
+    echo " * Enable E17 : yes"
+else
+    echo " * Enable E17 : no"
 fi

@@ -59,8 +59,12 @@ cid_init (CidMainContainer *pCid)
     pCid->iCurrentlyDrawing = 0;
     
     pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
-    
-    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DESKTOP; // GDK_WINDOW_TYPE_HINT_DOCK
+
+#ifdef E17_ENABLE    
+    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DESKTOP; 
+#else
+    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
+#endif
     
     pCid->pKeyFile = NULL;
 }
