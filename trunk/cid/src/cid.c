@@ -85,7 +85,8 @@ cid_run_with_player (void)
     if (cid->iPlayer != PLAYER_NONE)
         cid->pMonitorList = g_new0 (CidControlFunctionsList,1);
     /* On lance telle ou telle fonction selon le lecteur selectionne */
-    switch (cid->iPlayer) {
+    switch (cid->iPlayer) 
+    {
         /* Amarok 1.4 */
         case PLAYER_AMAROK_1:
             cid_build_amarok_menu ();

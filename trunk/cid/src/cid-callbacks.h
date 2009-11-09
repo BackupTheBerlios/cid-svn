@@ -63,7 +63,7 @@ void _cid_about (GtkMenuItem *pMenuItem, gpointer *data);
  * @param cPageLabel label
  * @param cAboutText contenu
  */
-void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText);
+static void _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText);
 
 /**
  * Fonction executée pour générer l'interface de configuration

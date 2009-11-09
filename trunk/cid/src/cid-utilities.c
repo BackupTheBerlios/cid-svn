@@ -210,31 +210,17 @@ You can use it with the following options:\n"));
     {
         if (strcmp(argv[i], "coin-coin" ) == 0) 
         {
-            g_print ("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMMMMWXOdlcccldONMMMMMMMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMMMO'         ..;xWMMMMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMWl          .;;. ;XMMMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMd                 .KMMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMM:  ...      ...    :MMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMM: 'od:   'dkxd,    .NMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMc l.,O,  O0''lK'    KMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMo c..ddllkx  ;K,    0MMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMx 'xxkO00OOkx0d.    xMMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMO.oxkO0000Okkkk.    :WMMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMK ,xxxkkkxxkO0O' .;' cNMMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMWc cK0OOOOO0KNWWX,     'XMMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMK, ;KWWXKXXNWMMMMMX'     .OMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMWo  dMMMMMWWMMMMMMMMM0.      cNMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMX:  ,NMMMWWNWMMMMMWWWWWd       ,KMMMMMMMMMMMM\nMMMMMMMMMMMMMMO.  .xXWWMMWNMMMMMMWNNNXNo  .     dMMMMMMMMMMM\nMMMMMMMMMMMMMX.  .kWMMMMMMMMMMMMMMMMMWNNo   .    kMMMMMMMMMM\nMMMMMMMMMMMMWc   OWMMMMMMMMMMMMMMMMMMMMMWc . .   .KMMMMMMMMM\nMMMMMMMMMMMWo   dMMMMMMMWWMMMMMMMMMMMMMMMX.   .   'NMMMMMMMM\nMMMMMMMMMMMd . ,NMMMMMMMNWMMMMMMMMMMMMMMMW'        dMMMMMMMM\nMMMMMMMMMN:  . dMMMMMMMMNWMMMMMMMMMMMMMMMM,        :MMMMMMMM\nMMMMMMMMMO   ..kMMMMMMMMNWMMMMMMMMMMMMMMMM,  .     :MMMMMMMM\nMMMMMMMMMKloxl;cKMMMMMMMNWMMMMMMMMMMMMMNXK'     ...xMMMMMMMM\nMMMMMMMWKddkkkkl':kNMMMMWWMMMMMMMMMMMMM0Ok;      ;kOWMMMMMMM\nMMMNXKOdodxkkkkkd. .dXMMMMMMMMMMMMMMMN0kkkl.....ckOONMMMMMMM\nMMNkkkkxxkkkkkkkkd'  .:XMMMMMMMMMMMMMXOxxkxolooxkOOkkKWMMMMM\nMMNxxkkkOOOkkkkkkxxc  .0MMMMMMMMMMMMMO;lxkkkkkkkOOOOOkO0XMMM\nMMXodkkOOOOOOOOOkkkxoxXMMMMMMMMMMMXk: .oxkOOOOOkkkkOOOOOOWMM\nMMKodxkkkOOOOOOOOOOkxdloOKXKK0kdl,    ,dkkOkkkkkkkxxkO0XWMMM\nMMXxdoooddddxxkkkkkkxoc.              ;dkkkkkkxxxk0XNWMMMMMM\nMMMMWNK0Okdollloodddolc;codxxxxxxxxddlcldxxxxxdkKWMMMMMMMMMM\nMMMMMMMMMMMWNX0xoccclxXMMMMMMMMMMMMMMMXdccllokKWMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMWNNWMMMMMMMMMMMMMMMMMMMWNNWWMMMMMMMMMMMMMMM\nMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n");
+            g_print (COIN_COIN);
             exit (CID_EXIT_SUCCESS);
         }
         if (strcmp(argv[i], "coin" ) == 0) 
         {
-            g_print("\
-Congratulation ! You just found my Easter Egg :)  \n\
-                        `                         \n\
-                   :sdNMMMNhs:                    \n                 `hMMMMMMMMhsmm/                  \n                 yMMMMMMMMNmNMMM/                 \n                 NMmdmNMMNddmNMMN`                \n\
-                 Nho+oMMy:+/+mMMM-                \n                 dsmd-dh+/Nd-yMMM/                \n                 hm+o:::::o+:mMMMo                \n                 sy+/::-::///dMNNd                \n\
-                 +d/+//////:-yMdhNs`              \n                -mh.-::::-.` `hMNMMh.             \n              `oNy.  `.``     `dMMMMd:            \n             -hMh`   ``        .NMMMMNo`          \n\
-            /NMN:`   ``     ``.`+NNNMMMd.         \n           -NMN/`              ``/NNmNMMd.        \n          `dNN/                   oNmNNMMh        \n          ymMo      `             `MMMmMMM/       \n\
-        `yMmN`      `              NMMmMMMm       \n        oMNdd       `              mMNNMMMN       \n        /soyy-      `            `.mNNNNmmh       \n      `:+///+ys:`   `           .:/hMMMMms/`      \n\
-  `--:++//////yNd+.            .://ohddh+:/-      \n  -////////////sNMm:           -++//+++//://:.    \n  -+///::://////oho.         `:hy+/:::/::::::/:.  \n  :o////::::://////-``````-/smMMo//://///////:.   \n\
-  :++++++////////+odNmmmmNNMMMMNo/////////-.`     \n   ``.-:/+ooo++++osyo+////////+os++//++/.         \n           `.:/++/.             -/++/:.           \n                                                  \n\
-What's that ? \n\
-Hum... I'd say it's a kinda Penguin ! \n\
-");
+            g_print (COIN);
             exit (CID_EXIT_SUCCESS);
         }
         if (strcmp(argv[i], "dev" ) == 0) 
         {
             g_print("/!\\ CAUTION /!\\\nDevelopment mode !\n");
-            //g_free (cid->pConfFile);
-            //g_free (cid->pDefaultImage);
             cid->pConfFile = g_strdup(TESTING_FILE);
             DEFAULT_IMAGE = g_strdup(TESTING_COVER);
             cid->bDevMode = TRUE;
@@ -394,7 +380,8 @@ cid_datacontent_new (GType iType, void *value)
     if (ret != NULL)
     {
         ret->type = iType;
-        switch (iType) {
+        switch (iType) 
+        {
             case G_TYPE_STRING:
                 ret->string = (gchar *) value;
                 break;
@@ -418,7 +405,8 @@ cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2)
         return FALSE;
     if (d1->type != d2->type)
         return FALSE;
-    switch (d1->type) {
+    switch (d1->type) 
+    {
         case G_TYPE_STRING:
             return g_strcmp0(d1->string,d2->string) == 0;
         case G_TYPE_INT:
@@ -565,7 +553,8 @@ cid_datacase_print (CidDataCase *pCase)
 {
     if (pCase != NULL)
     {
-        switch (pCase->content->type) {
+        switch (pCase->content->type) 
+        {
             case G_TYPE_STRING:
                 g_print ("%s\n",pCase->content->string);
                 break;
@@ -723,7 +712,8 @@ cid_create_datatable (GType iDataType, ...)
             iCurrType = (GType) current;
             continue;
         }
-        switch (iCurrType) {
+        switch (iCurrType) 
+        {
             case G_TYPE_BOOLEAN:
                 tmp = cid_datacontent_new_boolean(current);
                 break;

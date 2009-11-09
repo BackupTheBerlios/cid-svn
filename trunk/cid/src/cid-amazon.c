@@ -114,7 +114,8 @@ cid_stream_file(const char *filename, gchar **cValue)
 gboolean 
 cid_get_xml_file (const gchar *artist, const gchar *album) 
 {
-    if (g_strcasecmp("Unknown",artist)==0 || g_strcasecmp("Unknown",album)==0)
+    if (g_strcasecmp("Unknown",artist)==0 || g_strcasecmp("Unknown",album)==0 ||
+        g_strcasecmp("Inconnu",artist)==0 || g_strcasecmp("Inconnu",album)==0)
         return FALSE;
         
     gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);

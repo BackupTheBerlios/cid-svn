@@ -18,6 +18,7 @@
 #include "cid-utilities.h"
 #include "cid-asynchrone.h"
 #include "cid-constantes.h"
+#include "cid-draw.h"
 
 extern CidMainContainer *cid;
 extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML, bCurrentlyFocused;
@@ -52,7 +53,8 @@ _cid_quit (GtkWidget *p_widget, gpointer user_data)
 
 gpointer 
 _cid_launch_threaded (gchar *cCommand) 
-{    if (!system (cCommand)) return NULL;
+{    
+    if (!system (cCommand)) return NULL;
     g_free (cCommand);
     return NULL;
 }
@@ -237,17 +239,17 @@ on_motion (GtkWidget *widget, GdkEventMotion *event)
         cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
         cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2)) {
         
-        gtk_widget_queue_draw(cid->pWindow);
+        CID_REDRAW;
         bFlyingButton = TRUE;
     } 
     else if (bFlyingButton) 
     {
         bFlyingButton = FALSE;
-        gtk_widget_queue_draw(cid->pWindow);
+        CID_REDRAW;
     }
 }
 
-void 
+static void 
 _cid_web_button_clicked (GtkLinkButton *button, const gchar *link_, gpointer *user_data) 
 {
     cid_launch_web_browser(link_);
@@ -303,7 +305,7 @@ _cid_about (GtkMenuItem *pMenuItem, gpointer *data)
     gtk_widget_destroy (pDialog);
 }
 
-void 
+static void 
 _cid_add_about_page (GtkWidget *pNoteBook, const gchar *cPageLabel, const gchar *cAboutText) 
 {
     GtkWidget *pVBox, *pScrolledWindow;
