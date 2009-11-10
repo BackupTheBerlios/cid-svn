@@ -193,7 +193,7 @@ main ( int argc, char **argv )
 */
     //char **argvBis = malloc(sizeof(argv));
     //memcpy(argvBis,argv,sizeof(argv));
-
+/*
     cid = g_new0(CidMainContainer,1);
     
     int i;
@@ -254,6 +254,7 @@ main ( int argc, char **argv )
     ///////////////////////////////////////////////////////////////////////
 //    g_print ("%s\n",CID_MODULES_DIR);
 */
+cid_test_xml();
     g_print ("Bye !\n");    
     return CID_EXIT_SUCCESS;
     

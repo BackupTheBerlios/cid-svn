@@ -11,7 +11,10 @@
 #define  __CID_AMAZON__
 
 #include <libxml/xmlreader.h>
+#include <libxml/parser.h>
+#include <libxml/xpath.h>
 #include <gtk/gtk.h>
+#include <curl/curl.h>
 
 G_BEGIN_DECLS
 
@@ -20,6 +23,13 @@ G_BEGIN_DECLS
 #define AMAZON_API_URL_2 "&AssociateTag=webservices-20&ResponseGroup=Images,ItemAttributes&Operation=ItemSearch&ItemSearch.Shared.SearchIndex=Music"
 #define DEFAULT_XML_LOCATION "/tmp/cid_amazon.xml"
 #define DEFAULT_DOWNLOADED_IMAGE_LOCATION "/tmp/default.jpg"
+
+#define LAST_ID_KEY "941340dc17f3e2704c5b06ebf845e98e"
+#define LAST_API_URL "http://ws.audioscrobbler.com/2.0/?method="
+#define LAST_ARTIST "artist.getinfo"
+#define LAST_ALBUM "album.getinfo"
+//&api_key=
+#define TEST_XML "../data/test.xml"
 
 /**
  * Lit les noeuds du fichier en cours de parsage
@@ -51,6 +61,9 @@ gboolean cid_get_xml_file (const gchar *artist, const gchar *album);
  * @return succes du telechargement.
  */
 gboolean cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath);
+
+
+void cid_test_xml ();
 
 G_END_DECLS
 #endif

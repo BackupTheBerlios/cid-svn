@@ -24,7 +24,7 @@ int ret;
 int flag, found;
 
 gchar *URL;
-gchar *TAB_IMAGE_SIZES[] = {"MediumImage","LargeImage"};
+gchar *TAB_IMAGE_SIZES[] = {"large","extralarge"};
 
 /**
  * Lit les noeuds du fichier en cours de parsage
@@ -111,6 +111,54 @@ cid_stream_file(const char *filename, gchar **cValue)
     xmlMemoryDump();
 }
 
+void
+cid_test_xml ()
+{
+    xmlDocPtr doc;
+    doc = xmlParseFile(TEST_XML);
+    if (doc == NULL) {
+        fprintf(stderr, "Document XML invalide\n");
+        return;
+    }
+    // Initialisation de l'environnement XPath
+    xmlXPathInit();
+    // Création du contexte
+    xmlXPathContextPtr ctxt = xmlXPathNewContext(doc); // doc est un xmlDocPtr représentant notre catalogue
+    if (ctxt == NULL) {
+        fprintf(stderr, "Erreur lors de la création du contexte XPath\n");
+        return;
+    }
+    // Evaluation de l'expression XPath
+    xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("//image/text()", ctxt);
+    //xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("count(//image[size=large])", ctxt);
+    if (xpathRes == NULL) {
+        fprintf(stderr, "Erreur sur l'expression XPath\n");
+        return;
+    }
+    
+    // Manipulation du résultat
+    if (xpathRes->type == XPATH_NODESET) {
+        int i;
+        printf("Produits dont le prix est inférieur à 10 Euros :\n");
+        for (i = 0; i < xpathRes->nodesetval->nodeNr; i++) {
+            xmlNodePtr n = xpathRes->nodesetval->nodeTab[i];
+            if (n->type == XML_TEXT_NODE || n->type == XML_CDATA_SECTION_NODE) {
+                printf("- %s\n", n->content);
+            }
+        }
+    }
+    
+    /*
+    if (xpathRes->type == XPATH_NUMBER) {
+        printf("Nombre de produits dans le catalogue : %.0f\n", xmlXPathCastToNumber(xpathRes));
+    }
+    */
+    // Libération de la mémoire
+    xmlXPathFreeObject(xpathRes);
+    xmlXPathFreeContext(ctxt);
+    xmlFreeDoc(doc);
+}
+
 gboolean 
 cid_get_xml_file (const gchar *artist, const gchar *album) 
 {
@@ -124,10 +172,19 @@ cid_get_xml_file (const gchar *artist, const gchar *album)
     gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
     if (!system (cCommand)) return FALSE;
     g_free (cCommand);
-    cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cFileToDownload, cTmpFilePath, cTmpFilePath, cTmpFilePath);
-    cid_debug ("%s\n",cCommand);
+    //cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cFileToDownload, cTmpFilePath, cTmpFilePath, cTmpFilePath);
+    //cid_debug ("%s\n",cCommand);
     //system (cCommand);
-    cid_launch_command (cCommand);
+    //cid_launch_command (cCommand);
+    CURL *handle = curl_easy_init(); 
+    curl_easy_setopt(handle, CURLOPT_URL, "http://annonces.ebay.fr/");
+    FILE * fp = fopen("test.html", "w"); 
+    curl_easy_setopt(handle,  CURLOPT_WRITEDATA, fp); 
+    curl_easy_setopt(handle,  CURLOPT_WRITEFUNCTION, fwrite);
+    curl_easy_perform(handle);
+    fclose(fp);
+    curl_easy_cleanup(handle);
+
     bCurrentlyDownloadingXML = TRUE;
     g_free (cCommand);
     g_free (cTmpFilePath);
