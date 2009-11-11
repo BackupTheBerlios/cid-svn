@@ -543,6 +543,8 @@ cid_datatable_foreach (CidDataTable *p_list, CidDataAction func, gpointer *pData
         gint cpt = 1;
         while (p_temp != NULL)
         {
+            if (pData == NULL)
+                pData = g_new(gpointer,1);
             pData[0] = GINT_TO_POINTER(cpt);
             func (p_temp, pData);
             p_temp = p_temp->next;
@@ -571,7 +573,7 @@ cid_datacase_print (CidDataCase *pCase, gpointer *pData)
     }
 }
 
-void
+static void
 cid_datacase_replace (CidDataCase *pCase, gpointer *pData)
 {
     if (pCase != NULL)
@@ -761,22 +763,22 @@ cid_create_datatable (GType iDataType, ...)
 }
 
 void
-cid_str_replace_all (gchar **string, const gchar *cFrom, const gchar *cTo)
+cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo)
 {
-    gchar **tmp = g_strsplit(*string,cFrom,0);
+    gchar **tmp = g_strsplit(*string,sFrom,0);
     CidDataTable *t_temp = cid_datatable_new();
     while (*tmp != NULL)
     {
         t_temp = cid_datatable_append(t_temp,cid_datacontent_new_string(*tmp));
         tmp++;
     }
-    *string = (gchar *) malloc((strlen(*string)-(strlen(cFrom)*cid_datatable_length(t_temp))+(strlen(cTo)*cid_datatable_length(t_temp)))*sizeof(gchar));
+    *string = (gchar *) malloc((strlen(*string)-(strlen(sFrom)*cid_datatable_length(t_temp))+(strlen(sTo)*cid_datatable_length(t_temp)))*sizeof(gchar));
     g_sprintf(*string,"");
     gpointer *pData = g_new(gpointer,4);
     pData[0] = GINT_TO_POINTER(0);
     pData[1] = GINT_TO_POINTER(cid_datatable_length(t_temp));
     pData[2] = string;
-    pData[3] = (gchar *)cTo;
+    pData[3] = (gchar *)sTo;
     cid_datatable_foreach(t_temp,(CidDataAction)cid_datacase_replace,pData);
     cid_erase_datatable(&t_temp);
     g_free(t_temp);
