@@ -99,7 +99,7 @@ void cid_check_position (void);
  */
 CidDataTable *cid_create_datatable (GType iDataType, ...);
 
-void cid_delete_datatable(CidDataTable **p_list);
+void cid_erase_datatable(CidDataTable **p_list);
 CidDataTable *cid_datatable_remove(CidDataTable *p_list, CidDataContent *data);
 CidDataTable *cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data);
 CidDataTable *cid_datatable_remove_id(CidDataTable *p_list, int position);
@@ -109,8 +109,9 @@ CidDataTable *cid_datatable_prepend(CidDataTable *p_list, CidDataContent *data);
 CidDataTable *cid_datatable_append(CidDataTable *p_list, CidDataContent *data);
 CidDataContent *cid_datacontent_new (GType iType, void *value);
 gboolean cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2);
-void cid_datatable_foreach (CidDataTable *p_list, CidDataAction func);
-void cid_datacase_print (CidDataCase *pCase);
+void cid_datatable_foreach (CidDataTable *p_list, CidDataAction func, gpointer *pData);
+void cid_datacase_print (CidDataCase *pCase, gpointer *pData);
+void cid_datacase_replace (CidDataCase *pCase, gpointer *pData);
 
 #define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, (void*)val)
 #define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, (void*)val)
@@ -118,6 +119,8 @@ void cid_datacase_print (CidDataCase *pCase);
 
 #define cid_datatable_remove_first(list) cid_datatable_remove_id(list, 1)
 #define cid_datatable_remove_last(list) cid_datatable_remove_id(list, cid_datatable_length(list))
+
+void cid_str_replace_all (gchar **string, const gchar *cFrom, const gchar *cTo);
 
 G_END_DECLS
 #endif

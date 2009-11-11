@@ -7,11 +7,15 @@ bin_PROGRAMS = \
 if WITH_OPENGL
 have_opengl=-DHAVE_OPENGL="1"
 endif
+if E17_ENABLE
+have_e17=-DHAVE_E17="1"
+endif
 
 cid_CFLAGS = \
     $(PACKAGE_CFLAGS) \
     $(OPENGL_CFLAGS) \
     $(have_opengl) \
+    $(have_e17) \
     -DCID_DEFAULT_IMAGE=\""$(pkgdatadir)/default.svg"\"\
     -DCID_CONFIG_FILE=\""cid.conf"\"\
     -DCID_DATA_DIR=\""$(pkgdatadir)"\"\

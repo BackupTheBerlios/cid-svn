@@ -129,7 +129,7 @@ cid_test_xml ()
         return;
     }
     // Evaluation de l'expression XPath
-    xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("//image/text()", ctxt);
+    xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("//image[@size='large']/text()", ctxt);
     //xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("count(//image[size=large])", ctxt);
     if (xpathRes == NULL) {
         fprintf(stderr, "Erreur sur l'expression XPath\n");

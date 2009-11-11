@@ -516,7 +516,7 @@ cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
 }
 
 void
-cid_delete_datatable(CidDataTable **p_list)
+cid_erase_datatable(CidDataTable **p_list)
 {
     if (*p_list != NULL)
     {
@@ -535,21 +535,24 @@ cid_delete_datatable(CidDataTable **p_list)
 }
 
 void
-cid_datatable_foreach (CidDataTable *p_list, CidDataAction func)
+cid_datatable_foreach (CidDataTable *p_list, CidDataAction func, gpointer *pData)
 {
     if (p_list != NULL)
     {
         CidDataCase *p_temp = p_list->head;
+        gint cpt = 1;
         while (p_temp != NULL)
         {
-            func (p_temp);
+            pData[0] = GINT_TO_POINTER(cpt);
+            func (p_temp, pData);
             p_temp = p_temp->next;
+            cpt++;
         }
     }
 }
 
 void
-cid_datacase_print (CidDataCase *pCase)
+cid_datacase_print (CidDataCase *pCase, gpointer *pData)
 {
     if (pCase != NULL)
     {
@@ -564,6 +567,23 @@ cid_datacase_print (CidDataCase *pCase)
             case G_TYPE_BOOLEAN:
                 g_print ("%s\n",pCase->content->booleen ? "TRUE" : "FALSE");
                 break;
+        }
+    }
+}
+
+void
+cid_datacase_replace (CidDataCase *pCase, gpointer *pData)
+{
+    if (pCase != NULL)
+    {
+        gchar **c_tmp = pData[2];
+        if (GPOINTER_TO_INT(pData[0]) < GPOINTER_TO_INT(pData[1]))
+        {
+            g_sprintf(*c_tmp,"%s%s%s",*c_tmp,pCase->content->string,pData[3]);
+        } 
+        else
+        {
+            g_sprintf(*c_tmp,"%s%s",*c_tmp,pCase->content->string);
         }
     }
 }
@@ -594,6 +614,9 @@ cid_datatable_remove(CidDataTable *p_list, CidDataContent *data)
                     p_temp->next->prev = p_temp->prev;
                     p_temp->prev->next = p_temp->next;
                 }
+                if (p_temp->content->type == G_TYPE_STRING)
+                    free(p_temp->content->string);
+                free(p_temp->content);
                 free(p_temp);
                 p_list->length--;
                 found = 1;
@@ -634,6 +657,9 @@ cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
                     p_del->next->prev = p_del->prev;
                     p_del->prev->next = p_del->next;
                 }
+                if (p_del->content->type == G_TYPE_STRING)
+                    free(p_del->content->string);
+                free(p_del->content);
                 free(p_del);
                 p_list->length--;
             }
@@ -672,6 +698,9 @@ cid_datatable_remove_id(CidDataTable *p_list, int position)
                     p_temp->next->prev = p_temp->prev;
                     p_temp->prev->next = p_temp->next;
                 }
+                if (p_temp->content->type == G_TYPE_STRING)
+                    free(p_temp->content->string);
+                free(p_temp->content);
                 free(p_temp);
                 p_list->length--;
             }
@@ -695,7 +724,6 @@ cid_datatable_length(CidDataTable *p_list)
     }
     return ret;
 }
-
 
 CidDataTable *
 cid_create_datatable (GType iDataType, ...)
@@ -731,6 +759,29 @@ cid_create_datatable (GType iDataType, ...)
     va_end(args);
     return res;
 }
+
+void
+cid_str_replace_all (gchar **string, const gchar *cFrom, const gchar *cTo)
+{
+    gchar **tmp = g_strsplit(*string,cFrom,0);
+    CidDataTable *t_temp = cid_datatable_new();
+    while (*tmp != NULL)
+    {
+        t_temp = cid_datatable_append(t_temp,cid_datacontent_new_string(*tmp));
+        tmp++;
+    }
+    *string = (gchar *) malloc((strlen(*string)-(strlen(cFrom)*cid_datatable_length(t_temp))+(strlen(cTo)*cid_datatable_length(t_temp)))*sizeof(gchar));
+    g_sprintf(*string,"");
+    gpointer *pData = g_new(gpointer,4);
+    pData[0] = GINT_TO_POINTER(0);
+    pData[1] = GINT_TO_POINTER(cid_datatable_length(t_temp));
+    pData[2] = string;
+    pData[3] = (gchar *)cTo;
+    cid_datatable_foreach(t_temp,(CidDataAction)cid_datacase_replace,pData);
+    cid_erase_datatable(&t_temp);
+    g_free(t_temp);
+}
+    
 
 static int 
 _cid_xerror_handler (Display * pDisplay, XErrorEvent *pXError) 

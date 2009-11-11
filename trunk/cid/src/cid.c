@@ -60,7 +60,7 @@ cid_init (CidMainContainer *pCid)
     
     pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 
-#ifdef E17_ENABLE    
+#ifdef HAVE_E17    
     pCid->cidHint = GDK_WINDOW_TYPE_HINT_DESKTOP; 
 #else
     pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
@@ -254,7 +254,10 @@ main ( int argc, char **argv )
     ///////////////////////////////////////////////////////////////////////
 //    g_print ("%s\n",CID_MODULES_DIR);
 */
-cid_test_xml();
+//cid_test_xml();
+    gchar *blah = "il etait une fois";
+    cid_str_replace_all(&blah," ","+");
+    g_print(":%s\n",blah);
     g_print ("Bye !\n");    
     return CID_EXIT_SUCCESS;
     

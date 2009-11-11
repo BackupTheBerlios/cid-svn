@@ -32,7 +32,7 @@ typedef struct _CidMinimalAppletConfig CidMinimalAppletConfig;
 typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
 typedef void (* CidControlFunction) (void);
 typedef void (* CidManagePlaylistFunction) (gchar *cSong);
-typedef void (* CidDataAction) (CidDataCase *pCase);
+typedef void (* CidDataAction) (CidDataCase *pCase, gpointer *pData);
 
 /**
  * Structure de données utilisée pour stocker les informations
