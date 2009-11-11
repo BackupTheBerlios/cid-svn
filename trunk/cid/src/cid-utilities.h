@@ -106,10 +106,10 @@ void cid_check_position (void);
 CidDataTable *cid_create_datatable (GType iDataType, ...);
 
 /**
- * Fonction permettant de vider notre liste
+ * Fonction permettant de liberer notre liste
  * @param pointeur vers notre liste
  */
-void cid_erase_datatable(CidDataTable **p_list);
+void cid_free_datatable(CidDataTable **p_list);
 
 /**
  * Permet de supprimer le premier element 'data' de la liste 'p_list'
@@ -205,6 +205,15 @@ void cid_datacase_print (CidDataCase *pCase, gpointer *pData);
  * @param pData donnees a utiliser
  */
 static void cid_datacase_replace (CidDataCase *pCase, gpointer *pData);
+
+/**
+ * Permet de supprimer un element
+ * @param pCase element a supprimer
+ * @param pData donnees provenant du foreach
+ */
+void cid_free_datacase_full (CidDataCase *pCase, gpointer *pData);
+
+#define cid_free_datacase(val) cid_free_datacase_full(val, NULL)
 
 #define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, (void*)val)
 #define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, (void*)val)

@@ -383,7 +383,7 @@ cid_datacontent_new (GType iType, void *value)
         switch (iType) 
         {
             case G_TYPE_STRING:
-                ret->string = (gchar *) value;
+                ret->string = g_strdup((gchar *) value);
                 break;
             case G_TYPE_INT:
                 ret->iNumber = (gint) value;
@@ -516,21 +516,24 @@ cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
 }
 
 void
-cid_erase_datatable(CidDataTable **p_list)
+cid_free_datacase_full (CidDataCase *pCase, gpointer *pData)
+{
+    if (pCase != NULL)
+    {
+        if (pCase->content->type == G_TYPE_STRING)
+            g_free(pCase->content->string);
+        g_free(pCase->content);
+        g_free(pCase);
+    }
+}
+
+void
+cid_free_datatable (CidDataTable **p_list)
 {
     if (*p_list != NULL)
     {
-        CidDataCase *p_temp = (*p_list)->head;
-        while (p_temp != NULL)
-        {
-            CidDataCase *p_del = p_temp;
-            p_temp = p_temp->next;
-            if (p_del->content->type == G_TYPE_STRING)
-                free(p_del->content->string);
-            free(p_del->content);
-            free(p_del);
-        }
-        free(*p_list), *p_list = NULL;
+        cid_datatable_foreach(*p_list,(CidDataAction) cid_free_datacase_full, NULL);
+        g_free(*p_list), *p_list = NULL;
     }
 }
 
@@ -616,10 +619,7 @@ cid_datatable_remove(CidDataTable *p_list, CidDataContent *data)
                     p_temp->next->prev = p_temp->prev;
                     p_temp->prev->next = p_temp->next;
                 }
-                if (p_temp->content->type == G_TYPE_STRING)
-                    free(p_temp->content->string);
-                free(p_temp->content);
-                free(p_temp);
+                cid_free_datacase(p_temp);
                 p_list->length--;
                 found = 1;
             }
@@ -659,10 +659,7 @@ cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
                     p_del->next->prev = p_del->prev;
                     p_del->prev->next = p_del->next;
                 }
-                if (p_del->content->type == G_TYPE_STRING)
-                    free(p_del->content->string);
-                free(p_del->content);
-                free(p_del);
+                cid_free_datacase(p_del);
                 p_list->length--;
             }
             else
@@ -700,10 +697,7 @@ cid_datatable_remove_id(CidDataTable *p_list, int position)
                     p_temp->next->prev = p_temp->prev;
                     p_temp->prev->next = p_temp->next;
                 }
-                if (p_temp->content->type == G_TYPE_STRING)
-                    free(p_temp->content->string);
-                free(p_temp->content);
-                free(p_temp);
+                cid_free_datacase(p_temp);
                 p_list->length--;
             }
             else
@@ -780,8 +774,7 @@ cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo)
     pData[2] = string;
     pData[3] = (gchar *)sTo;
     cid_datatable_foreach(t_temp,(CidDataAction)cid_datacase_replace,pData);
-    cid_erase_datatable(&t_temp);
-    g_free(t_temp);
+    cid_free_datatable(&t_temp);
 }
     
 
