@@ -16,6 +16,7 @@
 #include <X11/Xlib.h>
 
 extern CidMainContainer *cid;
+extern int ret;
 
 static Display *s_XDisplay = NULL;
 
@@ -28,7 +29,8 @@ cid_sortie(int code)
     
     if (cid->bRunning)
         gtk_main_quit ();
-    return (code);
+    ret = code;
+    return code;
 }
 
 void 
@@ -416,68 +418,66 @@ cid_datacontent_equals (CidDataContent *d1, CidDataContent *d2)
     }
 }
 
-CidDataTable *
-cid_datatable_append(CidDataTable *p_list, CidDataContent *data)
+void
+cid_datatable_append(CidDataTable **p_list, CidDataContent *data)
 {
-    if (p_list != NULL) /* On vérifie si notre liste a été allouée */
+    if (*p_list != NULL) /* On vérifie si notre liste a été allouée */
     {
         CidDataCase *p_new = cid_datacase_new(); /* Création d'un nouveau node */
         if (p_new != NULL) /* On vérifie si le malloc n'a pas échoué */
         {
             p_new->content = data; /* On 'enregistre' notre donnée */
             p_new->next = NULL; /* On fait pointer p_next vers NULL */
-            if (p_list->tail == NULL) /* Cas où notre liste est vide (pointeur vers fin de liste à  NULL) */
+            if ((*p_list)->tail == NULL) /* Cas où notre liste est vide (pointeur vers fin de liste à  NULL) */
             {
                 p_new->prev = NULL; /* On fait pointer p_prev vers NULL */
-                p_list->head = p_new; /* On fait pointer la tête de liste vers le nouvel élément */
-                p_list->tail = p_new; /* On fait pointer la fin de liste vers le nouvel élément */
+                (*p_list)->head = p_new; /* On fait pointer la tête de liste vers le nouvel élément */
+                (*p_list)->tail = p_new; /* On fait pointer la fin de liste vers le nouvel élément */
             }
             else /* Cas où des éléments sont déjà présents dans notre liste */
             {
-                p_list->tail->next = p_new; /* On relie le dernier élément de la liste vers notre nouvel élément (début du chaînage) */
-                p_new->prev = p_list->tail; /* On fait pointer p_prev vers le dernier élément de la liste */
-                p_list->tail = p_new; /* On fait pointer la fin de liste vers notre nouvel élément (fin du chaînage: 3 étapes) */
+                (*p_list)->tail->next = p_new; /* On relie le dernier élément de la liste vers notre nouvel élément (début du chaînage) */
+                p_new->prev = (*p_list)->tail; /* On fait pointer p_prev vers le dernier élément de la liste */
+                (*p_list)->tail = p_new; /* On fait pointer la fin de liste vers notre nouvel élément (fin du chaînage: 3 étapes) */
             }
-            p_list->length++; /* Incrémentation de la taille de la liste */
+            (*p_list)->length++; /* Incrémentation de la taille de la liste */
         }
     }
-    return p_list; /* on retourne notre nouvelle liste */
 }
 
-CidDataTable *
-cid_datatable_prepend(CidDataTable *p_list, CidDataContent *data)
+void
+cid_datatable_prepend(CidDataTable **p_list, CidDataContent *data)
 {
-    if (p_list != NULL)
+    if (*p_list != NULL)
     {
         CidDataCase *p_new = cid_datacase_new();
         if (p_new != NULL)
         {
             p_new->content = data;
             p_new->prev = NULL;
-            if (p_list->tail == NULL)
+            if ((*p_list)->tail == NULL)
             {
                 p_new->next = NULL;
-                p_list->head = p_new;
-                p_list->tail = p_new;
+                (*p_list)->head = p_new;
+                (*p_list)->tail = p_new;
             }
             else
             {
-                p_list->head->prev = p_new;
-                p_new->next = p_list->head;
-                p_list->head = p_new;
+                (*p_list)->head->prev = p_new;
+                p_new->next = (*p_list)->head;
+                (*p_list)->head = p_new;
             }
-            p_list->length++;
+            (*p_list)->length++;
        }
     }
-    return p_list;
 }
 
-CidDataTable *
-cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
+void
+cid_datatable_insert(CidDataTable **p_list, CidDataContent *data, int position)
 {
-    if (p_list != NULL)
+    if (*p_list != NULL)
     {
-        CidDataCase *p_temp = p_list->head;
+        CidDataCase *p_temp = (*p_list)->head;
         int i = 1;
         while (p_temp != NULL && i <= position)
         {
@@ -485,11 +485,11 @@ cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
             {
                 if (p_temp->next == NULL)
                 {
-                    p_list = cid_datatable_append(p_list, data);
+                    cid_datatable_append(p_list, data);
                 }
                 else if (p_temp->prev == NULL)
                 {
-                    p_list = cid_datatable_prepend(p_list, data);
+                    cid_datatable_prepend(p_list, data);
                 }
                 else
                 {
@@ -501,7 +501,7 @@ cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
                         p_temp->prev->next = p_new;
                         p_new->prev = p_temp->prev;
                         p_new->next = p_temp;
-                        p_list->length++;
+                        (*p_list)->length++;
                     }
                 }
             }
@@ -512,7 +512,6 @@ cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position)
             i++;
         }
     }
-    return p_list;
 }
 
 void
@@ -520,7 +519,7 @@ cid_free_datacase_full (CidDataCase *pCase, gpointer *pData)
 {
     if (pCase != NULL)
     {
-        if (pCase->content->type == G_TYPE_STRING)
+        if (pCase->content->type == G_TYPE_STRING && pCase->content->string != NULL)
             g_free(pCase->content->string);
         g_free(pCase->content);
         g_free(pCase);
@@ -593,26 +592,26 @@ cid_datacase_replace (CidDataCase *pCase, gpointer *pData)
     }
 }
 
-CidDataTable *
-cid_datatable_remove(CidDataTable *p_list, CidDataContent *data)
+void
+cid_datatable_remove(CidDataTable **p_list, CidDataContent *data)
 {
-    if (p_list != NULL)
+    if (*p_list != NULL)
     {
-        CidDataCase *p_temp = p_list->head;
-        int found = 0;
+        CidDataCase *p_temp = (*p_list)->head;
+        gboolean found = FALSE;
         while (p_temp != NULL && !found)
         {
             if (cid_datacontent_equals(p_temp->content,data))
             {
                 if (p_temp->next == NULL)
                 {
-                    p_list->tail = p_temp->prev;
-                    p_list->tail->next = NULL;
+                    (*p_list)->tail = p_temp->prev;
+                    (*p_list)->tail->next = NULL;
                 }
                 else if (p_temp->prev == NULL)
                 {
-                    p_list->head = p_temp->next;
-                    p_list->head->prev = NULL;
+                    (*p_list)->head = p_temp->next;
+                    (*p_list)->head->prev = NULL;
                 }
                 else
                 {
@@ -620,8 +619,8 @@ cid_datatable_remove(CidDataTable *p_list, CidDataContent *data)
                     p_temp->prev->next = p_temp->next;
                 }
                 cid_free_datacase(p_temp);
-                p_list->length--;
-                found = 1;
+                (*p_list)->length--;
+                found = TRUE;
             }
             else
             {
@@ -629,15 +628,14 @@ cid_datatable_remove(CidDataTable *p_list, CidDataContent *data)
             }
         }
     }
-    return p_list;
 }
 
-CidDataTable *
-cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
+void
+cid_datatable_remove_all(CidDataTable **p_list, CidDataContent *data)
 {
-    if (p_list != NULL)
+    if (*p_list != NULL)
     {
-        CidDataCase *p_temp = p_list->head;
+        CidDataCase *p_temp = (*p_list)->head;
         while (p_temp != NULL)
         {
             if (cid_datacontent_equals(p_temp->content,data))
@@ -646,13 +644,13 @@ cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
                 p_temp = p_temp->next;
                 if (p_del->next == NULL)
                 {
-                    p_list->tail = p_del->prev;
-                    p_list->tail->next = NULL;
+                    (*p_list)->tail = p_del->prev;
+                    (*p_list)->tail->next = NULL;
                 }
                 else if (p_del->prev == NULL)
                 {
-                    p_list->head = p_del->next;
-                    p_list->head->prev = NULL;
+                    (*p_list)->head = p_del->next;
+                    (*p_list)->head->prev = NULL;
                 }
                 else
                 {
@@ -660,7 +658,7 @@ cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
                     p_del->prev->next = p_del->next;
                 }
                 cid_free_datacase(p_del);
-                p_list->length--;
+                (*p_list)->length--;
             }
             else
             {
@@ -668,15 +666,14 @@ cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data)
             }
         }
     }
-    return p_list;
 }
 
-CidDataTable *
-cid_datatable_remove_id(CidDataTable *p_list, int position)
+void
+cid_datatable_remove_id(CidDataTable **p_list, int position)
 {
-    if (p_list != NULL)
+    if (*p_list != NULL)
     {
-        CidDataCase *p_temp = p_list->head;
+        CidDataCase *p_temp = (*p_list)->head;
         int i = 1;
         while (p_temp != NULL && i <= position)
         {
@@ -684,13 +681,13 @@ cid_datatable_remove_id(CidDataTable *p_list, int position)
             {
                 if (p_temp->next == NULL)
                 {
-                    p_list->tail = p_temp->prev;
-                    p_list->tail->next = NULL;
+                    (*p_list)->tail = p_temp->prev;
+                    (*p_list)->tail->next = NULL;
                 }
                 else if (p_temp->prev == NULL)
                 {
-                    p_list->head = p_temp->next;
-                    p_list->head->prev = NULL;
+                    (*p_list)->head = p_temp->next;
+                    (*p_list)->head->prev = NULL;
                 }
                 else
                 {
@@ -698,7 +695,7 @@ cid_datatable_remove_id(CidDataTable *p_list, int position)
                     p_temp->prev->next = p_temp->next;
                 }
                 cid_free_datacase(p_temp);
-                p_list->length--;
+                (*p_list)->length--;
             }
             else
             {
@@ -707,7 +704,6 @@ cid_datatable_remove_id(CidDataTable *p_list, int position)
             i++;
         }
     }
-    return p_list;
 }
 
 size_t
@@ -750,7 +746,7 @@ cid_create_datatable (GType iDataType, ...)
             default:
                 iCurrType = (GType) current;
         }
-        res = cid_datatable_append(res,tmp);
+        cid_datatable_append(&res,tmp);
     }
     va_end(args);
     return res;
@@ -759,24 +755,55 @@ cid_create_datatable (GType iDataType, ...)
 void
 cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo)
 {
+    if (*string == NULL)
+        return;
     gchar **tmp = g_strsplit(*string,sFrom,0);
     CidDataTable *t_temp = cid_datatable_new();
     while (*tmp != NULL)
     {
-        t_temp = cid_datatable_append(t_temp,cid_datacontent_new_string(*tmp));
+        cid_datatable_append(&t_temp,cid_datacontent_new_string(*tmp));
         tmp++;
     }
-    *string = (gchar *) malloc((strlen(*string)-(strlen(sFrom)*cid_datatable_length(t_temp))+(strlen(sTo)*cid_datatable_length(t_temp)))*sizeof(gchar));
-    g_sprintf(*string,"");
+    size_t size = cid_datatable_length(t_temp);
+    if (size < 2)
+    {
+        cid_free_datatable(&t_temp);
+        return;
+    }
+    *string = g_malloc0((strlen(*string)+((strlen(sTo)-strlen(sFrom))*size))*sizeof(gchar)+1);
     gpointer *pData = g_new(gpointer,4);
     pData[0] = GINT_TO_POINTER(0);
-    pData[1] = GINT_TO_POINTER(cid_datatable_length(t_temp));
+    pData[1] = GINT_TO_POINTER(size);
     pData[2] = string;
     pData[3] = (gchar *)sTo;
     cid_datatable_foreach(t_temp,(CidDataAction)cid_datacase_replace,pData);
     cid_free_datatable(&t_temp);
 }
-    
+
+void
+cid_str_replace_all_seq (gchar **string, gchar *seqFrom, gchar *seqTo)
+{
+//    if (strlen(seqFrom) != strlen(seqTo))
+//        return;
+    /*
+    while (*seqFrom != '\0' && *seqTo != '\0')
+    {
+        gchar *from = g_malloc0(2*sizeof(gchar)), *to = g_malloc0(2*sizeof(gchar));
+        g_sprintf(from,"%c",*seqFrom);
+        g_sprintf(to,"%c",*seqTo);
+        g_print("from: %s, to: %s\n",from,to);
+        cid_str_replace_all (string,from,to);
+        g_free(from), from = NULL;
+        g_free(to), to = NULL;
+        seqFrom++;
+        seqTo++;
+    }
+    */
+    for(;*seqFrom != '\0';seqFrom++)
+    {
+        g_print("%c\n",*seqFrom);
+    }
+}
 
 static int 
 _cid_xerror_handler (Display * pDisplay, XErrorEvent *pXError) 

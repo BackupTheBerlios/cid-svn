@@ -117,7 +117,7 @@ void cid_free_datatable(CidDataTable **p_list);
  * @param data element a supprimer
  * @return nouvelle liste 
  */
-CidDataTable *cid_datatable_remove(CidDataTable *p_list, CidDataContent *data);
+void cid_datatable_remove(CidDataTable **p_list, CidDataContent *data);
 
 /**
  * Permet de supprimer tous les elements 'data' de la liste 'p_list'
@@ -125,7 +125,7 @@ CidDataTable *cid_datatable_remove(CidDataTable *p_list, CidDataContent *data);
  * @param data element a supprimer
  * @return nouvelle liste
  */
-CidDataTable *cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *data);
+void cid_datatable_remove_all(CidDataTable **p_list, CidDataContent *data);
 
 /**
  * Supprime de la liste 'p_list' l'element situe a l'indice 'position'
@@ -133,7 +133,7 @@ CidDataTable *cid_datatable_remove_all(CidDataTable *p_list, CidDataContent *dat
  * @param position indice de l'element a supprimer
  * @return nouvelle liste
  */
-CidDataTable *cid_datatable_remove_id(CidDataTable *p_list, int position);
+void cid_datatable_remove_id(CidDataTable **p_list, int position);
 
 /**
  * Permet de connaitre la taille d'une liste
@@ -149,7 +149,7 @@ size_t cid_datatable_length(CidDataTable *p_list);
  * @param position indice ou l'on souhaite ajouter l'element
  * @return nouvelle liste
  */
-CidDataTable *cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, int position);
+void cid_datatable_insert(CidDataTable **p_list, CidDataContent *data, int position);
 
 /**
  * Permet d'ajouter un element en debut de liste
@@ -157,7 +157,7 @@ CidDataTable *cid_datatable_insert(CidDataTable *p_list, CidDataContent *data, i
  * @param data element a ajouter
  * @return nouvelle liste
  */
-CidDataTable *cid_datatable_prepend(CidDataTable *p_list, CidDataContent *data);
+void cid_datatable_prepend(CidDataTable **p_list, CidDataContent *data);
 
 /**
  * Permet d'ajouter un element en fin de liste
@@ -165,7 +165,7 @@ CidDataTable *cid_datatable_prepend(CidDataTable *p_list, CidDataContent *data);
  * @param data element a ajouter
  * @return nouvelle liste
  */
-CidDataTable *cid_datatable_append(CidDataTable *p_list, CidDataContent *data);
+void cid_datatable_append(CidDataTable **p_list, CidDataContent *data);
 
 /**
  * Permet de creer un nouvel element pouvant etre insere dans une liste
@@ -229,6 +229,8 @@ void cid_free_datacase_full (CidDataCase *pCase, gpointer *pData);
  * @param sTo motif avec lequel on remplace
  */
 void cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo);
+
+void cid_str_replace_all_seq (gchar **string, gchar *seqFrom, gchar *seqTo);
 
 G_END_DECLS
 #endif

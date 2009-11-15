@@ -166,6 +166,11 @@ cid_get_xml_file (const gchar *artist, const gchar *album)
         g_strcasecmp("Inconnu",artist)==0 || g_strcasecmp("Inconnu",album)==0)
         return FALSE;
         
+    gchar *ar = g_strdup(artist);
+    gchar *al = g_strdup(album);
+    
+    cid_str_replace_all_seq(&ar," éèàç","+eeac");
+    
     gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);
     gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
     
