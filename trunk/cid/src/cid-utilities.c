@@ -385,7 +385,9 @@ cid_datacontent_new (GType iType, void *value)
         switch (iType) 
         {
             case G_TYPE_STRING:
-                ret->string = g_strdup((gchar *) value);
+                //ret->string = g_strdup((gchar *) value);
+                ret->string = g_malloc0(strlen((gchar *) value)*sizeof(gchar)+1);
+                strcpy(ret->string, (gchar *) value);
                 break;
             case G_TYPE_INT:
                 ret->iNumber = (gint) value;
@@ -394,6 +396,7 @@ cid_datacontent_new (GType iType, void *value)
                 ret->booleen = (gboolean) value;
                 break;
             default:
+                g_free(ret);
                 return NULL;
         }
     }
@@ -542,15 +545,26 @@ cid_datatable_foreach (CidDataTable *p_list, CidDataAction func, gpointer *pData
     if (p_list != NULL)
     {
         CidDataCase *p_temp = p_list->head;
+        gboolean bCreateData = FALSE;
+        if (pData == NULL)
+        {
+            pData = g_new(gpointer,1);
+            bCreateData = TRUE;
+        }
         gint cpt = 1;
         while (p_temp != NULL)
         {
-            if (pData == NULL)
-                pData = g_new(gpointer,1);
             pData[0] = GINT_TO_POINTER(cpt);
+            CidDataCase *p_del = g_malloc0(sizeof(*p_temp));
+            memcpy(p_del,p_temp,sizeof(*p_temp));
             func (p_temp, pData);
-            p_temp = p_temp->next;
+            p_temp = p_del->next;
+            g_free(p_del);
             cpt++;
+        }
+        if (bCreateData)
+        {
+            g_free(pData);
         }
     }
 }
@@ -834,4 +848,36 @@ cid_check_position (void)
     if (cid->iPosY > (cid->XScreenHeight - cid->iHeight)) cid->iPosY = (cid->XScreenHeight - cid->iHeight);
     if (cid->iPosX < 0) cid->iPosX = 0;
     if (cid->iPosY < 0) cid->iPosY = 0;
+}
+
+gchar *
+_url_encode (const gchar * str)
+{
+    const gchar * s = str;
+    char * t = NULL;
+    char * ret;
+    char * validChars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_.!~*'()";
+    char * isValidChar;
+    int lenght = 0;
+    // calcul de la taille de la chaine urlEncodée
+    do{
+        isValidChar = (char *) strchr(validChars, *s); // caractère valide?
+        if(!isValidChar)
+            lenght+=3; // %xx : 3 caractères
+        else
+            lenght++;  // sinon un seul
+    }while(*++s); // avance d'un cran dans la chaine. Si on est pas à la fin, on continue...
+    s = str;
+    t = g_new (gchar, lenght + 1); // Allocation à la bonne taille
+    ret = t;
+    //encodage
+    do{
+        isValidChar = (char *) strchr(validChars, *s);
+        if(!isValidChar)
+            sprintf(t, "%%%2X", *s), t+=3;
+        else
+            sprintf(t, "%c", *s), t++;
+    }while(*++s);
+    *t = 0; // 0 final
+    return ret;
 }

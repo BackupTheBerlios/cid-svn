@@ -232,5 +232,7 @@ void cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo);
 
 void cid_str_replace_all_seq (gchar **string, gchar *seqFrom, gchar *seqTo);
 
+gchar *_url_encode (const gchar * str);
+
 G_END_DECLS
 #endif
