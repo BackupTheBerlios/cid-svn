@@ -194,7 +194,7 @@ main ( int argc, char **argv )
 */
     //char **argvBis = malloc(sizeof(argv));
     //memcpy(argvBis,argv,sizeof(argv));
-/*
+
     cid = g_new0(CidMainContainer,1);
     
     int i;
@@ -212,13 +212,13 @@ main ( int argc, char **argv )
     cid_init(cid);
     
     cid_set_signal_interception ();
-*/
+
     // On internationalise l'appli.
     setlocale (LC_ALL,"");
     bindtextdomain (CID_GETTEXT_PACKAGE, CID_LOCALE_DIR);
     bind_textdomain_codeset (CID_GETTEXT_PACKAGE, "UTF-8");
     textdomain (CID_GETTEXT_PACKAGE);
-/*
+
     cid_read_parameters (argc,argv);
     
     cid_read_config (cid->pConfFile, NULL);
@@ -239,8 +239,8 @@ main ( int argc, char **argv )
     cid_key_file_free();
     cid_free_musicData();
     cid_free_main_structure (cid);
-*/
 
+/*
     ///////////////////////////////////////////////////////////////////////
     CidDataTable *test = cid_create_datatable(G_TYPE_STRING,"blah","blih","bloh","toto","tata","titi","tutu",G_TYPE_INT,5,12,G_TYPE_INVALID);
     printf("size: %d\n",cid_datatable_length(test));
@@ -256,7 +256,7 @@ main ( int argc, char **argv )
     printf("size: %d\n",cid_datatable_length(test));
     ///////////////////////////////////////////////////////////////////////
 //    g_print ("%s\n",CID_MODULES_DIR);
-
+*/
 //cid_test_xml();
     //gchar *blah = "il était une fois";
     //gchar *blih = "j'aime les frites";
@@ -268,7 +268,7 @@ main ( int argc, char **argv )
     //g_free(blah);
     //g_free(blih);
     
-    //g_print ("Bye !\n");    
+    g_print ("Bye !\n");    
 
     return ret;
     
