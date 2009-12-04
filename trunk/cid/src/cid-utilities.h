@@ -133,7 +133,7 @@ void cid_datatable_remove_all(CidDataTable **p_list, CidDataContent *data);
  * @param position indice de l'element a supprimer
  * @return nouvelle liste
  */
-void cid_datatable_remove_id(CidDataTable **p_list, int position);
+void cid_datatable_remove_id(CidDataTable **p_list, gint position);
 
 /**
  * Permet de connaitre la taille d'une liste
@@ -149,7 +149,7 @@ size_t cid_datatable_length(CidDataTable *p_list);
  * @param position indice ou l'on souhaite ajouter l'element
  * @return nouvelle liste
  */
-void cid_datatable_insert(CidDataTable **p_list, CidDataContent *data, int position);
+void cid_datatable_insert(CidDataTable **p_list, CidDataContent *data, gint position);
 
 /**
  * Permet d'ajouter un element en debut de liste
@@ -213,7 +213,16 @@ static void cid_datacase_replace (CidDataCase *pCase, gpointer *pData);
  */
 void cid_free_datacase_full (CidDataCase *pCase, gpointer *pData);
 
+/**
+ * Permet de supprimer un conteneur
+ * @param pContent contenu a supprimer
+ * @param pData donnees provenant du foreach
+ */
+void cid_free_datacontent_full (CidDataContent *pContent, gpointer *pData);
+
 #define cid_free_datacase(val) cid_free_datacase_full(val, NULL)
+
+#define cid_free_datacontent(val) cid_free_datacontent_full(val, NULL)
 
 #define cid_datacontent_new_string(val) cid_datacontent_new(G_TYPE_STRING, (void*)val)
 #define cid_datacontent_new_int(val) cid_datacontent_new(G_TYPE_INT, (void*)val)
