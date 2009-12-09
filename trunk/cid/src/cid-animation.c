@@ -48,13 +48,15 @@ cid_focus_in(void *ptr)
     cid->bFocusAnimation = TRUE;
     
     cid->dAlpha += cid->dFocusVariation * FADE_VARIATION;
-    cid->dAnimationProgress = cid->dAlpha / (cid->dFocusVariation > 0 ? cid->dFlyingColor[3]-cid->dColor[3] : cid->dColor[3]-cid->dFlyingColor[3]);
+    cid->dAnimationProgress = cid->dAlpha / (cid->dFocusVariation > 0 ? 
+        cid->dFlyingColor[3]-cid->dColor[3] : cid->dColor[3]-cid->dFlyingColor[3]);
     
     CID_REDRAW;
     
     cid->iCurrentlyDrawing = 0;
     
-    cid->bFocusAnimation = cid->dFocusVariation>0 ? cid->dAlpha < cid->dFlyingColor[3] : cid->dAlpha > cid->dFlyingColor[3];
+    cid->bFocusAnimation = cid->dFocusVariation>0 ? 
+        cid->dAlpha < cid->dFlyingColor[3] : cid->dAlpha > cid->dFlyingColor[3];
     if (!cid->bFocusAnimation) 
         cid_stop_measure_timer(pMeasureTimerFocus);
     return cid->bFocusAnimation;
@@ -69,7 +71,8 @@ cid_focus_out(void *ptr)
     cid->bFocusAnimation = TRUE;
     
     cid->dAlpha -= cid->dFocusVariation * FADE_VARIATION;
-    cid->dAnimationProgress = cid->dAlpha / (cid->dFocusVariation > 0 ? cid->dFlyingColor[3]-cid->dColor[3] : cid->dColor[3]-cid->dFlyingColor[3]);
+    cid->dAnimationProgress = cid->dAlpha / (cid->dFocusVariation > 0 ? 
+        cid->dFlyingColor[3]-cid->dColor[3] : cid->dColor[3]-cid->dFlyingColor[3]);
 
     if (cid->dFocusVariation>0 ? cid->dAlpha <= cid->dColor[3] : cid->dAlpha >= cid->dColor[3]) 
     {
@@ -81,7 +84,8 @@ cid_focus_out(void *ptr)
     CID_REDRAW;
     
     cid->iCurrentlyDrawing = 0;
-    cid->bCurrentlyFlying = cid->dFocusVariation>0 ? cid->dAlpha > cid->dColor[3] : cid->dAlpha < cid->dColor[3];
+    cid->bCurrentlyFlying = cid->dFocusVariation>0 ? 
+        cid->dAlpha > cid->dColor[3] : cid->dAlpha < cid->dColor[3];
     cid->bFocusAnimation = cid->bCurrentlyFlying;
     if (!cid->bFocusAnimation)
         cid_stop_measure_timer(pMeasureTimerFocus);
@@ -150,7 +154,11 @@ cid_threaded_animation (AnimationType iAnim, gint iDelay)
                 if (cid_measure_is_active(pMeasureTimerAnimation))
                     cid_free_measure_timer(pMeasureTimerAnimation);
             }
-            pMeasureTimerAnimation = cid_new_measure_timer (iDelay, NULL, NULL, (CidUpdateTimerFunc) cid_rotate_on_changing_song, NULL);
+            pMeasureTimerAnimation = cid_new_measure_timer (iDelay, 
+                                                            NULL, 
+                                                            NULL, 
+                                                            (CidUpdateTimerFunc) cid_rotate_on_changing_song, 
+                                                            NULL);
         
             cid_launch_measure(pMeasureTimerAnimation);
             break;
@@ -162,7 +170,11 @@ cid_threaded_animation (AnimationType iAnim, gint iDelay)
                 if (cid_measure_is_active(pMeasureTimerAnimation))
                     cid_free_measure_timer(pMeasureTimerAnimation);
             }
-            pMeasureTimerAnimation = cid_new_measure_timer (iDelay, NULL, NULL, (CidUpdateTimerFunc) cid_fade_in_out, NULL);
+            pMeasureTimerAnimation = cid_new_measure_timer (iDelay, 
+                                                            NULL, 
+                                                            NULL, 
+                                                            (CidUpdateTimerFunc) cid_fade_in_out, 
+                                                            NULL);
         
             cid_launch_measure(pMeasureTimerAnimation);
             break;
@@ -174,7 +186,11 @@ cid_threaded_animation (AnimationType iAnim, gint iDelay)
                 if (cid_measure_is_active(pMeasureTimerFocus))
                     cid_free_measure_timer(pMeasureTimerFocus);
             }
-            pMeasureTimerFocus = cid_new_measure_timer (iDelay, NULL, NULL, (CidUpdateTimerFunc) cid_focus_in, NULL);
+            pMeasureTimerFocus = cid_new_measure_timer (iDelay, 
+                                                        NULL, 
+                                                        NULL, 
+                                                        (CidUpdateTimerFunc) cid_focus_in, 
+                                                        NULL);
         
             cid_launch_measure(pMeasureTimerFocus);
             break;
@@ -186,7 +202,11 @@ cid_threaded_animation (AnimationType iAnim, gint iDelay)
                 if (cid_measure_is_active(pMeasureTimerFocus))
                     cid_free_measure_timer(pMeasureTimerFocus);
             }
-            pMeasureTimerFocus = cid_new_measure_timer (iDelay, NULL, NULL, (CidUpdateTimerFunc) cid_focus_out, NULL);
+            pMeasureTimerFocus = cid_new_measure_timer (iDelay, 
+                                                        NULL, 
+                                                        NULL, 
+                                                        (CidUpdateTimerFunc) cid_focus_out, 
+                                                        NULL);
         
             cid_launch_measure(pMeasureTimerFocus);
             break;

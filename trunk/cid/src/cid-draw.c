@@ -538,6 +538,7 @@ cid_set_render (cairo_t *pContext, gpointer *pData)
         cairo_restore (cr); 
     } 
     else 
+    if (!cid->bCurrentlyFlying)
     {
         cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
         cairo_save (cr);

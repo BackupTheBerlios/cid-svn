@@ -25,7 +25,7 @@ G_BEGIN_DECLS
  * @param filename where the messge comes from
  * @param function where the message comes from
  * @param line where the message comes from
- * @param message to display (viariable nomber of paramters)
+ * @param message to display (variable number of paramters)
  */
 void cid_log_location(const GLogLevelFlags loglevel,
                      const char *file,
