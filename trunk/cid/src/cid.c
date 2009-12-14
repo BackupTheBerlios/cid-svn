@@ -210,8 +210,6 @@ main ( int argc, char **argv )
     cid_log_set_level(0);
     
     cid_init(cid);
-    
-    cid_set_signal_interception ();
 
     // On internationalise l'appli.
     setlocale (LC_ALL,"");
@@ -223,6 +221,8 @@ main ( int argc, char **argv )
     
     cid_read_config (cid->pConfFile, NULL);
     cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
+    
+    cid_set_signal_interception ();
     
     if (!g_thread_supported ())
     { g_thread_init(NULL); }

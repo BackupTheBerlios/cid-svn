@@ -32,6 +32,8 @@ static GtkWidget *s_pDialog = NULL;
 void 
 cid_config_panel_destroyed (void) 
 {
+    if (s_pDialog)
+        gtk_widget_destroy (s_pDialog);
     iNbConfigDialogs --;
     if (iNbConfigDialogs <= 0) 
     {
@@ -191,7 +193,7 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
     GtkWidget *pDialog; 
     if (bApplyButtonPresent) 
     {
-        pParentWindow = NULL;  // evite de la rendre modale, et ainsi la fait apparaitre dans la barre des taches.
+        //pParentWindow = NULL;  // evite de la rendre modale, et ainsi la fait apparaitre dans la barre des taches.
         pDialog = gtk_dialog_new_with_buttons ((cTitle != NULL ? cTitle : ""),
             (pParentWindow != NULL ? GTK_WINDOW (pParentWindow) : NULL),
             GTK_DIALOG_DESTROY_WITH_PARENT,

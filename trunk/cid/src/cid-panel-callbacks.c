@@ -271,7 +271,9 @@ _cid_add (GtkButton *button, gpointer *data)
     gtk_tree_selection_select_iter (pSelection, &iter);
 }
 
- gboolean _cid_decrease_order_if_greater (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) {
+ gboolean 
+ _cid_decrease_order_if_greater (GtkTreeModel * model, GtkTreePath * path, GtkTreeIter * iter, int *pOrder) 
+ {
     int iMyOrder;
     gtk_tree_model_get (model, iter, CID_MODEL_ORDER, &iMyOrder, -1);
 
@@ -358,7 +360,7 @@ _cid_pick_a_file (GtkButton *button, gpointer *data)
     {
         gchar *cFilePath = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (pFileChooserDialog));
         gtk_entry_set_text (pEntry, cFilePath);
-    }
+    }filtres valgrind
     gtk_widget_destroy (pFileChooserDialog);
 }
 

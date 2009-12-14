@@ -76,6 +76,8 @@ cid_free_main_structure (CidMainContainer *pCid)
 {
     if (pCid->pWindow)
         gtk_widget_destroy(pCid->pWindow);
+    if (pCid->pMenu)
+        gtk_widget_destroy(pCid->pMenu);
     if (pCid->cSurface)
         cairo_surface_destroy(pCid->cSurface);
     if (pCid->cPreviousSurface)
@@ -113,7 +115,34 @@ cid_free_main_structure (CidMainContainer *pCid)
     pCid = NULL;
 }
     
-
+void
+cid_copy_file (const gchar *cSrc, const gchar *cDst)
+{
+    if (!cSrc || !cDst)
+    {
+        cid_warning ("Unable to copy file due to missing field ! (%s,%s)",cSrc,cDst);
+        return;
+    }
+    FILE *src = fopen (cSrc,"rb");
+    if (!src)
+    {
+        cid_warning ("Unable to open file: %s",cSrc);
+        return;
+    }
+    FILE *dst = fopen (cDst,"wb");
+    if (!dst)
+    {
+        cid_warning ("Unable to open file: %s",cDst);
+        return;
+    }
+    char buffer[256];
+    while (fgets(buffer,255,src) != NULL)
+    {
+        fprintf(dst,buffer);
+    }
+    fclose (src);
+    fclose (dst);
+}
 /*
 int 
 cid_read_string(char* chaine) 
@@ -207,7 +236,6 @@ You can use it with the following options:\n"));
     }
     
     int i=0;
-    gboolean bEasterEggs = FALSE;
     for (; i<argc; i++) 
     {
         if (strcmp(argv[i], "coin-coin" ) == 0) 
@@ -223,6 +251,10 @@ You can use it with the following options:\n"));
         if (strcmp(argv[i], "dev" ) == 0) 
         {
             g_print("/!\\ CAUTION /!\\\nDevelopment mode !\n");
+            if (cid->pConfFile)
+                g_free (cid->pConfFile);
+            if (DEFAULT_IMAGE)
+                g_free (DEFAULT_IMAGE);
             cid->pConfFile = g_strdup(TESTING_FILE);
             DEFAULT_IMAGE = g_strdup(TESTING_COVER);
             cid->bDevMode = TRUE;

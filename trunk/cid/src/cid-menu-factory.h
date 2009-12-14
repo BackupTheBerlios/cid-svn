@@ -19,7 +19,7 @@ G_BEGIN_DECLS
  * Fonction génératrice du menu au clic
  * @param objet demandant le menu
  */
-GtkWidget *cid_build_menu (CidMainContainer *pCid);
+void cid_build_menu (void);
 
 #define _add_entry_in_menu(cLabel, gtkStock, pSubMenu, pCallBack) CID_ADD_IN_MENU_WITH_STOCK_AND_DATA(cLabel, gtkStock, pSubMenu, pCallBack, data)
 

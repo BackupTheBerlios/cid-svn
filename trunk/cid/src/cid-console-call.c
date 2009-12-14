@@ -35,7 +35,9 @@ cleanCmd (const gchar *cCommand)
 gchar *
 cid_console_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, CIDError **error) 
 {
-    FILE *pPipe = popen (cleanCmd(cCommand),"r");
+    gchar *cClean = cleanCmd(cCommand);
+    FILE *pPipe = popen (cClean,"r");
+    g_free (cClean);
     if (!pPipe) 
     {
         setError(error,CID_CONSOLE_UNREACHABLE, cCommand);
@@ -57,7 +59,9 @@ cid_console_get_string_with_error_full (const gchar *cCommand, gchar *cDefault, 
 gint 
 cid_console_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDError **error) 
 {
-    FILE *pPipe = popen (cleanCmd(cCommand),"r");
+    gchar *cClean = cleanCmd(cCommand);
+    FILE *pPipe = popen (cClean,"r");
+    g_free (cClean);
     if (!pPipe) 
     {
         setError(error,CID_CONSOLE_UNREACHABLE, cCommand);
@@ -80,7 +84,9 @@ cid_console_get_int_with_error_full (const gchar *cCommand, gint iDefault, CIDEr
 gboolean 
 cid_console_get_boolean_with_error_full (const gchar *cCommand, gboolean bDefault, CIDError **error) 
 {
-    FILE *pPipe = popen (cleanCmd(cCommand),"r");
+    gchar *cClean = cleanCmd(cCommand);
+    FILE *pPipe = popen (cClean,"r");
+    g_free (cClean);
     if (!pPipe) 
     {
         setError(error,CID_CONSOLE_UNREACHABLE, cCommand);

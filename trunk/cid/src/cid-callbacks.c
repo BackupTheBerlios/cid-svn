@@ -19,6 +19,7 @@
 #include "cid-asynchrone.h"
 #include "cid-constantes.h"
 #include "cid-draw.h"
+#include "cid-menu-factory.h"
 
 extern CidMainContainer *cid;
 extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML, bCurrentlyFocused;
@@ -125,18 +126,22 @@ on_clic (GtkWidget *p_widget, GdkEventButton* pButton)
     else if (pButton->button == 3 && pButton->type == GDK_BUTTON_RELEASE)
     { //clic droit
         // On relache un clic droit, donc on affiche le menu contextuel
-        
-        GtkWidget *menu = (GtkWidget*) cid_build_menu (cid);  
+        /*
+        if (cid->pMenu)
+            gtk_widget_destroy (cid->pMenu);
+        cid->pMenu = cid_build_menu ();  
 
-        gtk_widget_show_all (menu);
+        gtk_widget_show_all (cid->pMenu);
 
-        gtk_menu_popup (GTK_MENU (menu),
+        gtk_menu_popup (GTK_MENU (cid->pMenu),
                 NULL,
                 NULL,
                 NULL,
                 NULL,
                 1,
                 gtk_get_current_event_time ());
+        */
+        cid_build_menu();        
     }
     
     (void)p_widget;
@@ -184,21 +189,22 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
                 else 
                 {
                     cid_debug("Le fichier est local");
-                    gchar *cFilePath = (**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL));
-                    g_string_printf (command, "cp %s /tmp/\"%s - %s.jpg\"",
-                        cFilePath,
-                        musicData.playing_artist,
-                        musicData.playing_album);
-                    g_free (cFilePath);
+                    gchar *cFileSrc = (**cReceivedDataList == '/' ? *cReceivedDataList : g_filename_from_uri (*cReceivedDataList, NULL, NULL));
+                    gchar *cFileDst = g_strdup_printf ("/tmp/\"%s - %s.jpg\"",musicData.playing_artist,musicData.playing_album);
+                    cid_copy_file (cFileSrc,cFileDst);
+                    g_free (cFileSrc);
+                    g_free (cFileDst);
                 }
                 cid_launch_command (command->str);                
                 g_string_free (command, TRUE);
-                cid_display_image(g_strdup_printf("/tmp/%s - %s.jpg",musicData.playing_artist,musicData.playing_album));
+                gchar *cTmpImagePath = g_strdup_printf("/tmp/%s - %s.jpg",musicData.playing_artist,musicData.playing_album);
+                cid_display_image(cTmpImagePath);
                 cid_animation(cid->iAnimationType);
+                g_free (cTmpImagePath);
             } 
             else 
             {
-                cid_display_image((**cReceivedDataList == '/' ? g_strdup (*cReceivedDataList) : g_filename_from_uri (*cReceivedDataList, NULL, NULL)));
+                cid_display_image((**cReceivedDataList == '/' ? *cReceivedDataList : g_filename_from_uri (*cReceivedDataList, NULL, NULL)));
                 cid_animation(cid->iAnimationType);
             }
         } 
@@ -213,7 +219,7 @@ void on_dragNdrop_data_received (GtkWidget *wgt, GdkDragContext *context, int x,
         
     //g_print("d&d >>> %s\n",cReceivedData);
     //system (g_strdup_printf("nautilus %s &",cReceivedData));
-    g_strfreev (cReceivedDataList);
+    //g_strfreev (cReceivedDataList);
     //g_free (cReceivedData);
 }
 

@@ -8,6 +8,7 @@
 */
 
 #include <math.h>
+#include <sys/stat.h>
 
 #include "cid-config.h"
 #include "cid-messages.h"
@@ -30,37 +31,59 @@ static gint iOldWidth, iOldHeight;
 void 
 cid_check_file (const gchar *f) 
 {
-    gchar *cCommand=NULL;
-    gchar *cFileName = g_strdup(CID_CONFIG_FILE);
-    if (!g_file_test (f, G_FILE_TEST_EXISTS)) 
+    gchar *cFileTest;
+    if (!g_file_test (f, G_FILE_TEST_EXISTS))
     {
-        cCommand = g_strdup_printf("mkdir -p %s/.config/cid > /dev/null",g_getenv("HOME"));
-        system (cCommand);
-        g_free (cCommand);
-        cCommand = NULL;
-        if (g_file_test (g_strdup_printf("%s/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
-            cCommand = g_strdup_printf("mv %s/%s %s/.config/cid/%s",
-                                        g_getenv("HOME"),
-                                        OLD_CONFIG_FILE,
-                                        g_getenv("HOME"),
-                                        CID_CONFIG_FILE);
-        else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE), G_FILE_TEST_EXISTS))
-            cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
-                                        g_getenv("HOME"),
-                                        OLD_CONFIG_FILE,
-                                        g_getenv("HOME"),
-                                        CID_CONFIG_FILE);
-        else if (g_file_test (g_strdup_printf("%s/.config/%s",g_getenv("HOME"),cFileName), G_FILE_TEST_EXISTS))
-            cCommand = g_strdup_printf("mv %s/.config/%s %s/.config/cid/%s",
-                                        g_getenv("HOME"),
-                                        CID_CONFIG_FILE,
-                                        g_getenv("HOME"),
-                                        CID_CONFIG_FILE);
-        else 
-            cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
-        cid_info ("Commande: %s\n", cCommand);
-        system (cCommand);
-        g_free (cCommand);
+        gchar *cDirName = g_strdup_printf("%s/.config/cid",g_getenv("HOME"));
+        if (!g_file_test (cDirName,G_FILE_TEST_IS_DIR))
+        {
+            cid_debug ("Creating directory: %s",cDirName);
+            mkdir(cDirName,S_IRWXU);
+        }
+        g_free (cDirName);
+        cFileTest = g_strdup_printf("%s/%s",g_getenv("HOME"),OLD_CONFIG_FILE) ;
+        if (g_file_test (cFileTest, G_FILE_TEST_EXISTS))
+        {
+            gchar *cSrc = g_strdup_printf("%s/%s",g_getenv("HOME"),OLD_CONFIG_FILE);
+            gchar *cDst = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+            cid_debug ("Moving file from %s to %s",cSrc,cDst);
+            rename(cSrc,cDst);
+            g_free (cSrc);
+            g_free (cDst);
+            g_free (cFileTest);
+            return;
+        }
+        g_free (cFileTest);
+        cFileTest = g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE);
+        if (g_file_test (cFileTest, G_FILE_TEST_EXISTS))
+        {
+            gchar *cSrc = g_strdup_printf("%s/.config/%s",g_getenv("HOME"),OLD_CONFIG_FILE);
+            gchar *cDst = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+            cid_debug ("Moving file from %s to %s",cSrc,cDst);
+            rename(cSrc,cDst);
+            g_free (cSrc);
+            g_free (cDst);
+            g_free (cFileTest);
+            return;
+        }
+        g_free (cFileTest);
+        cFileTest = g_strdup_printf("%s/.config/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+        if (g_file_test (cFileTest, G_FILE_TEST_EXISTS))
+        {
+            gchar *cSrc = g_strdup_printf("%s/.config/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+            gchar *cDst = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+            cid_debug ("Moving file from %s to %s",cSrc,cDst);
+            rename(cSrc,cDst);
+            g_free (cSrc);
+            g_free (cDst);
+            g_free (cFileTest);
+            return;
+        }
+        g_free (cFileTest);
+        gchar *cSrc = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
+        cid_debug ("Copying file from %s to %s",cSrc,cid->pConfFile);
+        cid_copy_file (cSrc,cid->pConfFile);
+        g_free (cSrc);
     }
 }
 
@@ -70,8 +93,10 @@ cid_check_conf_file_version (const gchar *f)
     gchar *cCommand=NULL;
     gchar line_f1[80], line_f2[80];
     FILE *f1, *f2;
-    f1 = fopen ((const char *)g_strdup_printf("%s/%s",CID_DATA_DIR, CID_CONFIG_FILE),"r");
+    gchar *cOrigFile = g_strdup_printf("%s/%s",CID_DATA_DIR, CID_CONFIG_FILE);
+    f1 = fopen ((const char *)cOrigFile,"r");
     f2 = fopen ((const char *)f,"r");
+    g_free (cOrigFile);
     
     if (!fgets(line_f1,80,f1) || !fgets(line_f2,80,f2))
         cid_exit (3,"couldn't read conf file, try to delete it");
@@ -84,12 +109,10 @@ cid_check_conf_file_version (const gchar *f)
     if (strcmp(line_f1,line_f2)!=0 || bUnvalidKey) 
     {
         cid_warning ("bad file version, building a new one\n");
-        cCommand = g_strdup_printf("rm -rf %s > /dev/null",f);
-        system (cCommand);
-        g_free (cCommand);
-        cCommand = g_strdup_printf ("cp %s/%s %s", CID_DATA_DIR, CID_CONFIG_FILE, cid->pConfFile);
-        system (cCommand);
-        g_free (cCommand);
+        remove (f);
+        gchar *cTmpPath = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
+        cid_copy_file(cTmpPath,f);
+        g_free (cTmpPath);
         
         cid_save_data ();
         cid_read_key_file (cid->pConfFile);

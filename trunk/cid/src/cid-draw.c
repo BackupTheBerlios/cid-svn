@@ -88,40 +88,40 @@ cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble iHeight)
     cid_debug ("%s (%s);\n",__func__,cImagePath);
     
     cairo_surface_t* pNewSurface = NULL;
-    gboolean bIsSVG = FALSE, bIsPNG = FALSE, bIsXPM = FALSE;
-    FILE *fd = fopen (cImagePath, "r");
+    //gboolean bIsSVG = FALSE, bIsPNG = FALSE, bIsXPM = FALSE;
+    //FILE *fd = fopen (cImagePath, "r");
     
-    if (fd != NULL) 
-    {
-        char buffer[8];
-        if (fgets (buffer, 7, fd) != NULL) 
-        {
-            if (strncmp (buffer+2, "xml", 3) == 0)
-                bIsSVG = TRUE;
-            else if (strncmp (buffer+1, "PNG", 3) == 0)
-                bIsPNG = TRUE;
-            else if (strncmp (buffer+3, "XPM", 3) == 0)
-                bIsXPM = TRUE;
-            cid_debug ("  format : %d;%d;%d", bIsSVG, bIsPNG, bIsXPM);
-        }
-        fclose (fd);
-    }
-    if (! bIsSVG && ! bIsPNG && ! bIsXPM) 
-    {  // sinon, on se base sur l'extension.
-        cid_debug ("  on se base sur l'extension en desespoir de cause.");
-        if (g_str_has_suffix (cImagePath, ".svg"))
-            bIsSVG = TRUE;
-        else if (g_str_has_suffix (cImagePath, ".png"))
-            bIsPNG = TRUE;
-    }
+    //if (fd != NULL) 
+    //{
+    //    char buffer[8];
+    //    if (fgets (buffer, 7, fd) != NULL) 
+    //    {
+    //        if (strncmp (buffer+2, "xml", 3) == 0)
+    //            bIsSVG = TRUE;
+    //        else if (strncmp (buffer+1, "PNG", 3) == 0)
+    //            bIsPNG = TRUE;
+    //        else if (strncmp (buffer+3, "XPM", 3) == 0)
+    //            bIsXPM = TRUE;
+    //        cid_debug ("  format : %d;%d;%d", bIsSVG, bIsPNG, bIsXPM);
+    //    }
+    //    fclose (fd);
+    //}
+    //if (! bIsSVG && ! bIsPNG && ! bIsXPM) 
+    //{  // sinon, on se base sur l'extension.
+    //    cid_debug ("  on se base sur l'extension en desespoir de cause.");
+    //    if (g_str_has_suffix (cImagePath, ".svg"))
+    //        bIsSVG = TRUE;
+    //    else if (g_str_has_suffix (cImagePath, ".png"))
+    //        bIsPNG = TRUE;
+    //}
 
 //  if (!bIsPNG) {
         // buffer de pixels après redimenssionement
         GdkPixbuf *nCover;
         nCover = gdk_pixbuf_new_from_file_at_scale (cImagePath,iWidth, iHeight, FALSE, NULL);
         pNewSurface = cid_get_image_from_pixbuf (&nCover);
-        if (!bIsSVG)
-            g_object_unref (nCover);
+        
+        g_object_unref (nCover);
 /*
     } 
     else 
@@ -459,13 +459,28 @@ cid_load_symbols (void)
     if (cid->cCross)
         cairo_surface_destroy (cid->cCross);
     
-    cid->cPlay      = cid_get_cairo_image(cid_get_symbol_path(CID_PLAY,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
-    cid->cPause     = cid_get_cairo_image(cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor),cid->iExtraSize,cid->iExtraSize);
-    cid->cNext      = cid_get_cairo_image(cid_get_symbol_path(CID_NEXT,cid->iSymbolColor),cid->iPrevNextSize,cid->iPrevNextSize);
-    cid->cPrev      = cid_get_cairo_image(cid_get_symbol_path(CID_PREV,cid->iSymbolColor),cid->iPrevNextSize,cid->iPrevNextSize);
-    cid->cPlay_big  = cid_get_cairo_image(cid_get_symbol_path(CID_PLAY,cid->iSymbolColor),cid->iPlayPauseSize,cid->iPlayPauseSize);
-    cid->cPause_big = cid_get_cairo_image(cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor),cid->iPlayPauseSize,cid->iPlayPauseSize);
-    cid->cCross = cid_get_cairo_image(g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR),cid->iExtraSize,cid->iExtraSize);
+    gchar *cTmpPath;
+    cTmpPath = cid_get_symbol_path(CID_PLAY,cid->iSymbolColor);
+    cid->cPlay      = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
+    g_free (cTmpPath);
+    cTmpPath = cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor);
+    cid->cPause     = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
+    g_free (cTmpPath);
+    cTmpPath = cid_get_symbol_path(CID_NEXT,cid->iSymbolColor);
+    cid->cNext      = cid_get_cairo_image(cTmpPath,cid->iPrevNextSize,cid->iPrevNextSize);
+    g_free (cTmpPath);
+    cTmpPath = cid_get_symbol_path(CID_PREV,cid->iSymbolColor);
+    cid->cPrev      = cid_get_cairo_image(cTmpPath,cid->iPrevNextSize,cid->iPrevNextSize);
+    g_free (cTmpPath);
+    cTmpPath = cid_get_symbol_path(CID_PLAY,cid->iSymbolColor);
+    cid->cPlay_big  = cid_get_cairo_image(cTmpPath,cid->iPlayPauseSize,cid->iPlayPauseSize);
+    g_free (cTmpPath);
+    cTmpPath = cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor);
+    cid->cPause_big = cid_get_cairo_image(cTmpPath,cid->iPlayPauseSize,cid->iPlayPauseSize);
+    g_free (cTmpPath);
+    cTmpPath = g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR);
+    cid->cCross = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
+    g_free (cTmpPath);
 }
 
 /* Fonction qui s'occupe de dessiner la fenêtre */
