@@ -360,7 +360,7 @@ _cid_pick_a_file (GtkButton *button, gpointer *data)
     {
         gchar *cFilePath = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (pFileChooserDialog));
         gtk_entry_set_text (pEntry, cFilePath);
-    }filtres valgrind
+    }
     gtk_widget_destroy (pFileChooserDialog);
 }
 

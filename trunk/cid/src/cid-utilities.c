@@ -76,8 +76,6 @@ cid_free_main_structure (CidMainContainer *pCid)
 {
     if (pCid->pWindow)
         gtk_widget_destroy(pCid->pWindow);
-    if (pCid->pMenu)
-        gtk_widget_destroy(pCid->pMenu);
     if (pCid->cSurface)
         cairo_surface_destroy(pCid->cSurface);
     if (pCid->cPreviousSurface)
@@ -200,14 +198,14 @@ You can use it with the following options:\n"));
     
     if (erreur != NULL) 
     {
-        g_print ("ERROR : %s\n", erreur->message);
+        fprintf (stdout,"ERROR : %s\n", erreur->message);
         exit (CID_ERROR_READING_ARGS);
     }
     
     if (bSafeMode) 
     {
         cid->bSafeMode = TRUE;
-        g_print ("Safe Mode\n");
+        fprintf (stdout,"Safe Mode\n");
     }
     
     if (bDebugMode) 
@@ -220,13 +218,13 @@ You can use it with the following options:\n"));
 
     if (bPrintVersion) 
     {
-        g_print ("Version: %s\n",CID_VERSION);
+        fprintf (stdout,"Version: %s\n",CID_VERSION);
         exit (CID_EXIT_SUCCESS);
     }
     
     if (bCafe) 
     {
-        g_print ("Please insert coin.\n");
+        fprintf (stdout,"Please insert coin.\n");
         exit (CID_EXIT_SUCCESS);
     }
 
@@ -240,17 +238,17 @@ You can use it with the following options:\n"));
     {
         if (strcmp(argv[i], "coin-coin" ) == 0) 
         {
-            g_print (COIN_COIN);
+            fprintf (stdout,COIN_COIN);
             exit (CID_EXIT_SUCCESS);
         }
         if (strcmp(argv[i], "coin" ) == 0) 
         {
-            g_print (COIN);
+            fprintf (stdout,COIN);
             exit (CID_EXIT_SUCCESS);
         }
         if (strcmp(argv[i], "dev" ) == 0) 
         {
-            g_print("/!\\ CAUTION /!\\\nDevelopment mode !\n");
+            fprintf (stdout,"/!\\ CAUTION /!\\\nDevelopment mode !\n");
             if (cid->pConfFile)
                 g_free (cid->pConfFile);
             if (DEFAULT_IMAGE)
@@ -630,13 +628,13 @@ cid_datacase_print (CidDataCase *pCase, gpointer *pData)
         switch (pCase->content->type) 
         {
             case G_TYPE_STRING:
-                g_print ("%s\n",pCase->content->string);
+                fprintf (stdout,"%s\n",pCase->content->string);
                 break;
             case G_TYPE_INT:
-                g_print ("%d\n",pCase->content->iNumber);
+                fprintf (stdout,"%d\n",pCase->content->iNumber);
                 break;
             case G_TYPE_BOOLEAN:
-                g_print ("%s\n",pCase->content->booleen ? "TRUE" : "FALSE");
+                fprintf (stdout,"%s\n",pCase->content->booleen ? "TRUE" : "FALSE");
                 break;
         }
     }
@@ -846,9 +844,11 @@ cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo)
     pData[0] = GINT_TO_POINTER(0);
     pData[1] = GINT_TO_POINTER(size);
     pData[2] = string;
-    pData[3] = (gchar *)sTo;
+    pData[3] = (gchar *)g_strdup(sTo);
     cid_datatable_foreach(t_temp,(CidDataAction)cid_datacase_replace,pData);
     cid_free_datatable(&t_temp);
+    g_free (pData[3]);
+    g_free (pData);
 }
 
 void
@@ -872,7 +872,7 @@ cid_str_replace_all_seq (gchar **string, gchar *seqFrom, gchar *seqTo)
     */
     for(;*seqFrom != '\0';seqFrom++)
     {
-        g_print("%c\n",*seqFrom);
+        fprintf (stdout,"%c\n",*seqFrom);
     }
 }
 

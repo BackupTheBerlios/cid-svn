@@ -194,7 +194,7 @@ main ( int argc, char **argv )
 */
     //char **argvBis = malloc(sizeof(argv));
     //memcpy(argvBis,argv,sizeof(argv));
-
+/*
     cid = g_new0(CidMainContainer,1);
     
     int i;
@@ -239,14 +239,14 @@ main ( int argc, char **argv )
     cid_key_file_free();
     cid_free_musicData();
     cid_free_main_structure (cid);
+*/
 
-/*
     ///////////////////////////////////////////////////////////////////////
     CidDataTable *test = cid_create_datatable(G_TYPE_STRING,"blah","blih","bloh","toto","tata","titi","tutu",G_TYPE_INT,5,12,G_TYPE_INVALID);
     printf("size: %d\n",cid_datatable_length(test));
     cid_datatable_foreach(test,(CidDataAction)cid_datacase_print,NULL);
     cid_datatable_append(&test,cid_datacontent_new_int(56));
-    cid_datatable_foreach(test,(CidDataAction)cid_datacase_print,NULL);
+    //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print,NULL);
     printf("size: %d\n",cid_datatable_length(test));
     CidDataContent *blah = cid_datacontent_new_string("toto");
     cid_datatable_remove(&test,blah);
@@ -258,10 +258,10 @@ main ( int argc, char **argv )
     printf("size: %d\n",cid_datatable_length(test));
     ///////////////////////////////////////////////////////////////////////
 //    g_print ("%s\n",CID_MODULES_DIR);
-*/
+
 //cid_test_xml();
     //gchar *blah = "il était une fois";
-    //gchar *blih = "j'aime les frites";
+    //gchar *blih = g_strdup("j'aime les frites");
     //cid_str_replace_all_seq(&blah," é","+e");
     //cid_str_replace_all(&blih," ","\\o/");
     //g_print(":%s\n",blah);
@@ -270,7 +270,7 @@ main ( int argc, char **argv )
     //g_free(blah);
     //g_free(blih);
     
-    g_print ("Bye !\n");    
+    fprintf (stdout,"Bye !\n");    
 
     return ret;
     
