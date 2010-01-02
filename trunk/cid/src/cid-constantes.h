@@ -15,8 +15,11 @@ G_BEGIN_DECLS
 #define MINUTES * 60
 #define HEURES * 60
 
+#define CONFIG_WIDTH 800
+#define CONFIG_HEIGHT 600
+
 /* Alias pour récupérer l'URI de l'image par défaut */
-#define DEFAULT_IMAGE cid->pDefaultImage
+#define DEFAULT_IMAGE cid->cDefaultImage
 
 #define TESTING_COVER "../data/default.svg"
 #define TESTING_FILE "../data/cid.conf"
@@ -25,6 +28,10 @@ G_BEGIN_DECLS
 
 #define FADE_VARIATION .15
 #define IN_OUT_VARIATION .05
+
+#define DEFAULT_SIZE 150
+#define MAX_SIZE 1024
+#define DEFAULT_TIMERS 5
 
 #define COIN_COIN \
 "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\

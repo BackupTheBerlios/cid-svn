@@ -66,7 +66,7 @@ void cid_read_parameters (int argc, char **argv);
  * definit la niveau de verbosite
  * @param niveau de verbosite
  */
-void _cid_set_verbosity(gchar *cVerbosity);
+void cid_set_verbosity (gchar *cVerbosity);
 
 /**
  * permet de jouer un son
@@ -111,6 +111,19 @@ void cid_check_position (void);
  * @return pointeur vers notre structure
  */
 CidDataTable *cid_create_datatable (GType iDataType, ...);
+
+/**
+ * Fonction permettant de creer une tableau dynamique d'une taille donnee
+ * avec une valeur par defaut donnee
+ * @param iSize taille du tableau
+ * @param iType type des donnees
+ * @param value valeur par defaut
+ * @return notre tableau
+ */
+CidDataTable *cid_create_sized_datatable_with_default_full (size_t iSize, GType iType, void *value);
+
+#define cid_create_sized_datatable_with_default(iSize,iType,value) cid_create_sized_datatable_with_default_full(iSize,iType,(void *)value)
+#define cid_create_sized_datatable(iSize) cid_create_sized_datatable_with_default(iSize,G_TYPE_INVALID,NULL)
 
 /**
  * Fonction permettant de liberer notre liste

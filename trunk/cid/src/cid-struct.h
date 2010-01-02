@@ -20,14 +20,13 @@ typedef struct _CidControlFunctionsList CidControlFunctionsList;
 typedef struct _CidDataTable CidDataTable;
 typedef struct _CidDataContent CidDataContent;
 typedef struct _CidDataCase CidDataCase;
-/*
+
 typedef struct _CidModule CidModule;
 typedef struct _CidModuleInterface CidModuleInterface;
 typedef struct _CidModuleInstance CidModuleInstance;
 typedef struct _CidVisitCard CidVisitCard;
 typedef struct _CidInternalModule CidInternalModule;
-typedef struct _CidMinimalAppletConfig CidMinimalAppletConfig;
-*/
+
 ///\______ Encapsulations
 typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
 typedef void (* CidControlFunction) (void);
@@ -95,6 +94,7 @@ typedef enum {
 typedef enum {
     CID_ROTATE,
     CID_FADE_IN_OUT,
+    CID_DIAPOSITIVE,
     CID_FOCUS_IN,
     CID_FOCUS_OUT
 } AnimationType;
@@ -159,29 +159,31 @@ struct _CidControlFunctionsList {
 struct _CidMainContainer {
     // fenêtre principale
     GtkWidget *pWindow;
+    // panneau de configuration
+    GtkWidget *pConfigPanel;
     
     ///\________ Toutes nos images
     // pochette
-    cairo_surface_t *cSurface;
+    cairo_surface_t *p_cSurface;
     // pochette precedente
-    cairo_surface_t *cPreviousSurface;
+    cairo_surface_t *p_cPreviousSurface;
     // croix pour le deplacement
-    cairo_surface_t *cCross;
+    cairo_surface_t *p_cCross;
     // play
-    cairo_surface_t *cPlay;
+    cairo_surface_t *p_cPlay;
     // pause
-    cairo_surface_t *cPause;
+    cairo_surface_t *p_cPause;
     // play big
-    cairo_surface_t *cPlay_big;
+    cairo_surface_t *p_cPlay_big;
     // pause big
-    cairo_surface_t *cPause_big;
+    cairo_surface_t *p_cPause_big;
     // next
-    cairo_surface_t *cNext;
+    cairo_surface_t *p_cNext;
     // prev
-    cairo_surface_t *cPrev;
+    cairo_surface_t *p_cPrev;
 
     // cairo context
-    cairo_t *pContext;
+    cairo_t *p_cContext;
     
     // largeur de cid
     gint iWidth;
@@ -209,6 +211,8 @@ struct _CidMainContainer {
     gint iCursorX;
     // position en y du curseur
     gint iCursorY;
+    // vitesse de l'animation
+    gint iAnimationSpeed;
     
     // avancement de l'animation
     gdouble dAnimationProgress;
@@ -228,7 +232,7 @@ struct _CidMainContainer {
     SymbolColor iSymbolColor;
     
     // type de fenêtre
-    GdkWindowTypeHint cidHint;
+    GdkWindowTypeHint iHint;
     
     // couleur de la fenêtre
     gdouble *dColor;
@@ -258,11 +262,11 @@ struct _CidMainContainer {
     gdouble dFadeInOutAlpha;
     
     // image par défaut
-    gchar *pDefaultImage;
+    gchar *cDefaultImage;
     // fichier de conf
-    gchar *pConfFile;
+    gchar *cConfFile;
     // verbosité du programme
-    gchar *pVerbosity;
+    gchar *cVerbosity;
     
     // caché ?
     gboolean bHide;
@@ -308,7 +312,7 @@ struct _CidMainContainer {
     gboolean bBlockedWidowActive;
     // On a active/desactive les options instables ?
     gboolean bChangedTestingConf;
-    //
+    // Est-ce qu'un panneau de configuration est deja present ?
     gboolean bConfFilePanel;
     // On a lance un pipe ?
     gboolean bPipeRunning;
@@ -316,6 +320,8 @@ struct _CidMainContainer {
     gboolean bDisplayControl;
     // Passe cid au premier plan lors d'un survol ?
     gboolean bShowAbove;
+    // On ne fait que configurer cid ?
+    gboolean bConfigPanel;
 
     
     // taille de la couleur

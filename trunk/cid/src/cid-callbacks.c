@@ -421,7 +421,10 @@ _cid_conf_panel (GtkMenuItem *pItemMenu, gpointer *data)
     if (!cid->bConfFilePanel) 
     {
         cid_save_data();
-    
-        cid_edit_conf_file_with_panel (GTK_WINDOW(gtk_window_new (GTK_WINDOW_TOPLEVEL)), cid->pConfFile, cid->bSafeMode ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , 750, 500, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
+        
+        if (cid->pConfigPanel)
+            gtk_widget_destroy (cid->pConfigPanel);
+        
+        cid_edit_conf_file_with_panel (NULL, cid->cConfFile, cid->bSafeMode && !cid->bConfigPanel ? _(" < Maintenance Mode > ") : _("CID Configuration Panel") , CONFIG_WIDTH, CONFIG_HEIGHT, '\0', NULL, cid->bSafeMode ? (CidReadConfigFunc) cid_read_config : (CidReadConfigFunc) cid_read_config_after_update, CID_GETTEXT_PACKAGE);
     }
 }

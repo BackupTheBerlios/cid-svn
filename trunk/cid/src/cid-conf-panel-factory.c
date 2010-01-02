@@ -23,17 +23,38 @@ extern CidMainContainer *cid;
 #define _allocate_new_model\
     modele = gtk_list_store_new (CID_MODEL_NB_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
+#define _pack_in_widget_box(pSubWidget) gtk_box_pack_start (GTK_BOX (pHBox), pSubWidget, FALSE, FALSE, 0)
+
+#define _pack_subwidget(pSubWidget) do {\
+    pSubWidgetList = g_slist_append (pSubWidgetList, pSubWidget);\
+    _pack_in_widget_box (pSubWidget); } while (0)
+    
 static int iNbConfigDialogs = 0;
 static GtkListStore *s_pRendererListStore = NULL;
 static GtkListStore *s_pDecorationsListStore = NULL;
 static GtkListStore *s_pDecorationsListStore2 = NULL;
-static GtkWidget *s_pDialog = NULL;
+//static GtkWidget *s_pDialog = NULL;
+
+static void _cid_set_value_in_pair (GtkSpinButton *pSpinButton, gpointer *data)
+{
+    GtkWidget *pPairSpinButton = data[0];
+    GtkWidget *pToggleButton = data[1];
+    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pToggleButton)))
+    {
+        int iValue = gtk_spin_button_get_value (pSpinButton);
+        int iPairValue = gtk_spin_button_get_value (GTK_SPIN_BUTTON (pPairSpinButton));
+        if (iValue != iPairValue)
+        {
+            gtk_spin_button_set_value (GTK_SPIN_BUTTON (pPairSpinButton), iValue);
+        }
+    }
+}
 
 void 
 cid_config_panel_destroyed (void) 
 {
-    if (s_pDialog)
-        gtk_widget_destroy (s_pDialog);
+    if (/*s_pDialog*/cid->pConfigPanel)
+        gtk_widget_destroy (/*s_pDialog*/cid->pConfigPanel);
     iNbConfigDialogs --;
     if (iNbConfigDialogs <= 0) 
     {
@@ -46,7 +67,7 @@ cid_config_panel_destroyed (void)
 gboolean 
 cid_edit_conf_file_with_panel (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain) 
 {
-    return cid_edit_conf_file_core (pWindow, g_strdup (cConfFilePath), g_strdup (cTitle), iWindowWidth, iWindowHeight, iIdentifier, cPresentedGroup, pConfigFunc, cGettextDomain);
+    return cid_edit_conf_file_core (pWindow, cConfFilePath, cTitle, iWindowWidth, iWindowHeight, iIdentifier, cPresentedGroup, pConfigFunc, cGettextDomain);
 }
 
 gboolean 
@@ -65,7 +86,7 @@ on_delete_main_gui (GMainLoop *pBlockingLoop)
 gboolean 
 cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *cTitle, int iWindowWidth, int iWindowHeight, gchar iIdentifier, gchar *cPresentedGroup, CidReadConfigFunc pConfigFunc, gchar *cGettextDomain) 
 {
-    if (s_pDialog != NULL && cid->bConfFilePanel) 
+    if (/*s_pDialog*/cid->pConfigPanel != NULL && cid->bConfFilePanel) 
     {
         return FALSE;
     }
@@ -85,15 +106,16 @@ cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *
     g_key_file_remove_key (pKeyFile, "Desktop Entry", "X-Ubuntu-Gettext-Domain", NULL);  // salete de traducteur automatique.
     
     GPtrArray *pDataGarbage = g_ptr_array_new ();
-    s_pDialog = cid_generate_ihm_from_keyfile (pKeyFile, cTitle, pWindow, &pWidgetList, (pConfigFunc != NULL)&&!cid->bSafeMode, iIdentifier, cPresentedGroup, cGettextDomain, pDataGarbage);
 
-    g_return_val_if_fail (s_pDialog != NULL, FALSE);
+    cid->pConfigPanel = cid_generate_ihm_from_keyfile (pKeyFile, cTitle, pWindow, &pWidgetList, (pConfigFunc != NULL)&&!cid->bSafeMode, iIdentifier, cPresentedGroup, cGettextDomain, pDataGarbage);
+
+    g_return_val_if_fail (cid->pConfigPanel != NULL, FALSE);
     cid->bConfFilePanel = TRUE;
     
     if (iWindowWidth != 0 && iWindowHeight != 0)
-        gtk_window_resize (GTK_WINDOW (s_pDialog), iWindowWidth, iWindowHeight);
+        gtk_window_resize (GTK_WINDOW (cid->pConfigPanel), iWindowWidth, iWindowHeight);
         
-    gtk_window_present (GTK_WINDOW (s_pDialog));
+    gtk_window_present (GTK_WINDOW (cid->pConfigPanel));
     
     gpointer *user_data = g_new (gpointer, 12);
     user_data[0] = pKeyFile;
@@ -108,18 +130,15 @@ cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *
     user_data[9] = GINT_TO_POINTER ((int) iIdentifier);
     user_data[10] = pDataGarbage;
         
-    g_signal_connect (s_pDialog, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
+    g_signal_connect (cid->pConfigPanel, "response", G_CALLBACK (_cid_user_action_on_config), user_data);
+    g_signal_connect (cid->pConfigPanel, "delete-event", G_CALLBACK (_cid_user_action_on_config), user_data);
     
     if (cid->bSafeMode) 
     {
         cid->bBlockedWidowActive = TRUE;
         GMainLoop *pBlockingLoop = g_main_loop_new (NULL, FALSE);
-        g_object_set_data (G_OBJECT (s_pDialog), "loop", pBlockingLoop);
+        g_object_set_data (G_OBJECT (cid->pConfigPanel), "loop", pBlockingLoop);
         user_data[11] = pBlockingLoop;
-        g_signal_connect (s_pDialog,
-            "delete-event",
-            G_CALLBACK (_cid_user_action_on_config),
-            user_data);
         
         cid_debug ("debut de boucle bloquante ...\n");
         GDK_THREADS_LEAVE ();
@@ -128,10 +147,6 @@ cid_edit_conf_file_core (GtkWindow *pWindow, gchar *cConfFilePath, const gchar *
         cid_debug ("fin de boucle bloquante\n");
         
         g_main_loop_unref (pBlockingLoop);
-    } 
-    else 
-    {
-        g_signal_connect (s_pDialog, "delete-event", G_CALLBACK (_cid_user_action_on_config), user_data);
     }
         
     return FALSE;
@@ -171,6 +186,7 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
     GtkWidget *pPreviewImage;
     GtkWidget *pButtonConfigRenderer;
     GtkWidget *pBackButton;
+    GtkWidget *pToggleButton = NULL;
     GtkCellRenderer *rend;
     GtkTreeIter iter;
     gchar *cGroupName, *cGroupComment , *cKeyName, *cKeyComment, *cUsefulComment, *cAuthorizedValuesChain, *pTipString, **pAuthorizedValuesList, *cSmallGroupIcon;
@@ -193,9 +209,8 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
     GtkWidget *pDialog; 
     if (bApplyButtonPresent) 
     {
-        //pParentWindow = NULL;  // evite de la rendre modale, et ainsi la fait apparaitre dans la barre des taches.
         pDialog = gtk_dialog_new_with_buttons ((cTitle != NULL ? cTitle : ""),
-            (pParentWindow != NULL ? GTK_WINDOW (pParentWindow) : NULL),
+            NULL,
             GTK_DIALOG_DESTROY_WITH_PARENT,
             GTK_STOCK_APPLY,
             GTK_RESPONSE_APPLY,
@@ -469,56 +484,81 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
                         }
                         g_free (bValueList);
                     break;
-
                     case 'i' :  // integer
                     case 'I' :  // integer dans un HScale
-                        //g_print ("  + integer\n");
+                    case 'j' :  // double integer WxH
+                        if (pAuthorizedValuesList != NULL && pAuthorizedValuesList[0] != NULL)
+                            iMinValue = g_ascii_strtod (pAuthorizedValuesList[0], NULL);
+                        else
+                            iMinValue = 0;
+                        if (pAuthorizedValuesList != NULL && pAuthorizedValuesList[1] != NULL)
+                            iMaxValue = g_ascii_strtod (pAuthorizedValuesList[1], NULL);
+                        else
+                            iMaxValue = 9999;
+                        if (iElementType == 'j')
+                            iNbElements *= 2;
                         length = 0;
                         iValueList = g_key_file_get_integer_list (pKeyFile, cGroupName, cKeyName, &length, NULL);
-                        for (k = 0; k < iNbElements; k ++) 
+                        GtkWidget *pPrevOneWidget=NULL;
+                        int iPrevValue=0;
+                        if (iElementType == 'j')
+                        {
+                            pToggleButton = gtk_toggle_button_new ();
+                            GtkWidget *pImage = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PAUSE, GTK_ICON_SIZE_MENU);  // trouver une image...
+                            gtk_button_set_image (GTK_BUTTON (pToggleButton), pImage);
+                        }
+                        for (k = 0; k < iNbElements; k ++)
                         {
                             iValue =  (k < (int)length ? iValueList[k] : 0);
-                            if (pAuthorizedValuesList != NULL && pAuthorizedValuesList[0] != NULL)
-                                iMinValue = g_ascii_strtod (pAuthorizedValuesList[0], NULL);
-                            else
-                                iMinValue = 0;
-                            if (pAuthorizedValuesList != NULL && pAuthorizedValuesList[1] != NULL)
-                                iMaxValue = g_ascii_strtod (pAuthorizedValuesList[1], NULL);
-                            else
-                                iMaxValue = 9999;
-
                             GtkObject *pAdjustment = gtk_adjustment_new (iValue,
                                 0,
                                 1,
                                 1,
                                 MAX (1, (iMaxValue - iMinValue) / 20),
                                 0);
-                            bAddBackButton = TRUE;
-                            if (iElementType == 'I') 
+
+                            if (iElementType == 'I')
                             {
                                 pOneWidget = gtk_hscale_new (GTK_ADJUSTMENT (pAdjustment));
                                 gtk_scale_set_digits (GTK_SCALE (pOneWidget), 0);
                                 gtk_widget_set (pOneWidget, "width-request", 150, NULL);
-                            } 
-                            else 
+                            }
+                            else
                             {
-                                pOneWidget = gtk_spin_button_new (GTK_ADJUSTMENT (pAdjustment),
-                                    1.,
-                                    0);
+                                pOneWidget = gtk_spin_button_new (GTK_ADJUSTMENT (pAdjustment), 1., 0);
                             }
                             g_object_set (pAdjustment, "lower", (double) iMinValue, "upper", (double) iMaxValue, NULL); // le 'width-request' sur un GtkHScale avec 'fMinValue' non nul plante ! Donc on les met apres...
                             gtk_adjustment_set_value (GTK_ADJUSTMENT (pAdjustment), iValue);
 
-                            pSubWidgetList = g_slist_append (pSubWidgetList, pOneWidget);
-                            gtk_box_pack_start(GTK_BOX (pHBox),
-                                pOneWidget,
-                                FALSE,
-                                FALSE,
-                                0);
+                            _pack_subwidget (pOneWidget);
+                            if (iElementType == 'j' && k+1 < iNbElements)  // on rajoute le separateur.
+                            {
+                                GtkWidget *pLabelX = gtk_label_new ("x");
+                                _pack_in_widget_box (pLabelX);
+                            }
+                            if (iElementType == 'j' && (k&1))  // on lie les 2 spins entre eux.
+                            {
+                                if (iPrevValue == iValue)
+                                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pToggleButton), TRUE);
+                                _allocate_new_buffer;
+                                data[0] = pPrevOneWidget;
+                                data[1] = pToggleButton;
+                                g_signal_connect (G_OBJECT (pOneWidget), "value-changed", G_CALLBACK(_cid_set_value_in_pair), data);
+                                _allocate_new_buffer;
+                                data[0] = pOneWidget;
+                                data[1] = pToggleButton;
+                                g_signal_connect (G_OBJECT (pPrevOneWidget), "value-changed", G_CALLBACK(_cid_set_value_in_pair), data);
+                            }
+                            pPrevOneWidget = pOneWidget;
+                            iPrevValue = iValue;
                         }
+                        if (iElementType == 'j')
+                        {
+                            _pack_in_widget_box (pToggleButton);
+                        }
+                        bAddBackButton = TRUE;
                         g_free (iValueList);
                     break;
-
                     case 'f' :  // float.
                     case 'c' :  // float avec un bouton de choix de couleur.
                     case 'e' :  // float dans un HScale.

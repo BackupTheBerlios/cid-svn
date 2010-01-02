@@ -76,38 +76,38 @@ cid_free_main_structure (CidMainContainer *pCid)
 {
     if (pCid->pWindow)
         gtk_widget_destroy(pCid->pWindow);
-    if (pCid->cSurface)
-        cairo_surface_destroy(pCid->cSurface);
-    if (pCid->cPreviousSurface)
-        cairo_surface_destroy(pCid->cPreviousSurface);
-    if (pCid->cCross)
-        cairo_surface_destroy(pCid->cCross);
-    if (pCid->cPlay)
-        cairo_surface_destroy(pCid->cPlay);
-    if (pCid->cPause)
-        cairo_surface_destroy(pCid->cPause);
-    if (pCid->cPlay_big)
-        cairo_surface_destroy(pCid->cPlay_big);
-    if (pCid->cPause_big)
-        cairo_surface_destroy(pCid->cPause_big);
-    if (pCid->cNext)
-        cairo_surface_destroy(pCid->cPrev);
-    if (pCid->pConfFile)
-        g_free(pCid->pConfFile);
-    if (pCid->pVerbosity)
-        g_free(pCid->pVerbosity);
+    if (pCid->p_cSurface)
+        cairo_surface_destroy(pCid->p_cSurface);
+    if (pCid->p_cPreviousSurface)
+        cairo_surface_destroy(pCid->p_cPreviousSurface);
+    if (pCid->p_cCross)
+        cairo_surface_destroy(pCid->p_cCross);
+    if (pCid->p_cPlay)
+        cairo_surface_destroy(pCid->p_cPlay);
+    if (pCid->p_cPause)
+        cairo_surface_destroy(pCid->p_cPause);
+    if (pCid->p_cPlay_big)
+        cairo_surface_destroy(pCid->p_cPlay_big);
+    if (pCid->p_cPause_big)
+        cairo_surface_destroy(pCid->p_cPause_big);
+    if (pCid->p_cNext)
+        cairo_surface_destroy(pCid->p_cPrev);
+    if (pCid->cConfFile)
+        g_free(pCid->cConfFile);
+    if (pCid->cVerbosity)
+        g_free(pCid->cVerbosity);
         
     pCid->pWindow = NULL;
-    pCid->cSurface = NULL;
-    pCid->cPreviousSurface = NULL;
-    pCid->cCross = NULL;
-    pCid->cPlay = NULL;
-    pCid->cPause = NULL;
-    pCid->cPlay_big = NULL;
-    pCid->cPause_big = NULL;
-    pCid->cPrev = NULL;
-    pCid->pConfFile = NULL;
-    pCid->pVerbosity = NULL;
+    pCid->p_cSurface = NULL;
+    pCid->p_cPreviousSurface = NULL;
+    pCid->p_cCross = NULL;
+    pCid->p_cPlay = NULL;
+    pCid->p_cPause = NULL;
+    pCid->p_cPlay_big = NULL;
+    pCid->p_cPause_big = NULL;
+    pCid->p_cPrev = NULL;
+    pCid->cConfFile = NULL;
+    pCid->cVerbosity = NULL;
     
     g_free (pCid);
     pCid = NULL;
@@ -134,7 +134,7 @@ cid_copy_file (const gchar *cSrc, const gchar *cDst)
         return;
     }
     char buffer[256];
-    while (fgets(buffer,255,src) != NULL)
+    while (fgets(buffer,256,src) != NULL)
     {
         fprintf(dst,buffer);
     }
@@ -159,36 +159,40 @@ void
 cid_read_parameters (int argc, char **argv) 
 {
     
-    GError *erreur=NULL;
-    gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE, bSafeMode = FALSE, bCafe = FALSE;
+    GError *erreur = NULL;
+    gboolean bPrintVersion = FALSE, bTestingMode = FALSE, bDebugMode = FALSE, bSafeMode = FALSE, bCafe = FALSE, bConfigPanel = FALSE;
+    gchar *cConfFile = NULL;
     
     GOptionEntry TableDesOptions[] =
     {
         {"log", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING,
-            &cid->pVerbosity,
-            _("log verbosity (debug,info,message,warning,error) default is warning."), NULL},
+            &cid->cVerbosity,
+            dgettext (CID_GETTEXT_PACKAGE, "log verbosity (debug,info,message,warning,error) default is warning."), NULL},
         {"config", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME,
-            &cid->pConfFile,
-            _("load CID with this config file instead of ~/.config/cid/cid.conf."), NULL},
+            &cConfFile,
+            dgettext (CID_GETTEXT_PACKAGE, "load CID with this config file instead of ~/.config/cid/cid.conf."), NULL},
         {"testing", 'T', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
             &bTestingMode,
-            _("runs CID in testing mode. (some unstable options might be running)"), NULL},
+            dgettext (CID_GETTEXT_PACKAGE, "runs CID in testing mode. (some unstable options might be running)"), NULL},
         {"debug", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
             &bDebugMode,
-            _("runs CID in debug mode. (equivalent to '-l debug')"), NULL},
+            dgettext (CID_GETTEXT_PACKAGE, "runs CID in debug mode. (equivalent to '-l debug')"), NULL},
+        {"edit", 'e', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
+            &bConfigPanel,
+            dgettext (CID_GETTEXT_PACKAGE, "open CID's configuration panel."), NULL},
         {"safe", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
             &bSafeMode,
-            _("runs CID in safe mode."), NULL},
+            dgettext (CID_GETTEXT_PACKAGE, "runs CID in safe mode."), NULL},
         {"cafe", 'C', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
             &bCafe,
-            _("do you want a cup of coffee ?"), NULL},
+            dgettext (CID_GETTEXT_PACKAGE, "do you want a cup of coffee?"), NULL},
         {"version", 'v', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,
             &bPrintVersion,
-            _("print version and quit."), NULL}
+            dgettext (CID_GETTEXT_PACKAGE, "print version and quit."), NULL}
     };
 
     GOptionContext *context = g_option_context_new ("");
-    g_option_context_set_summary (context,_("Conky Images Display is a programm written in C.\n\
+    g_option_context_set_summary (context,dgettext (CID_GETTEXT_PACKAGE, "Conky Images Display is a programm written in C.\n\
 Its goal is to display the cover of the song which \
 is currently playing in the player you chooseon the \
 desktop like conky does with other informations.\n\
@@ -198,8 +202,7 @@ You can use it with the following options:\n"));
     
     if (erreur != NULL) 
     {
-        fprintf (stdout,"ERROR : %s\n", erreur->message);
-        exit (CID_ERROR_READING_ARGS);
+        cid_exit (CID_ERROR_READING_ARGS, "ERROR : %s\n", erreur->message);
     }
     
     if (bSafeMode) 
@@ -208,13 +211,18 @@ You can use it with the following options:\n"));
         fprintf (stdout,"Safe Mode\n");
     }
     
+    if (bConfigPanel)
+    {
+        cid->bConfigPanel = TRUE;
+        cid->bSafeMode = TRUE;
+    }
+    
     if (bDebugMode) 
     {
-        g_free (cid->pVerbosity);
-        cid->pVerbosity = g_strdup ("debug");
+        if (cid->cVerbosity)
+            g_free (cid->cVerbosity);
+        cid->cVerbosity = g_strdup ("debug");
     }
-
-    _cid_set_verbosity (cid->pVerbosity);
 
     if (bPrintVersion) 
     {
@@ -249,18 +257,27 @@ You can use it with the following options:\n"));
         if (strcmp(argv[i], "dev" ) == 0) 
         {
             fprintf (stdout,"/!\\ CAUTION /!\\\nDevelopment mode !\n");
-            if (cid->pConfFile)
-                g_free (cid->pConfFile);
+            if (cid->cConfFile)
+                g_free (cid->cConfFile);
             if (DEFAULT_IMAGE)
                 g_free (DEFAULT_IMAGE);
-            cid->pConfFile = g_strdup(TESTING_FILE);
+            cid->cConfFile = g_strdup(TESTING_FILE);
             DEFAULT_IMAGE = g_strdup(TESTING_COVER);
             cid->bDevMode = TRUE;
         }
     }
+    
+    if (cConfFile != NULL)
+    {
+        if (cid->cConfFile)
+            g_free (cid->cConfFile);
+        cid->cConfFile = g_strdup (cConfFile);
+        g_free (cConfFile);
+    }
 }
     
-void _cid_set_verbosity(gchar *cVerbosity)
+void 
+cid_set_verbosity (gchar *cVerbosity)
 {
     if (!cVerbosity)
         cid_log_set_level(G_LOG_LEVEL_WARNING);
@@ -623,7 +640,7 @@ cid_datatable_foreach (CidDataTable *p_list, CidDataAction func, gpointer *pData
 void
 cid_datacase_print (CidDataCase *pCase, gpointer *pData)
 {
-    if (pCase != NULL)
+    if (pCase != NULL && pCase->content != NULL)
     {
         switch (pCase->content->type) 
         {
@@ -818,6 +835,19 @@ cid_create_datatable (GType iDataType, ...)
         cid_datatable_append(&res,tmp);
     }
     va_end(args);
+    return res;
+}
+
+CidDataTable *
+cid_create_sized_datatable_with_default_full (size_t iSize, GType iType, void *value)
+{
+    size_t cpt = 0;
+    CidDataTable *res = cid_datatable_new();
+    for (;cpt<iSize;cpt++)
+    {
+        CidDataContent *tmp = cid_datacontent_new(iType, value);
+        cid_datatable_append(&res,tmp);
+    }
     return res;
 }
 

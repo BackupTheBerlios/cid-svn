@@ -76,8 +76,8 @@ _cid_user_action_on_config (GtkDialog *pDialog, gint action, gpointer *user_data
         cid_free_generated_widget_list (pWidgetList);
         g_ptr_array_foreach (pDataGarbage, (GFunc) g_free, NULL);
         g_ptr_array_free (pDataGarbage, TRUE);
-        g_free (cConfFilePath);
-        g_free (cTitle);
+        //g_free (cConfFilePath);
+        //g_free (cTitle);
         g_free (user_data);
     }
 }

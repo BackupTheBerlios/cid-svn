@@ -28,7 +28,7 @@ cid_fade_in_out (void *ptr)
     if (cid->dFadeInOutAlpha > .99)
         cid->dFadeInOutAlpha = 0;
         
-    cid->dFadeInOutAlpha += IN_OUT_VARIATION;
+    cid->dFadeInOutAlpha += IN_OUT_VARIATION * cid->iAnimationSpeed;
     
     CID_REDRAW;
     
@@ -126,7 +126,7 @@ cid_rotate_on_changing_song (void *ptr)
     
     if (cid->dAngle < 360) 
     {
-        cid->dAngle+=1.0;
+        cid->dAngle += (1.0 * cid->iAnimationSpeed);
         CID_REDRAW;
     } 
     else 

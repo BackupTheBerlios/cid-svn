@@ -51,7 +51,7 @@ static void
 cid_init (CidMainContainer *pCid) 
 {    
     
-    pCid->pVerbosity = NULL;
+    pCid->cVerbosity = NULL;
     
     pCid->bTesting = FALSE;
     
@@ -59,12 +59,12 @@ cid_init (CidMainContainer *pCid)
     
     pCid->iCurrentlyDrawing = 0;
     
-    pCid->pConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+    pCid->cConfFile = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
 
 #ifdef HAVE_E17    
-    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DESKTOP; 
+    pCid->iHint = GDK_WINDOW_TYPE_HINT_DESKTOP; 
 #else
-    pCid->cidHint = GDK_WINDOW_TYPE_HINT_DOCK;
+    pCid->iHint = GDK_WINDOW_TYPE_HINT_DOCK;
 #endif
     
     pCid->pKeyFile = NULL;
@@ -161,6 +161,12 @@ cid_display_init(int *argc, char ***argv)
     {
         _cid_conf_panel(NULL,NULL);
     }
+    
+    if (cid->bConfigPanel)
+    {
+        exit (CID_EXIT_SUCCESS);
+    }
+    
     /* On créé la fenêtre */
     cid_create_main_window();
     
@@ -194,7 +200,7 @@ main ( int argc, char **argv )
 */
     //char **argvBis = malloc(sizeof(argv));
     //memcpy(argvBis,argv,sizeof(argv));
-/*
+
     cid = g_new0(CidMainContainer,1);
     
     int i;
@@ -218,14 +224,17 @@ main ( int argc, char **argv )
     textdomain (CID_GETTEXT_PACKAGE);
 
     cid_read_parameters (argc,argv);
+    cid_set_verbosity (cid->cVerbosity);
     
-    cid_read_config (cid->pConfFile, NULL);
+    cid_read_config (cid->cConfFile, NULL);
     cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
     
     cid_set_signal_interception ();
     
     if (!g_thread_supported ())
-    { g_thread_init(NULL); }
+    { 
+        g_thread_init(NULL); 
+    }
     gdk_threads_init();
 
     // La on lance la boucle GTK
@@ -239,8 +248,8 @@ main ( int argc, char **argv )
     cid_key_file_free();
     cid_free_musicData();
     cid_free_main_structure (cid);
-*/
 
+/*
     ///////////////////////////////////////////////////////////////////////
     CidDataTable *test = cid_create_datatable(G_TYPE_STRING,"blah","blih","bloh","toto","tata","titi","tutu",G_TYPE_INT,5,12,G_TYPE_INVALID);
     printf("size: %d\n",cid_datatable_length(test));
@@ -269,7 +278,12 @@ main ( int argc, char **argv )
     //g_print(":%s\n",_url_encode(blah));
     //g_free(blah);
     //g_free(blih);
-    
+*/    
+    //CidDataTable *test = cid_create_sized_datatable_with_default(5,G_TYPE_INT,2);
+    //CidDataTable *test = cid_create_sized_datatable(5);
+    //printf("size: %d\n",cid_datatable_length(test));
+    //cid_datatable_foreach(test,(CidDataAction)cid_datacase_print,NULL);
+    //cid_free_datatable(&test);
     fprintf (stdout,"Bye !\n");    
 
     return ret;
