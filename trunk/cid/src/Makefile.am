@@ -4,17 +4,19 @@ SUBDIRS = .
 bin_PROGRAMS = \
     cid
 
-if WITH_OPENGL
-have_opengl=-DHAVE_OPENGL="1"
-endif
+#if WITH_OPENGL
+#have_opengl=-DHAVE_OPENGL="1"
+#endif
+
+#    $(OPENGL_CFLAGS) \
+#    $(have_opengl)
+
 if E17_ENABLE
 have_e17=-DHAVE_E17="1"
 endif
 
 cid_CFLAGS = \
     $(PACKAGE_CFLAGS) \
-    $(OPENGL_CFLAGS) \
-    $(have_opengl) \
     $(have_e17) \
     -DCID_DEFAULT_IMAGE=\""$(pkgdatadir)/default.svg"\"\
     -DCID_CONFIG_FILE=\""cid.conf"\"\
@@ -46,6 +48,7 @@ cid_SOURCES = \
     cid-amazon.h \
     cid-animation.c \
     cid-animation.h \
+    cid-applet-canvas.h \
     cid-asynchrone.c \
     cid-asynchrone.h \
     cid-callbacks.c \
@@ -67,6 +70,8 @@ cid_SOURCES = \
     cid-menu-factory.h \
     cid-messages.c \
     cid-messages.h \
+    cid-modules.c \
+    cid-modules.h \
     cid-panel-callbacks.c \
     cid-panel-callbacks.h \
     cid-rhythmbox.c \
@@ -95,6 +100,7 @@ cidsubinclude_HEADERS = \
     cid-amarok2.h \
     cid-amazon.h \
     cid-animation.h \
+    cid-applet-canvas.h \
     cid-asynchrone.h \
     cid-callbacks.h \
     cid-conf-panel-factory.h \
@@ -106,6 +112,7 @@ cidsubinclude_HEADERS = \
     cid-exaile.h \
     cid-menu-factory.h \
     cid-messages.h \
+    cid-modules.h \
     cid-panel-callbacks.h \
     cid-rhythmbox.h \
     cid-utilities.h 

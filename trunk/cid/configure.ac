@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT([CID], [1.1.3], [Benjamin SANS (sans_ben@yahoo.fr)])
+AC_INIT([CID], [1.1.5], [Benjamin SANS (sans_ben@yahoo.fr)])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 
@@ -33,33 +33,33 @@ AC_ARG_ENABLE(e17,
             *)   echo "bad value ${enableval} for --enable-e17" ;;
         esac],[usee17=false])
 
-AC_ARG_ENABLE(opengl,
-        [ --enable-opengl  :  Enable OpenGL],
-        [case "${enableval}" in
-            yes) useopengl=true ;;
-            no)  useopengl=false ;;
-            *)   echo "bad value ${enableval} for --enable-opengl" ;;
-        esac],[useopengl=false])
+#AC_ARG_ENABLE(opengl,
+#        [ --enable-opengl  :  Enable OpenGL],
+#        [case "${enableval}" in
+#            yes) useopengl=true ;;
+#            no)  useopengl=false ;;
+#            *)   echo "bad value ${enableval} for --enable-opengl" ;;
+#        esac],[useopengl=false])
 
-if test "$useopengl" = "true" ; then
-        PKG_CHECK_MODULES(OPENGL, "gtkglext-1.0", [opengl_detected=true], [opengl_detected=false; AC_MSG_WARN(Could not find dtkdlext-1.0; C.I.D. won't be built with OpenGL support.)])
-        AC_SUBST(OPENGL_CFLAGS)
-        AC_SUBST(OPENGL_LIBS)
+#if test "$useopengl" = "true" ; then
+#        PKG_CHECK_MODULES(OPENGL, "gtkglext-1.0", [opengl_detected=true], [opengl_detected=false; AC_MSG_WARN(Could not find dtkdlext-1.0; C.I.D. won't be built with OpenGL support.)])
+#        AC_SUBST(OPENGL_CFLAGS)
+#        AC_SUBST(OPENGL_LIBS)
 
-        if test ! "$opengl_detected" = "false" ; then
-            AC_DEFINE(HAVE_OPENGL,"1",[Defined if we can use OpenGL.])
-        fi
-fi
+#        if test ! "$opengl_detected" = "false" ; then
+#            AC_DEFINE(HAVE_OPENGL,"1",[Defined if we can use OpenGL.])
+#        fi
+#fi
 
-if test "$opengl_detected" = "true" ; then
-        opengl_required="gtkglext-1.0"
-else
-        opengl_required=""
-fi
+#if test "$opengl_detected" = "true" ; then
+#        opengl_required="gtkglext-1.0"
+#else
+#        opengl_required=""
+#fi
 
-AC_SUBST(opengl_required)
+#AC_SUBST(opengl_required)
 
-AM_CONDITIONAL( [WITH_OPENGL], [test "$opengl_detected" = "true" ] )
+#AM_CONDITIONAL( [WITH_OPENGL], [test "$opengl_detected" = "true" ] )
 AM_CONDITIONAL( [E17_ENABLE], [test "$usee17" = "true" ] )
 
 AC_CONFIG_FILES([
@@ -74,11 +74,11 @@ AC_CONFIG_FILES([
 AC_OUTPUT
 
 echo "C.I.D. will be compiled with the following options :"
-if test "$opengl_detected" = "true" ; then
-    echo " * Use OpenGL : yes"
-else
-    echo " * Use OpenGL : no"
-fi
+#if test "$opengl_detected" = "true" ; then
+#    echo " * Use OpenGL : yes"
+#else
+#    echo " * Use OpenGL : no"
+#fi
 if test "$usee17" = "true" ; then
     echo " * Enable E17 : yes"
 else

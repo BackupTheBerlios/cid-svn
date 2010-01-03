@@ -30,5 +30,7 @@
 #include "cid-amarok2.h"
 #include "cid-console-call.h"
 #include "cid-constantes.h"
+#include "cid-applet-canvas.h"
+#include "cid-modules.h"
 
 #endif
