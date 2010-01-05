@@ -13,8 +13,6 @@
 
 G_BEGIN_DECLS
 
-#define OLD_CONFIG_FILE ".cidrc"
-
 /**
  * Fonction permettant de recuperer un boolean dans un fichier de configuration.
  * @param pKeyFile Fichier de configuration.

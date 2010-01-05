@@ -18,6 +18,8 @@ G_BEGIN_DECLS
 #define CONFIG_WIDTH 800
 #define CONFIG_HEIGHT 600
 
+#define OLD_CONFIG_FILE ".cidrc"
+
 /* Alias pour récupérer l'URI de l'image par défaut */
 #define DEFAULT_IMAGE cid->cDefaultImage
 

@@ -35,6 +35,18 @@ cid_check_file (const gchar *f)
     gchar *cFileTest;
     if (!g_file_test (f, G_FILE_TEST_EXISTS))
     {
+		/*
+		gchar *cCompareWith = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+		if (g_strcmp(f,cCompareWith)) // f correspond a un chemin entre par l'utilisateur
+		{
+			g_free (cCompareWith);
+			gchar *cSrc = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
+			cid_debug ("Copying file from %s to %s",cSrc,f);
+			cid_copy_file (cSrc,f);
+			g_free (cSrc);
+			return;
+		}
+		*/
         gchar *cDirName = g_strdup_printf("%s/.config/cid",g_getenv("HOME"));
         if (!g_file_test (cDirName,G_FILE_TEST_IS_DIR))
         {
@@ -82,8 +94,8 @@ cid_check_file (const gchar *f)
         }
         g_free (cFileTest);
         gchar *cSrc = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
-        cid_debug ("Copying file from %s to %s",cSrc,cid->cConfFile);
-        cid_copy_file (cSrc,cid->cConfFile);
+        cid_debug ("Copying file from %s to %s",cSrc,f);
+        cid_copy_file (cSrc,f);
         g_free (cSrc);
     }
 }
@@ -116,7 +128,7 @@ cid_check_conf_file_version (const gchar *f)
         g_free (cTmpPath);
         
         cid_save_data ();
-        cid_read_key_file (cid->cConfFile);
+        cid_read_key_file (f);
         return FALSE;
     }
     return TRUE;
@@ -196,6 +208,7 @@ cid_load_key_file(const gchar *cFile)
     if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) 
     {
         cid_warning (error->message);
+		g_error_free (error);
         return FALSE;
     }
     return TRUE;
@@ -241,9 +254,15 @@ cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbool
     {
         g_free (cGet);
         if (g_file_test (cDefault, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS))
+		{
+			cid_debug ("%s:%s=%s",cGroup,cKey,cDefault);
             return cDefault;
-        else 
+        }
+		else 
+		{
+			cid_debug ("%s:%s=(NULL)",cGroup,cKey);
             return NULL;
+		}
     }       
     cid_debug ("%s:%s=%s",cGroup,cKey,cGet);
     return cGet;
@@ -333,8 +352,16 @@ cid_read_key_file (const gchar *f)
     pSize               = g_key_file_get_integer_list (cid->pKeyFile, "Behaviour", "SIZE", &iReadSize, &error);
     if (cid_free_and_debug_error(&error) || iReadSize != 2)
     {
-        pSize[0] = DEFAULT_SIZE;
-        pSize[1] = DEFAULT_SIZE;
+		pSize = g_realloc (pSize, 2 * sizeof(int));
+		if (pSize != NULL)
+		{
+			pSize[0] = DEFAULT_SIZE;
+			pSize[1] = DEFAULT_SIZE;
+		}
+		else
+		{
+			cid_exit (CID_ERROR_READING_FILE, "cannot allocate memory");
+		}
     }
     cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", &error);
     cid_free_and_debug_error(&error);

@@ -269,7 +269,7 @@ _cid_about (GtkMenuItem *pMenuItem, gpointer *data)
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE,
-        "\nConky Images Display (2008-2009)\n version %s",CID_VERSION);
+        "\nConky Images Display (2008-2010)\n version %s",CID_VERSION);
     
 #if GTK_MINOR_VERSION >= 12
     GtkWidget *pLink = gtk_link_button_new("http://cid.freezee.org/");

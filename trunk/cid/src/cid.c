@@ -18,10 +18,10 @@
 **    Benjamin SANS <sans_ben@yahoo.fr>
 **
 ** Notes :
-**    Originally conceived to use it with conky to display amarok's cover 
+**    Initially developed to use it with conky to display amarok's cover 
 **    on desktop.
-**    The project was re-write separatly for rhythmbox.
-**    In the end, we deceided to merge our two programs "cleanly" with a DBus
+**    The project was re-written for rhythmbox.
+**    In the end, we deceided to merge our two programs with a DBus
 **    support to add amarok2 and other players in the future...
 **
 **
