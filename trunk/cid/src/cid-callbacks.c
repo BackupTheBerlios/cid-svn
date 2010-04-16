@@ -38,12 +38,18 @@ cid_interrupt (int signal)
 void 
 _cid_quit (GtkWidget *p_widget, gpointer user_data) 
 {
-
+	gchar *error = NULL;
     cid_save_data ();
 
-    gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
-    if (!system (cCommand)) return;
-    g_free (cCommand);
+    if (remove(DEFAULT_DOWNLOADED_IMAGE_LOCATION) == -1)
+    {
+		error = strerror (errno);
+		cid_warning ("Error while removing %s: %s",DEFAULT_DOWNLOADED_IMAGE_LOCATION,error);
+		g_free (error);
+	}
+    // gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+    //if (!system (cCommand)) return;
+    //g_free (cCommand);
 
     cid_sortie (CID_EXIT_SUCCESS);
 
