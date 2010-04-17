@@ -57,4 +57,10 @@ Conky Images Display v1.1.3
   * a few more eye-candy stuff
   * new controls
   * unstable option : drag'n'drop (add music to queue-list in rhythmbox or display the dropped picture)
-  
+ 
+Conky Images Display v1.1.5-alpha
+
+  * bug fixing
+  * memory improvements
+  * MPD support
+ 

@@ -1089,19 +1089,6 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
                                     FALSE,
                                     FALSE,
                                     0);
-                                if (iElementType == 'u') 
-                                { //Sound Play Button
-                                    pButtonPlay = gtk_button_new_from_stock (GTK_STOCK_MEDIA_PLAY); //Outch
-                                    g_signal_connect (G_OBJECT (pButtonPlay),
-                                        "clicked",
-                                        G_CALLBACK (_cid_play_a_sound),
-                                        data);
-                                    gtk_box_pack_start (GTK_BOX (pHBox),
-                                        pButtonPlay,
-                                        FALSE,
-                                        FALSE,
-                                        0);
-                                }
                             }
                         } else if (iElementType == 'R' || iElementType == 'M') {
 // Marge

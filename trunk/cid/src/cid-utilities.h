@@ -69,12 +69,6 @@ void cid_read_parameters (int argc, char **argv);
 void cid_set_verbosity (gchar *cVerbosity);
 
 /**
- * permet de jouer un son
- * @param cSoundPath chemin vers le son à jouer
- */
-void cid_play_sound (const gchar *cSoundPath);
-
-/**
  * Permet de deconnecter le monitoring du player
  */
 void cid_disconnect_player ();

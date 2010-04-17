@@ -85,7 +85,8 @@ typedef enum {
     PLAYER_RHYTHMBOX,
     PLAYER_AMAROK_1,
     PLAYER_EXAILE,
-    PLAYER_AMAROK_2 
+    PLAYER_AMAROK_2,
+    PLAYER_MPD 
 } PlayerIndice;
 
 /**
@@ -339,6 +340,12 @@ struct _CidMainContainer {
     ///\__ Dimensions de l'ecran
     int XScreenWidth;
     int XScreenHeight;
+    
+    /// MPD specific config
+    gchar *mpd_dir;
+    gchar *mpd_host;
+    gchar *mpd_pass;
+    gint mpd_port;
 };
 
 struct _CidLabelDescription {

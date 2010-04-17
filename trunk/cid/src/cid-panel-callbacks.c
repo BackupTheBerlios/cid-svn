@@ -365,14 +365,6 @@ _cid_pick_a_file (GtkButton *button, gpointer *data)
 }
 
 void 
-_cid_play_a_sound (GtkButton *button, gpointer *data) 
-{
-    GtkWidget *pEntry = data[0];
-    const gchar *cSoundPath = gtk_entry_get_text (GTK_ENTRY (pEntry));
-    cid_play_sound (cSoundPath);
-}
-
-void 
 _cid_set_font (GtkFontButton *widget, GtkEntry *pEntry) 
 {
     const gchar *cFontName = gtk_font_button_get_font_name (GTK_FONT_BUTTON (widget));

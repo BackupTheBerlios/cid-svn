@@ -298,55 +298,55 @@ cid_preload_module_from_directory (const gchar *cModuleDirPath, GError **erreur)
 
 void cid_free_module (CidModule *module)
 {
-	if (module == NULL)
-		return ;
-	cid_debug ("%s (%s)", __func__, module->pVisitCard->cModuleName);
+    if (module == NULL)
+        return ;
+    cid_debug ("%s (%s)", __func__, module->pVisitCard->cModuleName);
 
-	cid_deactivate_module (module);
+    cid_deactivate_module (module);
 
-	cid_close_module (module);
+    cid_close_module (module);
 
-	cid_free_visit_card (module->pVisitCard);
-	g_free (module->cSoFilePath);
-	g_free (module);
+    cid_free_visit_card (module->pVisitCard);
+    g_free (module->cSoFilePath);
+    g_free (module);
 }
 
 /*
 #define REGISTER_INTERNAL_MODULE(cGroupName) \
-	pModule = g_new0 (CidInternalModule, 1);\
-	cid_pre_init_##cGroupName (pModule);\
-	g_hash_table_insert (pModuleTable, (gpointer)pModule->cModuleName, (gpointer)pModule)
+    pModule = g_new0 (CidInternalModule, 1);\
+    cid_pre_init_##cGroupName (pModule);\
+    g_hash_table_insert (pModuleTable, (gpointer)pModule->cModuleName, (gpointer)pModule)
     
 void 
 cid_preload_internal_modules (GHashTable *pModuleTable)
 {
-	cd_message ("");
-	CidInternalModule *pModule;
-	
-	REGISTER_INTERNAL_MODULE (Position);
-	REGISTER_INTERNAL_MODULE (Accessibility);
-	REGISTER_INTERNAL_MODULE (System);
-	REGISTER_INTERNAL_MODULE (TaskBar);
-	REGISTER_INTERNAL_MODULE (HiddenDock);
-	REGISTER_INTERNAL_MODULE (Dialogs);
-	REGISTER_INTERNAL_MODULE (Indicators);
-	REGISTER_INTERNAL_MODULE (Views);
-	REGISTER_INTERNAL_MODULE (Labels);
-	REGISTER_INTERNAL_MODULE (Desklets);
-	REGISTER_INTERNAL_MODULE (Icons);
-	REGISTER_INTERNAL_MODULE (Background);
+    cd_message ("");
+    CidInternalModule *pModule;
+    
+    REGISTER_INTERNAL_MODULE (Position);
+    REGISTER_INTERNAL_MODULE (Accessibility);
+    REGISTER_INTERNAL_MODULE (System);
+    REGISTER_INTERNAL_MODULE (TaskBar);
+    REGISTER_INTERNAL_MODULE (HiddenDock);
+    REGISTER_INTERNAL_MODULE (Dialogs);
+    REGISTER_INTERNAL_MODULE (Indicators);
+    REGISTER_INTERNAL_MODULE (Views);
+    REGISTER_INTERNAL_MODULE (Labels);
+    REGISTER_INTERNAL_MODULE (Desklets);
+    REGISTER_INTERNAL_MODULE (Icons);
+    REGISTER_INTERNAL_MODULE (Background);
 }
 */
 
 void 
 cid_deactivate_module (CidModule *module)
 {
-	g_return_if_fail (module != NULL);
-	cid_debug ("%s (%s, %s)", __func__, module->pVisitCard->cModuleName, module->cConfFilePath);
-	g_list_foreach (module->pInstancesList, (GFunc) cid_stop_module_instance, NULL);
-	g_list_foreach (module->pInstancesList, (GFunc) cid_free_module_instance, NULL);
-	g_list_free (module->pInstancesList);
-	module->pInstancesList = NULL;
+    g_return_if_fail (module != NULL);
+    cid_debug ("%s (%s, %s)", __func__, module->pVisitCard->cModuleName, module->cConfFilePath);
+    g_list_foreach (module->pInstancesList, (GFunc) cid_stop_module_instance, NULL);
+    g_list_foreach (module->pInstancesList, (GFunc) cid_free_module_instance, NULL);
+    g_list_free (module->pInstancesList);
+    module->pInstancesList = NULL;
 }
 
 /**
@@ -355,14 +355,14 @@ cid_deactivate_module (CidModule *module)
 void 
 cid_stop_module_instance (CidModuleInstance *pInstance)
 {
-	if (pInstance->pModule->pInterface->stopModule != NULL)
-		pInstance->pModule->pInterface->stopModule (pInstance);
-	
-	if (pInstance->pModule->pInterface->reset_data != NULL)
-		pInstance->pModule->pInterface->reset_data (pInstance);
-	
-	if (pInstance->pModule->pInterface->reset_config != NULL)
-		pInstance->pModule->pInterface->reset_config (pInstance);
+    if (pInstance->pModule->pInterface->stopModule != NULL)
+        pInstance->pModule->pInterface->stopModule (pInstance);
+    
+    if (pInstance->pModule->pInterface->reset_data != NULL)
+        pInstance->pModule->pInterface->reset_data (pInstance);
+    
+    if (pInstance->pModule->pInterface->reset_config != NULL)
+        pInstance->pModule->pInterface->reset_config (pInstance);
 }
 
 /**
@@ -371,8 +371,8 @@ cid_stop_module_instance (CidModuleInstance *pInstance)
 void 
 cid_free_module_instance (CidModuleInstance *pInstance)
 {
-	g_free (pInstance->cConfFilePath);
-	/**g_free (pInstance->pConfig);
-	g_free (pInstance->pData);*/
-	g_free (pInstance);
+    g_free (pInstance->cConfFilePath);
+    /**g_free (pInstance->pConfig);
+    g_free (pInstance->pData);*/
+    g_free (pInstance);
 }

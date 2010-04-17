@@ -9,13 +9,13 @@
    *    Source originale: applet rhythmbox pour Cairo-dock
    *    Auteur origial: Adrien Pilleboue
 */
-//#include "cid.h"
 #include "cid-rhythmbox.h"
 #include "cid-dbus.h"
 #include "cid-messages.h"
 #include "cid-utilities.h"
 #include "cid-struct.h"
 #include "cid-constantes.h"
+#include "cid-callbacks.h"
 
 extern CidMainContainer *cid;
 
@@ -227,26 +227,22 @@ getSongInfos(void)
         } 
         else 
         {
-            //const gchar *tabFiles[]={"cover", "album", "albumart", ".folder", "folder", "Cover", "Folder"};
-            //gchar **pFilesPattern = (gchar **)tabFiles;
-            CidDataTable *p_tabFiles = cid_create_datatable(G_TYPE_STRING,"cover","album","albumart",".folder",".cover","folder","Cover","Folder",G_TYPE_INVALID);
+            CidDataTable *p_tabFiles = cid_create_datatable(G_TYPE_STRING,"cover","album","albumart",
+                                                            ".folder",".cover","folder","Cover","Folder",
+                                                            G_TYPE_INVALID);
             CidDataCase *p_temp = p_tabFiles->head;
             gchar *cSongPath = g_filename_from_uri (musicData.playing_uri, NULL, NULL);  // on teste d'abord dans le repertoire de la chanson.
-            int i=0;
             if (cSongPath != NULL)
             {
                 gchar *cSongDir = g_path_get_dirname (cSongPath);
                 g_free (cSongPath);
                 musicData.playing_cover = g_strdup_printf ("%s/%s - %s.jpg", cSongDir, musicData.playing_artist, musicData.playing_album);
                 cid_debug ("   test de %s\n", musicData.playing_cover);
-                while (/* *pFilesPattern!=NULL*/ p_temp != NULL && !g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS) /*&& tabFiles[i]!=NULL && i<7*/)
+                while (p_temp != NULL && !g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS))
                 {
                     g_free (musicData.playing_cover);
-                    musicData.playing_cover = g_strdup_printf ("%s/%s.jpg", cSongDir, p_temp->content->string /* *pFilesPattern/*tabFiles[i]*/);
-                    //cid_debug ("   test de %s (%d)\n", musicData.playing_cover,i);
+                    musicData.playing_cover = g_strdup_printf ("%s/%s.jpg", cSongDir, p_temp->content->string);
                     cid_debug ("   test de %s\n", musicData.playing_cover);
-                    //i++;
-                    //pFilesPattern++;
                     p_temp = p_temp->next;
                 }
                 if (! g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS))
@@ -262,9 +258,17 @@ getSongInfos(void)
                     musicData.playing_cover = g_strdup_printf("%s/.cache/rhythmbox/covers/%s - %s.jpg", g_getenv("HOME"),musicData.playing_artist, musicData.playing_album);
                 }
                 g_free (cSongDir);
+                if (! g_file_test (musicData.playing_cover, G_FILE_TEST_EXISTS))
+                {
+                    cid->iCheckIter = 0;
+                    if (musicData.iSidCheckCover == 0 && cid->iPlayer != PLAYER_NONE) 
+                    {
+                        cid_debug ("l'image n'existe pas encore => on boucle.\n");
+                        musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
+                    }
+                }
             }
             cid_free_datatable(&p_tabFiles);
-            //g_free (tabFiles);
         }
         cid_message ("  playing_cover <- %s\n", musicData.playing_cover);
         

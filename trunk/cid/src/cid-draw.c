@@ -70,12 +70,6 @@ cid_display_image(gchar *image)
     {
         cid->p_cSurface = cid_get_cairo_image (DEFAULT_IMAGE, cid->iWidth, cid->iHeight);
         musicData.cover_exist = FALSE;
-        cid->iCheckIter = 0;
-        if (musicData.iSidCheckCover == 0 && cid->iPlayer != PLAYER_NONE) 
-        {
-            cid_debug ("image : %s, mais n'existe pas encore => on boucle.\n", image);
-            musicData.iSidCheckCover = g_timeout_add (1 SECONDES, (GSourceFunc) _check_cover_is_present, (gpointer) NULL);
-        }
     }
     
     gtk_widget_queue_draw (cid->pWindow);
@@ -88,64 +82,14 @@ cid_get_cairo_image (char *cImagePath, gdouble iWidth, gdouble iHeight)
     cid_debug ("%s (%s);\n",__func__,cImagePath);
     
     cairo_surface_t* pNewSurface = NULL;
-    //gboolean bIsSVG = FALSE, bIsPNG = FALSE, bIsXPM = FALSE;
-    //FILE *fd = fopen (cImagePath, "r");
     
-    //if (fd != NULL) 
-    //{
-    //    char buffer[8];
-    //    if (fgets (buffer, 7, fd) != NULL) 
-    //    {
-    //        if (strncmp (buffer+2, "xml", 3) == 0)
-    //            bIsSVG = TRUE;
-    //        else if (strncmp (buffer+1, "PNG", 3) == 0)
-    //            bIsPNG = TRUE;
-    //        else if (strncmp (buffer+3, "XPM", 3) == 0)
-    //            bIsXPM = TRUE;
-    //        cid_debug ("  format : %d;%d;%d", bIsSVG, bIsPNG, bIsXPM);
-    //    }
-    //    fclose (fd);
-    //}
-    //if (! bIsSVG && ! bIsPNG && ! bIsXPM) 
-    //{  // sinon, on se base sur l'extension.
-    //    cid_debug ("  on se base sur l'extension en desespoir de cause.");
-    //    if (g_str_has_suffix (cImagePath, ".svg"))
-    //        bIsSVG = TRUE;
-    //    else if (g_str_has_suffix (cImagePath, ".png"))
-    //        bIsPNG = TRUE;
-    //}
-
-//  if (!bIsPNG) {
-        // buffer de pixels après redimenssionement
-        GdkPixbuf *nCover;
-        nCover = gdk_pixbuf_new_from_file_at_scale (cImagePath,iWidth, iHeight, FALSE, NULL);
-        pNewSurface = cid_get_image_from_pixbuf (&nCover);
+    // buffer de pixels après redimenssionement
+    GdkPixbuf *nCover;
+    nCover = gdk_pixbuf_new_from_file_at_scale (cImagePath,iWidth, iHeight, FALSE, NULL);
+    pNewSurface = cid_get_image_from_pixbuf (&nCover);
         
-        g_object_unref (nCover);
-/*
-    } 
-    else 
-    {
-        cairo_surface_t* surface_ini;
-        cairo_t* pCairoContext = NULL;
-        surface_ini = cairo_image_surface_create_from_png (cImagePath);
-        if (cairo_surface_status (surface_ini) == CAIRO_STATUS_SUCCESS) 
-        {
-            
-            pNewSurface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                cairo_image_surface_get_width (surface_ini),
-                cairo_image_surface_get_height (surface_ini));
-            pCairoContext = cairo_create (pNewSurface);
-            
-            cairo_scale (pCairoContext, iWidth, iHeight);
-            
-            cairo_set_source_surface (pCairoContext, surface_ini, 0, 0);
-            cairo_paint (pCairoContext);
-            cairo_destroy (pCairoContext);
-        }
-        cairo_surface_destroy (surface_ini);
-    }   
-*/
+    g_object_unref (nCover);
+
     return pNewSurface;
 }
 
@@ -507,7 +451,7 @@ cid_set_render (cairo_t *pContext, gpointer *pData)
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_save (cr);
 
-        ///\_______ des maths... je suis nul en maths xD
+        ///\_______ des maths... je suis nul en maths
         ///         le but c'est calculer le bon ratio pour l'image pendant une rotation        
         //gdouble theta = fabs (cid->dRotate);
         //if (theta > M_PI/2)
@@ -609,69 +553,78 @@ cid_set_render (cairo_t *pContext, gpointer *pData)
     if (cid->bCurrentlyFlying && cid->bDisplayControl && cid->iPlayer != PLAYER_NONE && cid->bMonitorPlayer) 
     {
         // Previous button
-        cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-        cairo_save(cr);
-        cairo_set_source_rgba (cr, 0, 0, 0, 0);
-        cairo_translate (cr, 0, (cid->iHeight - cid->iPrevNextSize)/2);
-        cairo_set_source_surface (cr, cid->p_cPrev, 0, 0);
-        if (cid->iCursorX < cid->iPrevNextSize &&
-            cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
-            cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2) {
-            
-            cairo_paint_with_alpha (cr, .5);
-            
-        } 
-        else 
+        if (cid->pMonitorList->p_fPrevious != NULL)
         {
-            if (cid->dAnimationProgress < 1)
-                cairo_paint_with_alpha (cr, cid->dAnimationProgress);
-            else
-                cairo_paint (cr);
+            cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+            cairo_save(cr);
+            cairo_set_source_rgba (cr, 0, 0, 0, 0);
+            cairo_translate (cr, 0, (cid->iHeight - cid->iPrevNextSize)/2);
+            cairo_set_source_surface (cr, cid->p_cPrev, 0, 0);
+            if (cid->iCursorX < cid->iPrevNextSize &&
+                cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
+                cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2) {
+                
+                cairo_paint_with_alpha (cr, .5);
+                
+            } 
+            else 
+            {
+                if (cid->dAnimationProgress < 1)
+                    cairo_paint_with_alpha (cr, cid->dAnimationProgress);
+                else
+                    cairo_paint (cr);
+            }
+            cairo_restore (cr); 
         }
-        cairo_restore (cr); 
         // Play/Pause button
-        cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-        cairo_save(cr);
-        cairo_set_source_rgba (cr, 0, 0, 0, 0);
-        cairo_translate (cr, (cid->iWidth - cid->iPlayPauseSize)/2, (cid->iHeight - cid->iPlayPauseSize)/2);
-        cairo_set_source_surface (cr, !musicData.playing ? cid->p_cPlay_big : cid->p_cPause_big, 0, 0);
-        if (cid->iCursorX < (cid->iWidth + cid->iPlayPauseSize)/2 &&
-            cid->iCursorX > (cid->iWidth - cid->iPlayPauseSize)/2 &&
-            cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
-            cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2) {
-            
-            cairo_paint_with_alpha (cr, .5);
-            
-        } 
-        else 
+        if (cid->pMonitorList->p_fPlayPause != NULL)
         {
-            if (cid->dAnimationProgress < 1)
-                cairo_paint_with_alpha (cr, cid->dAnimationProgress);
-            else
-                cairo_paint (cr);
+            cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+            cairo_save(cr);
+            cairo_set_source_rgba (cr, 0, 0, 0, 0);
+            cairo_translate (cr, (cid->iWidth - cid->iPlayPauseSize)/2, (cid->iHeight - cid->iPlayPauseSize)/2);
+            cairo_set_source_surface (cr, !musicData.playing ? cid->p_cPlay_big : cid->p_cPause_big, 0, 0);
+            if (cid->iCursorX < (cid->iWidth + cid->iPlayPauseSize)/2 &&
+                cid->iCursorX > (cid->iWidth - cid->iPlayPauseSize)/2 &&
+                cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
+                cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2) {
+                
+                cairo_paint_with_alpha (cr, .5);
+            
+            } 
+            else 
+            {
+                if (cid->dAnimationProgress < 1)
+                    cairo_paint_with_alpha (cr, cid->dAnimationProgress);
+                else
+                    cairo_paint (cr);
+            }
+            cairo_restore (cr); 
         }
-        cairo_restore (cr); 
         // Next button
-        cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-        cairo_save(cr);
-        cairo_set_source_rgba (cr, 0, 0, 0, 0);
-        cairo_translate (cr, (cid->iWidth - cid->iPrevNextSize), (cid->iHeight - cid->iPrevNextSize)/2);
-        cairo_set_source_surface (cr, cid->p_cNext, 0, 0);
-        if (cid->iCursorX > cid->iWidth - cid->iPrevNextSize &&
-            cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
-            cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2) {
-            
-            cairo_paint_with_alpha (cr, .5);
-            
-        } 
-        else 
+        if (cid->pMonitorList->p_fNext != NULL)
         {
-            if (cid->dAnimationProgress < 1)
-                cairo_paint_with_alpha (cr, cid->dAnimationProgress);
-            else
-                cairo_paint (cr);
+            cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+            cairo_save(cr);
+            cairo_set_source_rgba (cr, 0, 0, 0, 0);
+            cairo_translate (cr, (cid->iWidth - cid->iPrevNextSize), (cid->iHeight - cid->iPrevNextSize)/2);
+            cairo_set_source_surface (cr, cid->p_cNext, 0, 0);
+            if (cid->iCursorX > cid->iWidth - cid->iPrevNextSize &&
+                cid->iCursorY < (cid->iHeight + cid->iPrevNextSize)/2 &&
+                cid->iCursorY > (cid->iHeight - cid->iPrevNextSize)/2) {
+            
+                cairo_paint_with_alpha (cr, .5);
+            
+            } 
+            else 
+            {
+                if (cid->dAnimationProgress < 1)
+                    cairo_paint_with_alpha (cr, cid->dAnimationProgress);
+                else
+                    cairo_paint (cr);
+            }
+            cairo_restore (cr); 
         }
-        cairo_restore (cr); 
     }
     
     cairo_destroy (cr);

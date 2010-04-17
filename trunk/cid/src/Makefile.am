@@ -72,12 +72,15 @@ cid_SOURCES = \
     cid-messages.h \
     cid-modules.c \
     cid-modules.h \
+    cid-mpd.c \
     cid-panel-callbacks.c \
     cid-panel-callbacks.h \
     cid-rhythmbox.c \
     cid-rhythmbox.h \
     cid-utilities.c \
-    cid-utilities.h 
+    cid-utilities.h \
+    libmpdclient.c \
+    libmpdclient.h
     
     
     
@@ -113,7 +116,10 @@ cidsubinclude_HEADERS = \
     cid-menu-factory.h \
     cid-messages.h \
     cid-modules.h \
+    cid-mpd.h \
     cid-panel-callbacks.h \
     cid-rhythmbox.h \
-    cid-utilities.h 
+    cid-struct.h \
+    cid-utilities.h \
+    libmpdclient.h
 

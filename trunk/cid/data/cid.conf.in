@@ -66,7 +66,7 @@ MASK=
 #F+[Monitoring player options;gtk-preferences]
 frame_2=
 
-#r[None;Rhythmbox;Amarok;Exaile;Amarok 2] Wich player you want to monitor
+#r[None;Rhythmbox;Amarok;Exaile;Amarok 2;MPD] Wich player you want to monitor
 PLAYER=0
 
 #i[1;30] Interval between two refresh
@@ -128,7 +128,7 @@ frame_animation=
 #b Run an animation when the music changes
 ANIMATION=
 
-#r[Rotate;Fade in out;Diapositive] Animation to use
+#r[Rotate;Fade in out] Animation to use
 ANIMATION_TYPE=0
 
 #I-[1;10] Animation speed
@@ -166,3 +166,22 @@ frame_sep_ =
 
 #tb Active unstable functions
 B_UNSTABLE=
+
+
+[MPD]
+
+#S+ Songs directory
+#{Value of 'music_directory' in your mpd.conf. Default is $HOME/Music.}
+MPD_DIR=
+
+#s MPD server hostname
+#{Default is 'localhost'.}
+MPD_HOST=
+
+#s MPD server password
+#{Default is none.}
+MPD_PASS=
+
+#i MPD server port
+#{Default is 6600.}
+MPD_PORT=

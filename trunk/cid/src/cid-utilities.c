@@ -40,6 +40,7 @@ cid_disconnect_player ()
     rhythmbox_dbus_disconnect_from_bus();
     cid_disconnect_from_exaile();
     amarok_2_dbus_disconnect_from_bus();
+    cid_disconnect_from_mpd();
 }
 
 void 
@@ -226,7 +227,18 @@ You can use it with the following options:\n"));
 
     if (bPrintVersion) 
     {
-        fprintf (stdout,"Version: %s\n",CID_VERSION);
+        gchar *env;
+        env = g_malloc (20*sizeof(*env));
+#ifdef HAVE_E17
+                        snprintf (env,20,"e17");
+#else
+                        snprintf (env,20,"gnome and/or kde");
+#endif
+        fprintf (stdout,"Version: %s\n"
+                        "Compiled for: %s\n"
+                        ,CID_VERSION
+                        ,env);
+        g_free (env);
         exit (CID_EXIT_SUCCESS);
     }
     
@@ -295,32 +307,6 @@ cid_set_verbosity (gchar *cVerbosity)
         cid_log_set_level(G_LOG_LEVEL_WARNING);
         cid_warning("bad verbosity option: default to warning");
     }
-}
-
-void 
-cid_play_sound (const gchar *cSoundPath) 
-{
-    cid_debug ("%s (%s)", __func__, cSoundPath);
-    if (cSoundPath == NULL)
-    {
-        cid_warning ("No sound to play, halt.");
-        return;
-    }
-    
-    GError *erreur = NULL;
-    gchar *cSoundCommand = NULL;
-    if (g_file_test ("/usr/bin/play", G_FILE_TEST_EXISTS))
-        cSoundCommand = g_strdup_printf("play \"%s\"", cSoundPath);
-        
-    else if (g_file_test ("/usr/bin/aplay", G_FILE_TEST_EXISTS))
-        cSoundCommand = g_strdup_printf("aplay \"%s\"", cSoundPath);
-    
-    else if (g_file_test ("/usr/bin/paplay", G_FILE_TEST_EXISTS))
-        cSoundCommand = g_strdup_printf("paplay \"%s\"", cSoundPath);
-    
-    cid_launch_command (cSoundCommand);
-    
-    g_free (cSoundCommand);
 }
 
 void 
@@ -432,7 +418,6 @@ cid_datacontent_new (GType iType, void *value)
         switch (iType) 
         {
             case G_TYPE_STRING:
-                //ret->string = g_strdup((gchar *) value);
                 ret->string = NULL;
                 ret->string = g_malloc0(strlen((gchar *) value)*sizeof(gchar)+1);
                 strcpy(ret->string, (gchar *) value);

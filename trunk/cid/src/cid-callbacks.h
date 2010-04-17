@@ -23,9 +23,8 @@ void _cid_quit (GtkWidget *p_widget, gpointer user_data);
 
 /**
  * Fonction exécutée en cas d'interruption du programme 
- * @param signal signal à l'origine de l'interruption
  */
-void cid_interrupt (int signal);
+void cid_interrupt (void);
 
 /**
  * Fonction executée lors d'un clic de souris

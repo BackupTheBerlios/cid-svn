@@ -19,53 +19,53 @@ G_BEGIN_DECLS
 
 /// Definition of the visit card of a module.
 struct _CidVisitCard {
-	/// nom du module qui servira a l'identifier.
-	gchar *cModuleName;
-	/// Nom du domaine pour la traduction du module par 'gettext'.
-	gchar *cGettextDomain;
-	/// Version de cid pour laquelle a ete compilee le module.
-	gchar *cVersionOnCompilation;
-	/// version courante du module.
-	gchar *cModuleVersion;
-	/// repertoire du plug-in cote utilisateur.
-	gchar *cUserDataDir;
-	/// repertoire d'installation du plug-in.
-	gchar *cShareDataDir;
-	/// nom de son fichier de conf.
-	gchar *cConfFileName;
-	/// taille de la structure contenant la config du module.
-	gint iSizeOfConfig;
-	/// taille de la structure contenant les donnees du module.
-	gint iSizeOfData;
-	/// description et mode d'emploi succint.
-	gchar *cDescription;
-	/// auteur/pseudo
-	gchar *cAuthor;
-	/// nom d'un module interne auquel ce module se rattache, ou NULL si aucun.
-	const gchar *cInternalModule;
-	/// octets reserves pour preserver la compatibilite binaire lors de futurs ajouts sur l'interface entre plug-ins et dock.
-	char reserved[8];
+    /// nom du module qui servira a l'identifier.
+    gchar *cModuleName;
+    /// Nom du domaine pour la traduction du module par 'gettext'.
+    gchar *cGettextDomain;
+    /// Version de cid pour laquelle a ete compilee le module.
+    gchar *cVersionOnCompilation;
+    /// version courante du module.
+    gchar *cModuleVersion;
+    /// repertoire du plug-in cote utilisateur.
+    gchar *cUserDataDir;
+    /// repertoire d'installation du plug-in.
+    gchar *cShareDataDir;
+    /// nom de son fichier de conf.
+    gchar *cConfFileName;
+    /// taille de la structure contenant la config du module.
+    gint iSizeOfConfig;
+    /// taille de la structure contenant les donnees du module.
+    gint iSizeOfData;
+    /// description et mode d'emploi succint.
+    gchar *cDescription;
+    /// auteur/pseudo
+    gchar *cAuthor;
+    /// nom d'un module interne auquel ce module se rattache, ou NULL si aucun.
+    const gchar *cInternalModule;
+    /// octets reserves pour preserver la compatibilite binaire lors de futurs ajouts sur l'interface entre plug-ins et dock.
+    char reserved[8];
 };
 
 /// Definition of the interface of a module.
 struct _CidModuleInterface {
-	void		(* initModule)			(CidModuleInstance *pInstance, GKeyFile *pKeyFile);
-	void		(* stopModule)			(CidModuleInstance *pInstance);
-	gboolean	(* reloadModule)		(CidModuleInstance *pInstance, GKeyFile *pKeyFile);
-	gboolean	(* read_conf_file)		(CidModuleInstance *pInstance, GKeyFile *pKeyFile);
-	void		(* reset_config)		(CidModuleInstance *pInstance);
-	void		(* reset_data)			(CidModuleInstance *pInstance);
-	void		(* load_custom_widget)	(CidModuleInstance *pInstance, GKeyFile *pKeyFile);
-	void		(* save_custom_widget)	(CidModuleInstance *pInstance, GKeyFile *pKeyFile);
+    void        (* initModule)          (CidModuleInstance *pInstance, GKeyFile *pKeyFile);
+    void        (* stopModule)          (CidModuleInstance *pInstance);
+    gboolean    (* reloadModule)        (CidModuleInstance *pInstance, GKeyFile *pKeyFile);
+    gboolean    (* read_conf_file)      (CidModuleInstance *pInstance, GKeyFile *pKeyFile);
+    void        (* reset_config)        (CidModuleInstance *pInstance);
+    void        (* reset_data)          (CidModuleInstance *pInstance);
+    void        (* load_custom_widget)  (CidModuleInstance *pInstance, GKeyFile *pKeyFile);
+    void        (* save_custom_widget)  (CidModuleInstance *pInstance, GKeyFile *pKeyFile);
 };
 
 /// Definition of an instance of a module.
 struct _CidModuleInstance {
-	CidModule *pModule;
-	gchar *cConfFilePath;
-	gint iSlotID;
-	/**gpointer *myConfig;
-	gpointer *myData;*/
+    CidModule *pModule;
+    gchar *cConfFilePath;
+    gint iSlotID;
+    /**gpointer *myConfig;
+    gpointer *myData;*/
 };
 
 /// Fill the visit card and the interface of a module.
@@ -73,20 +73,20 @@ typedef gboolean (* CidModulePreInit) (CidVisitCard *pVisitCard, CidModuleInterf
 
 /// Definition of an external module.
 struct _CidModule {
-	/// chemin du .so
-	gchar *cSoFilePath;
-	/// structure du module, contenant les pointeurs vers les fonctions du module.
-	GModule *pModule;
-	/// fonctions d'interface du module.
-	CidModuleInterface *pInterface;
-	/// carte de visite du module.
-	CidVisitCard *pVisitCard;
-	/// chemin du fichier de conf du module.
-	gchar *cConfFilePath;
-	/// Heure de derniere (re)activation du module.
-	gdouble fLastLoadingTime;
-	/// Liste d'instance du plug-in.
-	GList *pInstancesList;
+    /// chemin du .so
+    gchar *cSoFilePath;
+    /// structure du module, contenant les pointeurs vers les fonctions du module.
+    GModule *pModule;
+    /// fonctions d'interface du module.
+    CidModuleInterface *pInterface;
+    /// carte de visite du module.
+    CidVisitCard *pVisitCard;
+    /// chemin du fichier de conf du module.
+    gchar *cConfFilePath;
+    /// Heure de derniere (re)activation du module.
+    gdouble fLastLoadingTime;
+    /// Liste d'instance du plug-in.
+    GList *pInstancesList;
 };
 
 
@@ -99,23 +99,23 @@ typedef void (* CidInternalModuleResetDataFunc) (CidInternalModuleDataPtr *pData
 
 /// Definition of an internal module.
 struct _CidInternalModule {
-	//\_____________ Carte de visite.
-	const gchar *cModuleName;
-	const gchar *cDescription;
-	const gchar *cIcon;
-	const gchar *cTitle;
-	gint iSizeOfConfig;
-	gint iSizeOfData;
-	const gchar **cDependencies;  // NULL terminated.
-	//\_____________ Interface.
-	CidInternalModuleReloadFunc reload;
-	CidInternalModuleGetConfigFunc get_config;
-	CidInternalModuleResetConfigFunc reset_config;
-	CidInternalModuleResetDataFunc reset_data;
-	//\_____________ Instance.
-	CidInternalModuleConfigPtr pConfig;
-	CidInternalModuleDataPtr pData;
-	GList *pExternalModules;
+    //\_____________ Carte de visite.
+    const gchar *cModuleName;
+    const gchar *cDescription;
+    const gchar *cIcon;
+    const gchar *cTitle;
+    gint iSizeOfConfig;
+    gint iSizeOfData;
+    const gchar **cDependencies;  // NULL terminated.
+    //\_____________ Interface.
+    CidInternalModuleReloadFunc reload;
+    CidInternalModuleGetConfigFunc get_config;
+    CidInternalModuleResetConfigFunc reset_config;
+    CidInternalModuleResetDataFunc reset_data;
+    //\_____________ Instance.
+    CidInternalModuleConfigPtr pConfig;
+    CidInternalModuleDataPtr pData;
+    GList *pExternalModules;
 };
 
 void cid_initialize_module_manager (const gchar *cModuleDirPath);
@@ -219,9 +219,9 @@ void cid_release_data_slot (CidModuleInstance *pInstance);
 #define cid_get_container_data(pContainer, pInstance) ((pContainer)->pDataSlot[pInstance->iSlotID])
 
 #define cid_set_icon_data(pIcon, pInstance, pData) \
-	(pIcon)->pDataSlot[pInstance->iSlotID] = pData
+    (pIcon)->pDataSlot[pInstance->iSlotID] = pData
 #define cid_set_container_data(pContainer, pInstance, pData) \
-	(pContainer)->pDataSlot[pInstance->iSlotID] = pData
+    (pContainer)->pDataSlot[pInstance->iSlotID] = pData
 
 
 void cid_preload_internal_modules (GHashTable *pModuleTable);

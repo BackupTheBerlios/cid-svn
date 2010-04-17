@@ -88,31 +88,32 @@ CID_APPLET_RESET_DATA_PROTO;
 #define CID_APPLET_DEFINE_ALL_BEGIN(_cName, _cDescription, _cAuthor) \
 CID_APPLET_DEFINE_PROTO \
 { \
-	pVisitCard->cModuleName = g_strdup (_cName); \
-	pVisitCard->cGettextDomain = MY_APPLET_GETTEXT_DOMAIN; \
-	pVisitCard->cDockVersionOnCompilation = MY_APPLET_DOCK_VERSION; \
-	pVisitCard->cUserDataDir = MY_APPLET_USER_DATA_DIR; \
-	pVisitCard->cShareDataDir = MY_APPLET_SHARE_DATA_DIR; \
-	pVisitCard->cConfFileName = (MY_APPLET_CONF_FILE != NULL && strcmp (MY_APPLET_CONF_FILE, "none") != 0 ? MY_APPLET_CONF_FILE : NULL); \
-	pVisitCard->cModuleVersion = MY_APPLET_VERSION;\
-	pVisitCard->cIconFilePath = MY_APPLET_SHARE_DATA_DIR"/"MY_APPLET_ICON_FILE; \
-	pVisitCard->iSizeOfConfig = sizeof (AppletConfig);\
-	pVisitCard->iSizeOfData = sizeof (AppletData);\
-	pVisitCard->cAuthor = _cAuthor;\
-	pVisitCard->cDescription = _cDescription;
+    pVisitCard->cModuleName = g_strdup (_cName); \
+    pVisitCard->cGettextDomain = MY_APPLET_GETTEXT_DOMAIN; \
+    pVisitCard->cUserDataDir = MY_APPLET_USER_DATA_DIR; \
+    pVisitCard->cShareDataDir = MY_APPLET_SHARE_DATA_DIR; \
+    pVisitCard->cConfFileName = ""; \
+    pVisitCard->cModuleVersion = MY_APPLET_VERSION;\
+    pVisitCard->iSizeOfConfig = sizeof (AppletConfig);\
+    pVisitCard->iSizeOfData = sizeof (AppletData);\
+    pVisitCard->cAuthor = _cAuthor;\
+    pVisitCard->cDescription = _cDescription;
 
 #define CID_APPLET_DEFINE_COMMON_APPLET_INTERFACE \
-	pInterface->initModule = CID_APPLET_INIT_FUNC;\
-	pInterface->stopModule = CID_APPLET_STOP_FUNC;\
-	pInterface->reloadModule = CID_APPLET_RELOAD_FUNC;\
-	pInterface->reset_config = CID_APPLET_RESET_CONFIG_FUNC;\
-	pInterface->reset_data = CID_APPLET_RESET_DATA_FUNC;\
-	pInterface->read_conf_file = CID_APPLET_READ_CONFIG_FUNC;
+    pInterface->initModule = CID_APPLET_INIT_FUNC;\
+    pInterface->stopModule = CID_APPLET_STOP_FUNC;\
+    pInterface->reloadModule = CID_APPLET_RELOAD_FUNC;
+    
+/*
+    pInterface->reset_config = CID_APPLET_RESET_CONFIG_FUNC;\
+    pInterface->reset_data = CID_APPLET_RESET_DATA_FUNC;\
+    pInterface->read_conf_file = CID_APPLET_READ_CONFIG_FUNC;
+*/
 
 /** Fin de la fonction de pre-initialisation de l'applet.
 */
 #define CID_APPLET_DEFINE_END \
-	return TRUE ;\
+    return TRUE ;\
 }
 /** Fonction de pre-initialisation generique. Ne fais que definir l'applet (en appelant les 2 macros precedentes), la plupart du temps cela est suffisant.
 */
@@ -131,7 +132,7 @@ CID_APPLET_DEFINE_END
 #define CID_APPLET_INIT_ALL_BEGIN(pApplet) \
 CID_APPLET_INIT_PROTO (pApplet)\
 { \
-	cid_message ("%s (%s)", __func__, pApplet->cConfFilePath);
+    cid_message ("%s (%s)", __func__, pApplet->cConfFilePath);
 
 /** Fin de la fonction d'initialisation de l'applet.
 */
@@ -148,7 +149,7 @@ CID_APPLET_STOP_PROTO \
 /** Fin de la fonction d'arret de l'applet.
 */
 #define CID_APPLET_STOP_END \
-	cid_release_data_slot (myApplet); \
+    cid_release_data_slot (myApplet); \
 }
 
 //\______________________ reload.
@@ -157,12 +158,12 @@ CID_APPLET_STOP_PROTO \
 #define CID_APPLET_RELOAD_ALL_BEGIN \
 CID_APPLET_RELOAD_PROTO \
 { \
-	cid_message ("%s (%s)\n", __func__, myApplet->cConfFilePath);
+    cid_message ("%s (%s)\n", __func__, myApplet->cConfFilePath);
 
 /** Fin de la fonction de rechargement de l'applet.
 */
 #define CID_APPLET_RELOAD_END \
-	return TRUE; \
+    return TRUE; \
 }
 
 
@@ -172,12 +173,12 @@ CID_APPLET_RELOAD_PROTO \
 #define CID_APPLET_GET_CONFIG_ALL_BEGIN \
 CID_APPLET_READ_CONFIG_PROTO \
 { \
-	gboolean bFlushConfFileNeeded = FALSE;
+    gboolean bFlushConfFileNeeded = FALSE;
 
 /** Fin de la fonction de configuration de l'applet.
 */
 #define CID_APPLET_GET_CONFIG_END \
-	return bFlushConfFileNeeded; \
+    return bFlushConfFileNeeded; \
 }
 
 //\______________________ reset_config.
@@ -217,29 +218,29 @@ myApplet = pApplet;
 
 
 #define CID_APPLET_RELOAD_BEGIN \
-	CID_APPLET_RELOAD_ALL_BEGIN
+    CID_APPLET_RELOAD_ALL_BEGIN
 
 
 #define CID_APPLET_RESET_DATA_END \
-	myConfigPtr = NULL; \
-	memset (myDataPtr, 0, sizeof (AppletData)); \
-	myDataPtr = NULL; \
-	myApplet = NULL; \
-	CID_APPLET_RESET_DATA_ALL_END
+    myConfigPtr = NULL; \
+    memset (myDataPtr, 0, sizeof (AppletData)); \
+    myDataPtr = NULL; \
+    myApplet = NULL; \
+    CID_APPLET_RESET_DATA_ALL_END
 
 
 #define CID_APPLET_RESET_CONFIG_BEGIN \
-	CID_APPLET_RESET_CONFIG_ALL_BEGIN \
-	if (myConfigPtr == NULL) \
-		return ;
+    CID_APPLET_RESET_CONFIG_ALL_BEGIN \
+    if (myConfigPtr == NULL) \
+        return ;
 
 
 #define CID_APPLET_GET_CONFIG_BEGIN \
-	CID_APPLET_GET_CONFIG_ALL_BEGIN\
-	if (myConfigPtr == NULL)\
-		myConfigPtr = (((gpointer)myApplet)+sizeof(CidModuleInstance));\
-	if (myDataPtr == NULL)\
-		myDataPtr = (((gpointer)myConfigPtr)+sizeof(AppletConfig));
+    CID_APPLET_GET_CONFIG_ALL_BEGIN\
+    if (myConfigPtr == NULL)\
+        myConfigPtr = (((gpointer)myApplet)+sizeof(CidModuleInstance));\
+    if (myDataPtr == NULL)\
+        myDataPtr = (((gpointer)myConfigPtr)+sizeof(AppletConfig));
 
 
 extern AppletConfig *myConfigPtr;

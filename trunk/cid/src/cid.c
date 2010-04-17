@@ -72,12 +72,19 @@ cid_init (CidMainContainer *pCid)
 
 /* Methode appelée pour relancer cid en cas de plantage */
 static void 
-cid_intercept_signal (int signal) 
+cid_intercept_signal (int number) 
 {
-    cid_warning ("Attention : cid has crashed (sig %d).\nIt will be restarted now.\n", signal);
-    execl ("/bin/sh", "/bin/sh", "-c", cLaunchCommand, NULL);  // on ne revient pas de cette fonction.
-    cid_error ("Sorry, couldn't restart cid");
-    cid_sortie (CID_EXIT_ERROR);
+    if (number == SIGINT || number == SIGTERM)
+    {
+        cid_interrupt ();
+        return;
+    }
+    cid_warning ("Attention : cid has crashed (%s).", strsignal(number));
+    //execl ("/bin/sh", "/bin/sh", "-c", cLaunchCommand, NULL);  // on ne revient pas de cette fonction.
+    //cid_warning ("Sorry, couldn't restart cid");
+    fflush (stdout);
+    signal (number, SIG_DFL);
+    raise (number);
 }
 
 void 
@@ -125,6 +132,11 @@ cid_run_with_player (void)
             cid_build_exaile_menu ();
             cid_connect_to_exaile(cid->iInter);
             break;
+        /* MPD */
+        case PLAYER_MPD:
+            cid_build_mpd_menu ();
+            cid_connect_to_mpd (cid->iInter);
+            break;
         /* None */
         case PLAYER_NONE:
             cid_display_image(NULL);
@@ -137,12 +149,28 @@ cid_run_with_player (void)
 
 /* Methode initialisant les signaux à intercepter */
 static void 
-cid_set_signal_interception (void) 
+cid_set_signal_interception (struct sigaction *action) 
 {
+    /*
     signal (SIGSEGV, cid_intercept_signal);  // Segmentation violation
     signal (SIGFPE, cid_intercept_signal);  // Floating-point exception
     signal (SIGILL, cid_intercept_signal);  // Illegal instruction
     signal (SIGABRT, cid_intercept_signal);  // Abort
+    */
+    (*action).sa_handler = cid_intercept_signal;
+    sigfillset (&((*action).sa_mask));
+    (*action).sa_flags = 0;
+    CidDataTable *p_signals = cid_create_datatable(G_TYPE_INT,SIGSEGV,SIGFPE,SIGILL,SIGABRT,SIGINT,SIGTERM,G_TYPE_INVALID);
+    CidDataCase *p_temp = p_signals->head;
+    while (p_temp != NULL)
+    {
+        if (sigaction (p_temp->content->iNumber, action, NULL) != 0)
+        {
+            cid_error ("Problem while catching signal %d",p_temp->content->iNumber);
+        }
+        p_temp = p_temp->next;
+    }
+    cid_free_datatable (&p_signals);
 }
 
 static void 
@@ -155,7 +183,8 @@ cid_display_init(int *argc, char ***argv)
         cid_exit (CID_GTK_ERROR,"Unable to load gtk context");
     
     /* On intercepte les signaux */
-    signal (SIGINT, cid_interrupt); // ctrl+c
+//    signal (SIGINT, cid_interrupt); // ctrl+c
+//    signal (SIGTERM, cid_interrupt);
 
     if (cid->bSafeMode) 
     {
@@ -200,8 +229,9 @@ main ( int argc, char **argv )
 */
     //char **argvBis = malloc(sizeof(argv));
     //memcpy(argvBis,argv,sizeof(argv));
+    struct sigaction action;
 
-    cid = g_new0(CidMainContainer,1);
+    cid = g_malloc0 (sizeof(*cid));
     
     int i;
     GString *sCommandString = g_string_new (argv[0]);
@@ -229,7 +259,7 @@ main ( int argc, char **argv )
     cid_read_config (cid->cConfFile, NULL);
     cid->bChangedTestingConf = cid->bTesting && cid->bUnstable;
     
-    cid_set_signal_interception ();
+    cid_set_signal_interception (&action);
     
     if (!g_thread_supported ())
     { 

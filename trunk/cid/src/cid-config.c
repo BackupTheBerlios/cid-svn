@@ -35,18 +35,18 @@ cid_check_file (const gchar *f)
     gchar *cFileTest;
     if (!g_file_test (f, G_FILE_TEST_EXISTS))
     {
-		/*
-		gchar *cCompareWith = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
-		if (g_strcmp(f,cCompareWith)) // f correspond a un chemin entre par l'utilisateur
-		{
-			g_free (cCompareWith);
-			gchar *cSrc = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
-			cid_debug ("Copying file from %s to %s",cSrc,f);
-			cid_copy_file (cSrc,f);
-			g_free (cSrc);
-			return;
-		}
-		*/
+        /*
+        gchar *cCompareWith = g_strdup_printf("%s/.config/cid/%s",g_getenv("HOME"),CID_CONFIG_FILE);
+        if (g_strcmp(f,cCompareWith)) // f correspond a un chemin entre par l'utilisateur
+        {
+            g_free (cCompareWith);
+            gchar *cSrc = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
+            cid_debug ("Copying file from %s to %s",cSrc,f);
+            cid_copy_file (cSrc,f);
+            g_free (cSrc);
+            return;
+        }
+        */
         gchar *cDirName = g_strdup_printf("%s/.config/cid",g_getenv("HOME"));
         if (!g_file_test (cDirName,G_FILE_TEST_IS_DIR))
         {
@@ -208,7 +208,7 @@ cid_load_key_file(const gchar *cFile)
     if (!g_key_file_load_from_file (cid->pKeyFile, cFile, flags, &error)) 
     {
         cid_warning (error->message);
-		g_error_free (error);
+        g_error_free (error);
         return FALSE;
     }
     return TRUE;
@@ -248,22 +248,23 @@ cid_get_string_value_full (GKeyFile *pKeyFile, gchar *cGroup, gchar *cKey, gbool
         cid_warning("Unable to find key '%s' in group '%s'\n=> %s",cKey,cGroup,error->message);
         g_error_free(error);
         error = NULL;
-        cGet = cDefault;
+        g_free (cGet);
+        cGet = g_strdup(cDefault);
     }
     if ((bFile || bDir) && cDefault != NULL && !g_file_test (cGet, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS)) 
     {
         g_free (cGet);
         if (g_file_test (cDefault, bDir ? G_FILE_TEST_IS_DIR : G_FILE_TEST_EXISTS))
-		{
-			cid_debug ("%s:%s=%s",cGroup,cKey,cDefault);
+        {
+            cid_debug ("%s:%s=%s",cGroup,cKey,cDefault);
             return cDefault;
         }
-		else 
-		{
-			cid_debug ("%s:%s=(NULL)",cGroup,cKey);
+        else 
+        {
+            cid_debug ("%s:%s=(NULL)",cGroup,cKey);
             return NULL;
-		}
-    }       
+        }
+    }
     cid_debug ("%s:%s=%s",cGroup,cKey,cGet);
     return cGet;
 }
@@ -352,16 +353,16 @@ cid_read_key_file (const gchar *f)
     pSize               = g_key_file_get_integer_list (cid->pKeyFile, "Behaviour", "SIZE", &iReadSize, &error);
     if (cid_free_and_debug_error(&error) || iReadSize != 2)
     {
-		pSize = g_realloc (pSize, 2 * sizeof(int));
-		if (pSize != NULL)
-		{
-			pSize[0] = DEFAULT_SIZE;
-			pSize[1] = DEFAULT_SIZE;
-		}
-		else
-		{
-			cid_exit (CID_ERROR_READING_FILE, "cannot allocate memory");
-		}
+        pSize = g_realloc (pSize, 2 * sizeof(int));
+        if (pSize != NULL)
+        {
+            pSize[0] = DEFAULT_SIZE;
+            pSize[1] = DEFAULT_SIZE;
+        }
+        else
+        {
+            cid_exit (CID_ERROR_READING_FILE, "cannot allocate memory");
+        }
     }
     cid->dRotate        = g_key_file_get_double  (cid->pKeyFile, "Behaviour", "ROTATION", &error);
     cid_free_and_debug_error(&error);
@@ -374,6 +375,17 @@ cid_read_key_file (const gchar *f)
     cid->bLockPosition  = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "LOCK", TRUE);
     cid->bMask          = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "MASK", TRUE);
     cid->bShowAbove     = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Behaviour", "SWITCH_ABOVE", TRUE);
+    
+    // MPD configurations
+    cid->mpd_dir   = CID_CONFIG_GET_DIR_PATH ("MPD", "MPD_DIR", g_strdup_printf ("%s/Music",g_getenv ("HOME")));
+    cid->mpd_host  = CID_CONFIG_GET_STRING ("MPD", "MPD_HOST");
+    if (cid->mpd_host != NULL && strcmp (cid->mpd_host, "") == 0)
+    {
+        g_free (cid->mpd_host);
+        cid->mpd_host = g_strdup ("localhost");
+    }
+    cid->mpd_pass  = CID_CONFIG_GET_STRING ("MPD", "MPD_PASS");
+    cid->mpd_port  = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("MPD", "MPD_PORT", 6600);
     
     cid->iWidth = pSize[0] <= MAX_SIZE ? pSize[0] : MAX_SIZE;
     cid->iHeight = pSize[1] <= MAX_SIZE ? pSize[1] : MAX_SIZE;
@@ -479,6 +491,17 @@ cid_save_data ()
     g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "MASK", cid->bMask);
     g_key_file_set_boolean (cid->pKeyFile, "Behaviour", "SWITCH_ABOVE", cid->bShowAbove);
 
+    // [MPD] configuration
+    gchar *cDefaultDir = g_strdup_printf ("%s/Music", g_getenv ("HOME"));
+    if (cid->mpd_dir != NULL && strcmp (cid->mpd_dir, cDefaultDir) != 0)
+        g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_DIR", cid->mpd_dir);
+    else
+        g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_DIR", "");
+    g_free (cDefaultDir);
+    g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_HOST", cid->mpd_host);
+    g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_PASS", cid->mpd_pass);
+    g_key_file_set_integer (cid->pKeyFile, "MPD", "MPD_PORT", cid->mpd_port);
+    
     cid_write_keys_to_file (cid->pKeyFile, cid->cConfFile);
 }
 
