@@ -122,7 +122,7 @@ cid_check_conf_file_version (const gchar *f)
     if (strcmp(line_f1,line_f2)!=0 || bUnvalidKey) 
     {
         cid_warning ("bad file version, building a new one\n");
-        remove (f);
+        cid_remove_file (f);
         gchar *cTmpPath = g_strdup_printf("%s/%s",CID_DATA_DIR,CID_CONFIG_FILE);
         cid_copy_file(cTmpPath,f);
         g_free (cTmpPath);
@@ -337,7 +337,7 @@ cid_read_key_file (const gchar *f)
 
     // [Options] configuration
     cid->bHide           = CID_CONFIG_GET_BOOLEAN ("Options", "HIDE");
-    cid->cDefaultImage   = CID_CONFIG_GET_FILE_PATH  ("Options", "IMAGE", cid->bDevMode ? TESTING_COVER : CID_DEFAULT_IMAGE);
+    cid->cDefaultImage   = CID_CONFIG_GET_FILE_PATH  ("Options", "IMAGE", cid->bDevMode ? TESTING_DIR"/"TESTING_COVER : CID_DEFAULT_IMAGE);
     cid->bRunAnimation   = CID_CONFIG_GET_BOOLEAN_WITH_DEFAULT ("Options", "ANIMATION", TRUE);
     cid->iAnimationType  = CID_CONFIG_GET_INTEGER ("Options", "ANIMATION_TYPE");
     cid->iAnimationSpeed = CID_CONFIG_GET_INTEGER ("Options", "ANIMATION_SPEED");
@@ -384,7 +384,11 @@ cid_read_key_file (const gchar *f)
         g_free (cid->mpd_host);
         cid->mpd_host = g_strdup ("localhost");
     }
-    cid->mpd_pass  = CID_CONFIG_GET_STRING ("MPD", "MPD_PASS");
+    gchar *cEncrypted = NULL;
+    cEncrypted     = CID_CONFIG_GET_STRING ("MPD", "MPD_PASS");
+    //cid_decrypt_string (cEncrypted, &cid->mpd_pass);
+    cid->mpd_pass = g_strdup (cEncrypted);
+    g_free (cEncrypted);
     cid->mpd_port  = CID_CONFIG_GET_INTEGER_WITH_DEFAULT ("MPD", "MPD_PORT", 6600);
     
     cid->iWidth = pSize[0] <= MAX_SIZE ? pSize[0] : MAX_SIZE;
@@ -448,7 +452,7 @@ cid_save_data ()
     
     if (cid->pWindow!=NULL)
         cid_get_data();
-    
+    /*
     // [System] configuration
     g_key_file_set_integer (cid->pKeyFile, "System", "PLAYER", cid->iPlayer);
     g_key_file_set_integer (cid->pKeyFile, "System", "INTER", cid->iInter/1000);
@@ -464,7 +468,7 @@ cid_save_data ()
     // [Options] configuration
     g_key_file_set_boolean (cid->pKeyFile, "Options", "ANIMATION", cid->bRunAnimation);
     g_key_file_set_boolean (cid->pKeyFile, "Options", "HIDE", cid->bHide);
-    if (strcmp(cid->cDefaultImage,TESTING_COVER)!=0 && strcmp(cid->cDefaultImage,CID_DEFAULT_IMAGE)!=0)
+    if (strcmp(cid->cDefaultImage,TESTING_DIR"/"TESTING_COVER)!=0 && strcmp(cid->cDefaultImage,CID_DEFAULT_IMAGE)!=0)
         g_key_file_set_string  (cid->pKeyFile, "Options", "IMAGE", cid->cDefaultImage);
     else
         g_key_file_set_string  (cid->pKeyFile, "Options", "IMAGE", "");
@@ -475,13 +479,14 @@ cid_save_data ()
     g_key_file_set_integer (cid->pKeyFile, "Options", "DELAY", cid->iTimeToWait);
     g_key_file_set_integer (cid->pKeyFile, "Options", "D_SIZE", cid->iImageSize);
     g_key_file_set_boolean (cid->pKeyFile, "Options", "B_UNSTABLE", cid->bUnstable);
-
+    */
     // [Behaviour] configuration
     gint pSize[2] = {cid->iWidth,cid->iHeight};
     gsize iReadSize = sizeof (pSize) / sizeof (*pSize);
     g_key_file_set_integer_list (cid->pKeyFile, "Behaviour", "SIZE", pSize, iReadSize);
     g_key_file_set_integer (cid->pKeyFile, "Behaviour", "GAP_X",cid->iPosX);
     g_key_file_set_integer (cid->pKeyFile, "Behaviour", "GAP_Y",cid->iPosY);
+    /*
     g_key_file_set_double (cid->pKeyFile, "Behaviour", "ROTATION",(cid->dRotate));
     g_key_file_set_double_list (cid->pKeyFile, "Behaviour", "COLOR", (cid->dColor), cid->gColorSize);
     g_key_file_set_double_list (cid->pKeyFile, "Behaviour", "FLYING_COLOR", (cid->dFlyingColor), cid->gFlyingColorSize);
@@ -499,9 +504,12 @@ cid_save_data ()
         g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_DIR", "");
     g_free (cDefaultDir);
     g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_HOST", cid->mpd_host);
-    g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_PASS", cid->mpd_pass);
+    gchar *cEncrypted = NULL;
+    cid_encrypt_string (cid->mpd_pass, &cEncrypted);
+    g_key_file_set_string (cid->pKeyFile, "MPD", "MPD_PASS", cEncrypted);
+    g_free (cEncrypted);
     g_key_file_set_integer (cid->pKeyFile, "MPD", "MPD_PORT", cid->mpd_port);
-    
+    */
     cid_write_keys_to_file (cid->pKeyFile, cid->cConfFile);
 }
 

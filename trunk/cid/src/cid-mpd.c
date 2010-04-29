@@ -71,6 +71,7 @@ cid_mpd_cover ()
     {
         mpd_closeConnection (conn);
         conn = NULL;
+        mpd_freeStatus(status);
         return cont;
     }
     
@@ -78,6 +79,14 @@ cid_mpd_cover ()
     
     gboolean bOldState = musicData.playing;
     musicData.playing = (status->state == MPD_STATUS_STATE_PLAY);
+    
+    if (status->state == MPD_STATUS_STATE_STOP || status->state == MPD_STATUS_STATE_UNKNOWN)
+    {
+        musicData.opening = FALSE;
+        mpd_freeStatus(status);
+        cid_display_image (DEFAULT_IMAGE);
+        return cont;
+    }
     
     mpd_freeStatus(status);
     
@@ -140,32 +149,6 @@ cid_mpd_cover ()
         entity = NULL;
     }
     mpd_finishCommand (conn);
-    
-    /*
-    mpd_sendLsInfoCommand (conn,"");
-    while ((entity = mpd_getNextInfoEntity(conn)))
-    {
-        if (entity->type != MPD_INFO_ENTITY_TYPE_DIRECTORY)
-        {
-            mpd_freeInfoEntity (entity);
-            continue;
-        }
-        
-        fprintf (stdout, "Directory: %s\n", entity->info.directory->path);
-        
-        if (entity != NULL) 
-        {
-            mpd_freeInfoEntity(entity);
-            entity = NULL;
-        }
-    }
-    if (entity != NULL) 
-    {
-        mpd_freeInfoEntity (entity);
-        entity = NULL;
-    }
-    mpd_finishCommand (conn);
-    */
     
     gchar *cSongPath = NULL;
     
@@ -232,6 +215,7 @@ cid_connect_to_mpd (gint iInter)
     cont = TRUE;
     cid->bPipeRunning = TRUE;
     cid_mpd_cover ();
+    cid->bConnected = TRUE;
     cid_mpd_pipe (iInter);   
 }
 
@@ -239,9 +223,13 @@ void
 cid_disconnect_from_mpd ()
 {
     cont = FALSE;
+    cid->bConnected = FALSE;
     if (cid->bPipeRunning)
         g_source_remove (cid->iPipe);
     cid->bPipeRunning = FALSE;
+    musicData.opening = FALSE;
+    musicData.playing = FALSE;
+    cid_display_image (NULL);
 }
 
 void 
@@ -284,4 +272,6 @@ cid_build_mpd_menu (void)
     cid->pMonitorList->p_fNext = _next_mpd;
     cid->pMonitorList->p_fPrevious = _previous_mpd;
     cid->pMonitorList->p_fAddToQueue = NULL;
+    cid->p_fConnectHandler = cid_connect_to_mpd;
+    cid->p_fDisconnectHandler = cid_disconnect_from_mpd;
 }

@@ -188,18 +188,21 @@ void
 _playPause_amarok (void) 
 {
     cid_launch_command ("dcop amarok player playPause >/dev/null 2>&1");
+    cid_amarok_cover ();
 }
 
 void 
 _next_amarok (void) 
 {
     cid_launch_command ("dcop amarok player next >/dev/null 2>&1");
+    cid_amarok_cover ();
 }
 
 void 
 _previous_amarok (void) 
 {
     cid_launch_command ("dcop amarok player prev >/dev/null 2>&1");
+    cid_amarok_cover ();
 }
 
 void 

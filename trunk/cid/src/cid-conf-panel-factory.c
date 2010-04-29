@@ -724,6 +724,7 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
                     case 'r' :  // string representee par son numero dans une liste de choix.
                     case 'M' :  // string, avec un label pour la description et un bouton configurer (specialement fait pour les modules).
                     case 'k' :  // string avec un selecteur de touche clavier (Merci Ctaf !)
+                    case 'p' :  // string type password
                         //g_print ("  + string (%s)\n", cUsefulComment);
                         pEntry = NULL;
                         pDescriptionLabel = NULL;
@@ -738,7 +739,25 @@ cid_generate_ihm_from_keyfile (GKeyFile *pKeyFile, const gchar *cTitle, GtkWindo
                             {
                                 pOneWidget = gtk_entry_new ();
                                 pEntry = pOneWidget;
-                                gtk_entry_set_text (GTK_ENTRY (pOneWidget), cValue);
+                                if( iElementType == 'p' ) // password mode
+                                {
+                                    gtk_entry_set_visibility(GTK_ENTRY (pOneWidget), FALSE);
+                                    /*
+                                    gchar *cDecryptedString = NULL;
+                                    cid_decrypt_string( cValue,  &cDecryptedString );
+                                    gtk_entry_set_text (GTK_ENTRY (pOneWidget), cDecryptedString);
+                                    if( cDecryptedString )
+                                    {
+                                        g_free( cDecryptedString );
+                                    }
+                                    */
+                                }
+                                /*
+                                else
+                                {
+                                */
+                                    gtk_entry_set_text (GTK_ENTRY (pOneWidget), cValue);
+                                //}
                             } 
                             else 
                             {

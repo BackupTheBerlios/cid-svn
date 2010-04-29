@@ -13,14 +13,13 @@
 #include "cid-messages.h"
 #include "cid-struct.h"
 #include "cid-conf-panel-factory.h"
-#include "cid-amazon.h"
+#include "cid-cover.h"
 #include "cid-config.h"
 #include "cid-utilities.h"
 #include "cid-asynchrone.h"
 #include "cid-constantes.h"
 #include "cid-draw.h"
 #include "cid-menu-factory.h"
-#include <errno.h>
 
 extern CidMainContainer *cid;
 extern gboolean bCurrentlyDownloading, bCurrentlyDownloadingXML, bCurrentlyFocused;
@@ -41,11 +40,8 @@ _cid_quit (GtkWidget *p_widget, gpointer user_data)
 {
     cid_save_data ();
 
-    if (remove(DEFAULT_DOWNLOADED_IMAGE_LOCATION) == -1)
-    {
-        cid_warning ("Error while removing %s: %s",DEFAULT_DOWNLOADED_IMAGE_LOCATION,strerror (errno));
-    }
-
+    cid_remove_file (DEFAULT_DOWNLOADED_IMAGE_LOCATION);
+    
     cid_sortie (CID_EXIT_SUCCESS);
 
     /* Parametres inutilises */
@@ -115,6 +111,16 @@ on_clic (GtkWidget *p_widget, GdkEventButton* pButton)
             else 
             {
                 cid->pMonitorList->p_fPlayPause();
+            }
+            if (pButton->x < cid->iExtraSize &&
+                     pButton->y > (cid->iHeight - cid->iExtraSize) &&
+                     cid->iPlayer == PLAYER_MPD)
+            {
+                if (cid->bConnected)
+                    cid->p_fDisconnectHandler();
+                else
+                    cid->p_fConnectHandler(cid->iInter);
+                CID_REDRAW;
             }
         }
     } 
@@ -244,7 +250,11 @@ on_motion (GtkWidget *widget, GdkEventMotion *event)
         (cid->iCursorX < (cid->iWidth + cid->iPlayPauseSize)/2 &&
         cid->iCursorX > (cid->iWidth - cid->iPlayPauseSize)/2 &&
         cid->iCursorY < (cid->iHeight + cid->iPlayPauseSize)/2 &&
-        cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2)) {
+        cid->iCursorY > (cid->iHeight - cid->iPlayPauseSize)/2)
+    ||
+        (cid->iCursorX < cid->iExtraSize &&
+        cid->iCursorY > (cid->iHeight - cid->iExtraSize))) 
+    {
         
         CID_REDRAW;
         bFlyingButton = TRUE;

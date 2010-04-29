@@ -23,8 +23,13 @@ G_BEGIN_DECLS
 /* Alias pour récupérer l'URI de l'image par défaut */
 #define DEFAULT_IMAGE cid->cDefaultImage
 
-#define TESTING_COVER "../data/default.svg"
-#define TESTING_FILE "../data/cid.conf"
+#define TESTING_COVER "default.svg"
+#define TESTING_FILE "cid.conf"
+#define TESTING_DIR "../data"
+
+#define IMAGE_CROSS "cross.png"
+#define IMAGE_CONNECT "connect.png"
+#define IMAGE_DISCONNECT "disconnect.png"
 
 #define PLAYLIST_NAME "C.I.D."
 

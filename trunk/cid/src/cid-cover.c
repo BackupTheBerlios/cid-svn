@@ -8,10 +8,12 @@
    *
 */
 //#include "cid.h"
-#include "cid-amazon.h"
+#include "cid-cover.h"
 #include "cid-struct.h"
 #include "cid-messages.h"
 #include "cid-utilities.h"
+
+#include <curl/curl.h>
 
 extern CidMainContainer *cid;
 
@@ -24,7 +26,7 @@ int ret;
 int flag, found;
 
 gchar *URL;
-gchar *TAB_IMAGE_SIZES[] = {"large","extralarge"};
+gchar *TAB_IMAGE_SIZES[] = {"medium","large"};
 
 /**
  * Lit les noeuds du fichier en cours de parsage
@@ -129,8 +131,11 @@ cid_test_xml ()
         return;
     }
     // Evaluation de l'expression XPath
-    xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("//image[@size='large']/text()", ctxt);
+    char *cXPath = NULL;
+    asprintf (&cXPath, "//image[@size='%s']/text()",TAB_IMAGE_SIZES[cid->iImageSize]);
+    xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression(cXPath, ctxt);
     //xmlXPathObjectPtr xpathRes = xmlXPathEvalExpression("count(//image[size=large])", ctxt);
+    free (cXPath);
     if (xpathRes == NULL) {
         fprintf(stderr, "Erreur sur l'expression XPath\n");
         return;
@@ -174,9 +179,12 @@ cid_get_xml_file (const gchar *artist, const gchar *album)
     gchar *cFileToDownload = g_strdup_printf("%s%s%s&Artist=%s&Album=%s",AMAZON_API_URL_1,LICENCE_KEY,AMAZON_API_URL_2,artist,album);
     gchar *cTmpFilePath = g_strdup (DEFAULT_XML_LOCATION);
     
+    /*
     gchar *cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_DOWNLOADED_IMAGE_LOCATION);
     if (!system (cCommand)) return FALSE;
     g_free (cCommand);
+    */
+    cid_remove_file (DEFAULT_DOWNLOADED_IMAGE_LOCATION);
     //cCommand = g_strdup_printf ("wget \"%s\" -O '%s-bis' -t 2 -T 2 > /dev/null 2>&1 && mv %s-bis %s", cFileToDownload, cTmpFilePath, cTmpFilePath, cTmpFilePath);
     //cid_debug ("%s\n",cCommand);
     //system (cCommand);
@@ -191,7 +199,7 @@ cid_get_xml_file (const gchar *artist, const gchar *album)
     curl_easy_cleanup(handle);
 
     bCurrentlyDownloadingXML = TRUE;
-    g_free (cCommand);
+    //g_free (cCommand);
     g_free (cTmpFilePath);
     g_free (cFileToDownload);
     return TRUE;
@@ -206,9 +214,12 @@ cid_download_missing_cover (const gchar *cURL, const gchar *cDestPath)
     cid_launch_command (cCommand);
     bCurrentlyDownloading = TRUE;
     g_free (cCommand);
+    /*
     cCommand = g_strdup_printf ("rm %s >/dev/null 2>&1", DEFAULT_XML_LOCATION);
     if (!system (cCommand)) return FALSE;
     g_free (cCommand);
+    */
+    cid_remove_file (DEFAULT_XML_LOCATION);
     return TRUE;
 }
 

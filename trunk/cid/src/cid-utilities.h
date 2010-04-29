@@ -34,6 +34,12 @@ G_BEGIN_DECLS
 void cid_copy_file (const gchar *cSrc, const gchar *cDst);
 
 /**
+ * Permet de supprimer un fichier
+ * @param cSrc Le fichier a supprimer
+ */
+void cid_remove_file (const gchar* cFilePath);
+
+/**
  * converti une chaine en son equivalent MAJUSCULE
  * @param cSrc chaine source
  * @return la chaine 'uppee'
@@ -254,6 +260,10 @@ void cid_free_datacontent_full (CidDataContent *pContent, gpointer *pData);
 void cid_str_replace_all (gchar **string, const gchar *sFrom, const gchar *sTo);
 
 void cid_str_replace_all_seq (gchar **string, gchar *seqFrom, gchar *seqTo);
+
+void cid_encrypt_string( const gchar *cDecryptedString,  gchar **cEncryptedString );
+
+void cid_decrypt_string( const gchar *cDecryptedString,  gchar **cEncryptedString );
 
 gchar *_url_encode (const gchar * str);
 

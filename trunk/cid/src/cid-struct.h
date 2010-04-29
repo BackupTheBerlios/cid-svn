@@ -32,6 +32,8 @@ typedef void (* CidReadConfigFunc) (gchar *cConfFile, gpointer *data);
 typedef void (* CidControlFunction) (void);
 typedef void (* CidManagePlaylistFunction) (gchar *cSong);
 typedef void (* CidDataAction) (CidDataCase *pCase, gpointer *pData);
+typedef void (* CidConnectPlayer) (gint iDelay);
+typedef void (* CidDisconnectPlayer) (void);
 
 /**
  * Structure de données utilisée pour stocker les informations
@@ -170,6 +172,10 @@ struct _CidMainContainer {
     cairo_surface_t *p_cPreviousSurface;
     // croix pour le deplacement
     cairo_surface_t *p_cCross;
+    // icone de connexion
+    cairo_surface_t *p_cConnect;
+    // icone de deconnexion
+    cairo_surface_t *p_cDisconnect;
     // play
     cairo_surface_t *p_cPlay;
     // pause
@@ -323,6 +329,8 @@ struct _CidMainContainer {
     gboolean bShowAbove;
     // On ne fait que configurer cid ?
     gboolean bConfigPanel;
+    // On est connecte au lecteur ?
+    gboolean bConnected;
 
     
     // taille de la couleur
@@ -336,6 +344,10 @@ struct _CidMainContainer {
     
     // keyFile
     GKeyFile *pKeyFile;
+    
+    // handler connexion/deconnexion
+    CidConnectPlayer p_fConnectHandler;
+    CidDisconnectPlayer p_fDisconnectHandler;
     
     ///\__ Dimensions de l'ecran
     int XScreenWidth;

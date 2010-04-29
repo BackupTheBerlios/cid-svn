@@ -178,7 +178,7 @@ MPD_DIR=
 #{Default is 'localhost'.}
 MPD_HOST=
 
-#s MPD server password
+#p MPD server password
 #{Default is none.}
 MPD_PASS=
 

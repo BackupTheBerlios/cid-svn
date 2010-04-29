@@ -15,9 +15,14 @@ if E17_ENABLE
 have_e17=-DHAVE_E17="1"
 endif
 
+if HAVE_LIBCRYPT
+have_libcrypt=-DHAVE_LIBCRYPT="1"
+endif
+
 cid_CFLAGS = \
     $(PACKAGE_CFLAGS) \
     $(have_e17) \
+    $(have_libcrypt) \
     -DCID_DEFAULT_IMAGE=\""$(pkgdatadir)/default.svg"\"\
     -DCID_CONFIG_FILE=\""cid.conf"\"\
     -DCID_DATA_DIR=\""$(pkgdatadir)"\"\
@@ -35,7 +40,7 @@ cid_LDFLAGS = \
 
 cid_LDADD = \
     $(PACKAGE_LIBS) \
-    $(OPENGL_LIBS)
+    $(LIBCRYPT_LIBS)
 
 cid_SOURCES = \
     cid.c \
@@ -44,8 +49,6 @@ cid_SOURCES = \
     cid-amarok.h \
     cid-amarok2.c \
     cid-amarok2.h \
-    cid-amazon.c \
-    cid-amazon.h \
     cid-animation.c \
     cid-animation.h \
     cid-applet-canvas.h \
@@ -60,6 +63,8 @@ cid_SOURCES = \
     cid-console-call.c \
     cid-console-call.h \
     cid-constantes.h \
+    cid-cover.c \
+    cid-cover.h \
     cid-dbus.c \
     cid-dbus.h \
     cid-draw.c \
@@ -101,7 +106,7 @@ cidsubincludedir =\
 cidsubinclude_HEADERS = \
     cid-amarok.h \
     cid-amarok2.h \
-    cid-amazon.h \
+    cid-cover.h \
     cid-animation.h \
     cid-applet-canvas.h \
     cid-asynchrone.h \

@@ -1,20 +1,19 @@
 /*
    *
-   *                     cid-amazon.h
+   *                     cid-cover.h
    *                       -------
    *                 Conky Images Display
    *             ----------------------------
    *
    *
 */
-#ifndef __CID_AMAZON__
-#define  __CID_AMAZON__
+#ifndef __CID_COVER__
+#define  __CID_COVER__
 
 #include <libxml/xmlreader.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 #include <gtk/gtk.h>
-#include <curl/curl.h>
 
 G_BEGIN_DECLS
 

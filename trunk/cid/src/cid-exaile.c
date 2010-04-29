@@ -10,7 +10,7 @@
 //#include "cid.h"
 #include "cid-exaile.h"
 #include "cid-struct.h"
-#include "cid-amazon.h"
+#include "cid-cover.h"
 #include "cid-dbus.h"
 #include "cid-callbacks.h"
 #include "cid-utilities.h"

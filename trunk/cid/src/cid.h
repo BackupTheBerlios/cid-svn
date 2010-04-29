@@ -15,7 +15,6 @@
 
 #include "cid-amarok.h"
 #include "cid-amarok2.h"
-#include "cid-amazon.h"
 #include "cid-animation.h"
 #include "cid-applet-canvas.h"
 #include "cid-asynchrone.h"
@@ -24,6 +23,7 @@
 #include "cid-config.h"
 #include "cid-console-call.h"
 #include "cid-constantes.h"
+#include "cid-cover.h"
 #include "cid-dbus.h"
 #include "cid-draw.h"
 #include "cid-exaile.h"

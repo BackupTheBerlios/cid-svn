@@ -425,8 +425,14 @@ cid_load_symbols (void)
     cTmpPath = cid_get_symbol_path(CID_PAUSE,cid->iSymbolColor);
     cid->p_cPause_big = cid_get_cairo_image(cTmpPath,cid->iPlayPauseSize,cid->iPlayPauseSize);
     g_free (cTmpPath);
-    cTmpPath = g_strdup_printf("%s/cross.png",cid->bDevMode ? "../data" : CID_DATA_DIR);
+    cTmpPath = g_strdup_printf("%s/%s",cid->bDevMode ? TESTING_DIR : CID_DATA_DIR, IMAGE_CROSS);
     cid->p_cCross = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
+    g_free (cTmpPath);
+    cTmpPath = g_strdup_printf("%s/%s",cid->bDevMode ? TESTING_DIR : CID_DATA_DIR, IMAGE_CONNECT);
+    cid->p_cConnect = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
+    g_free (cTmpPath);
+    cTmpPath = g_strdup_printf("%s/%s",cid->bDevMode ? TESTING_DIR : CID_DATA_DIR, IMAGE_DISCONNECT);
+    cid->p_cDisconnect = cid_get_cairo_image(cTmpPath,cid->iExtraSize,cid->iExtraSize);
     g_free (cTmpPath);
 }
 
@@ -547,6 +553,21 @@ cid_set_render (cairo_t *pContext, gpointer *pData)
         cairo_set_source_surface (cr, cid->p_cCross, 0, 0);
         cairo_paint (cr);
         cairo_restore (cr); 
+    }
+    
+    // On affiche l'image de connexion/deconnexion
+    if (cid->bCurrentlyFlying && cid->iPlayer == PLAYER_MPD)
+    {
+        cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+        cairo_save (cr);
+        cairo_set_source_rgba (cr, 0, 0, 0, 0);
+        cairo_translate (cr, 0, cid->iHeight-cid->iExtraSize);
+        if (cid->iCursorX < cid->iExtraSize && cid->iCursorY > cid->iHeight-cid->iExtraSize)
+            cairo_set_source_surface (cr, cid->bConnected ? cid->p_cConnect : cid->p_cDisconnect, 0, 0);
+        else
+            cairo_set_source_surface (cr, cid->bConnected ? cid->p_cDisconnect : cid->p_cConnect, 0, 0);
+        cairo_paint (cr);
+        cairo_restore (cr);
     }
     
     // Si on survolle et qu'on autorise l'affichage des controles

@@ -25,6 +25,11 @@ PKG_CHECK_MODULES(PACKAGE, "gtk+-2.0 dbus-1 dbus-glib-1 libxml-2.0 gthread-2.0 l
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
+# We use crypt(3) which may be in libc, or in libcrypt (eg FreeBSD)
+AC_CHECK_LIB(crypt, crypt, LIBCRYPT_LIBS="-lcrypt")
+AM_CONDITIONAL( [HAVE_LIBCRYPT], [test "$LIBCRYPT_LIBS" != ""] )
+AC_SUBST(LIBCRYPT_LIBS)
+
 AC_ARG_ENABLE(e17,
         [ --enable-e17  :  Enable Enlightenment support],
         [case "${enableval}" in

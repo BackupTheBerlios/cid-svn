@@ -11,6 +11,7 @@
 #include "cid-struct.h"
 #include "cid-conf-panel-factory.h"
 #include "cid-panel-callbacks.h"
+#include "cid-utilities.h"
 
 extern CidMainContainer *cid;
 
@@ -692,7 +693,18 @@ _cid_get_each_widget_value (gpointer *data, GKeyFile *pKeyFile)
         g_key_file_set_string (pKeyFile, cGroupName, cKeyName, (cValue != NULL ? cValue : "\0"));
         g_free (cValue);
     } else if (GTK_IS_ENTRY (pOneWidget)) {
-        const gchar *cValue = gtk_entry_get_text (GTK_ENTRY (pOneWidget));
+        gchar *cValue = NULL;//gtk_entry_get_text (GTK_ENTRY (pOneWidget));
+        const gchar *cWidgetValue = gtk_entry_get_text (GTK_ENTRY (pOneWidget));
+        /*
+        if( !gtk_entry_get_visibility(GTK_ENTRY (pOneWidget)) )
+        {
+            cid_encrypt_string( cWidgetValue,  &cValue );
+        }
+        else
+        {
+        */
+            cValue = g_strdup( cWidgetValue );
+        //}
         const gchar* const * cPossibleLocales = g_get_language_names ();
         gchar *cKeyNameFull, *cTranslatedValue;
         while (cPossibleLocales[i] != NULL) 

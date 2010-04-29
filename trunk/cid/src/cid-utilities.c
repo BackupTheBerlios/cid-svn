@@ -14,6 +14,17 @@
 #include "cid-constantes.h"
 
 #include <X11/Xlib.h>
+#include <errno.h>
+#ifdef HAVE_LIBCRYPT
+/* libC crypt */
+#include "crypt.h"
+
+static char DES_crypt_key[64] =
+{
+    1,0,0,1,1,1,0,0, 1,0,1,1,1,0,1,1, 1,1,0,1,0,1,0,1, 1,1,0,0,0,0,0,1,
+    0,0,0,1,0,1,1,0, 1,1,1,0,1,1,1,0, 1,1,1,0,0,1,0,0, 1,0,1,0,1,0,1,1
+}; 
+#endif
 
 extern CidMainContainer *cid;
 extern int ret;
@@ -141,6 +152,15 @@ cid_copy_file (const gchar *cSrc, const gchar *cDst)
     }
     fclose (src);
     fclose (dst);
+}
+
+void
+cid_remove_file (const gchar* cFilePath)
+{
+    if (remove(cFilePath) == -1)
+    {
+        cid_warning ("Error while removing %s: %s",cFilePath,strerror (errno));
+    }
 }
 /*
 int 
@@ -273,8 +293,8 @@ You can use it with the following options:\n"));
                 g_free (cid->cConfFile);
             if (DEFAULT_IMAGE)
                 g_free (DEFAULT_IMAGE);
-            cid->cConfFile = g_strdup(TESTING_FILE);
-            DEFAULT_IMAGE = g_strdup(TESTING_COVER);
+            cid->cConfFile = g_strdup_printf ("%s/%s", TESTING_DIR, TESTING_FILE);
+            DEFAULT_IMAGE = g_strdup_printf ("%s/%s", TESTING_DIR, TESTING_COVER);
             cid->bDevMode = TRUE;
         }
     }
@@ -920,6 +940,147 @@ cid_check_position (void)
     if (cid->iPosY > (cid->XScreenHeight - cid->iHeight)) cid->iPosY = (cid->XScreenHeight - cid->iHeight);
     if (cid->iPosX < 0) cid->iPosX = 0;
     if (cid->iPosY < 0) cid->iPosY = 0;
+}
+
+void 
+cid_decrypt_string( const gchar *cEncryptedString,  gchar **cDecryptedString )
+{
+    if( !cEncryptedString || *cEncryptedString == '\0' )
+    {
+        *cDecryptedString = g_strdup( "" );
+        return;
+    }
+#ifdef HAVE_LIBCRYPT
+    gchar *input = g_strdup(cEncryptedString);
+    gchar *shifted_input = input;
+    gchar **output = cDecryptedString; 
+
+    gchar *current_output = NULL;
+    if( output && input && strlen(input)>0 )
+    {
+        *output = g_malloc( (strlen(input)+1)/3+1 );
+        current_output = *output;
+    }
+    else
+    {
+        if( input )
+        {
+            g_free(input);
+        }
+        return;
+    }
+
+    gchar *last_char_in_input = input + strlen(input);
+//  g_print( "Password (before decrypt): %s\n", input );
+
+    for( ; shifted_input < last_char_in_input; shifted_input += 16+8, current_output += 8 )
+    {
+        guint block[8];
+        gchar txt[64];
+        gint i = 0, j = 0;
+        gchar current_letter = 0;
+    
+        memset( txt, 0, 64 );
+
+        shifted_input[16+8-1] = 0; // cut the string
+
+        sscanf( shifted_input, "%X-%X-%X-%X-%X-%X-%X-%X",
+        &block[0], &block[1], &block[2], &block[3], &block[4], &block[5], &block[6], &block[7] );
+
+        // process the eight first characters of "input"
+        for( i = 0; i < 8 ; i++ )
+            for ( j = 0; j < 8; j++ )
+                txt[i*8+j] = block[i] >> j & 1;
+    
+        setkey( DES_crypt_key );
+        encrypt( txt, 1 );  // decrypt
+
+        for ( i = 0; i < 8; i++ )
+        {
+            current_output[i] = 0;
+            for ( j = 0; j < 8; j++ )
+            {
+                current_output[i] |= txt[i*8+j] << j;
+            }
+        }
+    }
+
+    *current_output = 0;
+
+//  g_print( "Password (after decrypt): %s\n", *output );
+
+    g_free( input );
+
+#else
+    *cDecryptedString = g_strdup( cEncryptedString );
+#endif
+}
+
+void 
+cid_encrypt_string( const gchar *cDecryptedString,  gchar **cEncryptedString )
+{
+    if( !cDecryptedString || strlen(cDecryptedString) == 0 )
+    {
+        *cEncryptedString = g_strdup( "" );
+        return;
+    }
+    
+#ifdef HAVE_LIBCRYPT
+    const gchar *input = cDecryptedString;
+    gchar **output = cEncryptedString;
+    guint input_length = 0;
+
+    gchar *current_output = NULL;
+    if( output && input && strlen(input)>0 )
+    {
+        // for each block of 8 characters, we need 24 bytes.
+        guint nbBlocks = strlen(input)/8+1;
+    
+        *output = g_malloc( nbBlocks*24+1 );
+        current_output = *output;
+    }
+    else
+    {
+        return;
+    }
+
+    const gchar *last_char_in_input = input + strlen(input);
+
+//  g_print( "Password (before encrypt): %s\n", input );
+
+    for( ; input < last_char_in_input; input += 8, current_output += 16+8 )
+    {
+        gchar txt[64];
+        gint i = 0, j = 0;
+        gchar current_letter = 0;
+    
+        memset( txt, 0, 64 );
+    
+        // process the eight first characters of "input"
+        for( i = 0; i < strlen(input) && i < 8 ; i++ )
+            for ( j = 0; j < 8; j++ )
+                txt[i*8+j] = input[i] >> j & 1;
+    
+        setkey( DES_crypt_key );
+        encrypt( txt, 0 );  // encrypt
+
+        for ( i = 0; i < 8; i++ )
+        {
+            current_letter = 0;
+            for ( j = 0; j < 8; j++ )
+            {
+                current_letter |= txt[i*8+j] << j;
+            }
+            snprintf( current_output + i*3, 4, "%02X-", current_letter );
+        }
+    }
+
+    *(current_output-1) = 0;
+
+//  g_print( "Password (after encrypt): %s\n", *output );
+#else
+    *cEncryptedString = g_strdup( cDecryptedString );
+#endif
 }
 
 gchar *

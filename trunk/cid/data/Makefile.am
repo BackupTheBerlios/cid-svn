@@ -19,6 +19,8 @@ essentialdata_DATA = \
 		next-red.png \
 		prev-red.png \
 		cross.png \
+		connect.png \
+		disconnect.png \
 		cid.conf
 
 EXTRA_DIST = $(essentialdata_DATA) \
